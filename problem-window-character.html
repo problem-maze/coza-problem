@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Problem — The Window</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,600&family=DM+Mono:wght@400&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:100%;height:100%;background:#040608;overflow:hidden}
+
+  .stage{
+    position:relative;
+    width:100vw; height:100dvh;
+    background:
+      radial-gradient(ellipse 70vw 50vh at 50% 46%, rgba(80,120,190,0.10), transparent 65%),
+      #040608;
+    overflow:hidden;
+    font-family:'Cormorant Garamond',serif;
+  }
+
+  .stars{position:absolute;inset:0}
+  .star{position:absolute;background:rgba(225,235,248,0.85);border-radius:50%;animation:twinkle var(--d,5s) ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:.2}50%{opacity:1}}
+
+  /* ── the room: soft drapery flanking the window, near-black on near-black ── */
+  .curtain{
+    position:absolute; top:0; height:100%; width:19vmin;
+    background:linear-gradient(180deg, rgba(9,13,20,0.97), rgba(3,5,8,0.99));
+    z-index:1;
+  }
+  .curtain.left{
+    left:0;
+    border-radius:0 26% 14% 0 / 0 9% 6% 0;
+    box-shadow:inset -10px 0 26px rgba(190,210,240,0.035);
+    background-image:
+      repeating-linear-gradient(95deg, transparent 0 13px, rgba(225,235,248,0.025) 13px 14px),
+      linear-gradient(100deg, transparent 8%, rgba(0,0,0,0.3) 17%, transparent 27%, rgba(225,235,248,0.05) 36%, transparent 46%, rgba(0,0,0,0.22) 60%, transparent 72%);
+  }
+  .curtain.right{
+    right:0;
+    border-radius:26% 0 0 14% / 9% 0 0 6%;
+    box-shadow:inset 10px 0 26px rgba(190,210,240,0.035);
+    background-image:
+      repeating-linear-gradient(85deg, transparent 0 13px, rgba(225,235,248,0.025) 13px 14px),
+      linear-gradient(80deg, transparent 8%, rgba(0,0,0,0.3) 17%, transparent 27%, rgba(225,235,248,0.05) 36%, transparent 46%, rgba(0,0,0,0.22) 60%, transparent 72%);
+  }
+  .curtain-tie{display:none}
+
+  .floor-light{
+    position:absolute; left:50%; bottom:4vh; width:58vmin; height:11vmin;
+    transform:translate(-50%,0);
+    background:radial-gradient(ellipse, rgba(170,205,255,0.07) 0%, transparent 75%);
+    z-index:1; pointer-events:none;
+  }
+  .floor-tiles{
+    position:absolute; left:0; right:0; bottom:0; height:25vh;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(225,235,248,0.075) 0 1px, transparent 1px 36px),
+      repeating-linear-gradient(0deg, rgba(225,235,248,0.06) 0 1px, transparent 1px 20px);
+    -webkit-mask-image: linear-gradient(to top, black 0%, black 30%, transparent 95%);
+            mask-image: linear-gradient(to top, black 0%, black 30%, transparent 95%);
+    transform: perspective(280px) rotateX(58deg);
+    transform-origin: bottom;
+    z-index:2; pointer-events:none;
+  }
+
+  .floor-glow{
+    position:absolute; left:0; right:0; bottom:0; height:30vh;
+    background:linear-gradient(to top, #040608 8%, rgba(4,6,8,0.85) 40%, transparent 100%);
+    pointer-events:none; z-index:2;
+  }
+
+  /* ── the window ── */
+  .window-wrap{
+    position:absolute; left:50%; top:39%;
+    width:min(70vw,64vh); aspect-ratio:4/3;
+    transform:translate(-50%,-50%);
+    z-index:1;
+  }
+  .frame{fill:none; stroke:rgba(225,235,248,0.55); stroke-width:2.2;
+    filter:drop-shadow(0 0 6px rgba(170,205,255,0.18));}
+  .sill{fill:rgba(225,235,248,0.07); stroke:rgba(225,235,248,0.4); stroke-width:1.1}
+  .view-bg{fill:#070c16}
+  .star-in{fill:rgba(225,235,248,0.8)}
+  .star-in.tw{animation:twinkle var(--d,4s) ease-in-out infinite}
+  .horizon{stroke:rgba(225,235,248,0.14); stroke-width:0.6}
+  .ripple{stroke:rgba(225,235,248,0.06); stroke-width:0.5}
+
+  .ring{fill:none; stroke:rgba(225,235,248,0.32)}
+  .wall{stroke:rgba(225,235,248,0.4); stroke-linecap:round}
+  .gap{fill:none; stroke:#070c16; stroke-linecap:round}
+  .solve{
+    fill:none; stroke:rgba(232,242,255,0.96); stroke-linecap:round; stroke-linejoin:round;
+    filter:drop-shadow(0 0 5px rgba(190,220,255,0.9)) drop-shadow(0 0 16px rgba(150,195,255,0.6));
+  }
+  .pupil{fill:rgba(232,242,255,1); filter:drop-shadow(0 0 8px rgba(190,220,255,1))}
+  .catch{fill:#fff}
+  .lid{fill:none; stroke:rgba(228,238,250,0.97); stroke-width:2.4; stroke-linecap:round}
+
+  /* ── the figure, at the sill, looking out ──
+        anchored as % of window-wrap itself (not the stage), so the
+        gap between sill and figure stays correct at any aspect ratio */
+  .glow-spill{
+    position:absolute; left:50%; bottom:-40%;
+    width:62%; aspect-ratio:1/1;
+    transform:translate(-50%,0);
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(170,205,255,0.13) 0%, transparent 70%);
+    z-index:1; pointer-events:none;
+  }
+  .figure{
+    position:absolute; left:50%; bottom:-40%;
+    width:29%;
+    transform:translate(-50%,0);
+    z-index:2;
+  }
+  .figure svg{width:100%; height:auto; display:block}
+
+  .char-body{
+    stroke:rgba(228,238,250,0.9); stroke-width:1.8;
+    filter:drop-shadow(0 0 16px rgba(150,190,255,0.3));
+  }
+  .char-rim{fill:none; stroke:rgba(232,242,255,0.4); stroke-width:1.1; stroke-linecap:round}
+  .char-leg{fill:none; stroke:rgba(225,235,248,0.75); stroke-width:2.4; stroke-linecap:round}
+  .char-foot{stroke:rgba(225,235,248,0.75); stroke-width:2.4; stroke-linecap:round}
+  .char-band{
+    fill:none; stroke:rgba(232,242,255,0.92); stroke-width:2.8; stroke-linecap:round;
+    filter:drop-shadow(0 0 7px rgba(170,205,255,0.45));
+  }
+  .char-ear-outer{fill:rgba(7,11,18,0.92); stroke:rgba(228,238,250,0.85); stroke-width:1.6}
+  .char-ear-inner{fill:none; stroke:rgba(225,235,248,0.35); stroke-width:0.9}
+  .char-cord{fill:none; stroke:rgba(225,235,248,0.55); stroke-width:1; stroke-linecap:round}
+  .char-device{fill:rgba(7,11,18,0.94); stroke:rgba(228,238,250,0.8); stroke-width:1.4}
+  .char-device-line{fill:none; stroke:rgba(225,235,248,0.4); stroke-width:0.8}
+  .char-reel{fill:none; stroke:rgba(225,235,248,0.5); stroke-width:0.9}
+
+  /* the character's eye — same construction as the brand eye, but its own
+     scale-correct classes so it doesn't inherit the horizon eye's widths */
+  .ce-lid{fill:none; stroke:rgba(228,238,250,0.95); stroke-width:1.1; stroke-linecap:round}
+  .ce-ring{fill:none}
+  .ce-gap{fill:none; stroke:#16202f; stroke-linecap:round}
+  .ce-solve{fill:none; stroke:rgba(232,242,255,0.95); stroke-linecap:round; stroke-linejoin:round;
+    filter:drop-shadow(0 0 2px rgba(190,220,255,0.85))}
+  .ce-pupil{fill:rgba(232,242,255,1)}
+  .ce-catch{fill:#fff}
+
+  .brand{
+    position:absolute; top:6vh; left:0; right:0;
+    display:flex; align-items:center; justify-content:center;
+    z-index:3;
+  }
+  .brand-word{
+    font-size:clamp(16px,2.6vw,22px); font-weight:500;
+    color:rgba(225,235,248,0.85);
+  }
+  .brand-word em{font-style:italic; font-weight:600; color:#fff}
+
+  .word-stack{
+    position:absolute; left:0; right:0; bottom:7vh;
+    display:flex; flex-direction:column; align-items:center;
+    z-index:3; padding:0 8vw; text-align:center;
+  }
+  .headline{
+    font-size:clamp(26px,5.4vw,46px); font-weight:500; line-height:1.15;
+    color:rgba(228,238,250,0.98);
+    text-shadow:0 0 40px rgba(170,205,255,0.25);
+  }
+  .headline em{font-style:italic; font-weight:600}
+  .sub{
+    margin-top:14px;
+    font-family:'DM Mono',monospace;
+    font-size:clamp(9px,1.8vw,13px); letter-spacing:0.35em; text-transform:uppercase;
+    color:rgba(150,165,190,0.7);
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="stars" id="stars"></div>
+
+  <div class="brand">
+    <span class="brand-word"><em>P</em>roblem</span>
+  </div>
+
+  <div class="curtain left"></div>
+  <div class="curtain right"></div>
+  <div class="curtain-tie left"></div>
+  <div class="curtain-tie right"></div>
+  <div class="floor-tiles"></div>
+
+  <div class="window-wrap">
+    <svg viewBox="0 0 200 150" width="100%" height="100%" overflow="visible">
+      <defs>
+        <radialGradient id="eyeHalo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#bcd6ff" stop-opacity="0.16"/>
+          <stop offset="60%" stop-color="#6f95c9" stop-opacity="0.04"/>
+          <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="hazeBand" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#8fb4e8" stop-opacity="0"/>
+          <stop offset="50%" stop-color="#8fb4e8" stop-opacity="0.02"/>
+          <stop offset="100%" stop-color="#8fb4e8" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="horizonGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#e1ebf8" stop-opacity="0"/>
+          <stop offset="50%" stop-color="#e1ebf8" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#e1ebf8" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <rect class="view-bg" x="2" y="2" width="196" height="138"/>
+
+      <!-- atmospheric haze, for depth -->
+      <rect x="2" y="40" width="196" height="50" fill="url(#hazeBand)"/>
+
+      <!-- a few stars inside the view -->
+      <circle class="star-in" cx="18" cy="14" r="0.6" opacity="0.5"/>
+      <circle class="star-in tw" cx="34" cy="26" r="0.55" opacity="0.7" style="--d:3.4s"/>
+      <circle class="star-in" cx="58" cy="10" r="0.7" opacity="0.4"/>
+      <circle class="star-in tw" cx="150" cy="16" r="0.6" opacity="0.6" style="--d:4.2s"/>
+      <circle class="star-in" cx="170" cy="30" r="0.5" opacity="0.5"/>
+      <circle class="star-in tw" cx="182" cy="12" r="0.7" opacity="0.7" style="--d:3.8s"/>
+      <circle class="star-in" cx="120" cy="22" r="0.4" opacity="0.5"/>
+      <circle class="star-in" cx="90" cy="8" r="0.5" opacity="0.6"/>
+      <circle class="star-in" cx="10" cy="34" r="0.4" opacity="0.45"/>
+      <circle class="star-in tw" cx="65" cy="34" r="0.5" opacity="0.6" style="--d:5s"/>
+      <circle class="star-in" cx="135" cy="36" r="0.45" opacity="0.5"/>
+      <circle class="star-in" cx="190" cy="22" r="0.5" opacity="0.5"/>
+
+      <!-- soft rays, rising from the eye into the sky -->
+      <g stroke="rgba(225,235,248,0.06)" stroke-width="0.6" stroke-linecap="round">
+        <line x1="100" y1="64" x2="58" y2="9"/>
+        <line x1="100" y1="64" x2="80" y2="5"/>
+        <line x1="100" y1="64" x2="100" y2="3"/>
+        <line x1="100" y1="64" x2="120" y2="5"/>
+        <line x1="100" y1="64" x2="142" y2="9"/>
+      </g>
+
+      <!-- horizon + reflection ripples, the eye sits where they meet -->
+      <line class="horizon" x1="10" y1="66" x2="190" y2="66" stroke="url(#horizonGrad)" stroke-width="0.8"/>
+      <line class="ripple" x1="26" y1="82" x2="174" y2="82"/>
+      <line class="ripple" x1="42" y1="98" x2="158" y2="98"/>
+      <line class="ripple" x1="58" y1="114" x2="142" y2="114"/>
+
+      <!-- soft halo behind the eye -->
+      <circle cx="100" cy="66" r="20" fill="url(#eyeHalo)"/>
+
+      <!-- the brand's eye, on the horizon, viewed through the window -->
+      <g transform="translate(100,66) scale(0.82)">
+        <circle class="ring" cx="0" cy="0" r="62" stroke-width="1"/>
+        <circle class="ring" cx="0" cy="0" r="46" stroke-width="1"/>
+        <circle class="ring" cx="0" cy="0" r="31" stroke-width="0.9"/>
+        <circle class="ring" cx="0" cy="0" r="17" stroke-width="0.8"/>
+
+        <g class="wall" stroke-width="1">
+          <line x1="0" y1="-62" x2="0" y2="-46"/>
+          <line x1="43" y1="-31" x2="32" y2="-23"/>
+          <line x1="62" y1="0" x2="46" y2="0"/>
+          <line x1="43" y1="31" x2="32" y2="23"/>
+          <line x1="0" y1="62" x2="0" y2="46"/>
+          <line x1="-43" y1="31" x2="-32" y2="23"/>
+          <line x1="-62" y1="0" x2="-46" y2="0"/>
+          <line x1="-43" y1="-31" x2="-32" y2="-23"/>
+          <line x1="22" y1="-43" x2="15" y2="-29"/>
+          <line x1="-22" y1="43" x2="-15" y2="29"/>
+          <line x1="29" y1="15" x2="20" y2="10"/>
+          <line x1="-29" y1="-15" x2="-20" y2="-10"/>
+        </g>
+
+        <path class="gap" d="M-9,-30.5 A31,31 0 0,1 9,-30.5" stroke-width="3.4"/>
+        <path class="gap" d="M44,-7 A46,46 0 0,1 44,7" stroke-width="3.6"/>
+        <path class="gap" d="M-13,-60.5 A62,62 0 0,1 13,-60.5" stroke-width="3.8"/>
+        <path class="gap" d="M-6,16.5 A17,17 0 0,0 6,16.5" stroke-width="3"/>
+
+        <path class="solve" pathLength="100" stroke-width="1.6"
+          d="M0,-62 L0,-46 Q24,-42 31,-22 L17,-17 Q10,-2 0,0 L0,-17
+             Q-10,-22 -10,-31 L0,-31"/>
+
+        <g>
+          <path class="lid" d="M-15,0 Q0,-10 16,0"/>
+          <path class="lid" d="M-15,0 Q0,10 16,0"/>
+          <circle class="pupil" cx="0" cy="0" r="3.8"/>
+          <circle class="catch" cx="1.5" cy="-1.6" r="1.3"/>
+        </g>
+      </g>
+
+      <rect class="frame" x="2" y="2" width="196" height="138" rx="2"/>
+      <rect class="sill" x="-6" y="140" width="212" height="9"/>
+    </svg>
+
+    <div class="glow-spill"></div>
+
+    <div class="figure">
+      <svg viewBox="0 0 120 150" overflow="visible">
+        <defs>
+          <radialGradient id="bodyGlow" cx="38%" cy="30%" r="75%">
+            <stop offset="0%"  stop-color="#a9c8f0" stop-opacity="0.42"/>
+            <stop offset="55%" stop-color="#2c3c58" stop-opacity="0.30"/>
+            <stop offset="100%" stop-color="#0a0e16" stop-opacity="0.14"/>
+          </radialGradient>
+        </defs>
+
+        <!-- contact shadow -->
+        <ellipse cx="60" cy="137" rx="38" ry="4.5" fill="rgba(0,0,0,0.42)"/>
+
+        <!-- legs -->
+        <path class="char-leg" d="M42,96 Q36,114 31,134"/>
+        <line class="char-foot" x1="24" y1="134" x2="38" y2="134"/>
+        <path class="char-leg" d="M78,96 Q83,114 88,134"/>
+        <line class="char-foot" x1="81" y1="134" x2="95" y2="134"/>
+
+        <!-- body -->
+        <ellipse class="char-body" cx="60" cy="60" rx="44" ry="42" fill="url(#bodyGlow)"/>
+        <path class="char-rim" d="M23,38 A44,42 0 0,1 63,19"/>
+
+        <!-- far ear-cup, just a sliver behind the head -->
+        <path class="char-rim" d="M99,40 A9,10 0 0,1 102,55" opacity="0.55"/>
+
+        <!-- headphone band + far hint -->
+        <path class="char-band" d="M19,47 Q60,-9 101,47" opacity="0.95"/>
+
+        <!-- visible ear cup -->
+        <ellipse class="char-ear-outer" cx="17" cy="50" rx="13" ry="14"/>
+        <ellipse class="char-ear-inner" cx="17" cy="50" rx="6" ry="6.5"/>
+        <circle cx="12" cy="44" r="1" fill="#fff" opacity="0.65"/>
+
+        <!-- the brand eye, doing double duty as this character's eye -->
+        <g transform="translate(21,24)">
+          <path class="ce-lid" d="M1,11 Q16,1 31,11"/>
+          <path class="ce-lid" d="M1,11 Q16,21 31,11"/>
+          <g transform="translate(16,11)">
+            <circle r="5.5" class="ce-ring" style="stroke:rgba(232,242,255,0.35)" stroke-width="0.5"/>
+            <circle r="4"   class="ce-ring" style="stroke:rgba(232,242,255,0.26)" stroke-width="0.5"/>
+            <circle r="2.6" class="ce-ring" style="stroke:rgba(232,242,255,0.2)" stroke-width="0.45"/>
+            <path class="ce-gap" d="M-1.2,-5.5 A5.5,5.5 0 0,1 1.2,-5.5" stroke-width="1.2"/>
+            <path class="ce-gap" d="M3.4,-1 A4,4 0 0,1 3.4,1" stroke-width="1.1"/>
+            <path class="ce-gap" d="M-0.8,2.6 A2.6,2.6 0 0,1 0.8,2.6" stroke-width="0.9"/>
+            <path class="ce-solve" d="M0,-5.5 L0,-4 Q3,-3.5 4,0 L2.6,0 Q1.5,2 0,2.6 L0,1.4 Q-1.4,1 -1.4,0 L0,0"
+                  stroke-width="0.6"/>
+            <circle class="ce-pupil" cx="0" cy="0" r="1"/>
+            <circle class="ce-catch" cx="0.5" cy="-0.5" r="0.4"/>
+          </g>
+        </g>
+
+        <!-- coiled cord to the player -->
+        <path class="char-cord" d="M17,63 Q25,69 17,75 Q9,81 17,87 Q25,93 17,99 Q13,104 19,108"/>
+
+        <!-- cassette player -->
+        <path class="char-device-line" d="M14,106 Q22,99.5 30,106" fill="none"/>
+        <rect class="char-device" x="6" y="106" width="32" height="20" rx="3"/>
+        <rect class="char-device-line" x="10" y="110" width="20" height="4" rx="1" fill="none"/>
+        <circle class="char-reel" cx="14" cy="119" r="4"/>
+        <circle class="char-reel" cx="30" cy="119" r="4"/>
+        <line class="char-device-line" x1="19" y1="119" x2="25" y2="119"/>
+        <line class="char-device-line" x1="11" y1="124" x2="14" y2="124"/>
+        <line class="char-device-line" x1="18" y1="124" x2="21" y2="124"/>
+        <line class="char-device-line" x1="25" y1="124" x2="28" y2="124"/>
+        <line class="char-device-line" x1="36" y1="108" x2="40" y2="100"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="floor-glow"></div>
+  <div class="floor-light"></div>
+
+  <div class="word-stack">
+    <div class="headline">Every mind needs a <em>window</em>.</div>
+    <div class="sub">We help you open it</div>
+  </div>
+
+</div>
+
+<script>
+  const starsEl = document.getElementById('stars');
+  let html = '';
+  for (let i = 0; i < 90; i++) {
+    const x = (i * 53 % 100);
+    const y = (i * 31 % 100);
+    const s = (i % 5 === 0) ? 2.2 : 1.1;
+    const d = 3 + (i % 6);
+    html += `<div class="star" style="left:${x}%;top:${y}%;width:${s}px;height:${s}px;--d:${d}s"></div>`;
+  }
+  starsEl.innerHTML = html;
+</script>
+
+</body>
+</html>

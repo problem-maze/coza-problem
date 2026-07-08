@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Maze Eyes — ME Monogram</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&family=Sora:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--void:#050810;--panel:#0a0f1c;--panel2:#0c1322;--ice:#e8eff9;--cyan:#cfe3ff;--slate:#8693ae;--line:rgba(232,239,249,0.09)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--void);color:var(--ice);font-family:'Sora',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;
+    background-image:radial-gradient(ellipse 90% 50% at 50% -8%,rgba(44,66,108,0.22),transparent 56%)}
+  .doc{max-width:1080px;margin:0 auto;padding:0 26px}
+  .top{display:flex;justify-content:space-between;align-items:center;padding:24px 0;border-bottom:1px solid var(--line);
+    font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--slate)}
+  .top b{color:var(--ice);font-weight:500;letter-spacing:2px}
+  section{padding:60px 0;border-bottom:1px solid var(--line)}
+  .lbl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);opacity:.7;margin-bottom:10px}
+  h2{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(24px,4.4vw,38px);line-height:1.1;margin-bottom:14px}
+  .desc{font-size:15px;color:var(--slate);font-weight:300;max-width:560px;margin-bottom:34px}
+
+  /* HERO */
+  .hero{text-align:center;padding:90px 0 76px}
+  .hero .m{margin:0 auto 38px;display:block}
+  .hero h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(38px,8vw,76px);line-height:1;letter-spacing:1px}
+  .hero .tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--slate);margin-top:20px}
+  .hero .tag em{color:var(--cyan);font-style:normal}
+
+  /* construction grid */
+  .build{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:50px;display:flex;justify-content:center;position:relative}
+  .build .g{position:relative}
+  .build svg.grid line{stroke:rgba(207,227,255,0.14)}
+
+  /* variants */
+  .variants{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .sw{aspect-ratio:1;border:1px solid var(--line);border-radius:18px;display:flex;align-items:center;justify-content:center}
+  .cap{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--slate);margin-top:11px;text-align:center}
+  .v-mono{background:#11192c} .v-rev{background:var(--ice)} .v-lunar{background:var(--panel)}
+
+  /* lockups */
+  .lockups{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .lk{border:1px solid var(--line);border-radius:18px;background:var(--panel)}
+  .lkH{display:flex;align-items:center;gap:18px;padding:38px}
+  .lkV{flex-direction:column;text-align:center;gap:14px;padding:42px}
+  .wm{font-family:'Instrument Serif',serif;font-weight:400;line-height:1.05}
+  .lkH .wm{font-size:27px} .lkV .wm{font-size:27px}
+  .wm small{display:block;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--slate);margin-top:7px}
+
+  /* in context */
+  .ctx{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  /* browser tab */
+  .browser{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel2)}
+  .bbar{background:#070b14;padding:10px 12px;display:flex;gap:7px;align-items:center;border-bottom:1px solid var(--line)}
+  .dot{width:9px;height:9px;border-radius:50%}
+  .tab{margin-left:14px;background:var(--panel);border-radius:8px 8px 0 0;padding:7px 14px;display:flex;align-items:center;gap:8px;
+    font-size:12px;color:var(--ice);max-width:200px}
+  .bbody{padding:34px;display:flex;align-items:center;justify-content:center;min-height:130px}
+  /* app icon */
+  .appwrap{border:1px solid var(--line);border-radius:18px;background:var(--panel);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:34px}
+  .appicon{width:96px;height:96px;border-radius:22px;background:linear-gradient(160deg,#10182a,#070b14);
+    border:1px solid rgba(232,239,249,0.12);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 14px 36px -18px rgba(0,0,0,0.9)}
+  .applabel{font-size:12px;color:var(--slate)}
+
+  /* sizes */
+  .sizes{display:flex;align-items:flex-end;gap:32px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:44px}
+  .sizes .it{text-align:center} .sizes .it svg{display:block;margin:0 auto}
+
+  footer{padding:52px 0 80px;text-align:center}
+  footer .fb{display:inline-flex;align-items:center;gap:11px;margin-bottom:14px}
+  footer .fb span{font-family:'Instrument Serif',serif;font-size:21px}
+  footer .fl{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:3px;text-transform:uppercase;color:var(--slate)}
+  @media(max-width:720px){.variants{grid-template-columns:1fr}.lockups,.ctx{grid-template-columns:1fr}}
+</style></head><body>
+<div class="doc">
+  <div class="top"><b>The Maze Eyes</b><span>ME Monogram · v1.0</span></div>
+
+  <section class="hero">
+    <svg viewBox="0 0 120 120" class="m" width="150" height="150" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#cfe3ff"/></svg>
+    <h1>The Maze Eyes</h1>
+    <div class="tag">makers of <em>Problem</em></div>
+  </section>
+
+  <!-- construction -->
+  <section>
+    <div class="lbl">01 · The monogram</div>
+    <h2>M and E, one breath apart</h2>
+    <p class="desc">The two initials carry equal weight on a shared baseline and cap height. A single cyan pupil rests on the centre arm of the E — the eye, hidden in the letters.</p>
+    <div class="build"><div class="g">
+      <svg class="grid" viewBox="0 0 120 120" width="240" height="240" style="position:absolute;inset:0">
+        <line x1="0" y1="40" x2="120" y2="40"/><line x1="0" y1="63" x2="120" y2="63"/><line x1="0" y1="86" x2="120" y2="86"/>
+        <line x1="22" y1="0" x2="22" y2="120"/><line x1="58" y1="0" x2="58" y2="120"/><line x1="70" y1="0" x2="70" y2="120"/><line x1="96" y1="0" x2="96" y2="120"/>
+      </svg>
+      <svg viewBox="0 0 120 120" width="240" height="240" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#cfe3ff"/></svg>
+    </div></div>
+  </section>
+
+  <!-- variants -->
+  <section>
+    <div class="lbl">02 · Variants</div>
+    <h2>Lunar · Mono · Reverse</h2>
+    <div class="variants">
+      <div><div class="sw v-lunar"><svg viewBox="0 0 120 120" width="110" height="110" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#cfe3ff"/></svg></div><div class="cap">Lunar — primary</div></div>
+      <div><div class="sw v-mono"><svg viewBox="0 0 120 120" width="110" height="110" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#ffffff"/></svg></div><div class="cap">Mono — white</div></div>
+      <div><div class="sw v-rev"><svg viewBox="0 0 120 120" width="110" height="110" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#0a0f1c" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#0a0f1c" stroke-width="7" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#0a0f1c" stroke-width="7" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#0a0f1c" stroke-width="7" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#0a0f1c" stroke-width="7" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#0a0f1c"/></svg></div><div class="cap">Reverse — on light</div></div>
+    </div>
+  </section>
+
+  <!-- lockups -->
+  <section>
+    <div class="lbl">03 · Lockups</div>
+    <h2>With the wordmark</h2>
+    <div class="lockups">
+      <div class="lk lkH"><svg viewBox="0 0 120 120" width="64" height="64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#cfe3ff"/></svg><div class="wm">The Maze Eyes<small>makers of Problem</small></div></div>
+      <div class="lk lkV"><svg viewBox="0 0 120 120" width="76" height="76" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#cfe3ff"/></svg><div class="wm">The Maze Eyes<small>makers of Problem</small></div></div>
+    </div>
+  </section>
+
+  <!-- in context -->
+  <section>
+    <div class="lbl">04 · In context</div>
+    <h2>Working in the wild</h2>
+    <div class="ctx">
+      <div>
+        <div class="browser">
+          <div class="bbar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>
+            <span class="tab"><svg viewBox="0 0 120 120" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#cfe3ff"/></svg> The Maze Eyes</span>
+          </div>
+          <div class="bbody"><svg viewBox="0 0 120 120" width="80" height="80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#cfe3ff"/></svg></div>
+        </div>
+        <div class="cap">Browser favicon &amp; tab</div>
+      </div>
+      <div>
+        <div class="appwrap">
+          <div class="appicon"><svg viewBox="0 0 120 120" width="62" height="62" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#e8eff9" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#e8eff9" stroke-width="8" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#e8eff9" stroke-width="8" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#e8eff9" stroke-width="8" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#e8eff9" stroke-width="8" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#cfe3ff"/></svg></div>
+          <div class="applabel">The Maze Eyes</div>
+        </div>
+        <div class="cap">App icon</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- sizes -->
+  <section>
+    <div class="lbl">05 · Scale</div>
+    <h2>From 128 to 16px</h2>
+    <p class="desc">The monogram stays legible at any size — no detail to lose. Below 24px the cyan pupil may merge with the E; that's fine, the letters still read.</p>
+    <div class="sizes">
+      <div class="it"><svg viewBox="0 0 120 120" width="110" height="110" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#cfe3ff"/></svg><div class="cap">128</div></div>
+      <div class="it"><svg viewBox="0 0 120 120" width="64" height="64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#cfe3ff"/></svg><div class="cap">64</div></div>
+      <div class="it"><svg viewBox="0 0 120 120" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#cfe3ff"/></svg><div class="cap">32</div></div>
+      <div class="it"><svg viewBox="0 0 120 120" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#e8eff9" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#e8eff9" stroke-width="8" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#e8eff9" stroke-width="8" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#e8eff9" stroke-width="8" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#e8eff9" stroke-width="8" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#cfe3ff"/></svg><div class="cap">20</div></div>
+      <div class="it"><svg viewBox="0 0 120 120" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#e8eff9" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#e8eff9" stroke-width="8" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#e8eff9" stroke-width="8" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#e8eff9" stroke-width="8" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#e8eff9" stroke-width="8" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#cfe3ff"/></svg><div class="cap">16</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="fb"><svg viewBox="0 0 120 120" width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22,86 L22,40 L40,64 L58,40 L58,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M70,40 L70,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,40 L96,40" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,63 L90,63" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><path d="M70,86 L96,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/><circle cx="90" cy="63" r="3.4" fill="#cfe3ff"/></svg><span>The Maze Eyes</span></div>
+    <div class="fl">Problem — a product of The Maze Eyes · ME Monogram v1.0</div>
+  </footer>
+</div>
+</body></html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Problem — The Maze Eye</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;1,300;1,600&family=DM+Mono:wght@300;400&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:100%;height:100%;background:#040608;overflow:hidden}
+
+  .stage{
+    position:relative;
+    width:100vw; height:100dvh;
+    background:
+      radial-gradient(ellipse 70vw 60vh at 62% 48%, rgba(70,110,180,0.16), transparent 65%),
+      #040608;
+    overflow:hidden;
+    font-family:'Cormorant Garamond',serif;
+  }
+
+  /* ── stars ─────────────────────────── */
+  .stars{position:absolute;inset:0}
+  .star{
+    position:absolute;
+    background:rgba(225,235,248,0.85);
+    border-radius:50%;
+    animation:twinkle var(--d,5s) ease-in-out infinite;
+  }
+  @keyframes twinkle{0%,100%{opacity:.15}50%{opacity:.9}}
+
+  /* ── head ─────────────────────────── */
+  .head-wrap{
+    position:absolute; left:50%; top:50%;
+    width:min(78vw,78vh); height:min(78vw,78vh);
+    transform:translate(-50%,-52%);
+  }
+
+  /* maze grid lines */
+  .maze-fill    {fill:none; stroke:rgba(225,235,248,0.18); stroke-width:1}
+  .maze-fill-dim{fill:none; stroke:rgba(225,235,248,0.08); stroke-width:1}
+
+  /* head silhouette */
+  .head-outline{fill:none; stroke:rgba(225,235,248,0.55); stroke-width:1.5}
+
+  /* solve path — draw-on animation */
+  .solve{
+    fill:none;
+    stroke:rgba(232,242,255,0.96); stroke-width:2;
+    stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:100; stroke-dashoffset:100;
+    filter:
+      drop-shadow(0 0 4px rgba(190,220,255,0.9))
+      drop-shadow(0 0 14px rgba(150,195,255,0.6));
+    animation:drawPath 2.2s 0.6s cubic-bezier(.4,0,.2,1) forwards;
+  }
+  @keyframes drawPath{
+    to{ stroke-dashoffset:0 }
+  }
+
+  /* eye */
+  .eye-mark{
+    filter:
+      drop-shadow(0 0 10px rgba(190,220,255,0.85))
+      drop-shadow(0 0 26px rgba(150,195,255,0.5));
+    animation:eyePulse 3.6s 2.8s ease-in-out infinite;
+  }
+  @keyframes eyePulse{
+    0%,100%{ filter:drop-shadow(0 0 8px rgba(190,220,255,.7)) drop-shadow(0 0 22px rgba(150,195,255,.4)) }
+    50%     { filter:drop-shadow(0 0 18px rgba(190,220,255,1)) drop-shadow(0 0 44px rgba(130,190,255,.75)) }
+  }
+  .ne-lid  {fill:none; stroke:rgba(228,238,250,0.97); stroke-width:2.8; stroke-linecap:round}
+  .ne-pupil{fill:rgba(232,242,255,1)}
+  .ne-catch{fill:#fff}
+
+  /* scan line across maze — subtle ambient */
+  .scanline{
+    fill:none;
+    stroke:rgba(180,210,255,0.07);
+    stroke-width:18;
+    animation:scan 6s 3s ease-in-out infinite;
+  }
+  @keyframes scan{
+    0%  { transform:translateY(-140px); opacity:0 }
+    15% { opacity:1 }
+    85% { opacity:1 }
+    100%{ transform:translateY(140px); opacity:0 }
+  }
+
+  /* ── brand ─────────────────────────── */
+  .brand{
+    position:absolute; top:5vh; left:0; right:0;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    z-index:3;
+    animation:fadeUp .9s ease both;
+  }
+  .brand-word{
+    font-size:clamp(16px,2.6vw,22px); font-weight:500;
+    color:rgba(225,235,248,0.85);
+    letter-spacing:0.02em;
+  }
+  .brand-word em{font-style:italic; font-weight:600; color:#fff}
+
+  /* ── word stack ─────────────────────── */
+  .word-stack{
+    position:absolute; left:0; right:0; bottom:7vh;
+    display:flex; flex-direction:column; align-items:center;
+    z-index:3; padding:0 8vw; text-align:center;
+    animation:fadeUp .9s .3s ease both;
+  }
+
+  /* main headline — one sharp product claim */
+  .headline{
+    font-size:clamp(24px,5.2vw,44px); font-weight:300; line-height:1.18;
+    color:rgba(228,238,250,0.97);
+    letter-spacing:-0.01em;
+  }
+  .headline em{
+    font-style:italic; font-weight:600; color:#fff;
+    text-shadow:0 0 36px rgba(170,205,255,0.3);
+  }
+
+  /* divider line between headline and sub */
+  .divider{
+    width:32px; height:1px;
+    background:rgba(225,235,248,0.2);
+    margin:16px auto;
+  }
+
+  /* sub — short, declarative, brand-voice */
+  .sub{
+    font-family:'DM Mono',monospace;
+    font-size:clamp(9px,1.7vw,12px); letter-spacing:0.38em; text-transform:uppercase;
+    color:rgba(150,165,190,0.65);
+    line-height:1.9;
+  }
+  .sub strong{
+    color:rgba(190,210,240,0.85);
+    font-weight:400;
+  }
+
+  /* ── fade-up entry ─────────────────── */
+  @keyframes fadeUp{
+    from{ opacity:0; transform:translateY(14px) }
+    to  { opacity:1; transform:translateY(0) }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="stars" id="stars"></div>
+
+  <!-- brand -->
+  <div class="brand">
+    <span class="brand-word"><em>P</em>roblem</span>
+  </div>
+
+  <!-- head with maze -->
+  <div class="head-wrap">
+    <svg viewBox="0 0 200 240" width="100%" height="100%">
+      <defs>
+        <clipPath id="headClip">
+          <path d="M95,8
+                   C55,8 25,40 25,85
+                   C25,115 35,140 45,150
+                   C40,160 38,172 42,180
+                   L50,225
+                   L95,225
+                   C92,210 95,195 105,188
+                   C120,178 130,165 133,148
+                   C145,145 152,135 150,122
+                   C158,120 160,110 153,103
+                   C158,95 155,85 148,82
+                   C150,65 140,45 120,30
+                   C112,20 103,12 95,8 Z"/>
+        </clipPath>
+        <!-- gradient wash inside head: darker at edges, slight blue core -->
+        <radialGradient id="headBg" cx="55%" cy="48%" r="52%">
+          <stop offset="0%"   stop-color="#0d1e38"/>
+          <stop offset="100%" stop-color="#060b16"/>
+        </radialGradient>
+      </defs>
+
+      <g clip-path="url(#headClip)">
+
+        <!-- head fill -->
+        <rect x="0" y="0" width="200" height="240" fill="url(#headBg)"/>
+
+        <!-- ambient scan sweep -->
+        <rect class="scanline" x="0" y="100" width="200" height="1"/>
+
+        <!-- dim grid layer -->
+        <g class="maze-fill-dim">
+          <path d="M10,20 H190 M10,40 H190 M10,60 H190 M10,80 H190 M10,100 H190 M10,120 H190 M10,140 H190 M10,160 H190 M10,180 H190 M10,200 H190 M10,220 H190"/>
+          <path d="M20,0 V240 M40,0 V240 M60,0 V240 M80,0 V240 M100,0 V240 M120,0 V240 M140,0 V240 M160,0 V240 M180,0 V240"/>
+        </g>
+
+        <!-- maze walls — denser, more complex than v1 -->
+        <g class="maze-fill">
+          <!-- original walls preserved -->
+          <path d="M20,20 H60 M60,20 V60 M60,60 H100 M100,40 V60 M100,40 H140
+                   M20,40 V80 M20,80 H40 M40,80 V100 M40,100 H80 M80,100 V140
+                   M80,140 H120 M120,100 V140 M120,120 H160 M160,80 V120
+                   M140,60 H180 M180,60 V100 M160,140 H200 M60,140 V180
+                   M60,180 H100 M100,160 V200 M20,160 H60 M40,180 V220
+                   M100,200 H140 M140,180 V220 M20,200 H40
+                   M120,40 V20 M140,20 V40 M160,20 V60 M180,100 V140
+                   M40,120 H60 M80,60 V80 M100,80 H120 M140,100 H160
+                   M60,100 V120 M120,160 V180 M160,160 V200 M80,180 V200"/>
+          <!-- extra depth walls -->
+          <path d="M30,140 V160 M50,200 H70 M90,220 V240
+                   M130,160 H150 M150,200 V220 M170,180 H190
+                   M170,140 V160 M30,60 H50 M50,40 V60
+                   M110,120 V140 M130,80 H150 M170,60 V80
+                   M90,40 H110 M70,60 V80 M30,100 H50"/>
+        </g>
+
+      </g>
+
+      <!-- head outline on top -->
+      <path class="head-outline" d="M95,8
+               C55,8 25,40 25,85
+               C25,115 35,140 45,150
+               C40,160 38,172 42,180
+               L50,225
+               L95,225
+               C92,210 95,195 105,188
+               C120,178 130,165 133,148
+               C145,145 152,135 150,122
+               C158,120 160,110 153,103
+               C158,95 155,85 148,82
+               C150,65 140,45 120,30
+               C112,20 103,12 95,8 Z"/>
+
+      <!-- solve path — unchanged geometry, better animation -->
+      <path class="solve" pathLength="100"
+        d="M70,170 L70,150 L50,150 L50,120 L80,120 L80,90 L110,90
+           L110,70 L130,70 L130,103"/>
+
+      <!-- eye -->
+      <g class="eye-mark" transform="translate(133,103)">
+        <path class="ne-lid" d="M-13,0 Q0,-9 14,0"/>
+        <path class="ne-lid" d="M-13,0 Q0,9 14,0"/>
+        <circle class="ne-pupil" cx="0" cy="0" r="3.4"/>
+        <circle class="ne-catch" cx="1.3" cy="-1.4" r="1.2"/>
+      </g>
+
+    </svg>
+  </div>
+
+  <!-- word stack — global brand copywriting -->
+  <div class="word-stack">
+
+    <!--
+      COPYWRITING LOGIC:
+      Nike:      "Just do it."       — command, 3 words, action
+      Apple:     "Think different."  — reframe, 2 words, identity
+      OpenAI:    "ChatGPT — Get instant answers" — product + utility claim
+      Problem:   product = AI that reads your mental structure and finds the exit
+      Tone:      confident assertion, not empathy — you HAVE a structure, we READ it
+    -->
+
+    <div class="headline">
+      Every mind has a structure.<br><em>We read it.</em>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="sub">
+      <strong>Problem</strong> &nbsp;·&nbsp; AI-powered clarity &nbsp;·&nbsp; Find the way out
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  // stars
+  const starsEl = document.getElementById('stars');
+  let html = '';
+  for (let i = 0; i < 90; i++) {
+    const x = (i * 53 % 100);
+    const y = (i * 31 % 100);
+    const s = (i % 5 === 0) ? 2.2 : 1.1;
+    const d = 3 + (i % 6);
+    html += `<div class="star" style="left:${x}%;top:${y}%;width:${s}px;height:${s}px;--d:${d}s"></div>`;
+  }
+  starsEl.innerHTML = html;
+</script>
+
+</body>
+</html>
