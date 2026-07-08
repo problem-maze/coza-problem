@@ -18,8 +18,6 @@
     position:relative;
     width:100vw;height:100dvh;
     background:
-      radial-gradient(ellipse 60vw 40vh at 18% 22%, rgba(120,90,180,0.10), transparent 65%),
-      radial-gradient(ellipse 55vw 35vh at 86% 14%, rgba(80,130,200,0.12), transparent 60%),
       radial-gradient(ellipse 120vw 60vh at 50% 4%, rgba(225,235,248,0.05), transparent 60%),
       #040608;
     overflow:hidden;
@@ -35,70 +33,48 @@
         kept in-brand monochrome ice/cyan rather than a literal photo ── */
   .sphere-wrap{
     position:absolute;
-    left:50%; top:62vh;
-    width:115vmin; height:115vmin;
-    margin-left:-57.5vmin;
+    left:50%; top:64vh;
+    width:140vw; height:140vw;
+    max-width:1600px; max-height:1600px;
+    margin-left:-70vw;
     border-radius:50%;
     overflow:hidden;
     transform:translateZ(0);
   }
+  @media (min-width:900px){
+    .sphere-wrap{ width:1900px;height:1900px;margin-left:-950px; left:50%; top:620px; bottom:auto; }
+  }
   .sphere-base{
     position:absolute; inset:0; border-radius:50%;
     background:
-      radial-gradient(circle at 50% 9%, #eef5ff 0%, #c9dcf3 5%, #7f9ec9 13%, #3c5478 24%, #16243a 42%, #060a12 64%, #020305 80%);
+      radial-gradient(circle at 36% 16%, #eef5ff 0%, #c9dcf3 5%, #7f9ec9 13%, #3c5478 24%, #16243a 42%, #060a12 64%, #020305 80%);
   }
-  .sphere-relief{
-    /* the one terrain texture pass — sharper "coastline-like" edges,
-       same monochrome ice family. Replaces three earlier overlapping
-       noise layers — same look, a third of the render cost. */
+  .sphere-noise{
+    position:absolute; inset:0; border-radius:50%;
+    mix-blend-mode:overlay;
+    opacity:0.55;
+  }
+  .sphere-terrain{
     position:absolute; inset:0; border-radius:50%;
     mix-blend-mode:soft-light;
-    opacity:0.8;
-  }
-  .sphere-clouds{
-    /* one cloud pass at a frequency that reads at both close and far
-       zoom — replaces the earlier two-layer version. */
-    position:absolute; inset:0; border-radius:50%;
-    mix-blend-mode:screen;
-    opacity:0.42;
-  }
-  .sphere-polar{
-    /* a bright ice cap at the pole — leans into "moonlit ice world"
-       literally, and reads instantly as a real planetary feature.
-       Pure CSS gradient, costs nothing. */
-    position:absolute; inset:0; border-radius:50%;
-    background:radial-gradient(ellipse 34% 16% at 50% 4%, rgba(255,255,255,0.85) 0%, rgba(235,245,255,0.4) 45%, transparent 75%);
-    mix-blend-mode:screen;
-  }
-  .sphere-lights{
-    /* scattered light on the night side — every tiny point a mind,
-       same idea as the two distant figures, echoed across the whole
-       dark hemisphere. Plain SVG circles, costs nothing. */
-    position:absolute; inset:0; border-radius:50%;
-    pointer-events:none;
+    opacity:0.85;
   }
   .sphere-shade{
     /* night-side falloff so it reads as a sphere, not a disc */
     position:absolute; inset:0; border-radius:50%;
-    background:radial-gradient(circle at 50% 9%, transparent 0%, transparent 30%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.93) 78%);
+    background:radial-gradient(circle at 34% 14%, transparent 0%, transparent 30%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.93) 78%);
   }
   .sphere-rim{
     position:absolute; inset:0; border-radius:50%;
     box-shadow:
-      inset 0 0 0 1px rgba(225,235,248,0.2),
-      0 0 170px 18px rgba(150,190,255,0.18);
+      inset 0 0 0 1px rgba(225,235,248,0.14),
+      0 0 120px 10px rgba(150,190,255,0.10);
     pointer-events:none;
   }
   .sphere-atmo{
-    position:absolute; inset:-4%; border-radius:50%;
-    background:radial-gradient(circle at 50% 9%, rgba(200,225,255,0.6) 0%, rgba(150,190,255,0.26) 25%, transparent 54%);
-    filter:blur(7px);
-    pointer-events:none;
-  }
-  .sphere-light-dot{fill:rgba(235,245,255,0.95); animation:twinkle var(--d,4s) ease-in-out infinite;
-    filter:drop-shadow(0 0 1.2px rgba(220,235,255,1))}
-  .sphere-maze{
-    position:absolute; inset:0; border-radius:50%;
+    position:absolute; inset:-3%; border-radius:50%;
+    background:radial-gradient(circle at 36% 16%, rgba(190,220,255,0.45) 0%, rgba(140,180,255,0.18) 25%, transparent 52%);
+    filter:blur(6px);
     pointer-events:none;
   }
 
@@ -149,43 +125,6 @@
   .ne-catch{fill:rgba(255,255,255,0.95)}
   .ne-glow{fill:rgba(180,210,255,0.12)}
 
-  /* ── light column, eye → figure, the visual/emotional thread between them ── */
-  .rays{
-    position:absolute; left:50%; top:51vh; width:11vmin; height:15vh;
-    transform:translateX(-50%);
-    z-index:2; opacity:0.85; pointer-events:none;
-    mix-blend-mode:screen;
-  }
-
-  /* ── the figure — not tiny and incidental, but the human centre of the
-        whole scene: someone standing where the maze resolves, arms open,
-        looking straight up at the eye that sees what they can't ── */
-  .figure{
-    position:absolute; left:50%; top:65vh;
-    width:clamp(13px,2.3vw,27px);
-    transform:translateX(-50%);
-    z-index:3;
-    filter:drop-shadow(0 0 5px rgba(190,220,255,0.75)) drop-shadow(0 0 13px rgba(150,195,255,0.45));
-  }
-  .figure svg{width:100%; height:auto; display:block}
-  .figure-line{fill:none; stroke:rgba(232,242,255,0.97); stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
-
-  /* ── two distant figures, far smaller, barely lit — every other mind
-        also inside its own maze, echoing the tagline ── */
-  .figure-far{position:absolute; z-index:3; opacity:0.5;
-    filter:drop-shadow(0 0 2.5px rgba(180,210,255,0.5))}
-  .figure-far svg{width:100%; height:auto; display:block}
-
-  /* ── a faint constellation traced in the upper sky — a maze even the
-        stars are drawing, for anyone who looks twice ── */
-  .constellation{position:absolute; pointer-events:none; opacity:0.5}
-  .constellation line{stroke:rgba(200,220,250,0.35); stroke-width:1}
-  .constellation circle{fill:rgba(230,240,255,0.85)}
-
-  /* ── a couple of feature stars with a four-point glint, for shimmer ── */
-  .glint{position:absolute; pointer-events:none; animation:twinkle 4s ease-in-out infinite}
-  .glint svg{display:block; filter:drop-shadow(0 0 6px rgba(210,230,255,0.9))}
-
 </style>
 </head>
 <body>
@@ -196,92 +135,23 @@
 
   <div class="sphere-wrap">
     <div class="sphere-base"></div>
-    <svg class="sphere-relief" width="100%" height="100%" style="position:absolute;inset:0">
-      <filter id="reliefNoise" x="-8%" y="-8%" width="116%" height="116%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.011 0.015" numOctaves="3" seed="11" result="n"/>
-        <feColorMatrix in="n" type="matrix"
-          values="0 0 0 0 0.93
-                  0 0 0 0 0.96
-                  0 0 0 0 1
-                  1 0 0 0 -0.15" result="reliefRaw"/>
-        <feComponentTransfer in="reliefRaw">
-          <feFuncA type="linear" slope="2.6" intercept="-0.75"/>
-        </feComponentTransfer>
+    <svg class="sphere-noise" width="100%" height="100%" style="position:absolute;inset:0">
+      <filter id="terrainNoise">
+        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="5" seed="7" result="n"/>
+        <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.85  0 0 0 0 0.91  0 0 0 0 0.98  0 0 0 0.5 0"/>
       </filter>
-      <rect width="100%" height="100%" filter="url(#reliefNoise)"/>
+      <rect width="100%" height="100%" filter="url(#terrainNoise)"/>
     </svg>
-    <svg class="sphere-clouds" width="100%" height="100%" style="position:absolute;inset:0">
-      <filter id="cloudNoise" x="-8%" y="-8%" width="116%" height="116%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.04 0.06" numOctaves="2" seed="77" result="cn"/>
-        <feColorMatrix in="cn" type="matrix"
-          values="0 0 0 0 1
-                  0 0 0 0 1
-                  0 0 0 0 1
-                  1 0 0 0 -0.42" result="cloudRaw"/>
-        <feComponentTransfer in="cloudRaw">
-          <feFuncA type="linear" slope="2.8" intercept="-0.6"/>
-        </feComponentTransfer>
+    <svg class="sphere-terrain" width="100%" height="100%" style="position:absolute;inset:0">
+      <filter id="terrainNoise2">
+        <feTurbulence type="fractalNoise" baseFrequency="0.004 0.006" numOctaves="4" seed="42" result="n2"/>
+        <feColorMatrix in="n2" type="matrix" values="0 0 0 0 0.05  0 0 0 0 0.08  0 0 0 0 0.14  0 0 0 0.65 0"/>
       </filter>
-      <rect width="100%" height="100%" filter="url(#cloudNoise)"/>
+      <rect width="100%" height="100%" filter="url(#terrainNoise2)"/>
     </svg>
-    <div class="sphere-polar"></div>
     <div class="sphere-shade"></div>
-    <svg class="sphere-lights" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
-      <circle class="sphere-light-dot" cx="78" cy="72" r="0.55" style="--d:3.2s"/>
-      <circle class="sphere-light-dot" cx="84" cy="80" r="0.45" style="--d:4.1s"/>
-      <circle class="sphere-light-dot" cx="72" cy="83" r="0.5" style="--d:3.6s"/>
-      <circle class="sphere-light-dot" cx="90" cy="68" r="0.4" style="--d:5s"/>
-      <circle class="sphere-light-dot" cx="80" cy="90" r="0.45" style="--d:3.9s"/>
-      <circle class="sphere-light-dot" cx="64" cy="92" r="0.45" style="--d:4.6s"/>
-      <circle class="sphere-light-dot" cx="94" cy="84" r="0.4" style="--d:3.4s"/>
-      <circle class="sphere-light-dot" cx="56" cy="96" r="0.4" style="--d:4.3s"/>
-      <circle class="sphere-light-dot" cx="24" cy="75" r="0.45" style="--d:3.8s"/>
-      <circle class="sphere-light-dot" cx="15" cy="84" r="0.4" style="--d:4.8s"/>
-      <circle class="sphere-light-dot" cx="34" cy="92" r="0.45" style="--d:3.3s"/>
-      <circle class="sphere-light-dot" cx="8" cy="70" r="0.4" style="--d:4.4s"/>
-    </svg>
     <div class="sphere-rim"></div>
     <div class="sphere-atmo"></div>
-    <svg class="sphere-maze" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
-      <g stroke="rgba(232,242,255,0.5)" fill="none" stroke-width="0.16">
-        <circle cx="50" cy="9" r="8.5"  stroke-opacity="0.55"/>
-        <circle cx="50" cy="9" r="15.5" stroke-opacity="0.42"/>
-        <circle cx="50" cy="9" r="23"   stroke-opacity="0.30"/>
-        <circle cx="50" cy="9" r="31"   stroke-opacity="0.20"/>
-        <circle cx="50" cy="9" r="39.5" stroke-opacity="0.12"/>
-      </g>
-      <g stroke="#020305" stroke-width="0.55" stroke-linecap="round" fill="none">
-        <path d="M 47,0.55 A 8.5,8.5 0 0,1 53,0.55"/>
-        <path d="M 38.7,1 A 15.5,15.5 0 0,1 44.4,-5.2" transform="translate(0,0)"/>
-        <path d="M 61.5,12 A 15.5,15.5 0 0,1 56,23.6"/>
-        <path d="M 27,16 A 23,23 0 0,1 33,2"/>
-        <path d="M 73,18 A 31,31 0 0,1 67,3"/>
-      </g>
-      <path d="M 50,1.4 L 50,7.2 Q 56,8 57.6,15.5 Q 58.6,21 53,23
-               Q 46,25.5 41.2,23 Q 35,19.8 35.6,9.5 Q 36,2 44,1.4"
-            stroke="rgba(232,242,255,0.85)" stroke-width="0.34" fill="none"
-            stroke-linecap="round" stroke-linejoin="round"
-            filter="url(#mazeGlow)"/>
-      <defs>
-        <filter id="mazeGlow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="0.35" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
-    </svg>
-  </div>
-
-  <div class="rays">
-    <svg viewBox="0 0 200 100" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="rayGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="rgba(220,235,255,0.6)"/>
-          <stop offset="100%" stop-color="rgba(220,235,255,0)"/>
-        </linearGradient>
-      </defs>
-      <polygon points="85,0 115,0 135,100 65,100" fill="url(#rayGrad)"/>
-      <polygon points="93,0 107,0 118,100 82,100" fill="url(#rayGrad)" opacity="0.8"/>
-    </svg>
   </div>
 
   <div class="word-stack">
@@ -313,56 +183,6 @@
         <circle class="ne-catch" cx="0.95" cy="-0.95" r="0.4"/>
       </g>
     </svg>
-  </div>
-
-  <!-- the human note — standing where the path resolves, arms open, looking straight up -->
-  <div class="figure">
-    <svg viewBox="0 0 20 40">
-      <circle class="figure-line" cx="10" cy="6.4" r="3.6" fill="rgba(232,242,255,0.97)" stroke="none"/>
-      <path class="figure-line" d="M 10,10.4 L 10,24"/>
-      <path class="figure-line" d="M 10,13.6 L 2,5.5"/>
-      <path class="figure-line" d="M 10,13.6 L 18,5.5"/>
-      <path class="figure-line" d="M 10,24 L 4,38"/>
-      <path class="figure-line" d="M 10,24 L 16,38"/>
-    </svg>
-  </div>
-
-  <!-- two distant minds, each inside their own maze, far off on the same world -->
-  <div class="figure-far" style="left:22%; top:67vh; width:clamp(3px,0.5vw,6px)">
-    <svg viewBox="0 0 20 40">
-      <circle cx="10" cy="6.4" r="3.6" fill="rgba(220,235,255,0.8)"/>
-      <path d="M 10,10.4 L 10,24 M 10,14 L 4,11 M 10,14 L 16,11 M 10,24 L 5,37 M 10,24 L 15,37"
-            stroke="rgba(220,235,255,0.8)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
-    </svg>
-  </div>
-  <div class="figure-far" style="left:71%; top:70vh; width:clamp(2.5px,0.4vw,5px)">
-    <svg viewBox="0 0 20 40">
-      <circle cx="10" cy="6.4" r="3.6" fill="rgba(220,235,255,0.7)"/>
-      <path d="M 10,10.4 L 10,24 M 10,14 L 4,11 M 10,14 L 16,11 M 10,24 L 5,37 M 10,24 L 15,37"
-            stroke="rgba(220,235,255,0.7)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
-    </svg>
-  </div>
-
-  <!-- a faint constellation, top-right — a maze even the sky is tracing -->
-  <svg class="constellation" style="left:62%; top:6vh; width:22vw; height:16vh" viewBox="0 0 220 160">
-    <line x1="10" y1="20" x2="60" y2="10"/>
-    <line x1="60" y1="10" x2="95" y2="55"/>
-    <line x1="95" y1="55" x2="150" y2="40"/>
-    <line x1="150" y1="40" x2="205" y2="90"/>
-    <line x1="95" y1="55" x2="80" y2="120"/>
-    <circle cx="10" cy="20" r="1.6"/>
-    <circle cx="60" cy="10" r="1.8"/>
-    <circle cx="95" cy="55" r="2.1"/>
-    <circle cx="150" cy="40" r="1.6"/>
-    <circle cx="205" cy="90" r="1.8"/>
-    <circle cx="80" cy="120" r="1.5"/>
-  </svg>
-
-  <div class="glint" style="left:14%; top:20vh; width:18px">
-    <svg viewBox="0 0 24 24"><path fill="#fff" d="M12 0 L14.4 9.6 L24 12 L14.4 14.4 L12 24 L9.6 14.4 L0 12 L9.6 9.6 Z"/></svg>
-  </div>
-  <div class="glint" style="left:82%; top:32vh; width:11px">
-    <svg viewBox="0 0 24 24"><path fill="#fff" d="M12 0 L14.4 9.6 L24 12 L14.4 14.4 L12 24 L9.6 14.4 L0 12 L9.6 9.6 Z"/></svg>
   </div>
 
 </div>
