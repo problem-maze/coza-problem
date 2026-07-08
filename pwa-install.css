@@ -1,0 +1,37 @@
+  .pwa-install-btn{
+    position:fixed;bottom:20px;right:20px;z-index:9999;
+    background:rgba(var(--cyan),0.15);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border:1px solid rgba(var(--cyan),0.4);
+    border-radius:20px;padding:10px 18px;
+    color:rgba(var(--ice),0.95);
+    font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+    letter-spacing:2px;text-transform:uppercase;
+    cursor:pointer;transition:all 0.3s;
+    display:none;align-items:center;gap:8px;
+    opacity:0;transform:translateY(20px);
+    box-shadow:0 4px 24px rgba(var(--cyan),0.15);
+  }
+  .pwa-install-btn.show{display:flex;opacity:1;transform:translateY(0);animation:pwaIn 0.5s ease-out}
+  @keyframes pwaIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .pwa-install-btn:hover{background:rgba(var(--cyan),0.25);border-color:rgba(var(--cyan),0.6);transform:translateY(-2px)}
+  .pwa-install-btn svg{width:14px;height:14px;stroke:rgba(var(--cyan),0.9);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  @media(max-width:768px){
+    .pwa-install-btn{bottom:14px;right:14px;padding:9px 14px;font-size:9px;letter-spacing:1.5px}
+  }
+  /* iOS install hint banner */
+  .pwa-ios-hint{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+    z-index:9999;max-width:90vw;width:360px;
+    background:rgba(8,12,18,0.95);backdrop-filter:blur(12px);
+    border:1px solid rgba(var(--cyan),0.3);border-radius:14px;
+    padding:16px 18px;color:rgba(var(--ice),0.9);
+    font-family:'Sora',sans-serif;font-size:13px;line-height:1.5;
+    display:none;opacity:0;transition:all 0.4s;
+    box-shadow:0 8px 32px rgba(0,0,0,0.5);
+  }
+  .pwa-ios-hint.show{display:block;opacity:1}
+  .pwa-ios-hint-title{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(var(--cyan),0.9);margin-bottom:8px;font-family:'DM Mono',monospace}
+  .pwa-ios-hint-close{position:absolute;top:8px;right:10px;background:none;border:none;color:rgba(var(--ice),0.5);cursor:pointer;font-size:18px;padding:4px 8px;line-height:1}
+  .pwa-ios-hint-close:hover{color:rgba(var(--ice),0.9)}
+  .pwa-share-icon{display:inline-block;vertical-align:middle;margin:0 3px}

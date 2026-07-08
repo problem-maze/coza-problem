@@ -1,0 +1,663 @@
+/* ═══ AR POLISH — الطبقة النهائية، بتكسب أي قاعدة قبلها ═══ */
+/* العنوان: رجوع الاتجاه الصحيح + Amiri حتى جوه الـ spans */
+html[dir="rtl"] .hero-title{direction:rtl!important}
+html[lang="ar"] .hero-title,
+html[lang="ar"] .hero-title span,
+html[lang="ar"] .hero-title em,
+html[lang="ar"] .hero-title .word{
+  font-family:'Amiri','Instrument Serif',serif!important;
+  font-style:normal!important;
+  letter-spacing:0!important;
+  line-height:1.45!important;
+}
+/* العربي لا يُفرَّق حروفه أبداً — قتل letter-spacing في RTL */
+html[dir="rtl"] *{letter-spacing:0!important}
+/* عناوين الأقسام بنفس الكرامة */
+html[lang="ar"] .circle-title, html[lang="ar"] .talk-title,
+html[lang="ar"] .login-title, html[lang="ar"] .pr-title{
+  font-family:'Amiri','Instrument Serif',serif!important;
+  font-style:normal!important;line-height:1.5!important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   THE MESSENGER (الرسول) — animations
+   ════════════════════════════════════════════════════════════════ */
+/* the whole layer fades in once, when the journey begins */
+.msgr-layer.msgr-go{opacity:1}
+
+/* the figure leans/carves gently — pivot at the feet (bbox bottom) */
+@keyframes glLean{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(3deg)}}
+.gl-lean{transform-origin:50% 100%;transform-box:fill-box;animation:glLean 1.5s ease-in-out infinite}
+
+/* subtle weight shift up/down */
+@keyframes glBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.2px)}}
+.gl-figure{transform-box:fill-box;animation:glBob 1.5s ease-in-out infinite}
+
+/* arms drift slowly for balance, out of phase */
+@keyframes glArmF{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-6deg)}}
+@keyframes glArmB{0%,100%{transform:rotate(0deg)}50%{transform:rotate(7deg)}}
+.gl-arm-f{transform-origin:center;transform-box:fill-box;animation:glArmF 1.5s ease-in-out infinite}
+.gl-arm-b{transform-origin:center;transform-box:fill-box;animation:glArmB 1.5s ease-in-out infinite}
+
+/* aura breathing */
+@keyframes glAura{0%,100%{opacity:0.4;transform:scale(1)}50%{opacity:0.8;transform:scale(1.15)}}
+.gl-aura{transform-origin:center;transform-box:fill-box;animation:glAura 2s ease-in-out infinite}
+
+/* the beam shimmers */
+@keyframes glBlade{0%,100%{opacity:0.7}50%{opacity:1}}
+.gl-blade{animation:glBlade 1.3s ease-in-out infinite}
+
+/* the wake breathes softly */
+@keyframes glWake{0%,100%{opacity:0.45}50%{opacity:0.8}}
+.gl-wake{transform-origin:center;transform-box:fill-box;animation:glWake 1.1s ease-in-out infinite}
+.gl-wake-2{animation:glWake 1.1s ease-in-out 0.3s infinite}
+
+/* light motes drift back along the wake */
+@keyframes glMote{0%{opacity:0;transform:translateX(2px)}40%{opacity:1}100%{opacity:0;transform:translateX(-9px)}}
+.gl-mote{transform-box:fill-box}
+.gl-mote-1{animation:glMote 0.95s ease-out infinite}
+.gl-mote-2{animation:glMote 0.95s ease-out 0.47s infinite}
+
+
+/* arrival burst — fires when .fire is added */
+.msgr-burst.fire{animation:msgrBurstShow 0.7s ease-out forwards}
+@keyframes msgrBurstShow{0%{opacity:0}15%{opacity:1}100%{opacity:0}}
+.msgr-burst.fire .msgr-burst-ring{animation:msgrBurstRing 0.7s ease-out forwards;transform-origin:center;transform-box:fill-box}
+@keyframes msgrBurstRing{0%{transform:scale(0.3);stroke-opacity:0.9}100%{transform:scale(2.4);stroke-opacity:0}}
+.msgr-burst.fire .msgr-burst-rays{animation:msgrBurstRays 0.7s ease-out forwards;transform-origin:center;transform-box:fill-box}
+@keyframes msgrBurstRays{0%{transform:scale(0.4);opacity:0.9}100%{transform:scale(1.5);opacity:0}}
+
+/* MESSAGE label unfurls — fires when .show is added */
+.msgr-label.show{animation:msgrLabelShow 0.6s cubic-bezier(0.22,1,0.36,1) forwards}
+@keyframes msgrLabelShow{0%{opacity:0;transform:translate(290px,120px) scale(0.7)}100%{opacity:1;transform:translate(290px,120px) scale(1)}}
+.msgr-label.fade{animation:msgrLabelFade 0.5s ease forwards}
+@keyframes msgrLabelFade{to{opacity:0}}
+.msgr-label-env{transform-origin:center;transform-box:fill-box;animation:msgrEnvPulse 2s ease-in-out infinite}
+@keyframes msgrEnvPulse{0%,100%{opacity:0.85}50%{opacity:1}}
+
+/* respect reduced motion — show label statically, skip flight */
+.reduced-motion .msgr-body,.reduced-motion .msgr-trail-dot,.reduced-motion .msgr-burst{display:none!important}
+.reduced-motion .msgr-layer{opacity:1!important}
+.reduced-motion .msgr-label{opacity:1!important}
+
+/* ── MESSENGER PRE-NOTIFICATION (notification dot on badge before glider launches) ── */
+.qa-hint .msgr-notif-dot,.qa-hint .msgr-notif-ring{opacity:0;transform-origin:center;transform-box:fill-box}
+.qa-hint.msgr-incoming .msgr-notif-dot{animation:msgrDotPop 0.45s cubic-bezier(.22,1,.36,1) forwards,msgrDotPulse 1s 0.45s ease-in-out infinite}
+.qa-hint.msgr-incoming .msgr-notif-ring{animation:msgrRingPing 0.85s ease-out forwards,msgrRingPing 0.85s 1s ease-out forwards}
+.qa-hint.msgr-incoming .qa-badge{animation:msgrBadgePing 0.8s ease-in-out forwards!important}
+@keyframes msgrDotPop{0%{opacity:0;transform:scale(0)}70%{transform:scale(1.3)}100%{opacity:1;transform:scale(1)}}
+@keyframes msgrDotPulse{0%,100%{opacity:1}50%{opacity:0.6}}
+@keyframes msgrRingPing{0%{opacity:0.8;transform:scale(1)}100%{opacity:0;transform:scale(2.4)}}
+@keyframes msgrBadgePing{0%{stroke:rgba(var(--cyan),0.9);stroke-width:2}45%{stroke:rgba(232,196,104,1);stroke-width:3.5}100%{stroke:rgba(232,196,104,0.65);stroke-width:2.5}}
+.reduced-motion .msgr-notif-dot,.reduced-motion .msgr-notif-ring{display:none!important}
+
+/* light theme: keep the courier readable (it's mostly white already) */
+[data-theme="light"] .msgr-label rect{fill:rgba(255,255,255,0.95)!important}
+[data-theme="light"] .msgr-label text{fill:rgba(20,30,55,0.95)!important}
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIGHT MODE — "moonlight, inverted."  (Ander_128)
+   The home page + the V1.person eye rebuilt as ink-on-white, carrying the
+   exact same depth, breath and restraint as the dark moonlight original.
+   INK  = rgba(15,23,42,…)  — deep charcoal-navy (the new "ice")
+   Backgrounds go luminous white; every glowing line becomes a dark stroke
+   at the SAME alpha, so the structure and rhythm are preserved 1:1.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ---- 1. page foundation ---- */
+[data-theme="light"] .landing,
+[data-theme="light"] #home,
+[data-theme="light"] .hero,
+[data-theme="light"] .hero-section{background:transparent}
+[data-theme="light"] nav{
+  background:rgba(236,240,246,0.92);
+  border-bottom:1px solid rgba(15,23,42,0.09);
+  box-shadow:0 1px 14px rgba(15,23,42,0.05);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+}
+
+/* ---- 2. the soft radial vignette behind the eye (was a faint blue glow) ---- */
+[data-theme="light"] .hero-eye-wrap::before,
+[data-theme="light"] .hero-eye-glow{
+  background:radial-gradient(ellipse at center, rgba(13,17,28,0.14) 0%, rgba(13,17,28,0.07) 42%, transparent 70%) !important;
+}
+
+/* ---- 3. THE EYE — gradient defs overridden via stop colors ---- */
+/* The lids/aura/ground/scene-glow all reference these <linearGradient>/<radialGradient>
+   stops. We can't restyle SVG <stop> with a class, so we target them by the
+   parent gradient id with attribute selectors — stops accept CSS `stop-color`. */
+[data-theme="light"] #vpU stop:nth-child(1){stop-color:rgba(15,23,42,0.42)}
+[data-theme="light"] #vpU stop:nth-child(2){stop-color:rgba(12,19,36,0.96)}
+[data-theme="light"] #vpU stop:nth-child(3){stop-color:rgba(15,23,42,0.42)}
+[data-theme="light"] #vpL stop:nth-child(1){stop-color:rgba(15,23,42,0.42)}
+[data-theme="light"] #vpL stop:nth-child(2){stop-color:rgba(12,19,36,0.88)}
+[data-theme="light"] #vpL stop:nth-child(3){stop-color:rgba(15,23,42,0.42)}
+[data-theme="light"] #vpAura stop:nth-child(1){stop-color:rgba(15,23,42,0.14)}
+[data-theme="light"] #vpAura stop:nth-child(2){stop-color:rgba(15,23,42,0)}
+[data-theme="light"] #vpAuraBig stop:nth-child(1){stop-color:rgba(15,23,42,0.18)}
+[data-theme="light"] #vpAuraBig stop:nth-child(2){stop-color:rgba(15,23,42,0.07)}
+[data-theme="light"] #vpAuraBig stop:nth-child(3){stop-color:rgba(15,23,42,0)}
+[data-theme="light"] #vpGround stop:nth-child(1){stop-color:rgba(15,23,42,0.30)}
+[data-theme="light"] #vpGround stop:nth-child(2){stop-color:rgba(15,23,42,0.06)}
+[data-theme="light"] #vpGround stop:nth-child(3){stop-color:rgba(15,23,42,0)}
+[data-theme="light"] #vpSceneGlow stop:nth-child(1){stop-color:rgba(15,23,42,0.12)}
+[data-theme="light"] #vpSceneGlow stop:nth-child(2){stop-color:rgba(15,23,42,0)}
+
+/* the soft glow blur behind the lids reads as muddy gray on white — kill the
+   blur filter so the ink lids stay crisp (depth now comes from the stroke itself) */
+[data-theme="light"] #heroVPersonSvg .vph-lid{filter:none !important}
+
+/* lid back-glow paths (the two wide faint strokes drawn before the lids) */
+[data-theme="light"] #heroVPersonSvg g[transform="translate(450, 340)"] > path:nth-of-type(1){stroke:rgba(15,23,42,0.07) !important;filter:none !important}
+[data-theme="light"] #heroVPersonSvg g[transform="translate(450, 340)"] > path:nth-of-type(2){stroke:rgba(15,23,42,0.05) !important;filter:none !important}
+
+/* rings */
+[data-theme="light"] #heroVPersonSvg .vph-ring{stroke:rgba(15,23,42,0.30) !important}
+[data-theme="light"] #heroVPersonSvg .vph-ring-2{stroke:rgba(15,23,42,0.12) !important}
+
+/* ambient stars */
+[data-theme="light"] #heroVPersonSvg #vphAmbient{fill:rgba(15,23,42,0.55) !important}
+
+/* the wire figure — every limb/stroke to ink, soft glow off */
+[data-theme="light"] #heroVPersonSvg #vpHperFigure{filter:none !important;opacity:1 !important}
+[data-theme="light"] #heroVPersonSvg #vpHperFigure circle,
+[data-theme="light"] #heroVPersonSvg #vpHperFigure line{stroke:rgba(15,23,42,0.92) !important}
+[data-theme="light"] #heroVPersonSvg #vpHperFigure circle[fill^="rgba(226"]{fill:rgba(15,23,42,0.06) !important}
+[data-theme="light"] #heroVPersonSvg .vph-aura{stroke:rgba(15,23,42,0.4) !important}
+
+/* ── the "operations" badge + stage counter (02/05) above-right of the eye ──
+   In light mode the badge disc was a hardcoded near-black circle, so the inner
+   stage glyphs (drawn in cyan/ice) sat dark-on-dark and vanished. Fix: make the
+   disc a light surface and force every inner glyph + the counter to deep ink, so
+   the 5-stage operations read clearly and match the white interface. */
+[data-theme="light"] .hero-eye-svg .qa-badge{fill:rgba(248,250,252,0.96) !important;stroke:rgba(36,40,46,0.85) !important}
+[data-theme="light"] .hero-eye-svg .qa-glow-disc{fill:rgba(36,40,46,0.05) !important}
+[data-theme="light"] .hero-eye-svg .qa-aura{stroke:rgba(36,40,46,0.45) !important}
+/* every stroked glyph inside the badge → ink */
+[data-theme="light"] .hero-eye-svg .qa-glyph [stroke]:not([stroke="none"]),
+[data-theme="light"] .hero-eye-svg .qa-hint circle[stroke]:not([stroke="none"]){stroke:rgba(36,40,46,0.9) !important}
+/* every filled glyph element → ink (skip fill:none) */
+[data-theme="light"] .hero-eye-svg .qa-glyph [fill]:not([fill="none"]){fill:rgba(36,40,46,0.9) !important}
+/* the stage counter number + "/05" */
+[data-theme="light"] .hero-eye-svg .qa-stage-num{fill:rgba(36,40,46,0.95) !important;filter:none !important}
+[data-theme="light"] .hero-eye-svg .qa-stage-text tspan{fill:rgba(36,40,46,0.6) !important}
+[data-theme="light"] .hero-eye-svg .qa-connector{stroke:rgba(36,40,46,0.5) !important}
+
+/* ── V1 (old eye) lids — make them the bold, confident ink curve from the
+   approved preview: deep solid stroke end-to-end, crisp (no washy glow). The
+   base gradient fades the ends to faint --ice; on white that looked thin, so
+   we override the stops to strong ink and drop the blur filter. */
+[data-theme="light"] #heroEyeSvg #hU stop:nth-child(1){stop-color:rgba(15,23,42,0.5)}
+[data-theme="light"] #heroEyeSvg #hU stop:nth-child(2){stop-color:rgba(12,19,36,0.98)}
+[data-theme="light"] #heroEyeSvg #hU stop:nth-child(3){stop-color:rgba(15,23,42,0.5)}
+[data-theme="light"] #heroEyeSvg #hL stop:nth-child(1){stop-color:rgba(15,23,42,0.42)}
+[data-theme="light"] #heroEyeSvg #hL stop:nth-child(2){stop-color:rgba(12,19,36,0.9)}
+[data-theme="light"] #heroEyeSvg #hL stop:nth-child(3){stop-color:rgba(15,23,42,0.42)}
+[data-theme="light"] #heroEyeSvg .he-lid{filter:none !important;stroke-width:3.6 !important}
+/* drop the faint wide cyan back-glow strokes behind the lids (muddy on white) */
+[data-theme="light"] #heroEyeSvg > g > path[stroke^="rgba(var(--cyan),0.1"],
+[data-theme="light"] #heroEyeSvg > g > path[stroke^="rgba(var(--cyan),0.07"]{stroke:rgba(15,23,42,0.06) !important;filter:none !important}
+
+/* ── the inner eye "operations" — alive on white, not flat ink ──
+   Carry the moonlight soul into light mode: rings fade in graded blue-ink, the
+   pupil glows with a soft cool halo, and the maze-glow gives the whole eye a
+   gentle living bloom. (NOTE: the comment that used to wrap these rules was
+   never closed, so they silently did nothing — fixed now.) */
+[data-theme="light"] #heroEyeSvg .maze-ring-1{stroke:rgba(22,27,36,0.86) !important;stroke-width:2.1 !important}
+[data-theme="light"] #heroEyeSvg .maze-ring-2{stroke:rgba(28,34,46,0.58) !important;stroke-width:1.6 !important}
+[data-theme="light"] #heroEyeSvg .maze-ring-3{stroke:rgba(36,42,54,0.28) !important;stroke-width:1.2 !important}
+[data-theme="light"] #heroEyeSvg .maze-ring-4{stroke:rgba(44,50,62,0.12) !important;stroke-width:0.9 !important}
+[data-theme="light"] #heroEyeSvg .maze-ring-5{stroke:rgba(56,62,74,0.04) !important;stroke-width:0.7 !important}
+[data-theme="light"] #heroEyeSvg .maze-wall{stroke:rgba(22,27,36,0.26) !important}
+/* pupil: deep ink core + a living cool-blue glow (the spark of life) */
+[data-theme="light"] #heroEyeSvg .maze-pupil{fill:rgba(9,11,19,0.98) !important;filter:drop-shadow(0 0 5px rgba(12,16,26,0.65)) drop-shadow(0 0 14px rgba(12,16,26,0.35)) drop-shadow(0 0 30px rgba(12,16,26,0.16)) !important}
+/* the tracing path that solves the maze → luminous blue-ink */
+[data-theme="light"] #heroEyeSvg .maze-solve-path{stroke:rgba(16,20,34,0.90) !important;stroke-width:1.1 !important;filter:drop-shadow(0 0 3px rgba(16,20,34,0.45)) !important}
+/* the breathing bloom behind the iris → keep a soft cool tint, a touch stronger */
+[data-theme="light"] #heroEyeSvg .maze-glow{opacity:0.42 !important}
+[data-theme="light"] #heroEyeSvg{filter:drop-shadow(0 6px 44px rgba(10,14,24,0.16)) drop-shadow(0 2px 18px rgba(10,14,24,0.09)) !important}
+/* any scan/iris helper lines drawn with cyan inside the old eye → blue-ink */
+[data-theme="light"] #heroEyeSvg .he-inner [stroke]:not([stroke="none"]){stroke:rgba(20,25,36,0.52) !important}
+
+/* lids: bring back a whisper of glow so the eye breathes, not a dead outline */
+[data-theme="light"] #heroEyeSvg .he-lid{filter:drop-shadow(0 0 8px rgba(12,16,26,0.24)) drop-shadow(0 0 22px rgba(12,16,26,0.10)) !important;stroke-width:3.8 !important}
+
+/* ── cinematic annotations on BOTH eyes (WE FIND / THE ANSWER / AT THE CENTER,
+   YOUR PROBLEM IS TRAPPED, etc.). They use --cyan/--id which wash out on white —
+   force ink. The big word stays strongest; the small lines a touch lighter. */
+[data-theme="light"] .hero-eye-svg .he-ann-label,
+[data-theme="light"] .hero-eye-svg .he-ann-label,
+[data-theme="light"] #heroEyeSvg .he-ann-label{fill:rgba(36,40,46,0.72) !important;filter:none !important}
+[data-theme="light"] .hero-eye-svg .he-ann-3 .he-ann-label[font-size="20"]{fill:rgba(36,40,46,0.95) !important}
+[data-theme="light"] .hero-eye-svg .he-ann-dot{fill:rgba(36,40,46,0.4) !important}
+[data-theme="light"] .hero-eye-svg .he-ann-line{stroke:rgba(36,40,46,0.4) !important}
+[data-theme="light"] .hero-eye-svg .qa-connector{stroke:rgba(36,40,46,0.45) !important}
+/* the big stage glyphs (check-ring, golden spiral) — keep them visible on white */
+[data-theme="light"] .hero-eye-svg .qa-check-ring{stroke:rgba(36,40,46,0.5) !important}
+
+/* labels / hint / cinematic annotation */
+[data-theme="light"] #vpHperLabel{fill:rgba(15,23,42,0.55) !important}
+[data-theme="light"] #vpHperHint{fill:rgba(15,23,42,0.45) !important}
+[data-theme="light"] #vpAnnTop,[data-theme="light"] #vpAnnBot{fill:rgba(15,23,42,0.45) !important}
+[data-theme="light"] #vpAnnMid{fill:rgba(12,19,36,0.9) !important}
+[data-theme="light"] #vpHperAnn{filter:none !important}
+[data-theme="light"] #vpHperAnn circle{fill:rgba(15,23,42,0.3) !important}
+[data-theme="light"] #vpHperAnn line{stroke:rgba(15,23,42,0.3) !important}
+
+/* the "!" beacon ring + dotted leader (drawn by JS in the scene) inherit COLD,
+   already handled in SeekerCine. Nothing to do here. */
+
+/* version dropdown pill + hero microcopy */
+[data-theme="light"] .hero-eye-svg text{fill:rgba(36,40,46,0.55)}
+
+/* loader pupil inner rings (the early anti-flicker block handles lids/text/bg) */
+[data-theme="light"] .loader-pupil circle[fill*="255,255,255"],
+[data-theme="light"] .loader-pupil circle[fill*="255, 255, 255"]{fill:rgba(15,23,42,0.1) !important}
+[data-theme="light"] .loader-pupil circle[stroke*="255,255,255"],
+[data-theme="light"] .loader-pupil circle[stroke*="255, 255, 255"]{stroke:rgba(15,23,42,0.2) !important}
+[data-theme="light"] .loader-pupil circle[fill*="var(--cyan)"]{fill:rgba(30,52,96,0.7) !important}
+[data-theme="light"] .loader-pupil circle[stroke*="var(--cyan)"]{stroke:rgba(15,23,42,0.35) !important}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SIGN-IN PAGE — light mode (Ander_133)
+   The login screen had its own dark gradients (login-left/right) plus
+   buttons built on --ice, so on white the text turned to ink on dark and
+   vanished. Rebuild it as ink-on-white: white surfaces, a high-contrast
+   primary button, readable inputs/links — while keeping the globe + live
+   chat inside a deliberate dark "capsule" (the neon globe needs a dark
+   sky to glow against; that's a design choice, not a bug).
+   ═══════════════════════════════════════════════════════════════════ */
+/* surfaces → white */
+[data-theme="light"] #pageLogin{background:var(--bg)}
+[data-theme="light"] .login-right{background:transparent !important;border-left:1px solid rgba(15,23,42,0.1)}
+[data-theme="light"] .login-left{background:transparent}
+
+/* headline + body copy → ink */
+[data-theme="light"] #pageLogin .login-logo-main{color:rgba(15,23,42,0.95)}
+[data-theme="light"] #pageLogin .login-logo-sub,
+[data-theme="light"] #pageLogin .login-eyebrow,
+[data-theme="light"] #pageLogin .login-kicker{color:rgba(15,23,42,0.5) !important}
+[data-theme="light"] #pageLogin .login-headline,
+[data-theme="light"] #pageLogin .login-title{color:rgba(15,23,42,0.92) !important}
+[data-theme="light"] #pageLogin .login-headline em,
+[data-theme="light"] #pageLogin .login-title em{color:rgba(30,52,96,0.9) !important}
+[data-theme="light"] #pageLogin .login-sub,
+[data-theme="light"] #pageLogin .login-desc,
+[data-theme="light"] #pageLogin p{color:rgba(15,23,42,0.62) !important}
+
+/* primary button (email) → solid ink with light text (mirror of dark mode) */
+[data-theme="light"] #pageLogin .login-btn{background:rgba(15,23,42,0.95) !important;color:#fff !important}
+[data-theme="light"] #pageLogin .login-btn *{color:#fff !important}
+[data-theme="light"] #pageLogin .login-btn svg{stroke:#fff !important}
+
+/* oauth buttons (Google/Apple) → white card with ink border + ink text */
+[data-theme="light"] #pageLogin .login-oauth{background:rgba(255,255,255,0.9) !important;color:rgba(15,23,42,0.9) !important;border:1px solid rgba(15,23,42,0.2) !important}
+[data-theme="light"] #pageLogin .login-oauth *{color:rgba(15,23,42,0.9)}
+[data-theme="light"] #pageLogin .login-oauth:hover{background:rgba(15,23,42,0.04) !important}
+/* keep Apple logo dark, Google logo keeps its colors (leave fill alone) */
+[data-theme="light"] #pageLogin .login-oauth .oauth-apple path{fill:rgba(15,23,42,0.9) !important}
+
+/* email input → white field, ink text, visible border */
+[data-theme="light"] #pageLogin .login-input{background:rgba(255,255,255,0.85) !important;color:rgba(15,23,42,0.95) !important;border:1px solid rgba(15,23,42,0.22) !important}
+[data-theme="light"] #pageLogin .login-input::placeholder{color:rgba(15,23,42,0.4) !important}
+[data-theme="light"] #pageLogin .login-input:focus{border-color:rgba(30,52,96,0.6) !important}
+
+/* "OR" divider + Terms/Privacy links */
+[data-theme="light"] #pageLogin .login-divider{color:rgba(15,23,42,0.4) !important}
+[data-theme="light"] #pageLogin .login-terms{color:rgba(15,23,42,0.5) !important}
+[data-theme="light"] #pageLogin .login-terms a,
+[data-theme="light"] #pageLogin a[href]{color:rgba(30,52,96,0.85) !important}
+
+/* the safety/trust card at the bottom → light panel */
+[data-theme="light"] #pageLogin .login-trust{background:rgba(15,23,42,0.03) !important;border:1px solid rgba(15,23,42,0.1) !important}
+[data-theme="light"] #pageLogin .login-trust-head,
+[data-theme="light"] #pageLogin .login-trust-title{color:rgba(15,23,42,0.85) !important}
+[data-theme="light"] #pageLogin .login-trust-sub,
+[data-theme="light"] #pageLogin .login-trust-text,
+[data-theme="light"] #pageLogin .login-trust-check{color:rgba(15,23,42,0.62) !important}
+[data-theme="light"] #pageLogin .login-trust-dot{background:rgba(30,52,96,0.7) !important}
+[data-theme="light"] #pageLogin .login-trust-icon{color:rgba(30,52,96,0.8) !important;border-color:rgba(15,23,42,0.2) !important}
+
+/* the login-illustration eye (lic-*) → ink lines on white, like the V1 eye */
+[data-theme="light"] #pageLogin .lic-lid{filter:none !important;stroke:rgba(15,23,42,0.9) !important}
+[data-theme="light"] #pageLogin .lic-lid-echo{stroke:rgba(15,23,42,0.18) !important}
+[data-theme="light"] #pageLogin .lic-ring{stroke:rgba(15,23,42,0.4) !important}
+[data-theme="light"] #pageLogin .lic-wall{stroke:rgba(15,23,42,0.3) !important}
+[data-theme="light"] #pageLogin .lic-limbal{stroke:rgba(15,23,42,0.45) !important}
+[data-theme="light"] #pageLogin .lic-pupil{fill:rgba(15,23,42,0.95) !important}
+[data-theme="light"] #pageLogin .lic-irisfill{fill:rgba(15,23,42,0.04) !important}
+[data-theme="light"] #pageLogin .lic-solve{stroke:rgba(30,52,96,0.8) !important}
+[data-theme="light"] #pageLogin .lic-lash{stroke:rgba(15,23,42,0.6) !important}
+[data-theme="light"] #pageLogin .lic-halo{fill:rgba(15,23,42,0.04) !important}
+[data-theme="light"] #pageLogin .login-eye-svg [stroke="rgba(var(--cyan),1)"]{stroke:rgba(30,52,96,0.85) !important}
+
+/* footer links (PRIVACY · TERMS · CONTACT) */
+[data-theme="light"] #pageLogin .login-footer,
+[data-theme="light"] #pageLogin .login-footer a{color:rgba(15,23,42,0.5) !important}
+
+/* ── GLOBE + LIVE-DEMO + ORBIT-EYE — unified WHITE treatment (Ander_135) ──
+   No dark capsules. Everything matches the white interface: light surfaces,
+   ink text, and the globe's continent lines are drawn in ink (handled in JS
+   via colorLerp). The globe sphere gets a pale fill so the ink coastlines and
+   the dark interface read together. */
+/* globe sphere fill → pale, so dark coastlines show on a light ball */
+[data-theme="light"] #pageLogin #twGlobeSphere{fill:rgba(15,23,42,0.04) !important}
+[data-theme="light"] #pageLogin .tw-globe-container{background:transparent !important;border:none !important;box-shadow:none !important}
+/* graticule (lat/long grid) → faint ink */
+[data-theme="light"] #pageLogin #twGraticule path,
+[data-theme="light"] #pageLogin #twGraticule line,
+[data-theme="light"] #pageLogin .tw-graticule{stroke:rgba(15,23,42,0.16) !important}
+/* atmosphere glow ring → subtle cool tint instead of bright halo */
+[data-theme="light"] #pageLogin #twAtmos{opacity:0.25 !important}
+/* connection threads + nodes drawn over the globe → ink */
+[data-theme="light"] #pageLogin #twConnections path{stroke:rgba(30,52,96,0.5) !important}
+[data-theme="light"] #pageLogin #twDots .tw-dot-ring{stroke:rgba(30,52,96,0.65) !important;fill:rgba(30,52,96,0.06) !important}
+[data-theme="light"] #pageLogin #twDots .tw-dot-glow{stroke:rgba(30,52,96,0.15) !important;fill:none !important}
+[data-theme="light"] #pageLogin #twDots .tw-dot-core{fill:rgba(30,52,96,0.9) !important}
+[data-theme="light"] #pageLogin #twDots .tw-picked-ring{stroke:rgba(30,52,96,0.7) !important}
+
+/* counter: "GERMANIC · N LANGUAGES · N FAMILIES" → ink */
+[data-theme="light"] #pageLogin .tw-counter{color:rgba(15,23,42,0.55) !important}
+[data-theme="light"] #pageLogin .tw-counter-num{color:rgba(30,52,96,0.9) !important}
+[data-theme="light"] #pageLogin .tw-counter-dot{color:rgba(30,52,96,0.45) !important}
+[data-theme="light"] #pageLogin .tw-counter-fam{color:rgba(15,23,42,0.8) !important}
+/* country flag label under the globe (UNITED STATES + native name) → ink */
+[data-theme="light"] #pageLogin .tw-cl-name{color:rgba(15,23,42,0.9) !important;text-shadow:none !important}
+[data-theme="light"] #pageLogin .tw-cl-lang{color:rgba(30,52,96,0.8) !important}
+[data-theme="light"] #pageLogin .tw-cl-landmark path,
+[data-theme="light"] #pageLogin .tw-cl-landmark line,
+[data-theme="light"] #pageLogin .tw-cl-landmark circle{stroke:rgba(15,23,42,0.85) !important}
+
+/* ── LIVE DEMO (lp-chat-preview) → white panel, ink text ── */
+[data-theme="light"] #pageLogin .lp-chat-preview{
+  background:rgba(255,255,255,0.6) !important;
+  border:1px solid rgba(15,23,42,0.12) !important;
+  box-shadow:0 8px 30px rgba(15,23,42,0.06) !important;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+}
+[data-theme="light"] #pageLogin .lp-chat-header{border-bottom-color:rgba(15,23,42,0.1) !important}
+[data-theme="light"] #pageLogin .lp-chat-title{color:rgba(15,23,42,0.7) !important}
+/* chat bubbles: user (tinted) + ai (light gray), dark text both */
+[data-theme="light"] #pageLogin .lp-msg{color:rgba(15,23,42,0.9) !important}
+[data-theme="light"] #pageLogin .lp-msg.user,
+[data-theme="light"] #pageLogin .lp-msg-user{background:rgba(30,52,96,0.1) !important;color:rgba(15,23,42,0.92) !important;border:1px solid rgba(30,52,96,0.2) !important}
+[data-theme="light"] #pageLogin .lp-msg.ai,
+[data-theme="light"] #pageLogin .lp-msg-ai{background:rgba(15,23,42,0.05) !important;color:rgba(15,23,42,0.9) !important;border:1px solid rgba(15,23,42,0.1) !important}
+/* the resonance / "core thought" footer block */
+[data-theme="light"] #pageLogin .lp-resonance,
+[data-theme="light"] #pageLogin .lp-res-info{background:rgba(15,23,42,0.03) !important;border-color:rgba(15,23,42,0.12) !important}
+[data-theme="light"] #pageLogin .lp-res-region,
+[data-theme="light"] #pageLogin .lp-res-region em,
+[data-theme="light"] #pageLogin .lp-res-count,
+[data-theme="light"] #pageLogin .lp-res-num,
+[data-theme="light"] #pageLogin .lp-res-live-text{color:rgba(15,23,42,0.8) !important}
+[data-theme="light"] #pageLogin .lp-res-divider{background:rgba(15,23,42,0.15) !important}
+/* the "→ identifying the core thought" prompt line → ink-blue */
+[data-theme="light"] #pageLogin .lp-chat-path,
+[data-theme="light"] #pageLogin .lp-chat-cta,
+[data-theme="light"] #pageLogin [class*="chat-path"]{color:rgba(30,52,96,0.8) !important}
+/* country/lang pills in the demo header */
+[data-theme="light"] #pageLogin .lp-res-flag,
+[data-theme="light"] #pageLogin .lp-chat-preview [class*="pill"],
+[data-theme="light"] #pageLogin .lp-chat-preview [class*="chip"],
+[data-theme="light"] #pageLogin .lp-chat-preview [class*="badge"]{color:rgba(15,23,42,0.85) !important;border-color:rgba(15,23,42,0.2) !important}
+
+/* orbit eye above the globe → ink lines, kill the reddish halo */
+[data-theme="light"] #pageLogin .tw-orbit-eye,
+[data-theme="light"] #pageLogin .login-globe-eye,
+[data-theme="light"] #pageLogin [class*="orbit-eye"]{filter:none !important}
+[data-theme="light"] #pageLogin [class*="orbit-eye"] path,
+[data-theme="light"] #pageLogin [class*="orbit-eye"] circle,
+[data-theme="light"] #pageLogin [class*="orbit-eye"] ellipse{stroke:rgba(15,23,42,0.7) !important}
+
+/* the aperture/zoom lens → light frame instead of a black box */
+[data-theme="light"] #pageLogin .tw-lens-wrap,
+[data-theme="light"] #pageLogin .tw-lens-svg{filter:none !important}
+[data-theme="light"] #pageLogin .tw-lens-shape{stroke:rgba(30,52,96,0.7) !important}
+/* the lens "glass" radial fill → pale, so the magnified country shows on light */
+[data-theme="light"] #pageLogin #twLensGlass stop:nth-child(1){stop-color:rgba(15,23,42,0.05)}
+[data-theme="light"] #pageLogin #twLensGlass stop:nth-child(2){stop-color:rgba(15,23,42,0.08)}
+[data-theme="light"] #pageLogin #twLensGlass stop:nth-child(3){stop-color:rgba(15,23,42,0.12)}
+/* lens labels (TRACED / country name / coords) → ink */
+[data-theme="light"] #pageLogin #twLensTraced{fill:rgba(30,52,96,0.6) !important}
+[data-theme="light"] #pageLogin #twLensName{fill:rgba(15,23,42,0.85) !important}
+[data-theme="light"] #pageLogin #twLensCoord{fill:rgba(15,23,42,0.5) !important}
+[data-theme="light"] #pageLogin #twLensRim circle:nth-child(2){stroke:rgba(15,23,42,0.14) !important}
+[data-theme="light"] #pageLogin #twLensScan{fill:rgba(30,52,96,0.1) !important}
+
+/* ═══════════════ ADAPTIVE BRIGHTNESS ═══════════════ */
+/* Two viewport veils — never affect layout (no filter on html/body). */
+:root{ --pbv-dim:0; --pbv-warm:0; --pbv-lift:0; }
+#p-bright-dim, #p-bright-lift{
+  position:fixed; inset:0; pointer-events:none; z-index:9998;
+  opacity:1; transition:background .5s ease, opacity .5s ease;
+}
+/* night / dim: cool void wash + faint amber warmth layered together */
+#p-bright-dim{
+  background:
+    linear-gradient(rgba(120,86,40, var(--pbv-warm)), rgba(120,86,40, var(--pbv-warm))),
+    linear-gradient(rgba(2,5,12, var(--pbv-dim)), rgba(2,5,12, var(--pbv-dim)));
+}
+/* sun / max: soft-light white raises brightness + apparent contrast */
+#p-bright-lift{
+  background:rgba(255,255,255, var(--pbv-lift));
+  mix-blend-mode:soft-light;
+}
+html:not(.p-bright-on) #p-bright-dim,
+html:not(.p-bright-on) #p-bright-lift{ opacity:0; }
+.reduced-motion #p-bright-dim, .reduced-motion #p-bright-lift{ transition:none; }
+
+/* Brightness FAB removed — auto brightness runs silently in background */
+
+
+
+
+
+/* ══════════════════════════════════════════════════════════════
+   LIGHT MODE — COMPREHENSIVE SECTION FIXES
+   All sections below the hero need solid backgrounds so the hero
+   content doesn't bleed through. Card/text styles adapted from
+   sky-mode (charcoal palette, no blue).
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 1. SOLID BACKGROUNDS — prevent hero bleed-through ── */
+[data-theme="light"] section,
+[data-theme="light"] .section,
+[data-theme="light"] #process,
+[data-theme="light"] #annotatedEye,
+[data-theme="light"] .phil,
+[data-theme="light"] #philosophy,
+[data-theme="light"] .solmap,
+[data-theme="light"] #solutionMap,
+[data-theme="light"] .solve-page,
+[data-theme="light"] .pr-wrap,
+[data-theme="light"] .realty-page,
+[data-theme="light"] .footer-section,
+[data-theme="light"] footer,
+[data-theme="light"] .footer{
+  background: var(--bg) !important;
+  position: relative;
+}
+
+/* ── 2. CHAPTER DIVIDERS ── */
+[data-theme="light"] .chap-div{
+  background: linear-gradient(90deg,transparent,rgba(22,28,40,0.16) 20%,rgba(22,28,40,0.16) 80%,transparent) !important;
+}
+[data-theme="light"] .chap-div span{
+  border-color: rgba(22,28,40,0.35) !important;
+  background: var(--bg) !important;
+  color: rgba(22,28,40,0.65) !important;
+  box-shadow: none !important;
+}
+[data-theme="light"] .sec-label{ color: rgba(22,28,40,0.55) !important; }
+[data-theme="light"] .divider{
+  background: linear-gradient(90deg,transparent,rgba(22,28,40,0.14),transparent) !important;
+}
+
+/* ── 3. PROCESS CARDS ── */
+[data-theme="light"] .proc-card{
+  background: rgba(255,255,255,0.88) !important;
+  border-color: rgba(22,28,40,0.12) !important;
+  box-shadow: 0 2px 20px rgba(15,20,32,0.07) !important;
+}
+[data-theme="light"] .proc-card:hover{
+  background: rgba(255,255,255,0.98) !important;
+  border-color: rgba(22,28,40,0.22) !important;
+  box-shadow: 0 6px 36px rgba(15,20,32,0.11) !important;
+}
+[data-theme="light"] .proc-card::before{
+  background: linear-gradient(90deg,transparent,rgba(22,28,40,0.20),transparent) !important;
+}
+[data-theme="light"] .card-num  { color: rgba(22,28,40,0.25) !important; }
+[data-theme="light"] .card-title{ color: rgba(12,16,28,0.95) !important; text-shadow:none !important; }
+[data-theme="light"] .card-desc { color: rgba(22,28,40,0.72) !important; }
+[data-theme="light"] .card-eye  { opacity:0.35 !important; filter:invert(1) !important; }
+
+/* ── 4. HERO PROOF NUMBERS (bottom of hero) ── */
+[data-theme="light"] .hero-proof-num{ color: rgba(12,16,28,0.90) !important; }
+[data-theme="light"] .hero-proof    { color: rgba(22,28,40,0.65) !important; }
+[data-theme="light"] .hero-proof-dot{ background: rgba(22,28,40,0.55) !important; box-shadow:none !important; }
+
+/* ── 5. PRINCIPLES (HP) ICONS ── */
+[data-theme="light"] .hp-icon{
+  background: rgba(22,28,40,0.07) !important;
+  border-color: rgba(22,28,40,0.18) !important;
+}
+[data-theme="light"] .hp-text { color: rgba(12,16,28,0.88) !important; }
+[data-theme="light"] .hp-num  { color: rgba(12,16,28,0.92) !important; }
+[data-theme="light"] .hp-card {
+  background: rgba(255,255,255,0.80) !important;
+  border-color: rgba(22,28,40,0.10) !important;
+}
+
+/* ── 6. ANNOTATED EYE SECTION ── */
+[data-theme="light"] .annotated-eye,
+[data-theme="light"] #annotatedEye{
+  background: rgba(235,238,244,0.95) !important;
+}
+[data-theme="light"] .ann-label,
+[data-theme="light"] #annotatedEye .ann-label{ fill:rgba(15,23,42,0.65) !important; }
+[data-theme="light"] #annotatedEye text{ fill:rgba(15,23,42,0.65) !important; }
+[data-theme="light"] #annotatedEye [stroke]:not([stroke="none"]){ stroke:rgba(15,23,42,0.55) !important; }
+[data-theme="light"] #annotatedEye [fill]:not([fill="none"]):not(text){ fill:rgba(15,23,42,0.08) !important; }
+
+/* ── 7. PHILOSOPHY SECTION ── */
+[data-theme="light"] .phil,
+[data-theme="light"] #philosophy{
+  background: rgba(230,234,242,0.90) !important;
+}
+[data-theme="light"] .phil-quote { color: rgba(12,16,28,0.92) !important; }
+[data-theme="light"] .phil-attr  { color: rgba(22,28,40,0.60) !important; }
+
+/* ── 8. SOLUTION MAP / SOLMAP ── */
+[data-theme="light"] .solmap,
+[data-theme="light"] #solutionMap{
+  background: var(--bg) !important;
+}
+[data-theme="light"] .solmap-title,
+[data-theme="light"] .solmap .sec-title{ color: rgba(12,16,28,0.95) !important; }
+[data-theme="light"] .solmap-desc,
+[data-theme="light"] .solmap .sec-sub { color: rgba(22,28,40,0.72) !important; }
+/* the draggable knot demo sphere */
+[data-theme="light"] .solmap-ball,
+[data-theme="light"] .knot-ball,
+[data-theme="light"] .solve-ball{
+  background: radial-gradient(circle at 35% 35%, rgba(200,206,218,1), rgba(155,162,178,0.9)) !important;
+  box-shadow: 0 4px 18px rgba(15,20,32,0.18), inset 0 1px 2px rgba(255,255,255,0.6) !important;
+}
+
+/* ── 9. PRICING SECTION ── */
+[data-theme="light"] .pr-wrap,
+[data-theme="light"] #pagePricing,
+[data-theme="light"] .pricing-section{ background: var(--bg) !important; }
+
+[data-theme="light"] .circle-card,
+[data-theme="light"] .price-card,
+[data-theme="light"] [class*="plan-card"]{
+  background: rgba(255,255,255,0.90) !important;
+  border-color: rgba(22,28,40,0.12) !important;
+  box-shadow: 0 2px 20px rgba(15,20,32,0.07) !important;
+}
+[data-theme="light"] .circle-card:hover,
+[data-theme="light"] .price-card:hover{
+  box-shadow: 0 6px 36px rgba(15,20,32,0.11) !important;
+  border-color: rgba(22,28,40,0.22) !important;
+}
+/* plan name, price, tagline */
+[data-theme="light"] [class*="plan-name"],
+[data-theme="light"] [class*="plan-price"],
+[data-theme="light"] [class*="plan-title"]{ color: rgba(12,16,28,0.95) !important; }
+[data-theme="light"] [class*="plan-sub"],
+[data-theme="light"] [class*="plan-desc"]{ color: rgba(22,28,40,0.70) !important; }
+/* CTA buttons in pricing */
+[data-theme="light"] [class*="plan-cta"],
+[data-theme="light"] [class*="plan-btn"]{
+  background: rgba(12,16,28,0.92) !important;
+  color: rgba(240,242,246,0.98) !important;
+  border-color: transparent !important;
+}
+/* annual save badge */
+[data-theme="light"] [class*="save-badge"],
+[data-theme="light"] .plan-save,
+[data-theme="light"] [class*="annual-save"]{ color: rgba(50,90,60,0.90) !important; }
+
+/* ── 10. FAQ SECTION ── */
+[data-theme="light"] .faq-item,
+[data-theme="light"] [class*="faq-q"],
+[data-theme="light"] [class*="faq-row"]{
+  background: rgba(255,255,255,0.85) !important;
+  border-color: rgba(22,28,40,0.10) !important;
+}
+[data-theme="light"] [class*="faq-q"] *,
+[data-theme="light"] .faq-question{ color: rgba(12,16,28,0.92) !important; }
+[data-theme="light"] [class*="faq-a"],
+[data-theme="light"] .faq-answer{ color: rgba(22,28,40,0.75) !important; background: rgba(245,246,249,0.95) !important; }
+
+/* ── 11. SOLVE PAGE (HOW CLARITY EMERGES) ── */
+[data-theme="light"] .solve-page{ background: var(--bg) !important; }
+[data-theme="light"] .solve-page .sec-title,
+[data-theme="light"] .solve-title{ color: rgba(12,16,28,0.95) !important; }
+[data-theme="light"] .solve-page .sec-sub,
+[data-theme="light"] .solve-sub  { color: rgba(22,28,40,0.70) !important; }
+[data-theme="light"] .solve-page [stroke]:not([stroke="none"]){ stroke:rgba(22,28,40,0.55) !important; }
+
+/* ── 12. FOOTER ── */
+[data-theme="light"] .footer-section,
+[data-theme="light"] footer,
+[data-theme="light"] .footer{ background: rgba(228,232,240,0.95) !important; }
+[data-theme="light"] .footer-brand   { color: rgba(12,16,28,0.92) !important; }
+[data-theme="light"] .footer-col-title{ color: rgba(22,28,40,0.55) !important; }
+[data-theme="light"] .footer-desc    { color: rgba(22,28,40,0.70) !important; }
+[data-theme="light"] .footer-link    { color: rgba(22,28,40,0.75) !important; }
+[data-theme="light"] .footer-link:hover{ color: rgba(12,16,28,0.95) !important; }
+
+/* ── 13. GLOBAL TEXT FALLBACK for any missed elements ── */
+[data-theme="light"] .sec-title    { color: rgba(12,16,28,0.95) !important; }
+[data-theme="light"] .sec-sub      { color: rgba(22,28,40,0.70) !important; }
+[data-theme="light"] .divider-line { background: rgba(22,28,40,0.12) !important; }
+
+/* ── 14. SNOW + AMBIENT — invisible in light mode ── */
+[data-theme="light"] #snow { opacity: 0 !important; }
+[data-theme="light"] body::after { opacity: 0.04 !important; }
+[data-theme="light"] .ambient-bg  { opacity: 0.15 !important; }
+
+/* ── FAQ (pr-faq) ── */
+[data-theme="light"] .pr-faq-title{ color: rgba(12,16,28,0.80) !important; }
+[data-theme="light"] .pr-faq-item{
+  background: rgba(255,255,255,0.85) !important;
+  border-color: rgba(22,28,40,0.10) !important;
+}
+[data-theme="light"] .pr-faq-item:hover{ border-color: rgba(22,28,40,0.22) !important; }
+[data-theme="light"] .pr-faq-q{ color: rgba(12,16,28,0.92) !important; }
+[data-theme="light"] .pr-faq-q svg{ stroke: rgba(22,28,40,0.50) !important; }
+[data-theme="light"] .pr-faq-a{ color: rgba(22,28,40,0.78) !important; background: rgba(245,246,249,0.90) !important; }
+
+/* ── 15. SCROLL INDICATOR + BTT ── */
+[data-theme="light"] .btt{
+  border-color: rgba(22,28,40,0.18) !important;
+  background: rgba(255,255,255,0.80) !important;
+  color: rgba(22,28,40,0.75) !important;
+}
+[data-theme="light"] .scroll-indicator,
+[data-theme="light"] .scroll-down-hint{ color: rgba(22,28,40,0.45) !important; }
+

@@ -1,0 +1,372 @@
+  /* ── Login Swiper ─────────────────────────────────────────── */
+  .lp-swiper{position:relative;width:100%;height:100%;overflow:hidden;background:#070b12}
+  .lp-swiper-track{display:flex;width:200%;height:100%;transition:transform 0.65s cubic-bezier(0.4,0,0.2,1);will-change:transform}
+  .lp-swiper-track .login-right{order:0;width:50%!important;min-width:50%!important;flex-shrink:0;overflow-y:auto;border-left:none}
+  .lp-swiper-track .login-left{order:1;width:50%!important;min-width:50%!important;flex-shrink:0;overflow-y:auto;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0 28px 40px;background:#070b12;scroll-behavior:smooth}
+  /* Sticky headmaze — stays visible even when form is scrolled */
+  .lp-swiper-track .login-left .login-headmaze{
+    position:sticky;top:0;
+    background:#070b12;
+    width:100%;
+    display:flex;justify-content:center;
+    padding:20px 0 10px;
+    margin-bottom:12px;
+    z-index:5;
+    transition:padding 0.3s ease, margin 0.3s ease;
+  }
+  /* KEYBOARD OPEN: Airbnb-style — only show the form */
+  .lp-swiper-track .login-left.lp-kb-open .login-headmaze,
+  .lp-swiper-track .login-left.lp-kb-open .login-logo,
+  .lp-swiper-track .login-left.lp-kb-open .login-title,
+  .lp-swiper-track .login-left.lp-kb-open .login-sub,
+  .lp-swiper-track .login-left.lp-kb-open .login-phase,
+  .lp-swiper-track .login-left.lp-kb-open .lp-words{
+    display:none!important;
+  }
+  /* Center form + reduce top padding */
+  .lp-swiper-track .login-left.lp-kb-open{
+    justify-content:flex-start!important;
+    padding-top:16px!important;
+  }
+  /* Language selector stays but smaller */
+  .lp-swiper-track .login-left.lp-kb-open .lp-lang-sel{
+    margin-bottom:12px!important;
+    padding:5px 10px!important;
+    font-size:11px!important;
+  }
+  /* Pagination dots — pinned to top of slide 2 */
+  .lp-dots{position:relative;top:0;left:0;right:0;width:100%;display:flex;justify-content:center;align-items:center;gap:10px;z-index:20;padding:8px 0 4px;pointer-events:none}
+  .lp-dot{width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.4);background:transparent;transition:all 0.3s;cursor:pointer;pointer-events:auto;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.4)}
+  .lp-dot svg{width:14px;height:14px}
+  .lp-dot.lp-dot-active{border-color:rgba(255,255,255,0.9);background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.95)}
+  /* Override login-wrap grid on swiper layout */
+  .lp-swiper .login-wrap{display:contents}
+  /* Country picker button removed — merged into globe dot */
+  /* Country picker overlay */
+  .lp-cp-overlay{
+    display:none;position:fixed;inset:0;
+    background:rgba(4,6,8,0.86);z-index:10000;
+    align-items:stretch;justify-content:center;
+  }
+  .lp-cp-overlay.lp-cp-open{display:flex;animation:cpFadeIn 0.2s ease}
+  @keyframes cpFadeIn{from{opacity:0}to{opacity:1}}
+  .lp-cp-sheet{
+    background:#0a0e1a;
+    width:100%;height:100dvh;max-height:100dvh;
+    overflow-y:auto;
+    border-top:none;
+    animation:cpSlideUp 0.25s ease;
+    display:flex;flex-direction:column;
+  }
+  @keyframes cpSlideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .lp-cp-header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:16px 20px 12px;border-bottom:1px solid rgba(var(--ice),0.08);
+    flex-shrink:0;background:#0a0e1a;
+  }
+  .lp-cp-title{font-size:9px;letter-spacing:2.5px;color:rgba(var(--ice),0.5)}
+  .lp-cp-close{
+    background:none;border:none;color:rgba(var(--ice),0.4);
+    font-size:14px;cursor:pointer;padding:4px;
+  }
+
+  /* ── Smart search bar ── */
+  .lp-cp-search-wrap{
+    display:flex;align-items:center;gap:10px;
+    padding:12px 18px;
+    border-bottom:1px solid rgba(var(--ice),0.08);
+    flex-shrink:0;background:#0a0e1a;z-index:2;
+  }
+  .lp-cp-search-ico{width:15px;height:15px;flex-shrink:0;color:rgba(var(--cyan),0.45)}
+  .lp-cp-search{
+    flex:1;background:none;border:none;outline:none;
+    font-family:'DM Mono',monospace;font-size:13px;letter-spacing:0.3px;
+    color:rgba(var(--ice),0.92);min-width:0;
+  }
+  .lp-cp-search::placeholder{color:rgba(var(--ice),0.3)}
+  .lp-cp-search-clear{
+    flex-shrink:0;color:rgba(var(--ice),0.35);font-size:13px;
+    cursor:pointer;padding:2px 4px;
+  }
+  .lp-cp-no-results{
+    grid-column:span 2;padding:28px 20px;text-align:center;
+    font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;
+    color:rgba(var(--ice),0.35);
+  }
+  .lp-cp-best-hint{
+    grid-column:span 2;padding:10px 18px 4px;
+    font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;
+    color:rgba(var(--cyan),0.4);text-transform:uppercase;
+  }
+
+  .lp-cp-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);
+    gap:1px;background:rgba(var(--ice),0.06);padding:0;
+  }
+  .lp-cp-item{
+    display:flex;align-items:center;gap:10px;
+    padding:14px 16px;background:#0a0e1a;
+    cursor:pointer;transition:background 0.15s;
+  }
+  .lp-cp-item:hover,.lp-cp-item.lp-cp-active{background:rgba(var(--cyan),0.08)}
+  .lp-cp-item.lp-cp-active{border-left:2px solid rgba(var(--cyan),0.8)}
+  .lp-cp-item.lp-cp-best{background:rgba(var(--cyan),0.06);order:-1}
+  .lp-cp-flag{font-size:20px;line-height:1;flex-shrink:0}
+  .lp-cp-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .lp-cp-cname{font-size:10px;letter-spacing:1px;color:rgba(var(--ice),0.85);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lp-cp-lang{font-size:9px;color:rgba(var(--ice),0.4);letter-spacing:0.5px}
+
+  /* ── 3D flag sphere — replaces the flat grid entirely ── */
+  .lp-cp-sphere-wrap{
+    position:relative;width:100%;
+    flex:1 1 auto;min-height:0;
+    background:radial-gradient(ellipse 70% 60% at 50% 45%, rgba(20,35,65,0.4), #04060a 75%);
+    overflow:hidden;touch-action:none;
+  }
+  #lpCpSphereCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;transition:opacity 0.6s ease}
+  .lp-cp-sphere-wrap.lp-cp-dimming #lpCpSphereCanvas{opacity:0.25}
+  .lp-cp-sphere-hint{
+    position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+    font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2.2px;
+    color:rgba(var(--cyan),0.3);text-transform:uppercase;
+    pointer-events:none;transition:opacity 1.2s ease;
+  }
+
+  /* ── Center eye portal — the eye watching over the sphere ── */
+  .lp-cp-eye-portal{
+    position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    z-index:1;pointer-events:none;
+    transition:opacity 0.5s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1);
+  }
+  .lp-cp-eye-portal.lp-cp-eye-fade{opacity:0;transform:translate(-50%,-50%) scale(0.85)}
+  .lp-cp-eye-svg{width:min(34vw,150px);height:auto;display:block;opacity:0.9}
+  .lp-cp-eye-lid{fill:none;stroke:rgba(var(--cyan),0.55);stroke-width:1.6;stroke-linecap:round}
+  .lp-cp-eye-glow{fill:rgba(var(--cyan),0.08)}
+  .lp-cp-eye-ring{fill:none;stroke:rgba(var(--cyan),0.22);stroke-width:0.6}
+  .lp-cp-eye-pupil{fill:rgba(var(--cyan),0.92);transition:r 0.4s ease}
+  .lp-cp-eye-catch{fill:#fff}
+  .lp-cp-eye-msg{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;
+    color:rgba(var(--cyan),0.55);text-transform:uppercase;
+  }
+  .lp-cp-eye-heart{
+    color:rgba(255,210,225,0.85);display:inline-block;
+    animation:lpCpHeartBeat 1.8s ease-in-out infinite;
+  }
+  @keyframes lpCpHeartBeat{
+    0%,100%{transform:scale(1)}
+    50%    {transform:scale(1.18)}
+  }
+  /* Eye "wakes up" when a country is confirmed */
+  .lp-cp-eye-portal.lp-cp-eye-active .lp-cp-eye-pupil{r:1.4;fill:#fff}
+  .lp-cp-eye-portal.lp-cp-eye-active .lp-cp-eye-svg{
+    animation:lpCpEyeWake 0.5s ease-in-out 3 alternate;
+  }
+  @keyframes lpCpEyeWake{
+    0%   {transform:scaleY(1)}
+    50%  {transform:scaleY(0.08)}
+    100% {transform:scaleY(1)}
+  }
+  .lp-cp-eye-portal.lp-cp-eye-active .lp-cp-eye-msg{opacity:0}
+  .lp-cp-match-label{
+    position:absolute;top:12px;left:50%;transform:translateX(-50%);
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;
+    color:rgba(var(--cyan),0.85);text-align:center;
+    background:rgba(6,10,20,0.7);padding:6px 14px;border-radius:20px;
+    border:1px solid rgba(var(--cyan),0.2);
+    opacity:0;transition:opacity 0.4s ease;pointer-events:none;
+    white-space:nowrap;max-width:88%;overflow:hidden;text-overflow:ellipsis;
+  }
+
+  /* Globe slide header — dots row with sign-in attached to dot② */
+  .lp-globe-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 12px 6px;width:100%;flex-shrink:0;
+    pointer-events:auto;position:relative;
+  }
+  .lp-globe-header .lp-dots{
+    position:static;padding:0;
+    display:flex;align-items:center;gap:8px;
+    pointer-events:auto;flex:1;justify-content:center;
+  }
+  /* Both dots in header are pill-shaped with text */
+  .lp-globe-header .lp-dot{
+    width:auto;border-radius:20px;
+    padding:0 10px 0 6px;gap:5px;
+    display:flex;align-items:center;
+    pointer-events:auto;cursor:pointer;
+  }
+  .lp-globe-header .lp-dot svg{width:14px;height:14px}
+
+
+
+  /* ─── About / WHY pill button ─── */
+  .lp-about-pill .lp-about-ico{
+    animation:lpAboutPulse 3s ease-in-out 1s infinite;
+  }
+  @keyframes lpAboutPulse{
+    0%,100%{filter:drop-shadow(0 0 0px rgba(184,212,240,0));opacity:0.7}
+    50%{filter:drop-shadow(0 0 5px rgba(184,212,240,0.6));opacity:1}
+  }
+
+  /* ─── What-is Overlay ─── */
+  .lpwi-overlay{
+    position:fixed;inset:0;z-index:99999;
+    background:#020507;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-end;
+    opacity:0;pointer-events:none;
+    transition:opacity 0.4s ease;
+    overflow:hidden;
+    touch-action:pan-y;
+  }
+  .lpwi-overlay.lpwi-open{
+    opacity:1;pointer-events:auto;
+  }
+  .lpwi-close{
+    position:absolute;top:16px;right:16px;
+    width:32px;height:32px;border-radius:50%;
+    border:1px solid rgba(184,212,240,0.2);
+    background:rgba(8,14,26,0.6);
+    color:rgba(184,212,240,0.6);
+    font-size:14px;cursor:pointer;z-index:2;
+    display:flex;align-items:center;justify-content:center;
+    transition:all 0.2s;
+  }
+  .lpwi-close:hover{color:rgba(184,212,240,0.95);border-color:rgba(184,212,240,0.5)}
+
+  /* Stars */
+  .lpwi-stars{position:absolute;inset:0;z-index:0;pointer-events:none}
+  .lpwi-star{position:absolute;background:rgba(225,235,248,0.75);border-radius:50%;animation:lpwiTwinkle var(--d,5s) ease-in-out infinite}
+  @keyframes lpwiTwinkle{0%,100%{opacity:.1}50%{opacity:.85}}
+
+  /* 3D Scene */
+  .lpwi-scene{
+    position:absolute;inset:0;z-index:1;
+    perspective:320px;perspective-origin:50% 44%;
+    pointer-events:none;
+  }
+  .lpwi-tunnel{
+    position:absolute;left:50%;top:44%;
+    width:0;height:0;transform-style:preserve-3d;
+  }
+  .lpwi-frame{
+    position:absolute;border-style:solid;
+    border-color:rgba(190,210,240,var(--op,0.4));
+    transform-style:preserve-3d;
+  }
+  .lpwi-glow{
+    position:absolute;left:50%;top:44%;
+    width:18vmin;height:18vmin;
+    transform:translate(-50%,-50%);border-radius:50%;
+    background:radial-gradient(circle,rgba(225,238,255,0.9) 0%,rgba(170,205,255,0.4) 35%,transparent 70%);
+    filter:blur(3px);z-index:2;
+    animation:lpwiGlowPulse 3s ease-in-out infinite;
+  }
+  @keyframes lpwiGlowPulse{0%,100%{opacity:0.7;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
+  .lpwi-eye-wrap{
+    position:absolute;left:50%;top:44%;
+    width:12vmin;
+    transform:translate(-50%,-50%);z-index:3;
+    filter:drop-shadow(0 0 12px rgba(190,220,255,0.85)) drop-shadow(0 0 28px rgba(150,195,255,0.5));
+    animation:lpwiEyePulse 3s ease-in-out infinite;
+  }
+  @keyframes lpwiEyePulse{0%,100%{filter:drop-shadow(0 0 8px rgba(190,220,255,0.6)) drop-shadow(0 0 18px rgba(150,195,255,0.3))}50%{filter:drop-shadow(0 0 18px rgba(190,220,255,1)) drop-shadow(0 0 36px rgba(150,195,255,0.6))}}
+  .lpwi-eye-svg{width:100%;height:auto;display:block}
+  .lpwi-figure{
+    position:absolute;left:50%;top:54%;
+    width:4vmin;transform:translate(-50%,-50%);
+    z-index:2;opacity:0.88;
+  }
+  .lpwi-figure svg{width:100%;height:auto;display:block}
+
+  /* Cards */
+  .lpwi-cards-wrap{
+    position:relative;z-index:5;
+    width:100%;padding:0 28px 0;
+    margin-bottom:64px;
+  }
+  .lpwi-card{
+    display:none;
+    flex-direction:column;gap:10px;
+    text-align:center;
+    animation:lpwiCardIn 0.55s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+  .lpwi-card.lpwi-card-active{display:flex}
+  @keyframes lpwiCardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+  .lpwi-mono{
+    font-family:'DM Mono',monospace;
+    font-size:9px;letter-spacing:2.5px;
+    color:rgba(184,212,240,0.4);text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .lpwi-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(26px,7vw,34px);font-weight:500;
+    line-height:1.2;color:rgba(225,235,248,0.95);
+  }
+  .lpwi-title em{font-style:italic;font-weight:600;color:#fff}
+  .lpwi-body{
+    font-family:'Sora',sans-serif;font-weight:300;
+    font-size:13px;line-height:1.7;
+    color:rgba(170,185,205,0.78);margin-top:6px;
+  }
+  .lpwi-body em{font-style:normal;color:rgba(184,212,240,0.9)}
+
+  /* Nav dots */
+  .lpwi-dots{
+    position:relative;z-index:5;
+    display:flex;gap:8px;margin-bottom:24px;
+  }
+  .lpwi-dot-n{
+    width:5px;height:5px;border-radius:50%;
+    background:rgba(184,212,240,0.22);
+    cursor:pointer;transition:all 0.3s;
+  }
+  .lpwi-dot-n.lpwi-dot-n-on{
+    background:rgba(184,212,240,0.85);
+    transform:scale(1.25);
+  }
+  .lpwi-hint{
+    position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+    font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;
+    color:rgba(184,212,240,0.3);text-transform:lowercase;z-index:5;
+    animation:lpwiHintFade 3s ease 1.5s forwards;
+  }
+  @keyframes lpwiHintFade{0%{opacity:1}100%{opacity:0}}
+  /* Dot② = sign in pill (non-header context — original dot style) */
+  .lp-dots:not(.lp-globe-header .lp-dots) .lp-dot[data-slide="1"]{
+    width:auto;border-radius:20px;
+    padding:0 10px 0 6px;gap:6px;
+    display:flex;align-items:center;
+  }
+  .lp-signin-hint{
+    font-size:8.5px;letter-spacing:2px;
+    color:rgba(var(--ice),0.55);
+    font-family:inherit;white-space:nowrap;
+    opacity:0;max-width:0;overflow:hidden;
+    animation:lpHintExpand 0.7s ease 0.4s forwards;
+  }
+  @keyframes lpHintExpand{
+    0%{opacity:0;max-width:0}
+    40%{opacity:1}
+    100%{opacity:1;max-width:160px}
+  }
+  .lp-signin-hint.lp-hint-reset{animation:none;opacity:0;max-width:0}
+  .lp-signin-hint.lp-hint-replay{animation:lpHintExpand 0.7s ease 0.1s forwards}
+  /* TRACING ring CSS removed */
+
+  /* Freeze ALL animations in form-slide while user is on globe-slide */
+  #lpSwiper.lp-on-globe .login-left .lhmz-svg,
+  #lpSwiper.lp-on-globe .login-left .lhmz-svg *,
+  #lpSwiper.lp-on-globe .login-left .login-illus svg,
+  #lpSwiper.lp-on-globe .login-left .login-illus svg *,
+  #lpSwiper.lp-on-globe .login-left .login-headmaze svg,
+  #lpSwiper.lp-on-globe .login-left .login-headmaze svg *{
+    animation:none!important;
+    animation-play-state:paused!important;
+  }

@@ -1,0 +1,177 @@
+  /* ═══ ANTI-FLICKER: dark background before any other styles parse ═══ */
+  html:not([data-theme="light"]), html:not([data-theme="light"]) body { background-color: #040608 !important; color-scheme: dark; }
+  html[data-theme="light"], html[data-theme="light"] body { background-color: #f0f2f6 !important; color-scheme: light; }
+  /* ═══ FONT-DISPLAY: ensure text visible immediately before fonts load ═══ */
+  @font-face{font-family:'Sora';font-display:swap}
+  @font-face{font-family:'DM Mono';font-display:swap}
+  @font-face{font-family:'Cormorant Garamond';font-display:swap}
+  @font-face{font-family:'Jost';font-display:swap}
+  @font-face{font-family:'Cairo';font-display:swap}
+  @font-face{font-family:'Amiri';font-display:swap}
+
+  /* ════════════════════════════════════════════════════════════
+     LITE MODE — auto-activated when device struggles (tier-low + low FPS)
+     Hides ALL canvas/globe/heavy animations. Pure CSS + DOM only.
+     Triggered by html.lite-mode class (set by liteMode watchdog)
+     ════════════════════════════════════════════════════════════ */
+  /* Lite mode badge */
+  html.lite-mode .lite-badge{display:flex!important}
+  .lite-badge{display:none}
+  /* loader/splash must match the chosen theme from the very first paint —
+     otherwise the dark splash flashes before the full stylesheet loads. */
+  html[data-theme="light"] .loader{background:#f0f2f6 !important}
+  html[data-theme="light"] .loader-lid{stroke:rgba(15,23,42,0.88) !important;filter:none !important}
+  html[data-theme="light"] .loader-glow{stroke:rgba(15,23,42,0.08) !important;filter:none !important}
+  html[data-theme="light"] .loader .p-glow{color:rgba(12,19,36,0.95) !important;text-shadow:none !important;animation:none !important}
+  html[data-theme="light"] .loader .p-rest{color:rgba(12,19,36,0.9) !important}
+  html[data-theme="light"] .loader-sub{color:rgba(15,23,42,0.55) !important}
+  html[data-theme="light"] .loader .maze-solve-path{stroke:rgba(30,52,96,0.85) !important;filter:none !important}
+
+  /* ═══════════════ i18n / RTL SUPPORT ═══════════════ */
+  /* Arabic */
+  html[lang="ar"] body,
+  html[lang="ar"] .nav-brand,
+  html[lang="ar"] .hero-title,
+  html[lang="ar"] p, html[lang="ar"] div, html[lang="ar"] span,
+  html[lang="ar"] button, html[lang="ar"] input, html[lang="ar"] textarea,
+  html[lang="ar"] a, html[lang="ar"] li, html[lang="ar"] h1,
+  html[lang="ar"] h2, html[lang="ar"] h3, html[lang="ar"] h4 {
+    font-family: 'Cairo', 'Noto Naskh Arabic', 'Sora', sans-serif !important;
+  }
+  /* Chinese */
+  html[lang="zh"] body, html[lang="zh"] *:not(svg):not(path):not(circle):not(line):not(rect) {
+    font-family: 'Noto Sans SC', 'Sora', sans-serif !important;
+  }
+  /* Japanese */
+  html[lang="ja"] body, html[lang="ja"] *:not(svg):not(path):not(circle):not(line):not(rect) {
+    font-family: 'Noto Sans JP', 'Sora', sans-serif !important;
+  }
+
+  /* ═══════════════ RTL — Arabic mirror layout ═══════════════ */
+  html[dir="rtl"] {
+    direction: rtl;
+  }
+  html[dir="rtl"] body {
+    direction: rtl;
+    text-align: right;
+  }
+
+  /* Navbar: flip the entire flex direction so:
+     [logo] [Home Solve] ... [Talk Circle Watch Realty Signin] [globe]
+     becomes:
+     [globe] [Signin Realty Watch Circle Talk] ... [Solve Home] [logo] */
+  html[dir="rtl"] nav { flex-direction: row-reverse; }
+  html[dir="rtl"] .nav-left { flex-direction: row-reverse; }
+  html[dir="rtl"] .nav-right {
+    flex-direction: row-reverse;
+    margin-left: 0;
+    margin-right: auto;
+  }
+  html[dir="rtl"] .nav-swipe {
+    flex-direction: row-reverse;
+    padding-left: 0;
+    padding-right: 14px;
+  }
+  html[dir="rtl"] .nav-links {
+    flex-direction: row-reverse;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  /* Don't flip the eye logo, the globe, or the brand glitch word */
+  html[dir="rtl"] .nav-eye, html[dir="rtl"] #navEyeSvg,
+  html[dir="rtl"] .tw-globe, html[dir="rtl"] .lp-chat,
+  html[dir="rtl"] .glitch-word, html[dir="rtl"] .p-glow,
+  html[dir="rtl"] .lang-switch-btn,
+  html[dir="rtl"] .lang-switch-btn svg { direction: ltr; }
+
+  html[dir="rtl"] .nav-brand,
+  html[dir="rtl"] .nav-brand-main,
+  html[dir="rtl"] .login-logo,
+  html[dir="rtl"] .login-logo-main,
+  html[dir="rtl"] .login-logo-stack { direction: ltr; unicode-bidi: embed; }
+
+  /* Flip directional icons (left/right arrows, send icons) */
+  html[dir="rtl"] .hero-cta svg,
+  html[dir="rtl"] .back-btn svg,
+  html[dir="rtl"] .send-btn svg,
+  html[dir="rtl"] .magnetic svg { transform: scaleX(-1); }
+  html[dir="rtl"] .hero-cta:hover svg { transform: scaleX(-1) translateX(-4px); }
+  html[dir="rtl"] .login-btn svg { transform: scaleX(-1); }
+  html[dir="rtl"] .login-btn:hover svg { transform: scaleX(-1) translateX(-3px); }
+  html[dir="rtl"] .lp-path-indicator svg { transform: scaleX(-1); }
+
+  /* Lang code badge: keep on the visual "outer" side of the globe icon */
+  html[dir="rtl"] .lang-switch-btn .lang-code {
+    right: auto;
+    left: -4px;
+  }
+
+  /* Keep numerals, codes, and brand LTR (Arabic numerals show wrong otherwise) */
+  html[dir="rtl"] .nav-brand-sub,
+  html[dir="rtl"] [data-keep-ltr],
+  html[dir="rtl"] .lp-lang-badge,
+  html[dir="rtl"] .lp-lang-family,
+  html[dir="rtl"] .hero-label { direction: ltr; justify-content: flex-end; }
+  html[dir="rtl"] .hero-label::before { display: none; }
+  html[dir="rtl"] .hero-label::after { content: ''; width: 25px; height: 1px; background: rgba(var(--id), 0.3); }
+  /* On mobile, hero is column/centered — RTL text should center too */
+  @media(max-width:768px){
+    html[dir="rtl"] .hero-text  { text-align: center !important; }
+    html[dir="rtl"] .hero-title { text-align: center !important; }
+    html[dir="rtl"] .hero-desc  { text-align: center !important; }
+    html[dir="rtl"] .hero-label { justify-content: center !important; }
+    html[dir="rtl"] .hero-cta   { justify-content: center !important; }
+  }
+  html[dir="rtl"] .nav-langCode,
+  html[dir="rtl"] #navLangCode {
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+
+  /* Hero text in RTL: text-align right, but eye/visual on the left */
+  html[dir="rtl"] .hero-text { text-align: right; }
+  html[dir="rtl"] .hero-desc { text-align: right; }
+  html[dir="rtl"] .hero-cta { flex-direction: row-reverse; }
+
+  /* Hero principles: icons on the right in RTL */
+  html[dir="rtl"] .hp-item { flex-direction: row-reverse; }
+
+  /* Lang picker: hover slides toward the inside (right edge) */
+  html[dir="rtl"] .lang-picker-item:hover {
+    transform: translateX(-2px);
+  }
+  html[dir="rtl"] .lang-picker-header { flex-direction: row-reverse; }
+  html[dir="rtl"] .lang-picker-item { flex-direction: row-reverse; }
+
+  /* Generic flex containers that hold left/right content shouldn't break in RTL */
+  html[dir="rtl"] .lp-msg.user { align-self: flex-start; border-radius: 18px 18px 18px 4px; text-align: right; direction: rtl; }
+  html[dir="rtl"] .lp-msg.ai,
+  html[dir="rtl"] .lp-msg.assistant { align-self: flex-end; border-radius: 18px 18px 4px 18px; text-align: right; direction: rtl; }
+  html[dir="rtl"] .lp-chat { direction: rtl; }
+  html[dir="rtl"] .lp-chat-header { flex-direction: row-reverse; }
+  html[dir="rtl"] .lp-live-dot { margin-left: 0; margin-right: 0; }
+  html[dir="rtl"] .lp-live-label { text-align: right; }
+  html[dir="rtl"] .lp-lang-badge { direction: ltr; }
+  html[dir="rtl"] .lp-path-indicator { flex-direction: row-reverse; text-align: right; direction: rtl; }
+
+  /* Fix scrollbar position hint (purely visual) */
+  html[dir="rtl"] * { scrollbar-color: rgba(var(--cyan), 0.15) transparent; }
+
+  /* ── LOGIN FORM ── */
+  html[dir="rtl"] .login-left          { text-align: right; }
+  html[dir="rtl"] .login-logo          { flex-direction: row-reverse; direction: ltr; }
+  html[dir="rtl"] .login-logo-stack    { direction: ltr; }
+  html[dir="rtl"] .login-title         { text-align: right; }
+  html[dir="rtl"] .login-sub           { text-align: right; }
+  html[dir="rtl"] .login-input         { text-align: right; direction: rtl; }
+  html[dir="rtl"] .login-btn           { flex-direction: row-reverse; }
+  html[dir="rtl"] .login-oauth         { flex-direction: row-reverse; }
+  html[dir="rtl"] .login-divider       { direction: rtl; }
+  html[dir="rtl"] .login-trust         { direction: rtl; }
+  html[dir="rtl"] .login-trust-head    { flex-direction: row-reverse; }
+  html[dir="rtl"] .login-trust-text    { text-align: right; }
+  html[dir="rtl"] .login-trust-checks  { direction: rtl; }
+  html[dir="rtl"] .login-trust-check   { flex-direction: row-reverse; justify-content: flex-start; }
+  html[dir="rtl"] .login-footer        { flex-direction: row-reverse; }
+  html[dir="rtl"] .login-content       { text-align: right; }

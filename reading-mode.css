@@ -1,0 +1,162 @@
+/* ═══════════ v94: وضع القراءة — «كتاب المتاهة» · ضوء قمري ═══════════
+   نفس هوية الموقع: الأزرق الغميق الداكن + لمسات السيان، والإضاءة
+   أبيض قمري ليه ٣ درجات سطوع بيتحكم فيها شريط قمري أعلى الصفحة.
+   الكتاب ٣ فصول بيتترجموا مع العشر لغات بتوع الموقع نفسها.
+   كله CSS خالص — صفر canvas — يطير على أضعف موبايل. */
+
+#pageReading{
+  /* الأبيض القمري */
+  --rd-moon:228,239,250;
+  /* درجة السطوع الافتراضية (٢ من ٣) */
+  --rd-pool:0.09;               /* قوة بقعة الضوء */
+  --rd-ink:#d6e1ed;             /* الحبر */
+  --rd-dim:#84919f;             /* حبر خافت */
+  --rd-strip:0.5;               /* لمعان الشريط القمري أعلى الورقة */
+  --rd-line:rgba(var(--rd-moon),0.13);
+  --rd-paper:#070b11;
+  --rd-paper-hi:#0c1219;
+  --rd-fs:18px;
+  background:
+    radial-gradient(ellipse 90% 50% at 50% -8%, rgba(var(--rd-moon),calc(var(--rd-pool)*0.8)), transparent 60%),
+    #04060a;
+  min-height:100vh;
+  padding:86px 14px 60px;
+  transition:background 0.5s ease;
+}
+/* ── درجات السطوع الثلاث ── */
+#pageReading.rd-lum-1{--rd-pool:0.045;--rd-ink:#b3c0cf;--rd-dim:#6d7a88;--rd-strip:0.22;--rd-line:rgba(var(--rd-moon),0.09);--rd-paper:#05080d;--rd-paper-hi:#090e14}
+#pageReading.rd-lum-3{--rd-pool:0.15;--rd-ink:#eef4fb;--rd-dim:#9fadbc;--rd-strip:0.85;--rd-line:rgba(var(--rd-moon),0.18);--rd-paper:#0a1018;--rd-paper-hi:#111927}
+
+/* ── جسم الكتاب ── */
+.rd-book{max-width:660px;margin:0 auto}
+.rd-page{
+  position:relative;
+  background:radial-gradient(ellipse 120% 60% at 50% -12%, var(--rd-paper-hi), var(--rd-paper) 60%);
+  border:1px solid var(--rd-line);
+  border-radius:14px;
+  padding:34px 28px 30px;
+  box-shadow:
+    0 0 70px rgba(var(--rd-moon),calc(var(--rd-pool)*0.5)),
+    0 24px 60px rgba(0,0,0,0.55),
+    inset 0 0 70px rgba(0,0,0,0.35);
+  transition:background 0.5s ease,border-color 0.5s ease,box-shadow 0.5s ease;
+  overflow:hidden;
+}
+/* بقعة الضوء القمري على الورقة */
+.rd-page::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 78% 36% at 50% -6%, rgba(var(--rd-moon),var(--rd-pool)), transparent 70%);
+  transition:opacity 0.5s ease;
+}
+/* الشريط الأبيض القمري أعلى الورقة — لمعانه بيتغير مع الدرجة */
+.rd-page::after{
+  content:'';position:absolute;top:0;left:8%;right:8%;height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(var(--rd-moon),var(--rd-strip)),transparent);
+  filter:drop-shadow(0 0 6px rgba(var(--rd-moon),calc(var(--rd-strip)*0.6)));
+  transition:opacity 0.5s ease;
+}
+
+/* ── شريط التحكم العلوي ── */
+.rd-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;max-width:660px;margin:0 auto 16px;flex-wrap:wrap}
+.rd-bar-title{font-family:'Instrument Serif','Amiri',serif;font-size:22px;color:var(--rd-ink);letter-spacing:0.4px;white-space:nowrap}
+#pageReading[lang="ar"] .rd-bar-title{font-family:'Amiri',serif}
+.rd-bar-sub{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2.5px;color:var(--rd-dim);text-transform:uppercase;display:block;margin-top:3px}
+.rd-ctrls{display:flex;gap:8px;align-items:center}
+
+/* ── الشريط القمري: ☾ + ٣ درجات ── */
+.rd-strip{
+  display:flex;align-items:center;gap:7px;
+  background:rgba(var(--rd-moon),0.04);
+  border:1px solid var(--rd-line);border-radius:999px;
+  padding:7px 12px;
+}
+.rd-strip-moon{font-size:13px;line-height:1;color:rgba(var(--rd-moon),0.85);text-shadow:0 0 8px rgba(var(--rd-moon),0.5)}
+.rd-seg{
+  width:22px;height:8px;border-radius:4px;cursor:pointer;border:1px solid var(--rd-line);
+  background:rgba(var(--rd-moon),0.06);transition:all 0.3s;
+  -webkit-tap-highlight-color:transparent;padding:0;
+}
+.rd-seg.on{
+  background:rgba(var(--rd-moon),0.85);
+  border-color:rgba(var(--rd-moon),0.9);
+  box-shadow:0 0 10px rgba(var(--rd-moon),0.55);
+}
+.rd-btn{
+  font-family:'DM Mono',monospace;font-size:12px;line-height:1;
+  color:var(--rd-dim);background:rgba(var(--rd-moon),0.04);
+  border:1px solid var(--rd-line);border-radius:8px;
+  padding:8px 10px;cursor:pointer;transition:all 0.25s;
+  -webkit-tap-highlight-color:transparent;
+}
+.rd-btn:hover{color:var(--rd-ink);background:rgba(var(--rd-moon),0.1);border-color:rgba(var(--rd-moon),0.3)}
+
+/* ── الفهرس ── */
+.rd-cover{text-align:center;padding:18px 0 8px}
+.rd-cover-orn{font-size:14px;color:rgba(var(--rd-moon),0.5);letter-spacing:8px;margin-bottom:14px}
+.rd-cover h2{font-family:'Instrument Serif','Amiri',serif;font-size:32px;font-weight:400;color:var(--rd-ink);margin:0 0 8px}
+#pageReading[lang="ar"] .rd-cover h2{font-family:'Amiri',serif;font-weight:700}
+.rd-cover p{font-size:14.5px;color:var(--rd-dim);margin:0 0 24px;line-height:1.9}
+.rd-toc{list-style:none;margin:0;padding:0;text-align:start}
+.rd-toc li{
+  display:flex;align-items:baseline;gap:12px;
+  padding:13px 6px;border-bottom:1px dashed var(--rd-line);
+  cursor:pointer;transition:background 0.25s;border-radius:8px;
+  -webkit-tap-highlight-color:transparent;
+}
+.rd-toc li:hover{background:rgba(var(--rd-moon),0.05)}
+.rd-toc-num{font-family:'Instrument Serif','Amiri',serif;font-size:17px;color:rgba(var(--rd-moon),0.7);min-width:24px}
+.rd-toc-t{font-size:16.5px;color:var(--rd-ink);flex:1;line-height:1.6}
+.rd-toc-m{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--rd-dim);white-space:nowrap}
+
+/* ── الفصل ── */
+.rd-ch-head{text-align:center;margin-bottom:20px}
+.rd-ch-num{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(var(--rd-moon),0.65);text-transform:uppercase}
+.rd-ch-head h2{font-family:'Instrument Serif','Amiri',serif;font-size:27px;font-weight:400;color:var(--rd-ink);margin:8px 0 10px;line-height:1.5}
+#pageReading[lang="ar"] .rd-ch-head h2{font-family:'Amiri',serif;font-weight:700}
+.rd-orn{color:rgba(var(--rd-moon),0.45);font-size:12px;letter-spacing:7px}
+.rd-body{font-size:var(--rd-fs);line-height:2.05;color:var(--rd-ink);text-align:start;font-family:Georgia,'Times New Roman',serif}
+#pageReading[lang="ar"] .rd-body{font-family:'Noto Naskh Arabic',serif;line-height:2.15}
+#pageReading[lang="zh"] .rd-body{font-family:'Noto Sans SC',sans-serif;line-height:1.95}
+#pageReading[lang="ja"] .rd-body{font-family:'Noto Sans JP',sans-serif;line-height:1.95}
+.rd-body p{margin:0 0 16px}
+.rd-body h3{font-size:calc(var(--rd-fs) + 3px);color:var(--rd-ink);margin:24px 0 10px;font-family:inherit;font-weight:700}
+.rd-body ul{margin:0 0 16px;padding-inline-start:22px}
+.rd-body li{margin-bottom:9px}
+.rd-body strong{color:#fff;font-weight:700}
+#pageReading.rd-lum-1 .rd-body strong{color:#dfe8f1}
+.rd-try{
+  margin:22px 0 6px;padding:16px 18px;border-radius:11px;
+  background:rgba(var(--rd-moon),0.055);border:1px solid var(--rd-line);
+}
+.rd-try-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2.5px;color:rgba(var(--rd-moon),0.8);display:block;margin-bottom:7px;text-transform:uppercase}
+.rd-try p{margin:0;font-size:calc(var(--rd-fs) - 1px)}
+
+/* انتقال الصفحة */
+.rd-turn{animation:rdTurn 0.38s ease}
+@keyframes rdTurn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.reduced-motion .rd-turn,html.tier-low .rd-turn{animation:none}
+
+/* ── ذيل الصفحة ── */
+.rd-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:26px;padding-top:16px;border-top:1px solid var(--rd-line)}
+.rd-nav-btn{
+  font-size:13.5px;color:var(--rd-dim);font-family:inherit;
+  background:none;border:1px solid var(--rd-line);border-radius:9px;
+  padding:9px 16px;cursor:pointer;transition:all 0.25s;
+  -webkit-tap-highlight-color:transparent;
+}
+.rd-nav-btn:hover{color:var(--rd-ink);border-color:rgba(var(--rd-moon),0.35);background:rgba(var(--rd-moon),0.06)}
+.rd-nav-btn[disabled]{opacity:0.3;cursor:default;pointer-events:none}
+.rd-pageno{font-family:'Instrument Serif',serif;font-size:14px;color:var(--rd-dim)}
+
+/* شريط تقدم رفيع */
+.rd-prog{position:absolute;top:0;inset-inline-start:0;height:2px;background:rgba(var(--rd-moon),0.6);transition:width 0.4s ease;box-shadow:0 0 8px rgba(var(--rd-moon),0.45)}
+
+@media(max-width:560px){
+  #pageReading{padding:76px 8px 46px}
+  .rd-page{padding:26px 18px 24px;border-radius:12px}
+  .rd-cover h2{font-size:27px}
+  .rd-ch-head h2{font-size:23px}
+  .rd-bar-title{font-size:18px}
+  .rd-btn{padding:7px 9px;font-size:11px}
+  .rd-seg{width:18px}
+}

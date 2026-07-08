@@ -1,0 +1,439 @@
+  /* ───────── Pillar 6: Time-of-Day Living Sky ───────── */
+  /* The right panel gets a subtle mood overlay derived from the user's
+     LOCAL hour. Each mood has its own gradient temperature.
+     Skipped on tier-low to save GPU. */
+  .lp-sky{
+    position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0;
+    opacity:0;transition:opacity 2.4s cubic-bezier(0.22,1,0.36,1),
+                       background 3.6s cubic-bezier(0.22,1,0.36,1);
+    mix-blend-mode:screen;
+  }
+  .lp-sky.lit{opacity:1}
+  /* Mood gradients — calibrated for the existing #040608 base */
+  .lp-sky.mood-dawn     {background:radial-gradient(ellipse at 30% 20%, rgba(255,168,140,0.08) 0%, transparent 55%),
+                                   radial-gradient(ellipse at 70% 80%, rgba(var(--cyan),0.05) 0%, transparent 60%)}
+  .lp-sky.mood-morning  {background:radial-gradient(ellipse at 50% 25%, rgba(170,215,235,0.06) 0%, transparent 60%),
+                                   radial-gradient(ellipse at 50% 75%, rgba(var(--cyan),0.04) 0%, transparent 65%)}
+  .lp-sky.mood-midday   {background:radial-gradient(ellipse at 50% 30%, rgba(140,180,200,0.05) 0%, transparent 70%)}
+  .lp-sky.mood-afternoon{background:radial-gradient(ellipse at 65% 60%, rgba(225,185,130,0.07) 0%, transparent 55%),
+                                   radial-gradient(ellipse at 30% 30%, rgba(var(--cyan),0.04) 0%, transparent 65%)}
+  .lp-sky.mood-dusk     {background:radial-gradient(ellipse at 40% 70%, rgba(170,110,180,0.09) 0%, transparent 55%),
+                                   radial-gradient(ellipse at 70% 25%, rgba(60,80,160,0.07) 0%, transparent 60%)}
+  .lp-sky.mood-night    {background:radial-gradient(ellipse at 50% 50%, rgba(40,55,100,0.08) 0%, transparent 70%),
+                                   radial-gradient(ellipse at 20% 80%, rgba(20,30,60,0.05) 0%, transparent 60%)}
+  .lp-sky.mood-void     {background:radial-gradient(ellipse at 50% 50%, rgba(18,24,42,0.10) 0%, transparent 80%)}
+  .tier-low .lp-sky{display:none}
+
+  /* ───────── Pillar 7: Email Mirror Response ───────── */
+  /* When the user types, the eye micro-reacts. CSS variables make this
+     instant — no animation conflict with the existing breath cycle. */
+  .lp-email-typing #lpPupil{
+    transform:scale(var(--lp-pupil-scale,1));
+    transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    transform-origin:center;
+  }
+  .lp-email-typing #lpPupilHalo{
+    opacity:var(--lp-halo-opacity,0.65);
+    transition:opacity 0.4s ease;
+  }
+  /* When @ is detected, lids briefly draw closer (inhale) */
+  .lp-email-at #lpLidUp{
+    d:path("M -280 0 Q 0 -152, 280 0")!important;
+    transition:d 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .lp-email-at #lpLidLo{
+    d:path("M -280 0 Q 0 152, 280 0")!important;
+    transition:d 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  /* When valid email pattern detected, brief glow surge */
+  @keyframes lpEmailValid{
+    0%  {filter:drop-shadow(0 0 8px rgba(var(--cyan),0.5))}
+    50% {filter:drop-shadow(0 0 28px rgba(var(--cyan),0.9))}
+    100%{filter:drop-shadow(0 0 8px rgba(var(--cyan),0.5))}
+  }
+  .lp-email-valid .login-eye-svg{animation:lpEmailValid 1.8s ease-out 1}
+
+  /* ───────── Pillar 8: Returning Visitor — slower, familiar rhythm ───────── */
+  /* Returning users get a calmer breath — the eye recognizes them.
+     Breath cycle slows from 6s to 8s. */
+  .lp-returning #lpLidUp{animation-duration:8s!important}
+  .lp-returning #lpLidLo{animation-duration:8s!important}
+  .lp-returning .login-title em::after{
+    content:'';display:inline-block;width:6px;height:6px;border-radius:50%;
+    background:rgba(var(--cyan),0.85);margin-left:10px;vertical-align:middle;
+    animation:lpReturnDot 2s ease-in-out infinite;
+    box-shadow:0 0 12px rgba(var(--cyan),0.6);
+  }
+  @keyframes lpReturnDot{
+    0%,100%{opacity:0.4;transform:scale(0.8)}
+    50%    {opacity:1;  transform:scale(1.15)}
+  }
+
+  /* ───────── Pillar 9: Iris Accommodation — set inline via JS ───────── */
+  /* The pupil scales using --lp-accom-scale set by JS based on mouse distance.
+     Combined with the existing breath animation via CSS calc — no conflict. */
+
+  /* ───────── Pillar 10: Submit Ritual ───────── */
+  #lpRitualOverlay{
+    position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;pointer-events:none;
+    background:radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(4,6,8,0) 100%);
+    opacity:0;transition:opacity 0.5s ease;
+    display:flex;align-items:center;justify-content:center;
+  }
+  #lpRitualOverlay.active{
+    opacity:1;
+    pointer-events:auto;
+    background:radial-gradient(ellipse at center, rgba(4,6,8,0.0) 0%, rgba(4,6,8,0.95) 65%);
+    transition:opacity 0.6s ease, background 1.2s ease;
+  }
+  #lpRitualPupil{
+    width:60px;height:60px;border-radius:50%;
+    background:radial-gradient(circle at 42% 38%,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,0.95) 65%,
+      rgba(var(--cyan),0.4) 95%,
+      rgba(var(--cyan),0) 100%);
+    box-shadow:
+      0 0 30px rgba(var(--cyan),0.4),
+      0 0 80px rgba(var(--cyan),0.2),
+      inset 0 0 20px rgba(0,0,0,0.8);
+    opacity:0;
+    transform:scale(0.3);
+    position:relative;
+  }
+  #lpRitualOverlay.active #lpRitualPupil{
+    animation:lpRitualPupilExpand 2.4s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  @keyframes lpRitualPupilExpand{
+    0%  {opacity:0;   transform:scale(0.3)}
+    15% {opacity:1;   transform:scale(0.5)}
+    50% {opacity:1;   transform:scale(8)}
+    100%{opacity:0.95;transform:scale(60)}
+  }
+  /* Stars inside the pupil — recursion */
+  #lpRitualStars{
+    position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
+    opacity:0;
+  }
+  #lpRitualOverlay.active #lpRitualStars{
+    animation:lpRitualStarsIn 2.4s ease-out 0.6s forwards;
+  }
+  @keyframes lpRitualStarsIn{
+    0%  {opacity:0}
+    100%{opacity:1}
+  }
+  .lp-ritual-star{
+    position:absolute;width:2px;height:2px;border-radius:50%;
+    background:rgba(232,242,255,0.85);
+    box-shadow:0 0 4px rgba(232,242,255,0.7);
+  }
+  /* The threshold glyph — appears just as pupil fully opens */
+  #lpRitualGlyph{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.5);
+    font-family:'Cormorant Garamond',serif;
+    font-size:42px;font-style:italic;font-weight:300;
+    color:rgba(232,242,255,0);
+    letter-spacing:6px;
+    text-shadow:0 0 24px rgba(var(--cyan),0.6);
+    opacity:0;
+    white-space:nowrap;
+  }
+  #lpRitualOverlay.active #lpRitualGlyph{
+    animation:lpRitualGlyphIn 2.4s cubic-bezier(0.22,1,0.36,1) 1.2s forwards;
+  }
+  @keyframes lpRitualGlyphIn{
+    0%  {opacity:0;   transform:translate(-50%,-50%) scale(0.5)}
+    25% {opacity:1;   transform:translate(-50%,-50%) scale(1)}
+    75% {opacity:1;   transform:translate(-50%,-50%) scale(1.05)}
+    100%{opacity:0;   transform:translate(-50%,-50%) scale(1.2)}
+  }
+
+  /* Form fade during ritual */
+  .lp-ritual-playing .login-left{
+    opacity:0;transition:opacity 0.8s ease;pointer-events:none;
+  }
+  .lp-ritual-playing .login-right .lp-stars,
+  .lp-ritual-playing .login-right .lp-words,
+  .lp-ritual-playing .login-right .lp-chat-preview{
+    opacity:0;transition:opacity 0.8s ease;
+  }
+
+  /* Reduced motion — skip the cinematic, just fade */
+  @media (prefers-reduced-motion: reduce){
+    #lpRitualPupil{animation:none!important;opacity:1;transform:scale(40)}
+    #lpRitualStars,#lpRitualGlyph{animation:none!important}
+  }
+  /* ───────── Pillar 11: Origin Resonance ─────────
+     The Live Demo upgraded — the globe now KNOWS the user.
+     A small data panel below the globe shows real-time community
+     resonance. It explains what the globe IS (the system's memory
+     of language communities) and shows who the user belongs to. */
+  .lp-resonance{
+    position:relative;
+    width:100%;max-width:340px;margin:8px auto 14px;
+    padding:14px 16px 12px;
+    background:linear-gradient(135deg,rgba(8,12,20,0.65) 0%,rgba(12,18,28,0.55) 100%);
+    border:1px solid rgba(var(--cyan),0.18);
+    border-radius:14px;
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    box-shadow:0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(var(--ice),0.05);
+    opacity:0;transform:translateY(8px);
+    transition:opacity 0.7s cubic-bezier(0.22,1,0.36,1),transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    z-index:3;
+  }
+  .lp-resonance.ready{opacity:1;transform:translateY(0)}
+  /* Subtle top accent line */
+  .lp-resonance::before{
+    content:'';position:absolute;top:0;left:18px;right:42px;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(var(--cyan),0.55),transparent);
+  }
+  .lp-res-info{
+    position:absolute;top:10px;right:10px;
+    width:22px;height:22px;border-radius:50%;
+    background:rgba(var(--cyan),0.08);
+    border:1px solid rgba(var(--cyan),0.28);
+    color:rgba(var(--cyan),0.9);
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:all 0.25s;
+    font-family:'DM Mono',monospace;font-size:10px;font-weight:600;
+    padding:0;
+  }
+  .lp-res-info:hover{
+    background:rgba(var(--cyan),0.18);
+    border-color:rgba(var(--cyan),0.55);
+    transform:scale(1.08);
+  }
+  .lp-res-head{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+  .lp-res-flag{
+    font-size:22px;line-height:1;
+    filter:drop-shadow(0 0 8px rgba(var(--cyan),0.35));
+    transition:filter 0.5s;
+  }
+  .lp-res-region{
+    font-family:'DM Mono',monospace;
+    font-size:9.5px;letter-spacing:2.2px;text-transform:uppercase;
+    color:rgba(var(--ice),0.95);
+    flex:1;line-height:1.35;
+  }
+  .lp-res-region em{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-weight:500;
+    font-size:13px;letter-spacing:0.5px;
+    text-transform:none;
+    color:rgba(var(--cyan),0.9);
+    margin-left:4px;
+  }
+  .lp-res-divider{
+    height:1px;
+    background:linear-gradient(90deg,transparent,rgba(var(--ice),0.12),transparent);
+    margin:6px 0 10px;
+  }
+  .lp-res-count{
+    display:flex;align-items:baseline;gap:8px;
+    margin-bottom:9px;
+  }
+  .lp-res-num{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-weight:500;
+    font-size:22px;line-height:1;
+    color:rgba(var(--ice),0.96);
+    text-shadow:0 0 16px rgba(var(--cyan),0.4);
+    transition:color 0.6s,transform 0.4s;
+    display:inline-block;
+  }
+  .lp-res-num.bump{
+    animation:lpResBump 0.6s ease-out;
+  }
+  @keyframes lpResBump{
+    0%  {transform:translateY(0);   color:rgba(var(--ice),0.96)}
+    35% {transform:translateY(-4px);color:rgba(var(--cyan),1)}
+    100%{transform:translateY(0);   color:rgba(var(--ice),0.96)}
+  }
+  .lp-res-label{
+    font-family:'Sora',sans-serif;font-weight:300;
+    font-size:11px;color:rgba(var(--id),0.78);
+    letter-spacing:0.2px;
+  }
+  .lp-res-pattern{
+    display:flex;flex-direction:column;gap:3px;
+    margin-bottom:10px;
+  }
+  .lp-res-pattern-lbl{
+    font-family:'DM Mono',monospace;
+    font-size:8.5px;letter-spacing:2px;text-transform:uppercase;
+    color:rgba(var(--id),0.5);
+  }
+  .lp-res-pattern-val{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-weight:500;
+    font-size:14px;letter-spacing:0.3px;
+    color:rgba(var(--cyan),0.92);
+    text-shadow:0 0 12px rgba(var(--cyan),0.25);
+  }
+  .lp-res-live{
+    display:flex;align-items:center;gap:7px;
+    padding-top:8px;
+    border-top:1px dashed rgba(var(--ice),0.08);
+  }
+  .lp-res-live-dot{
+    width:7px;height:7px;border-radius:50%;
+    background:rgba(34,200,140,0.95);
+    box-shadow:0 0 8px rgba(34,200,140,0.8);
+    animation:lpResLivePulse 2s ease-in-out infinite;
+  }
+  @keyframes lpResLivePulse{
+    0%,100%{opacity:0.6;transform:scale(0.85)}
+    50%    {opacity:1;  transform:scale(1.15)}
+  }
+  .lp-res-live-text{
+    font-family:'DM Mono',monospace;
+    font-size:9px;letter-spacing:1.6px;text-transform:uppercase;
+    color:rgba(var(--id),0.7);
+    flex:1;
+  }
+  .lp-res-live-text em{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    text-transform:none;letter-spacing:0;font-size:11.5px;
+    color:rgba(var(--cyan),0.85);
+  }
+
+  /* Beam from globe → eye when a country activates (the visible link) */
+  .lp-res-beam{
+    position:absolute;pointer-events:none;
+    height:1px;
+    background:linear-gradient(90deg,
+      rgba(var(--cyan),0) 0%,
+      rgba(var(--cyan),0.6) 30%,
+      rgba(var(--cyan),0.9) 50%,
+      rgba(var(--cyan),0.6) 70%,
+      rgba(var(--cyan),0) 100%);
+    box-shadow:0 0 6px rgba(var(--cyan),0.7);
+    transform-origin:0 50%;
+    opacity:0;z-index:8;
+  }
+  .lp-res-beam.fire{
+    animation:lpResBeamFire 1.4s ease-out forwards;
+  }
+  @keyframes lpResBeamFire{
+    0%  {opacity:0;   transform-scale-x:0.1}
+    20% {opacity:0.9}
+    60% {opacity:0.85}
+    100%{opacity:0}
+  }
+
+  /* The explanation overlay — "What is this?" */
+  .lp-res-explain{
+    position:fixed;top:0;left:0;right:0;bottom:0;z-index:9500;
+    background:rgba(4,6,8,0);
+    backdrop-filter:blur(0);
+    -webkit-backdrop-filter:blur(0);
+    opacity:0;visibility:hidden;
+    transition:opacity 0.5s,visibility 0.5s,background 0.5s,backdrop-filter 0.5s;
+    display:flex;align-items:center;justify-content:center;
+    padding:24px;
+    pointer-events:none;
+  }
+  .lp-res-explain.active{
+    opacity:1;visibility:visible;pointer-events:auto;
+    background:rgba(4,6,8,0.78);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+  }
+  .lp-res-explain-inner{
+    max-width:480px;width:100%;
+    padding:32px 30px 28px;
+    background:linear-gradient(135deg,rgba(10,14,22,0.95) 0%,rgba(6,10,16,0.95) 100%);
+    border:1px solid rgba(var(--cyan),0.25);
+    border-radius:18px;
+    box-shadow:0 24px 80px rgba(0,0,0,0.7),inset 0 1px 0 rgba(var(--ice),0.06);
+    position:relative;
+    transform:scale(0.94) translateY(12px);
+    transition:transform 0.55s cubic-bezier(0.22,1,0.36,1);
+  }
+  .lp-res-explain.active .lp-res-explain-inner{
+    transform:scale(1) translateY(0);
+  }
+  .lp-res-explain-close{
+    position:absolute;top:12px;right:14px;
+    width:30px;height:30px;border-radius:50%;
+    background:rgba(var(--ice),0.04);border:1px solid rgba(var(--ice),0.12);
+    color:rgba(var(--ice),0.7);
+    font-size:18px;font-weight:300;line-height:1;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:all 0.25s;padding:0;
+  }
+  .lp-res-explain-close:hover{
+    background:rgba(var(--ice),0.1);border-color:rgba(var(--ice),0.3);
+    color:rgba(var(--ice),1);transform:rotate(90deg);
+  }
+  .lp-res-explain h3{
+    font-family:'Cormorant Garamond',serif;
+    font-size:26px;font-weight:500;letter-spacing:-0.3px;
+    color:rgba(var(--ice),0.96);
+    margin:0 0 18px;line-height:1.25;
+  }
+  .lp-res-explain h3 em{
+    font-style:italic;font-weight:400;
+    color:rgba(var(--cyan),0.92);
+  }
+  .lp-res-explain-list{
+    list-style:none;padding:0;margin:0 0 20px;
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .lp-res-explain-list li{
+    display:flex;gap:14px;align-items:flex-start;
+    padding:11px 12px;
+    background:rgba(var(--cyan),0.04);
+    border-left:2px solid rgba(var(--cyan),0.5);
+    border-radius:0 8px 8px 0;
+  }
+  .lp-res-explain-icon{
+    font-family:'DM Mono',monospace;
+    font-size:10px;letter-spacing:1.5px;
+    color:rgba(var(--cyan),0.85);
+    min-width:60px;
+    padding-top:2px;
+    text-transform:uppercase;font-weight:600;
+  }
+  .lp-res-explain-text{
+    font-family:'Sora',sans-serif;
+    font-size:13px;font-weight:300;
+    color:rgba(var(--ice),0.88);
+    line-height:1.55;flex:1;
+  }
+  .lp-res-explain-text em{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-weight:500;
+    color:rgba(var(--cyan),0.9);
+    font-size:14px;
+  }
+  .lp-res-explain-foot{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-weight:400;
+    font-size:14.5px;
+    color:rgba(var(--ice),0.78);
+    text-align:center;
+    line-height:1.5;
+    padding-top:16px;
+    border-top:1px solid rgba(var(--ice),0.08);
+    margin:0;
+  }
+
+  /* Reduce on tier-low */
+  .tier-low .lp-resonance{display:none}
+  .tier-low .lp-res-explain{display:none}
+
+  /* Mobile — make panel slightly tighter */
+  @media(max-width:900px){
+    .lp-resonance{max-width:none;margin:6px 16px 12px}
+    .lp-res-num{font-size:20px}
+    .lp-res-pattern-val{font-size:13px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .lp-res-live-dot{animation:none}
+    .lp-res-num{transition:none}
+    .lp-resonance{transition:opacity 0.3s}
+  }

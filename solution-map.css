@@ -1,0 +1,13 @@
+  .solmap{position:relative;padding:88px 24px 96px;background:radial-gradient(ellipse 78% 62% at 50% 42%,rgba(20,28,46,0.4),transparent 72%);overflow:hidden}
+  .solmap-head{max-width:720px;margin:0 auto 22px;text-align:center;position:relative;z-index:2}
+  .solmap-eyebrow{font-family:'DM Mono',monospace;font-size:10px;font-weight:300;letter-spacing:5px;text-transform:uppercase;color:rgba(var(--id),0.55);margin-bottom:14px}
+  .solmap-title{font-family:'Instrument Serif',serif;font-size:42px;font-weight:400;line-height:1.12;color:rgba(var(--ice),0.92);margin-bottom:12px}
+  .solmap-sub{font-family:'Sora',sans-serif;font-size:15px;line-height:1.6;color:rgba(var(--id),0.62);max-width:540px;margin:0 auto}
+  .solmap-stage{max-width:880px;margin:8px auto 0;position:relative;z-index:1}
+  .solmap-svg{width:100%;height:auto;display:block;cursor:ew-resize;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+  #smHint{transition:opacity .5s ease}
+  @media (max-width:768px){
+    .solmap{padding:60px 14px 70px}
+    .solmap-title{font-size:30px}
+    .solmap-sub{font-size:13px}
+  }

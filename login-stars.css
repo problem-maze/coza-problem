@@ -1,0 +1,956 @@
+  /* Stars background */
+  .lp-stars{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden}
+  .lp-star{position:absolute;background:rgba(var(--ice),0.7);border-radius:50%;animation:lpStarTwinkle var(--st,4s) ease-in-out infinite}
+  @keyframes lpStarTwinkle{0%,100%{opacity:0.2}50%{opacity:0.85}}
+  .low-end .lp-star{animation:none;opacity:0.5}
+  
+  /* Eye section — taller and bigger */
+  .login-eye-section{position:relative;flex:1.5;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:520px;padding-top:12px;z-index:2}
+  .login-eye-wrap{position:relative;width:100%;max-width:740px;height:520px;display:flex;align-items:center;justify-content:center}
+  
+  /* Floating words */
+  .lp-words{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:1}
+  .lp-word{position:absolute;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;letter-spacing:0.5px;white-space:nowrap;transform:translate(-50%,-50%);transition:all 1.5s cubic-bezier(0.4,0,0.2,1);opacity:0}
+  .lp-word.shown{opacity:0.85}
+  .lp-word.absorbed{opacity:0;transform:translate(-50%,-50%) scale(0.3);filter:blur(4px)}
+  .lp-word.emerging{opacity:0;transform:translate(-50%,-50%) scale(0.5)}
+  .lp-word.emerging.shown{opacity:0.95;transform:translate(-50%,-50%) scale(1)}
+  .lp-word.negative{color:rgba(var(--ice),0.5);font-size:15px}
+  .lp-word.positive{color:rgba(var(--cyan),0.95);font-size:17px;text-shadow:0 0 14px rgba(var(--cyan),0.5)}
+  
+  /* Phase indicator (bigger and more visible) */
+  .login-phase{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:5px;text-transform:uppercase;color:rgba(var(--cyan),0);transition:color 0.6s;margin-top:18px;min-height:16px}
+  .login-phase.on{color:rgba(var(--cyan),0.8)}
+  .login-phase.glow{color:rgba(var(--cyan),1);text-shadow:0 0 20px rgba(var(--cyan),0.5)}
+  
+  /* Live Chat Preview (glassmorphism) */
+  .lp-chat-preview{
+    position:relative;z-index:2;
+    margin:0 auto 0;width:100%;max-width:440px;
+    background:rgba(var(--ice),0.04);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border:1px solid rgba(var(--cyan),0.18);
+    border-radius:16px;
+    padding:14px 18px;
+    box-shadow:0 8px 40px rgba(0,0,0,0.35),inset 0 1px 0 rgba(var(--ice),0.06);
+  }
+  .lp-chat-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(var(--ice),0.08)}
+  .lp-chat-dot{width:8px;height:8px;border-radius:50%;background:rgba(34,200,140,0.95);box-shadow:0 0 8px rgba(34,200,140,0.6);animation:lpDotPulse 2s ease-in-out infinite}
+  @keyframes lpDotPulse{0%,100%{opacity:0.7;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
+  .lp-chat-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(var(--id),0.7)}
+  /* ── Moonlight dwell-timer ring (3s sweep per country) ── */
+  .lp-dwell-ring{flex:0 0 auto;transform:rotate(-90deg);overflow:visible}
+  .lp-dwell-ring circle{fill:none;stroke-linecap:round}
+  .lp-dwell-track{stroke:rgba(220,242,255,0.12);stroke-width:2}
+  .lp-dwell-prog{
+    stroke:rgba(220,242,255,0.92);stroke-width:2.2;
+    /* r=9 → circumference 2π·9 ≈ 56.55 */
+    stroke-dasharray:56.55;stroke-dashoffset:56.55;
+    filter:drop-shadow(0 0 3px rgba(220,242,255,0.55));
+  }
+  .tier-low .lp-dwell-prog{filter:none}
+  .lp-lang-badge{
+    margin-left:auto;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;
+    color:rgba(var(--ice),0.55);background:rgba(var(--ice),0.06);
+    border:1px solid rgba(var(--ice),0.1);padding:4px 11px;border-radius:9px;
+    transition:all 0.5s ease;white-space:nowrap;cursor:default;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  /* Picked-country ring animation on globe */
+  .tw-picked-ring{
+    transform-origin:center;
+    animation:twPickedPulse 2.2s ease-out infinite;
+  }
+  @keyframes twPickedPulse{
+    0%  {r:6;  stroke-opacity:0.9; stroke-width:1.2}
+    100%{r:18; stroke-opacity:0;   stroke-width:0.2}
+  }
+  .lp-bdg-country{
+    color:rgba(var(--ice),0.95);font-weight:500;letter-spacing:1.4px;
+    max-width:140px;overflow:hidden;text-overflow:ellipsis;
+  }
+  .lp-bdg-sep{opacity:0.4;margin:0 1px}
+  .lp-bdg-code{opacity:0.7;letter-spacing:1.6px}
+  @media(max-width:520px){
+    .lp-bdg-country{max-width:90px;font-size:8.5px}
+  }
+  .lp-lang-badge.lit{
+    color:rgba(var(--cyan),1);border-color:rgba(var(--cyan),0.35);
+    background:rgba(var(--cyan),0.08);box-shadow:0 0 8px rgba(var(--cyan),0.15);
+  }
+  /* Family-aware: unified to --cyan (moonlight white) */
+  .lp-lang-badge.fam{
+    color:rgba(var(--cyan),1);
+    border-color:rgba(var(--cyan),0.45);
+    background:rgba(var(--cyan),0.10);
+    box-shadow:0 0 10px rgba(var(--cyan),0.30);
+  }
+  .lp-lang-badge.fam .lp-bdg-country{
+    color:rgba(var(--cyan),1);
+  }
+  .lp-lang-badge.fam .lp-bdg-code{
+    color:rgba(var(--cyan),0.7);
+  }
+  /* Wrap groups badge + family chip */
+  .lp-lang-wrap{
+    margin-left:auto;
+    display:flex;align-items:center;gap:8px;
+    flex-wrap:wrap;justify-content:flex-end;
+  }
+  .lp-lang-family{
+    font-family:'DM Mono',monospace;
+    font-size:8px;
+    letter-spacing:1.2px;
+    /* Unified to the site's one signature color (moonlight white) —
+       previously this tinted differently per language family, which
+       broke consistency with the eye and everything around it. */
+    color:rgba(var(--cyan),0.85);
+    background:rgba(var(--cyan),0.06);
+    border:1px solid rgba(var(--cyan),0.20);
+    padding:2px 7px;
+    border-radius:6px;
+    white-space:nowrap;
+    transition:all 0.55s cubic-bezier(.4,0,.2,1);
+    text-transform:uppercase;
+    opacity:0.85;
+  }
+  .lp-lang-family.lit{
+    color:rgba(var(--cyan),1);
+    background:rgba(var(--cyan),0.12);
+    border-color:rgba(var(--cyan),0.45);
+    box-shadow:0 0 8px rgba(var(--cyan),0.25);
+    text-shadow:0 0 6px rgba(var(--cyan),0.45);
+    opacity:1;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     TWO WORLDS — eye + globe + chat orchestration
+     ═══════════════════════════════════════════════════════════════════ */
+
+  /* When active, restructure the right panel */
+  .login-right{
+    /* Already a flex column - keep that */
+    position:relative;
+  }
+
+  /* Mini eye: shrink and move to top-right */
+  .login-eye-section.two-worlds-active{
+    position:absolute;
+    top:16px;
+    right:16px;
+    width:230px;
+    height:180px;
+    min-height:0!important;
+    flex:none!important;
+    z-index:10;
+    padding:0;
+    align-items:flex-start;
+    pointer-events:none;
+  }
+  .login-eye-section.two-worlds-active .login-eye-wrap{
+    width:100%;
+    height:100%;
+    max-width:none;
+    pointer-events:auto;
+  }
+  .login-eye-section.two-worlds-active .login-eye-svg{
+    width:100%;height:100%;max-height:none;
+    filter:drop-shadow(0 0 28px rgba(var(--cyan),0.4))!important;
+  }
+  .login-eye-section.two-worlds-active .lp-words,
+  .login-eye-section.two-worlds-active .login-phase{
+    display:none!important;
+  }
+
+  /* Star field */
+  .tw-stars{
+    position:absolute;
+    top:0;left:0;right:0;bottom:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:1;
+  }
+  .tw-star{
+    position:absolute;
+    width:1.5px;height:1.5px;
+    background:rgba(var(--ice),0.7);
+    border-radius:50%;
+    animation:twStarTwinkle var(--dur,4s) ease-in-out infinite;
+    animation-delay:var(--dly,0s);
+    box-shadow:0 0 2px rgba(var(--ice),0.5);
+  }
+  .tw-star-bright{
+    width:2.2px;height:2.2px;
+    background:rgba(var(--cyan),0.95);
+    box-shadow:0 0 4px rgba(var(--cyan),0.7);
+  }
+  @keyframes twStarTwinkle{
+    0%,100%{opacity:0.15;transform:scale(0.85)}
+    50%    {opacity:0.95;transform:scale(1.15)}
+  }
+  .tier-low .tw-stars{display:none}
+
+  /* Globe container */
+  .tw-globe-container{
+    position:relative;
+    width:100%;
+    flex:1;
+    min-height:280px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:2;
+    padding:18px 16px 14px;
+  }
+  .tw-globe-svg{
+    width:100%;
+    max-width:340px;
+    height:auto;
+    aspect-ratio:1;
+    cursor:grab;
+    will-change:transform;
+    filter:drop-shadow(0 0 35px rgba(var(--cyan),0.22));
+    transition:filter 0.6s;
+  }
+  .tw-globe-container:hover .tw-globe-svg{
+    filter:drop-shadow(0 0 55px rgba(var(--cyan),0.4));
+  }
+  .tw-globe-container:active{cursor:grabbing}
+
+  /* Active country ring animation */
+  @keyframes twActivePing{
+    0%  {r:4;  stroke-opacity:0.7; stroke-width:0.8}
+    100%{r:16; stroke-opacity:0;   stroke-width:0.2}
+  }
+
+  /* Cinematic country label */
+  .tw-country-label{
+    position:absolute;
+    bottom:18px;
+    left:18px;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:4px;
+    z-index:5;
+    opacity:0;
+    transform:translateY(8px);
+    transition:opacity 0.6s, transform 0.6s;
+    pointer-events:none;
+  }
+  .tw-country-label.show{
+    opacity:1;
+    transform:translateY(0);
+  }
+  .tw-cl-flag{font-size:22px;line-height:1}
+  .tw-cl-name{
+    font-family:'DM Mono',monospace;
+    font-size:12px;
+    letter-spacing:3px;
+    color:rgba(var(--ice),0.95);
+    text-shadow:0 0 8px rgba(var(--cyan),0.5);
+  }
+  .tw-cl-lang{
+    font-family:'Cormorant Garamond','Sora',serif;
+    font-style:italic;
+    font-size:13px;
+    color:rgba(var(--cyan),0.85);
+  }
+  /* v123: famous-landmark icon — draws on when a country appears, moonlight white */
+  .tw-cl-landmark{
+    width:54px;height:54px;
+    margin-bottom:2px;
+    opacity:0;
+    transform:translateY(6px) scale(0.96);
+    transition:opacity 0.5s ease, transform 0.6s cubic-bezier(.4,0,.2,1);
+    overflow:visible;
+    filter:drop-shadow(0 0 5px rgba(220,242,255,0.4));
+  }
+  .tw-country-label.show .tw-cl-landmark{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+  .tw-cl-landmark path, .tw-cl-landmark line, .tw-cl-landmark circle{
+    stroke:rgba(220,242,255,0.92);
+  }
+  /* the draw-on: dasharray/offset set inline per element, animated via this transition */
+  .tw-cl-landmark .lm-draw{
+    stroke-dasharray:1;
+    stroke-dashoffset:1;
+  }
+  .tw-cl-landmark.lm-on .lm-draw{
+    stroke-dashoffset:0;
+  }
+  .tier-low .tw-cl-landmark{filter:none}
+  @media(max-width:520px){
+    .tw-cl-landmark{width:44px;height:44px}
+  }
+
+  /* Live counter (bottom-left of globe area) */
+  .tw-counter{
+    position:absolute;
+    top:18px;
+    left:18px;
+    display:flex;
+    align-items:center;
+    gap:4px;
+    font-family:'DM Mono',monospace;
+    font-size:9px;
+    letter-spacing:2px;
+    color:rgba(var(--id),0.55);
+    z-index:5;
+    pointer-events:none;
+  }
+  .tw-counter-num{
+    color:rgba(var(--cyan),0.85);
+    font-weight:500;
+    margin-right:3px;
+  }
+  .tw-counter-lbl{margin-right:8px}
+  .tw-counter-dot{
+    color:rgba(var(--cyan),0.4);
+    margin:0 4px;
+  }
+  /* Family chip — fills in with the active family's color */
+  .tw-counter-fam{
+    display:inline-block;
+    padding:3px 7px 2px;
+    margin-right:8px;
+    border-radius:6px;
+    font-weight:600;
+    letter-spacing:2.5px;
+    color:rgba(var(--ice),0.85);
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(var(--ice),0.12);
+    transition:all 0.55s cubic-bezier(.4,0,.2,1);
+  }
+  .tw-counter-fam.lit{
+    color:#fff;
+    background:rgba(var(--cyan),0.22);
+    border-color:rgba(var(--cyan),0.55);
+    box-shadow:0 0 14px rgba(var(--cyan),0.35),
+               inset 0 0 6px rgba(var(--cyan),0.18);
+    text-shadow:0 0 8px rgba(var(--cyan),0.6);
+  }
+  /* Family paths — soft glow when idle, full brightness when family is active */
+  #twFamilyPaths path{
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    transition:stroke-opacity 0.5s, stroke-width 0.5s, filter 0.5s;
+  }
+  #twFamilyPaths path.dim{stroke-opacity:0.10}
+  #twFamilyPaths path.idle{stroke-opacity:0.32}
+  #twFamilyPaths path.active{stroke-opacity:0.95;filter:drop-shadow(0 0 4px currentColor)}
+  /* Travel dash (animated highlight crawling along the active path) */
+  #twFamilyTravel path{
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    stroke-width:1.6;
+    stroke-dasharray:6 14;
+    animation:twTravelDash 1.6s linear infinite;
+    filter:drop-shadow(0 0 6px currentColor);
+  }
+  @keyframes twTravelDash{
+    from{stroke-dashoffset:0}
+    to  {stroke-dashoffset:-40}
+  }
+  .tier-low #twFamilyTravel{display:none}
+
+  /* Light beam UP (globe → eye) */
+  .tw-beam-up{
+    position:absolute;
+    top:80px;
+    right:80px;
+    width:2px;
+    height:0;
+    background:linear-gradient(to top, rgba(var(--cyan),0), rgba(var(--cyan),0.85), rgba(var(--cyan),0));
+    box-shadow:0 0 12px rgba(var(--cyan),0.6);
+    z-index:4;
+    opacity:0;
+    pointer-events:none;
+    transform-origin:bottom;
+    transform:rotate(20deg);
+  }
+  .tw-beam-up.active{
+    animation:twBeamUp 1.4s ease-out;
+  }
+  @keyframes twBeamUp{
+    0%   {height:0;   opacity:0}
+    30%  {height:140px;opacity:1}
+    100% {height:140px;opacity:0}
+  }
+
+  /* Light beam DOWN (globe → chat) */
+  .tw-beam-down{
+    position:absolute;
+    bottom:140px;
+    left:50%;
+    width:2px;
+    height:0;
+    background:linear-gradient(to bottom, rgba(var(--cyan),0), rgba(var(--cyan),0.85), rgba(var(--cyan),0));
+    box-shadow:0 0 12px rgba(var(--cyan),0.6);
+    z-index:4;
+    opacity:0;
+    pointer-events:none;
+    transform-origin:top;
+  }
+  .tw-beam-down.active{
+    animation:twBeamDown 1.4s ease-out;
+  }
+  .tw-beam-down.reverse{
+    animation:twBeamDownReverse 1.2s ease-out;
+  }
+  @keyframes twBeamDown{
+    0%   {height:0;   opacity:0}
+    30%  {height:80px;opacity:1}
+    100% {height:80px;opacity:0}
+  }
+  @keyframes twBeamDownReverse{
+    0%   {height:80px;opacity:0;transform:scaleY(-1)}
+    30%  {height:80px;opacity:1;transform:scaleY(-1)}
+    100% {height:0;opacity:0;transform:scaleY(-1)}
+  }
+
+  /* Hide beams on low tier */
+  .tier-low .tw-beam-up,
+  .tier-low .tw-beam-down{display:none}
+
+  /* Position chat below globe */
+  #pageLogin .lp-chat-preview{
+    position:relative;
+    z-index:3;
+    margin-top:auto;
+  }
+
+  /* Mobile responsive */
+  @media(max-width:920px){
+    .login-eye-section.two-worlds-active{
+      width:110px;
+      height:85px;
+      top:14px;
+      right:14px;
+    }
+    .tw-globe-container{
+      min-height:260px;
+      padding:20px 14px 14px;
+    }
+    .tw-globe-svg{max-width:280px}
+    .tw-counter{font-size:7px;letter-spacing:1.5px;top:12px;left:12px}
+    .tw-cl-name{font-size:10px;letter-spacing:2px}
+    .tw-cl-lang{font-size:11px}
+    .tw-cl-flag{font-size:18px}
+    .tw-country-label{bottom:12px;left:12px}
+  }
+  @media(max-width:480px){
+    .login-eye-section.two-worlds-active{
+      width:80px;
+      height:65px;
+    }
+    .tw-globe-svg{max-width:220px}
+  }
+
+
+  
+  .lp-chat-body{display:flex;flex-direction:column;gap:8px;min-height:120px}
+  .lp-msg{padding:10px 14px;border-radius:12px;font-family:'Sora',sans-serif;font-size:13px;line-height:1.5;max-width:85%;opacity:0;transform:translateY(8px);transition:opacity 0.4s,transform 0.4s}
+  .lp-msg.in{opacity:1;transform:translateY(0)}
+  .lp-msg.user{align-self:flex-end;background:rgba(var(--cyan),0.18);border:1px solid rgba(var(--cyan),0.28);color:rgba(var(--ice),0.95);border-bottom-right-radius:4px}
+  .lp-msg.ai{align-self:flex-start;background:rgba(var(--ice),0.05);border:1px solid rgba(var(--ice),0.1);color:rgba(var(--ice),0.92);border-bottom-left-radius:4px}
+  .lp-typing{display:inline-flex;gap:4px;align-items:center;padding:4px 0}
+  .lp-typing span{width:5px;height:5px;border-radius:50%;background:rgba(var(--ice),0.6);animation:lpTyping 1.2s ease-in-out infinite}
+  .lp-typing span:nth-child(2){animation-delay:0.2s}
+  .lp-typing span:nth-child(3){animation-delay:0.4s}
+  @keyframes lpTyping{0%,60%,100%{opacity:0.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+  
+  /* Path indicator visualization */
+  .lp-path-indicator{margin-top:6px;padding:8px 12px;background:rgba(var(--cyan),0.08);border-radius:8px;border-left:2px solid rgba(var(--cyan),0.6);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(var(--cyan),0.85);opacity:0;transition:opacity 0.5s;display:flex;align-items:center;gap:8px}
+  .lp-path-indicator.in{opacity:1}
+  .lp-path-indicator::before{content:'→';color:rgba(var(--cyan),1);font-size:14px}
+  
+  /* Mobile: smaller eye, chat preview hidden in compact mode */
+  @media(max-width:900px){
+    .login-eye-section{min-height:340px}
+    .login-eye-wrap{height:340px;max-width:480px}
+    .lp-chat-preview{max-width:100%;margin-top:18px;padding:14px 16px}
+    .lp-chat-body{min-height:110px}
+    .lp-msg{font-size:12px;padding:8px 12px}
+    .lp-word.negative{font-size:13px}
+    .lp-word.positive{font-size:14px}
+  }
+  @media(max-width:480px){
+    .login-eye-section{min-height:280px}
+    .login-eye-wrap{height:280px}
+    .lp-chat-body{min-height:100px}
+  }
+  
+  /* ═══════════════ ADAPTIVE PERFORMANCE — 3 TIERS ═══════════════ */
+  /* HIGH tier: full premium experience (default, no overrides) */
+  
+  /* MID tier: simplified for mid-range mobile devices */
+  .tier-mid #pageLogin .lp-rays{display:none}                          /* hide 8 light rays */
+  .tier-mid #pageLogin #lpPupilHalo{display:none}                       /* hide outer halo */
+  .tier-mid #pageLogin .login-right > svg g[opacity="0.4"]{display:none}/* hide atmosphere streaks */
+  .tier-mid #pageLogin .lp-stars .lp-star:nth-child(n+16){display:none} /* limit stars to 15 */
+  .tier-mid #pageLogin .lp-ring{animation-duration:120s,8s!important}   /* slower animations */
+  .tier-mid #pageLogin .lp-chat-preview{backdrop-filter:none!important;background:rgba(8,12,18,0.85)} /* no backdrop blur */
+  .tier-mid .pwa-install-btn{backdrop-filter:none;background:rgba(var(--cyan),0.2)}
+  .tier-mid .theme-fab{backdrop-filter:none}
+  
+  /* LOW tier: minimal animations for weak devices */
+  .tier-low #pageLogin .lp-rays,
+  .tier-low #pageLogin #lpPupilHalo,
+  .tier-low #pageLogin #lpPupilBloom,
+  .tier-low #pageLogin .login-right > svg g[opacity="0.4"],
+  .tier-low #pageLogin .lp-words,
+  .tier-low #pageLogin .lp-stars{display:none!important}
+  .tier-low #pageLogin .lp-ring{animation:lpRingSpin1 90s linear infinite!important;filter:none!important}
+  .tier-low #pageLogin #lpPupil{animation:none!important;filter:none!important}
+  .tier-low #pageLogin #lpLidUp,.tier-low #pageLogin #lpLidLo{animation:none!important;filter:none!important}
+  .tier-low #pageLogin #lpIris{animation:none!important}
+  .tier-low #pageLogin .login-eye-svg{filter:none!important}
+  .tier-low #pageLogin .login-right{background:var(--bg)!important}     /* solid bg, no gradient */
+  .tier-low #pageLogin .lp-chat-preview{backdrop-filter:none!important;background:rgba(8,12,18,0.95);border:1px solid rgba(var(--cyan),0.25)}
+  /* lhmz-tag tier guards removed (taglines deleted) */
+  /* PERF tier-low: stop lhmz insight pulse + walls breathe */
+  .tier-low .lhmz-solve{animation:lhmzSolveMaster 8s cubic-bezier(0.4,0,0.2,1) 1.0s infinite!important}
+  .tier-low .lhmz-eye{animation:lhmzEyeAppear 0.4s ease 2.2s forwards!important}
+  .tier-low .lhmz-particle{display:none}
+  .tier-low .lhmz-walls{animation:lhmzFade 0.6s ease 0.7s forwards!important}
+  .tier-low .lhmz-grid{animation:lhmzFade 0.6s ease 0.5s forwards!important}
+  /* PERF tier-low: no floating animation on maze head */
+  .tier-low .lhmz-svg{animation:none!important}
+
+  .tier-mid .lhmz-svg{animation-duration:9s!important}
+  /* PERF tier-low/mid: remove backdrop-filter from login-chat (GPU cost) */
+  .tier-low .login-chat,.tier-mid .login-chat{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(8,12,18,0.88)!important}
+  /* PERF tier-low: remove backdrop-filter from lp-cp-sheet */
+  .tier-low .lp-cp-sheet,.tier-mid .lp-cp-sheet{backdrop-filter:none!important;background:#0a0e1a!important}
+  .tier-low #pageLogin .login-right > svg defs filter feGaussianBlur{stdDeviation:0!important} /* disable blurs */
+  /* Whole-site low-tier: disable expensive effects */
+  .tier-low .pwa-install-btn,.tier-low .theme-fab{backdrop-filter:none!important}
+  .tier-low #snow{display:none}
+  .tier-low body::after{display:none}                                  /* grain off */
+  
+  /* Reduced motion: kill all animations site-wide */
+  .reduced-motion *,.reduced-motion *::before,.reduced-motion *::after{
+    animation-duration:0.001s!important;
+    animation-iteration-count:1!important;
+    transition-duration:0.1s!important;
+  }
+  
+  @keyframes lpRingSpin1{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  @keyframes lpRingSpin2{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  @keyframes lpRingSpin3{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  @keyframes lpRingSpin4{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+  /* ═══ Layer 5: Signature Rosette Animations ═══
+     Speed ratios follow Fibonacci → φ-derived: 64, 89, 144, 233, 377, 610, 987.
+     Each is ≈ previous × 1.618 (the golden ratio).
+     Copying these values is hard without knowing they're Fibonacci. */
+  @keyframes roseSpin1{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  @keyframes roseSpin2{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  @keyframes roseSpin3{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  @keyframes roseSpin4{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  @keyframes roseSpin5{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  @keyframes roseSpin6{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  @keyframes roseSpin7{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  /* Breathing: synced with pupil 6s but each layer offset by 0.85s
+     (which is 6 × (1/φ) ≈ 3.7, halved). Hard to guess without the formula. */
+  @keyframes roseBreathe{
+    0%,100%{opacity:0.32}
+    50%    {opacity:0.55}
+  }
+  /* The signature glint — visible only at golden-angle (137.5°) moments
+     in the 5.1s cycle. Anyone copying without this exact timing gets
+     either a constant glint or a flickering mess. */
+  @keyframes roseGlint{
+    0%,38%,100%{opacity:0;transform:scale(0.7)}
+    50%        {opacity:1;transform:scale(1.15)}
+    62%        {opacity:0.4;transform:scale(1)}
+  }
+  /* Performance: hide rosette on low tier to keep mobile smooth */
+  .tier-low .lp-rosette{display:none}
+  .tier-mid .rose-3,.tier-mid .rose-7{display:none}
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce){
+    .lp-rosette g{animation:none!important}
+    .lp-rosette{opacity:0.2}
+  }
+
+  /* Wave breathe — rings spin AND glow simultaneously, wave from outer→inner */
+  @keyframes lpRipPulse{
+    0%  {r:18; stroke-opacity:0.7; stroke-width:1.2}
+    100%{r:80; stroke-opacity:0; stroke-width:0.3}
+  }
+  @keyframes lpRingWaveBreathe{
+    0%,100%{stroke-opacity:0.55;filter:drop-shadow(0 0 2px rgba(var(--cyan),0.3))}
+    50%{stroke-opacity:1;filter:drop-shadow(0 0 9px rgba(var(--cyan),0.75))}
+  }
+  /* Lid breathe (subtle stroke opacity pulse, like real eyes) */
+  @keyframes lpLidUpBreathe{
+    0%,100%{stroke-opacity:0.92}
+    50%{stroke-opacity:1}
+  }
+  @keyframes lpLidLoBreathe{
+    0%,100%{stroke-opacity:0.78}
+    50%{stroke-opacity:0.95}
+  }
+  /* Pupil breathing (scale + glow pulse) */
+  @keyframes lpPupilBreathe{
+    0%,100%{transform:scale(1);filter:drop-shadow(0 0 8px rgba(var(--cyan),0.5))}
+    50%{transform:scale(1.12);filter:drop-shadow(0 0 16px rgba(var(--cyan),0.9))}
+  }
+  /* BLINK — eye closes briefly every 8s */
+  @keyframes lpBlinkUp{
+    0%,90%,100%{d:path("M -260 0 Q 0 -160, 260 0")}
+    93%{d:path("M -260 0 Q 0 -10, 260 0")}
+    96%{d:path("M -260 0 Q 0 -160, 260 0")}
+  }
+  @keyframes lpBlinkLo{
+    0%,90%,100%{d:path("M -260 0 Q 0 160, 260 0")}
+    93%{d:path("M -260 0 Q 0 10, 260 0")}
+    96%{d:path("M -260 0 Q 0 160, 260 0")}
+  }
+  /* Apply blink (replaces simple breathe — combines both via composite animation) */
+  #lpLidUp{animation:lpLidUpBreathe 6s ease-in-out infinite,lpBlinkUp 8s 4s ease-in-out infinite}
+  #lpLidLo{animation:lpLidLoBreathe 6s ease-in-out infinite,lpBlinkLo 8s 4s ease-in-out infinite}
+  /* Micro-saccades — tiny pupil movements (idle, when no phase active) */
+  @keyframes lpMicroSaccade{
+    0%,100%{transform:translate(0,0)}
+    20%{transform:translate(1.5px,-0.8px)}
+    45%{transform:translate(-1.2px,0.6px)}
+    70%{transform:translate(1px,0.4px)}
+    85%{transform:translate(-0.8px,-0.6px)}
+  }
+  #lpIris{animation:lpMicroSaccade 5s 3s ease-in-out infinite}
+  /* When phase running, JS controls iris transform — pause CSS animation */
+  #lpIris.lp-phase-active{animation:none}
+
+  /* Low-end: minimal animations */
+  .low-end .lp-ring{animation:lpRingSpin1 60s linear infinite!important}
+  .low-end #lpPupil,.low-end #lpLidUp,.low-end #lpLidLo,.low-end #lpIris{animation:none!important}
+
+  /* ═══════════════════════════════════════════════════════════════
+     INTRO PAGE — iPhone mockup with Problem app icon
+     ═══════════════════════════════════════════════════════════════ */
+  #pageIntro{
+    position:fixed; top:0;left:0;right:0;bottom:0; z-index:8000;
+    background:radial-gradient(ellipse at center,#0a0e16 0%,#040608 70%,#000 100%);
+    display:none; flex-direction:column; align-items:center; justify-content:center;
+    padding:20px; overflow:hidden;
+  }
+  #pageIntro.active{display:flex}
+  #pageIntro.fading-out{opacity:0; transition:opacity 0.6s ease}
+
+  /* Ambient stars background */
+  /* ═══ CINEMATIC BRAND REVEAL ═══ */
+  #brandReveal{
+    position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;
+    background:radial-gradient(ellipse at 50% 50%, #060912 0%, #010204 100%);
+    display:none;align-items:center;justify-content:center;
+    opacity:0;
+  }
+  #brandReveal.active{ display:flex;opacity:1; }
+  #brandReveal.fading{ opacity:0;transition:opacity 0.9s ease; }
+  #brandCanvas{ width:100%;height:100%;display:block; }
+  .brand-skip-hint{
+    position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+    font-size:12px;letter-spacing:3px;color:rgba(180,205,245,0.35);
+    font-family:'DM Mono',monospace;pointer-events:none;
+    animation:brandSkipPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes brandSkipPulse{0%,100%{opacity:0.25}50%{opacity:0.6}}
+
+  .intro-stars{position:absolute; top:0;left:0;right:0;bottom:0; pointer-events:none; opacity:0.5}
+  .intro-star{position:absolute; width:2px; height:2px; background:rgba(255,255,255,0.7); border-radius:50%; animation:introStarTwinkle 3s ease-in-out infinite}
+  @keyframes introStarTwinkle{0%,100%{opacity:0.2}50%{opacity:1}}
+
+  /* Brand label above phone */
+  .intro-brand-tag{
+    position:relative; z-index:2;
+    margin-bottom:24px;
+    text-align:center;
+    animation:introFadeIn 0.8s cubic-bezier(0.22,1,0.36,1) 0.2s both;
+  }
+  .intro-brand-tag-label{
+    font-family:'DM Mono',monospace;
+    font-size:9px; letter-spacing:3.5px; text-transform:uppercase;
+    color:rgba(var(--cyan),0.55);
+    margin-bottom:6px;
+  }
+  .intro-brand-tag-title{
+    font-family:'Instrument Serif',serif; font-style:italic;
+    font-size:22px; color:rgba(var(--ice),0.95);
+    line-height:1.2;
+  }
+  @keyframes introFadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+
+  /* The iPhone mockup */
+  .iphone-frame{
+    position:relative; z-index:2;
+    width:min(290px, 78vw);
+    aspect-ratio: 9 / 19.5;
+    background:linear-gradient(145deg,rgba(var(--ice),0.04),var(--bg));
+    border-radius:42px;
+    padding:12px;
+    box-shadow:
+      0 0 0 2px rgba(60,65,75,0.6),
+      0 0 0 4px rgba(20,22,28,0.9),
+      0 30px 80px rgba(0,0,0,0.7),
+      0 0 60px rgba(var(--cyan),0.08),
+      inset 0 0 1px rgba(255,255,255,0.04);
+    animation:introFadeIn 1s cubic-bezier(0.22,1,0.36,1) 0.4s both;
+    flex-shrink:0;
+  }
+  .iphone-screen{
+    position:relative;
+    width:100%; height:100%;
+    border-radius:32px;
+    overflow:hidden;
+    background:linear-gradient(180deg,rgba(var(--cyan),0.12) 0%,rgba(var(--cyan),0.06) 50%,var(--bg) 100%);
+  }
+
+  /* Dynamic Island / Notch */
+  .iphone-notch{
+    position:absolute; top:8px; left:50%; transform:translateX(-50%);
+    width:88px; height:24px;
+    background:var(--bg);
+    border-radius:14px;
+    z-index:10;
+  }
+
+  /* Status bar */
+  .iphone-status{
+    position:absolute; top:0; left:0; right:0;
+    height:42px; padding:14px 26px 0;
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:-apple-system,'SF Pro Text',system-ui,sans-serif;
+    font-size:13px; font-weight:600;
+    color:#fff;
+    z-index:5;
+  }
+  .iphone-status-time{ font-variant-numeric:tabular-nums }
+  .iphone-status-icons{display:flex; align-items:center; gap:5px}
+  .iphone-status-icons svg{display:block}
+  .iphone-battery{
+    width:24px; height:11px;
+    border:1px solid rgba(255,255,255,0.9); border-radius:3px;
+    padding:1px;
+    position:relative;
+  }
+  .iphone-battery::after{
+    content:''; position:absolute;
+    right:-3px; top:50%; transform:translateY(-50%);
+    width:1.5px; height:5px;
+    background:rgba(255,255,255,0.9); border-radius:0 1px 1px 0;
+  }
+  .iphone-battery-fill{
+    width:80%; height:100%;
+    background:#fff; border-radius:1.5px;
+  }
+
+  /* Home screen background — abstract gradient */
+  .iphone-home-bg{
+    position:absolute; top:0;left:0;right:0;bottom:0;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(80,120,200,0.25) 0%, transparent 50%),
+      radial-gradient(circle at 70% 80%, rgba(140,80,180,0.18) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(60,100,180,0.12) 0%, transparent 60%),
+      linear-gradient(180deg,#1a2540 0%,#0d1828 50%,#04080f 100%);
+  }
+
+  /* App grid */
+  .iphone-apps{
+    position:absolute; top:62px; left:14px; right:14px;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:14px 8px;
+    z-index:6;
+  }
+  .iphone-app{
+    display:flex; flex-direction:column; align-items:center; gap:5px;
+    cursor:default;
+    animation:introFadeIn 0.5s ease both;
+  }
+  .iphone-app:nth-child(1){animation-delay:0.6s}
+  .iphone-app:nth-child(2){animation-delay:0.65s}
+  .iphone-app:nth-child(3){animation-delay:0.7s}
+  .iphone-app:nth-child(4){animation-delay:0.75s}
+  .iphone-app:nth-child(5){animation-delay:0.8s}
+  .iphone-app:nth-child(6){animation-delay:0.85s}
+  .iphone-app:nth-child(7){animation-delay:0.9s}
+  .iphone-app:nth-child(8){animation-delay:0.95s}
+  .iphone-app:nth-child(9){animation-delay:1s}
+  .iphone-app:nth-child(10){animation-delay:1.05s}
+  .iphone-app:nth-child(11){animation-delay:1.1s}
+  .iphone-app:nth-child(12){animation-delay:1.15s}
+  .iphone-app-icon{
+    width:46px; height:46px;
+    border-radius:11px;
+    background:rgba(var(--ice),0.06);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    font-family:-apple-system,'SF Pro Display',system-ui,sans-serif;
+    font-weight:700; font-size:20px; color:#fff;
+    box-shadow:0 2px 8px rgba(0,0,0,0.3);
+  }
+  .iphone-app-label{
+    font-family:-apple-system,'SF Pro Text',system-ui,sans-serif;
+    font-size:9px; font-weight:400;
+    color:#fff;
+    text-shadow:0 1px 2px rgba(0,0,0,0.5);
+    max-width:60px;
+    text-align:center;
+    line-height:1.2;
+  }
+
+  /* App icon variations — realistic colors */
+  .ic-messages{background:linear-gradient(180deg,#5be67c,#1ec64a)}
+  .ic-messages::before{content:'';width:24px;height:22px;background:#fff;-webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2C6.5 2 2 5.6 2 10c0 2.3 1.2 4.3 3.2 5.8L4 21l5.4-2.4c.8.2 1.7.4 2.6.4 5.5 0 10-3.6 10-8s-4.5-9-10-9z' fill='%23fff'/></svg>") center/contain no-repeat;mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2C6.5 2 2 5.6 2 10c0 2.3 1.2 4.3 3.2 5.8L4 21l5.4-2.4c.8.2 1.7.4 2.6.4 5.5 0 10-3.6 10-8s-4.5-9-10-9z' fill='%23fff'/></svg>") center/contain no-repeat}
+  .ic-phone{background:linear-gradient(180deg,#5be67c,#1ec64a)}
+  .ic-phone::before{content:'';width:22px;height:22px;background:#fff;-webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.1-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8 9.7a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z'/></svg>") center/contain no-repeat;mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.1-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8 9.7a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z'/></svg>") center/contain no-repeat}
+  .ic-camera{background:linear-gradient(180deg,#999,#444)}
+  .ic-camera::before{content:'';width:24px;height:20px;background:#fff;border-radius:4px;position:relative}
+  .ic-camera::after{content:'';position:absolute;width:10px;height:10px;background:#444;border:2px solid #fff;border-radius:50%}
+  .ic-photos{background:#fff;position:relative}
+  .ic-photos::before{content:'';position:absolute;inset:6px;background:conic-gradient(#ffb900,#ff5e3a,#ff2a68,#a200ff,#5e5ce6,#0a84ff,#30d158,#ffb900);border-radius:50%;filter:blur(0.5px)}
+  .ic-music{background:linear-gradient(180deg,#fa233b,#fa233b)}
+  .ic-music::before{content:'\266B';font-size:24px;color:#fff;font-weight:400}
+  .ic-mail{background:linear-gradient(180deg,#1d9bf0,#005ce6)}
+  .ic-mail::before{content:'';width:24px;height:18px;border:2px solid #fff;border-radius:3px}
+  .ic-safari{background:#fff;position:relative}
+  .ic-safari::before{content:'';position:absolute;inset:4px;background:radial-gradient(circle,#42a5f5,#1976d2);border-radius:50%}
+  .ic-safari::after{content:'';position:absolute;width:14px;height:2px;background:#fff;left:50%;top:50%;transform:translate(-50%,-50%) rotate(45deg);box-shadow:0 0 0 1px rgba(0,0,0,0.1)}
+  .ic-maps{background:linear-gradient(180deg,#a8e063,#56ab2f);position:relative}
+  .ic-maps::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,0.4) 50%,transparent 60%)}
+  .ic-settings{background:linear-gradient(180deg,#888,#444);position:relative}
+  .ic-settings::before{content:'\2699';font-size:30px;color:#fff;font-weight:300}
+  .ic-clock{background:#000;position:relative}
+  .ic-clock::before{content:'';position:absolute;inset:4px;border:2px solid #fff;border-radius:50%}
+  .ic-clock::after{content:'';position:absolute;width:2px;height:14px;background:#fff;left:50%;top:50%;transform:translateX(-50%) translateY(-100%) rotate(40deg);transform-origin:bottom center;border-radius:1px}
+  .ic-weather{background:linear-gradient(180deg,#56ccf2,#2f80ed);position:relative}
+  .ic-weather::before{content:'\2601';font-size:26px;color:#fff}
+  .ic-notes{background:linear-gradient(180deg,#fef08a,#facc15);position:relative}
+  .ic-notes::before{content:'';position:absolute;inset:6px;background:repeating-linear-gradient(180deg,transparent 0,transparent 4px,rgba(0,0,0,0.15) 4px,rgba(0,0,0,0.15) 5px);border-radius:2px}
+
+  /* ★ PROBLEM ICON — the hero */
+  .ic-problem{
+    background:linear-gradient(145deg,#0a0e16 0%,#040608 60%,#000 100%);
+    position:relative;
+    box-shadow:
+      0 2px 12px rgba(0,0,0,0.5),
+      0 0 0 0.5px rgba(var(--cyan),0.35),
+      0 0 20px rgba(var(--cyan),0.18);
+    overflow:visible;
+  }
+  .ic-problem::after{
+    content:''; position:absolute; inset:-3px;
+    border-radius:14px;
+    box-shadow:0 0 24px rgba(var(--cyan),0.35);
+    opacity:0; transition:opacity 0.4s ease;
+    pointer-events:none;
+  }
+  .iphone-app.problem-app:hover .ic-problem::after,
+  .iphone-app.problem-app.pulsing .ic-problem::after{opacity:1}
+  /* Pulse halo to draw attention */
+  .iphone-app.problem-app::before{
+    content:''; position:absolute; top:0; left:50%; transform:translate(-50%,-4px);
+    width:54px; height:54px; border-radius:13px;
+    border:1px solid rgba(var(--cyan),0.5);
+    animation:problemPulse 2.2s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes problemPulse{
+    0%,100%{opacity:0; transform:translate(-50%,-4px) scale(1)}
+    50%{opacity:0.7; transform:translate(-50%,-4px) scale(1.15)}
+  }
+  .iphone-app.problem-app{position:relative; cursor:pointer; transition:transform 0.18s ease}
+  .iphone-app.problem-app:active{transform:scale(0.92)}
+
+  /* The eye drawn inside the Problem icon */
+  .ic-problem-eye{width:34px; height:34px}
+  .ic-problem-eye .eye-lid{stroke:rgba(var(--ice),0.95); stroke-width:1.8; fill:none; stroke-linecap:round; filter:drop-shadow(0 0 3px rgba(var(--cyan),0.6))}
+  .ic-problem-eye .eye-ring{stroke:rgba(var(--cyan),0.6); fill:none}
+  .ic-problem-eye .eye-pupil{fill:rgba(var(--cyan),0.95); filter:drop-shadow(0 0 4px rgba(var(--cyan),1))}
+  .ic-problem-eye .eye-spark{fill:rgba(255,255,255,0.9)}
+
+  /* Tap hint pointer */
+  .intro-tap-hint{
+    position:absolute; z-index:11;
+    pointer-events:none;
+    animation:introTapHint 2.2s ease-in-out infinite;
+  }
+  .intro-tap-hint svg{width:28px; height:28px; filter:drop-shadow(0 0 6px rgba(var(--cyan),0.7))}
+  @keyframes introTapHint{
+    0%,100%{transform:translate(0,0); opacity:0.85}
+    50%{transform:translate(-4px,-4px); opacity:1}
+  }
+
+  /* Dock at bottom */
+  .iphone-dock{
+    position:absolute; bottom:18px; left:14px; right:14px;
+    height:64px;
+    background:rgba(255,255,255,0.18);
+    backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+    border-radius:22px;
+    display:flex; align-items:center; justify-content:space-around;
+    padding:0 8px;
+    z-index:6;
+  }
+  .iphone-dock .iphone-app{gap:0}
+  .iphone-dock .iphone-app-label{display:none}
+
+  /* Home indicator */
+  .iphone-home-indicator{
+    position:absolute; bottom:6px; left:50%; transform:translateX(-50%);
+    width:108px; height:4px;
+    background:rgba(255,255,255,0.85);
+    border-radius:2px;
+    z-index:7;
+  }
+
+  /* Bottom text + skip */
+  .intro-bottom{
+    position:relative; z-index:2;
+    margin-top:30px;
+    text-align:center;
+    animation:introFadeIn 0.8s cubic-bezier(0.22,1,0.36,1) 1.4s both;
+  }
+  .intro-cta-text{
+    font-family:'DM Mono',monospace;
+    font-size:10px; letter-spacing:2px; text-transform:uppercase;
+    color:rgba(var(--cyan),0.85);
+    margin-bottom:12px;
+  }
+  .intro-skip-btn{
+    background:transparent; border:1px solid rgba(var(--ice),0.18);
+    color:rgba(var(--id),0.7);
+    padding:8px 22px; border-radius:20px;
+    font-family:'DM Mono',monospace; font-size:10px; letter-spacing:1.6px;
+    cursor:pointer; transition:all 0.25s;
+  }
+  .intro-skip-btn:hover{
+    border-color:rgba(var(--cyan),0.4);
+    color:rgba(var(--ice),0.95);
+    background:rgba(var(--cyan),0.06);
+  }
+
+  /* Mobile — smaller phone, scale down */
+  @media(max-width:480px){
+    .iphone-frame{width:min(260px, 75vw); padding:10px}
+    .iphone-screen{border-radius:28px}
+    .iphone-notch{width:78px; height:22px; top:6px}
+    .iphone-status{font-size:12px; padding:12px 22px 0}
+    .iphone-apps{top:54px; gap:12px 6px; left:12px; right:12px}
+    .iphone-app-icon{width:42px; height:42px; border-radius:10px}
+    .iphone-app-label{font-size:8px}
+    .ic-problem-eye{width:30px; height:30px}
+    .intro-brand-tag-title{font-size:19px}
+  }
+  @media(max-height:700px){
+    .intro-brand-tag{margin-bottom:14px}
+    .intro-brand-tag-title{font-size:18px}
+    .intro-bottom{margin-top:18px}
+  }

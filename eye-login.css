@@ -1,0 +1,754 @@
+
+
+  /* Realty modal */
+
+  /* ═══════════════ LOGIN PAGE — Claude-style split layout ═══════════════ */
+  #pageLogin{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9000;background:var(--bg);overflow:hidden;display:none}
+  #pageLogin.active{display:block;animation:fadeIn 0.4s ease}
+  /* أثناء تسجيل الدخول — اخفي أي عناصر عائمة عشان متركبش على المحتوى */
+  body:has(#pageLogin.active) .pp-quick-fab,
+  body:has(#pageLogin.active) .pwa-install-btn,
+  #pageLogin.active ~ .pp-quick-fab,
+  #pageLogin.active ~ .pwa-install-btn{display:none!important}
+  
+  .login-wrap{min-height:100vh;min-height:100dvh;display:grid;grid-template-columns:1fr 1fr;gap:0}
+  
+  /* LEFT: Form side */
+  .login-left{display:flex;flex-direction:column;justify-content:center;padding:48px 56px;position:relative;background:linear-gradient(180deg,#070b12 0%,#04060a 100%)}
+  /* A subtle top edge that marks this as a distinct section */
+  .login-left::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(var(--cyan),0.25),transparent);
+  }
+  .login-logo{display:flex;align-items:center;gap:10px;font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;letter-spacing:0.5px;margin-bottom:auto;padding-top:env(safe-area-inset-top,0);color:rgba(var(--ice),0.92);text-decoration:none}
+  .login-logo:hover,.login-logo:visited,.login-logo:active{color:rgba(var(--ice),0.92);text-decoration:none}
+  .login-logo svg{width:30px;height:30px}
+  .login-logo .p-glow{font-style:italic;font-weight:600}
+  .login-logo-stack{display:flex;flex-direction:column;line-height:1}
+  .login-logo-main{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500}
+  .login-logo-sub{font-family:'DM Mono',monospace;font-size:8px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:rgba(var(--id),0.65);margin-top:3px}
+
+  /* ═══════════════════════════════════════════════════════════════════
+     LOGIN LOGO — animated split-eye → one-line figure → reform.
+     Loops continuously while the sign-in page is open.
+     − (left half)  =  the void / the problem
+     + (right half) =  the answer
+     The figure (single continuous moonlight line, Anthropic-style)
+     is the person standing between them — connecting the two.
+     10s cycle. Pure CSS keyframes, no JS — costs nothing on the main
+     thread. Disabled entirely on tier-low and prefers-reduced-motion,
+     where it simply shows the static eye (original look, zero cost).
+     ═══════════════════════════════════════════════════════════════════ */
+  .login-logo-anim svg.ll-anim-svg{
+    width:58px; height:58px; overflow:visible; flex-shrink:0;
+    animation: llGlowBreathe 3.2s ease-in-out infinite;
+  }
+  .login-logo-anim{ gap:14px; }
+  html.tier-low .login-logo-anim svg.ll-anim-svg{ animation:none; filter: drop-shadow(0 0 8px rgba(var(--cyan),0.25)); }
+  @media (prefers-reduced-motion:reduce){
+    .login-logo-anim svg.ll-anim-svg{ animation:none; filter: drop-shadow(0 0 8px rgba(var(--cyan),0.25)); }
+  }
+
+  .llEyeL, .llEyeR{ transform-box:fill-box; transform-origin:center; }
+  .llEyeL{ animation: llSplitL 10s ease-in-out infinite; }
+  .llEyeR{ animation: llSplitR 10s ease-in-out infinite; }
+  .llIris{ animation: llIrisFade 10s ease-in-out infinite; }
+  .llSignMinus, .llSignPlus{ animation: llSignFade 10s ease-in-out infinite; opacity:0; }
+  .llFigure{
+    stroke-dasharray:100;
+    stroke-dashoffset:100;
+    opacity:0;
+    animation: llFigureDraw 10s ease-in-out infinite;
+  }
+
+  /* Low-end devices + reduced motion: skip the whole sequence, show a
+     plain static eye (zero animation cost, identical to the old logo) */
+  html.tier-low .llEyeL, html.tier-low .llEyeR{ animation:none; transform:none; }
+  html.tier-low .llIris{ animation:none; opacity:1; }
+  html.tier-low .llSignMinus, html.tier-low .llSignPlus{ animation:none; opacity:0; }
+  html.tier-low .llFigure{ animation:none; opacity:0; }
+
+  @media (prefers-reduced-motion:reduce){
+    .llEyeL, .llEyeR{ animation:none !important; transform:none !important; }
+    .llIris{ animation:none !important; opacity:1 !important; }
+    .llSignMinus, .llSignPlus{ animation:none !important; opacity:0 !important; }
+    .llFigure{ animation:none !important; opacity:0 !important; }
+  }
+
+  @media(max-width:480px){
+    .login-logo-anim svg.ll-anim-svg{ width:50px; height:50px; }
+  }
+
+
+  .login-content{max-width:380px;width:100%;margin:auto 0}
+  .vph-lid-up{animation:vphLidUp 6s ease-in-out infinite}
+  .vph-lid-lo{animation:vphLidLo 6s ease-in-out infinite}
+  .vph-ring{animation:vphRing 4s ease-in-out infinite}
+  .vph-aura{animation:vphAura 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:0px -38px}
+  #vpHperFigure{animation:vphFigBreath 4s ease-in-out infinite;transition:opacity .6s ease}
+  /* While the Seeker cinematic runs, JS drives the figure transform each frame —
+     disable the CSS breath so they don't fight. */
+  #heroVPersonSvg.sc-running #vpHperFigure{animation:none}
+  #vpHperScene{transition:opacity .6s ease}
+  #vpHperLabel,#vpHperHint{transition:opacity .6s ease}
+  .vph-needle{transform-box:fill-box;transform-origin:0px -30px;animation:vphNeedle 5s cubic-bezier(.4,0,.2,1) infinite}
+  .vph-storm{transform-box:fill-box;transform-origin:0px 0px}
+  .vph-storm-1{animation:vphStorm 16s linear infinite}
+  .vph-storm-2{animation:vphStorm 11s linear infinite reverse}
+  .vph-pulse{stroke-dasharray:10 120;animation:vphSyn 2.8s ease-in-out infinite}
+  .vph-pulse-2{animation-delay:.7s}.vph-pulse-3{animation-delay:1.4s}.vph-pulse-4{animation-delay:2.1s}
+  .vph-hub{animation:vphHub 1.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+  .vph-frag{transform-box:fill-box;transform-origin:center}
+  .vph-f1{animation:vphFrag 3.5s ease-in-out infinite}
+  .vph-f2{animation:vphFrag 3.5s ease-in-out .6s infinite}
+  .vph-f3{animation:vphFrag 3.5s ease-in-out 1.2s infinite}
+  .vph-f4{animation:vphFrag 3.5s ease-in-out 1.8s infinite}
+  .vph-f5{animation:vphFrag 3.5s ease-in-out 2.4s infinite}
+  .vph-core{animation:vphCore 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+  .vph-aura-big{animation:vphAuraBig 7s ease-in-out infinite}
+  .vph-amb{animation:vphAmb 4.5s ease-in-out infinite}
+  .vph-scene-glow{animation:vphSceneGlow 5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+  .vph-ground{animation:vphGround 4s ease-in-out infinite}
+  /* التعليق السينمائي — ظهور هادئ */
+  #vpHperAnn{transition:opacity .8s ease}
+  .vph-ann-label,.vph-ann-strong{font-family:'DM Mono',monospace}
+     Hidden — the section border + scroll hint mark the divide now. */
+  .login-section-sep{
+    display:none !important;
+    align-items:center;gap:14px;
+    width:100%;max-width:380px;
+    margin:0 auto 32px;
+  }
+  .lss-line{
+    flex:1;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(var(--cyan),0.2));
+  }
+  .lss-line:last-child{
+    background:linear-gradient(90deg,rgba(var(--cyan),0.2),transparent);
+  }
+  .lss-label{
+    font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;
+    color:rgba(var(--id),0.5);white-space:nowrap;
+  }
+
+  /* ═══ Hand-drawn consciousness illustration ═══ */
+  .login-illus{
+    display:flex;justify-content:center;
+    margin-bottom:30px;
+  }
+  .login-illus svg{
+    width:250px;height:auto;
+    overflow:visible;
+  }
+  /* ══════════════════════════════════════════════════
+     THE MAZE EYE — login illustration (threshold style)
+     Sequence: lids draw → rings fade → gaps → solve path
+     draws → pupil pops → halo pulses → JS blink forever
+     ══════════════════════════════════════════════════ */
+  .lic-lid{
+    fill:none;stroke:rgba(var(--ice),0.88);stroke-width:2;stroke-linecap:round;
+    stroke-dasharray:100;stroke-dashoffset:100;
+    animation:licDraw 0.8s cubic-bezier(0.4,0,0.2,1) 0.12s forwards;
+  }
+  .lic-lid-lo{stroke:rgba(var(--ice),0.45);stroke-width:1.5;animation-delay:0.28s}
+
+  .lic-ring{fill:none;opacity:0;animation:licFade 0.6s ease forwards}
+  .lic-ring:nth-of-type(1){animation-delay:0.55s}
+  .lic-ring:nth-of-type(2){animation-delay:0.66s}
+  .lic-ring:nth-of-type(3){animation-delay:0.77s}
+  .lic-ring:nth-of-type(4){animation-delay:0.88s}
+  .lic-gaps{opacity:0;animation:licFade 0.45s ease 1.02s forwards}
+  .lic-gap{fill:none;stroke:#070b12;stroke-width:7}
+
+  .lic-solve{
+    fill:none;stroke:rgba(var(--cyan),0.9);stroke-width:1.7;stroke-linecap:round;
+    stroke-dasharray:100;stroke-dashoffset:100;
+    animation:licDraw 1.5s cubic-bezier(0.4,0,0.2,1) 1.2s forwards;
+    filter:drop-shadow(0 0 5px rgba(var(--cyan),0.45));
+  }
+
+  .lic-pupil{
+    fill:rgba(var(--cyan),0.95);
+    filter:drop-shadow(0 0 10px rgba(var(--cyan),0.85));
+    opacity:0;
+    transform-box:fill-box;transform-origin:center;
+    animation:licPupilPop 0.5s cubic-bezier(0.34,1.56,0.64,1) 2.75s forwards;
+  }
+  .lic-catch{fill:rgba(255,255,255,0.85);opacity:0;animation:licFade 0.38s ease 2.95s forwards}
+
+  /* ── الترقية الفنية ── */
+  /* صدى الجفون — توهج ناعم تحت الخط */
+  .lic-lid-echo{
+    fill:none;stroke:rgba(160,210,235,0.18);stroke-width:4.5;stroke-linecap:round;
+    stroke-dasharray:100;stroke-dashoffset:100;
+    animation:licDraw 0.8s cubic-bezier(0.4,0,0.2,1) 0.12s forwards;
+  }
+  .lic-lid-echo-lo{animation-delay:0.28s;stroke:rgba(160,210,235,0.12)}
+
+  /* رموش ومجرى الدمع */
+  .lic-lash{fill:none;stroke:rgba(225,235,248,0.55);stroke-width:1.6;stroke-linecap:round;
+    opacity:0;animation:licFade 0.6s ease 0.7s forwards}
+  .lic-duct{fill:none;stroke:rgba(225,235,248,0.4);stroke-width:1.3;stroke-linecap:round;
+    opacity:0;animation:licFade 0.6s ease 0.78s forwards}
+
+  /* نجوم محيطة بتتنفس */
+  .lic-amb{opacity:0;animation:licTwinkle 4.2s ease-in-out 1.4s infinite}
+
+  /* عمق القزحية + الحلقة الحوفية */
+  .lic-irisfill{opacity:0;animation:licFade 1.0s ease 0.62s forwards}
+  .lic-limbal{fill:none;opacity:0;animation:licFade 0.9s ease 0.82s forwards}
+
+  /* جدران المتاهة */
+  .lic-wall{stroke:rgba(225,235,248,0.16);stroke-width:1;stroke-linecap:round;
+    opacity:0;animation:licFade 0.5s ease 1.02s forwards}
+
+  /* المتاهة بتلف للأبد — أسرع وأكثر حيوية بعد اكتمال الدخول */
+  .lic-maze-spin{
+    transform-box:fill-box;transform-origin:center;
+    animation:licMazeSpin 44s linear 3.6s infinite;
+    will-change:transform;
+  }
+
+  /* هالة نابضة حوالين البؤبؤ — نبض أحيوية */
+  .lic-halo{
+    fill:none;opacity:0;
+    transform-box:fill-box;transform-origin:center;
+    animation:licFade 0.5s ease 3.1s forwards, licHaloPulse 2.8s ease-in-out 3.5s infinite;
+  }
+
+  /* ── Whole illustration floats gently — always alive ── */
+  .login-illus svg{
+    width:250px;height:auto;overflow:visible;
+    animation:liIllusFloat 5s 4.6s ease-in-out infinite;
+    will-change:transform;
+  }
+
+  .reduced-motion .lic-lid,.reduced-motion .lic-solve,.reduced-motion .lic-lid-echo{
+    animation:none!important;stroke-dashoffset:0!important;
+  }
+  .reduced-motion .lic-ring,.reduced-motion .lic-gaps,
+  .reduced-motion .lic-pupil,.reduced-motion .lic-catch,
+  .reduced-motion .lic-lash,.reduced-motion .lic-duct,
+  .reduced-motion .lic-irisfill,.reduced-motion .lic-limbal,
+  .reduced-motion .lic-wall,.reduced-motion .lic-halo{
+    animation:none!important;opacity:1!important;
+  }
+  .reduced-motion .lic-amb{animation:none!important;opacity:0.4!important}
+  .reduced-motion .lic-maze-spin{animation:none!important}
+  .reduced-motion .lic-comet,.reduced-motion .lic-comet-tail{display:none!important}
+  .reduced-motion .login-illus svg{animation:none!important}
+  .reduced-motion .licFormStage{animation:none!important;opacity:1!important}
+  .reduced-motion .licSignMinus,.reduced-motion .licSignPlus,.reduced-motion .licFigure{
+    animation:none!important;opacity:0!important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     THE FORMING — this eye's own split → figure → reform, on a 10s loop
+     (same rhythm as the small login-logo's .llEyeL/.llEyeR/.llFigure, so
+     the two echo each other). The iris/maze/pupil (.licFormStage) empties
+     to void, − and + appear either side of the gap, a single continuous
+     moonlight line draws the figure standing between them, then it
+     reverses and the eye reforms. Pure CSS — inherits the lic-hold
+     play-state pause above, so it only starts once the eye's intro does,
+     then loops forever. Off entirely on reduced motion (eye just stays
+     in its normal, fully-detailed state).
+     ═══════════════════════════════════════════════════════════════════ */
+  .licFormStage{ animation: licFormFade 10s ease-in-out infinite; }
+  .licSignMinus, .licSignPlus{ animation: licSignFade 10s ease-in-out infinite; opacity:0; }
+  .licFigure{
+    stroke-dasharray:100;
+    stroke-dashoffset:100;
+    opacity:0;
+    animation: licFigureDraw 10s ease-in-out infinite;
+  }
+
+  /* ═══ v87: العين تبدأ قصتها أول ما تتشاف فعلاً (زي تجربة Claude) ═══
+     lic-hold بيجمّد كل أنيميشن الرسمة عند لحظة الصفر — حتى أثناء الـ delay —
+     وأول ما الرسمة تدخل الشاشة الكلاس بيتشال فالقصة كلها تبدأ من أولها. */
+  .login-illus.lic-hold svg,
+  .login-illus.lic-hold svg *{animation-play-state:paused!important}
+
+  /* ═══════════════════════════════════════════════════════════════════
+     Head-maze companion illustration — a profile head filled with a
+     maze, one glowing solve path resolving into an eye. Sits beneath
+     the eye illustration above (.login-illus). One-shot entrance only:
+     no perpetual ring-spin, no comet, no "forming" loop — just a gentle
+     float once it settles — so it stays cheap on weaker devices. Every
+     color rides the existing --ice/--cyan/--bg2 variables so it themes
+     itself for free under [data-theme="light"]/"highcontrast".
+     ═══════════════════════════════════════════════════════════════════ */
+  .login-headmaze{display:flex;justify-content:center;margin-bottom:30px;position:relative}
+  /* taglines CSS removed */
+  .lhmz-svg{
+    width:170px;height:auto;overflow:visible;
+    animation:lhmzFloat 9s 2.8s ease-in-out infinite;
+    will-change:transform;
+  }
+
+  .lhmz-bg{fill:var(--bg2)}
+
+  /* Grid + walls: يظهروا عند الدخول ثم يتنفسوا ببطء */
+  .lhmz-grid{
+    fill:none;stroke:rgba(var(--ice),0.35);stroke-width:1;
+    opacity:0;
+    animation:lhmzFade 0.6s ease 0.5s forwards, lhmzMazeBreathe 6s ease-in-out 2.5s infinite;
+  }
+  .lhmz-walls{
+    fill:none;stroke:rgba(var(--ice),0.55);stroke-width:1.2;
+    opacity:0;
+    animation:lhmzFade 0.6s ease 0.7s forwards, lhmzWallsLive 4s ease-in-out 2s infinite;
+  }
+
+  .lhmz-outline{
+    fill:none;stroke:rgba(var(--ice),0.55);stroke-width:1.4;
+    stroke-dasharray:100;stroke-dashoffset:100;
+    animation:lhmzDraw 1.1s cubic-bezier(0.4,0,0.2,1) 0.1s forwards;
+  }
+
+  /* المسار: أنيميشن واحد بدون تعارض */
+  .lhmz-solve{
+    fill:none;stroke:rgba(var(--cyan),0.95);stroke-width:2.2;
+    stroke-linecap:round;stroke-linejoin:round;
+    stroke-dasharray:100;stroke-dashoffset:100;
+    filter:drop-shadow(0 0 3px rgba(var(--cyan),0.7));
+    animation:lhmzSolveMaster 8s cubic-bezier(0.4,0,0.2,1) 1.0s infinite;
+  }
+
+  /* جسيم الكهرباء — بيجري على المسار */
+  .lhmz-particle{opacity:0;animation:lhmzParticleFade 8s ease 1.3s infinite}
+
+  /* العين: أنيميشن واحد للـ opacity */
+  .lhmz-eye{
+    opacity:0;
+    transform-box:fill-box;
+    transform-origin:center;
+    animation:lhmzEyeAppear 0.4s ease 2.2s forwards;
+  }
+  .lhmz-eye.lhmz-alive{
+    animation:lhmzEyePulse 6s ease-in-out infinite,
+              lhmzEyeLife 11s ease-in-out infinite;
+  }
+
+  .lhmz-lid{fill:none;stroke:rgba(var(--ice),0.97);stroke-width:2.4;stroke-linecap:round}
+  .lhmz-pupil{fill:rgba(var(--cyan),1)}
+  .lhmz-catch{fill:#fff}
+
+  .login-headmaze.lic-hold svg,
+  .login-headmaze.lic-hold svg *{animation-play-state:paused!important}
+
+  .reduced-motion .lhmz-outline,.reduced-motion .lhmz-solve{
+    animation:none!important;stroke-dashoffset:0!important;
+  }
+  .reduced-motion .lhmz-grid,.reduced-motion .lhmz-walls,.reduced-motion .lhmz-eye{
+    animation:none!important;opacity:1!important;
+  }
+  .reduced-motion .lhmz-svg{animation:none!important}
+  .low-end .lhmz-svg{animation:none!important}
+
+  /* Language selector button in sign-in form */
+  .lp-lang-sel{
+    display:inline-flex;align-items:center;gap:5px;
+    background:rgba(var(--ice),0.05);
+    border:1px solid rgba(var(--ice),0.14);
+    border-radius:20px;padding:5px 10px 5px 8px;
+    color:rgba(var(--ice),0.65);font-size:11px;
+    letter-spacing:1px;cursor:pointer;
+    transition:all 0.2s;margin-bottom:16px;
+  }
+  .lp-lang-sel:hover{background:rgba(var(--ice),0.1);color:rgba(var(--ice),0.9)}
+  .lp-ls-flag{font-size:13px;line-height:1}
+  .lp-ls-code{font-size:10px;letter-spacing:1.5px;font-family:inherit}
+
+  /* ═══ Primary Google button (Anthropic-style — white, prominent) ═══ */
+  .login-oauth-primary{
+    background:rgba(var(--ice),0.96)!important;
+    color:#0a0e16!important;
+    border:none!important;
+    font-weight:600!important;
+    justify-content:space-between!important;
+    padding:15px 22px!important;
+    margin-bottom:0!important;
+  }
+  .login-oauth-primary:hover{
+    background:rgba(var(--ice),1)!important;
+    transform:translateY(-1px);
+    box-shadow:0 8px 24px rgba(var(--ice),0.12)!important;
+  }
+  .login-oauth-primary span{order:1}
+  .login-oauth-primary svg{order:2;width:22px;height:22px}
+
+  /* ═══ Terms line (Anthropic-style small print) ═══ */
+  .login-terms{
+    font-family:'Sora',sans-serif;font-weight:300;
+    font-size:11px;line-height:1.6;
+    color:rgba(var(--id),0.45);
+    text-align:center;
+    margin:18px 0 0;
+  }
+  .login-terms a{
+    color:rgba(var(--id),0.7);
+    text-decoration:underline;
+    text-underline-offset:2px;
+    transition:color 0.2s;
+  }
+  .login-terms a:hover{color:rgba(var(--cyan),0.9)}
+
+  /* ═══ Button loading states ═══ */
+  .login-btn.loading,
+  .login-oauth.loading{
+    pointer-events:none;
+    position:relative;
+  }
+  .login-btn.loading::after,
+  .login-oauth.loading::after{
+    content:'';
+    position:absolute;top:50%;left:50%;
+    width:18px;height:18px;margin:-9px 0 0 -9px;
+    border:2px solid rgba(var(--cyan),0.25);
+    border-top-color:rgba(var(--cyan),0.95);
+    border-radius:50%;
+    animation:loginSpin 0.7s linear infinite;
+  }
+  .login-oauth-primary.loading::after{
+    border-color:rgba(10,14,22,0.25);
+    border-top-color:rgba(10,14,22,0.9);
+  }
+  .login-btn.loading svg,
+  .login-oauth.loading svg,
+  .login-oauth.loading span{opacity:0}
+
+  /* ═══ Email input shake (invalid) ═══ */
+  .login-input-wrap.shake{
+    animation:loginShake 0.4s cubic-bezier(0.36,0.07,0.19,0.97);
+  }
+
+  /* ═══ "Check your email" confirmation screen ═══ */
+  .login-sent{
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+    padding:20px 0;
+  }
+  .login-sent-icon{margin-bottom:24px}
+  .login-sent-icon svg{width:72px;height:72px;overflow:visible}
+  .ls-env{
+    stroke-dasharray:160;stroke-dashoffset:160;
+    animation:liDraw 0.8s 0.1s ease forwards;
+  }
+  .ls-flap{
+    stroke-dasharray:70;stroke-dashoffset:70;
+    animation:liDraw 0.6s 0.7s ease forwards;
+  }
+  .ls-check-bg{
+    opacity:0;transform:scale(0);transform-origin:center;transform-box:fill-box;
+    animation:liDot 0.5s 1.2s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  }
+  .ls-check{
+    stroke-dasharray:20;stroke-dashoffset:20;
+    animation:liDraw 0.4s 1.5s ease forwards;
+  }
+  .login-sent-title{
+    font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;
+    color:rgba(var(--ice),0.95);margin-bottom:12px;
+    opacity:0;animation:liFade 0.5s 1.0s ease forwards;
+  }
+  .login-sent-sub{
+    font-family:'Sora',sans-serif;font-weight:300;font-size:14px;line-height:1.6;
+    color:rgba(var(--id),0.7);margin-bottom:28px;
+    opacity:0;animation:liFade 0.5s 1.2s ease forwards;
+  }
+  .login-sent-sub strong{color:rgba(var(--cyan),0.9);font-weight:500}
+  .login-sent-back{
+    background:rgba(var(--ice),0.04);
+    border:1px solid rgba(var(--ice),0.12);
+    border-radius:12px;padding:12px 22px;
+    font-family:'Sora',sans-serif;font-size:13px;
+    color:rgba(var(--id),0.85);cursor:pointer;
+    transition:all 0.25s;margin-bottom:18px;
+    opacity:0;animation:liFade 0.5s 1.4s ease forwards;
+  }
+  .login-sent-back:hover{
+    border-color:rgba(var(--cyan),0.35);
+    color:rgba(var(--cyan),0.9);
+    background:rgba(var(--cyan),0.05);
+  }
+  .login-sent-hint{
+    font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;
+    color:rgba(var(--id),0.4);
+    opacity:0;animation:liFade 0.5s 1.6s ease forwards;
+  }
+  .login-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:500;letter-spacing:-0.5px;line-height:1.15;color:rgba(var(--ice),0.95);margin-bottom:14px}
+  .login-title em{font-style:italic;color:rgba(var(--ice),1);font-weight:400}
+  .login-sub{font-family:'Sora',sans-serif;font-size:14px;font-weight:300;color:rgba(var(--id),0.85);line-height:1.6;margin-bottom:32px}
+  
+  .login-input-wrap{position:relative;margin-bottom:14px}
+  .login-input{width:100%;padding:15px 18px;background:rgba(var(--ice),0.05);border:1px solid rgba(var(--ice),0.2);border-radius:14px;color:rgba(var(--ice),0.95);font-family:'Sora',sans-serif;font-size:16px;transition:all 0.3s;outline:none}
+  .login-input::placeholder{color:rgba(var(--ice),0.38)}
+  .login-input::placeholder{color:rgba(var(--id),0.55);font-weight:300}
+  .login-input:focus{border-color:rgba(var(--cyan),0.55);background:rgba(var(--ice),0.06);box-shadow:0 0 0 3px rgba(var(--cyan),0.1)}
+  
+  .login-btn{width:100%;padding:14px 18px;background:rgba(var(--ice),0.95);color:#000;border:none;border-radius:10px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px}
+  .login-btn:hover{background:rgba(var(--cyan),0.95);color:#fff;transform:translateY(-1px);box-shadow:0 4px 16px rgba(var(--cyan),0.25)}
+  .login-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform 0.3s}
+  .login-btn:hover svg{transform:translateX(3px)}
+  
+  .login-divider{display:flex;align-items:center;gap:14px;margin:18px 0;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(var(--id),0.5)}
+  .login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:rgba(var(--ice),0.12)}
+  
+  .login-oauth{width:100%;padding:13px 18px;background:transparent;color:rgba(var(--ice),0.9);border:1px solid rgba(var(--ice),0.2);border-radius:10px;font-family:'Sora',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px}
+  .login-oauth:hover{border-color:rgba(var(--cyan),0.5);background:rgba(var(--cyan),0.05)}
+  .login-oauth svg{width:18px;height:18px;flex-shrink:0}
+  
+  /* ═══ Privacy Trust Block — calm, integrated, in Sign In palette ═══ */
+  .login-trust{
+    margin-top:28px;padding:18px 18px 16px;
+    background:linear-gradient(135deg,rgba(var(--cyan),0.04) 0%,rgba(var(--ice),0.02) 100%);
+    border:1px solid rgba(var(--cyan),0.15);
+    border-radius:14px;
+    position:relative;
+    opacity:0;
+    animation:loginTrustIn 0.7s 0.4s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  /* Subtle top accent line */
+  .login-trust::before{
+    content:'';position:absolute;top:0;left:18px;right:18px;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(var(--cyan),0.5),transparent);
+  }
+  .login-trust-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+  .login-trust-icon{
+    width:34px;height:34px;border-radius:50%;flex-shrink:0;
+    background:rgba(var(--cyan),0.08);
+    border:1px solid rgba(var(--cyan),0.22);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+  }
+  .login-trust-icon::after{
+    content:'';position:absolute;inset:-2px;border-radius:50%;
+    border:1px solid rgba(var(--cyan),0.15);
+    animation:loginTrustPulse 3s ease-in-out infinite;
+  }
+  .login-trust-icon svg{width:16px;height:16px}
+  .login-trust-text{flex:1;padding-top:2px}
+  .login-trust-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:15px;font-weight:500;font-style:italic;
+    color:rgba(var(--ice),0.95);
+    line-height:1.3;margin-bottom:3px;
+  }
+  .login-trust-sub{
+    font-family:'Sora',sans-serif;font-size:11px;font-weight:300;
+    color:rgba(var(--id),0.65);line-height:1.4;
+  }
+  .login-trust-checks{
+    display:grid;grid-template-columns:1fr 1fr;gap:7px 14px;
+    padding-top:12px;
+    border-top:1px solid rgba(var(--ice),0.06);
+  }
+  .login-trust-check{
+    display:flex;align-items:center;gap:7px;
+    font-family:'DM Mono',monospace;font-size:9px;
+    letter-spacing:1px;text-transform:uppercase;
+    color:rgba(var(--id),0.7);
+    line-height:1.3;
+  }
+  .login-trust-dot{
+    width:5px;height:5px;border-radius:50%;
+    background:rgba(var(--cyan),0.85);
+    box-shadow:0 0 6px rgba(var(--cyan),0.5);
+    flex-shrink:0;
+  }
+  /* Subtle stagger on checks */
+  .login-trust-check:nth-child(1){opacity:0;animation:loginTrustIn 0.4s 0.7s ease forwards}
+  .login-trust-check:nth-child(2){opacity:0;animation:loginTrustIn 0.4s 0.85s ease forwards}
+  .login-trust-check:nth-child(3){opacity:0;animation:loginTrustIn 0.4s 1.0s ease forwards}
+  .login-trust-check:nth-child(4){opacity:0;animation:loginTrustIn 0.4s 1.15s ease forwards}
+  /* Mobile: stack checks vertically on tiny screens */
+  @media(max-width:380px){
+    .login-trust-checks{grid-template-columns:1fr;gap:6px}
+    .login-trust{padding:16px 14px 14px}
+    .login-trust-title{font-size:14px}
+  }
+  /* Light theme adjustment */
+  /* Reduced motion */
+  .reduced-motion .login-trust,.reduced-motion .login-trust-check,
+  .reduced-motion .login-trust-icon::after{animation:none!important;opacity:1!important}
+  
+  .login-footer{margin-top:auto;padding-top:32px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(var(--id),0.55);display:flex;gap:18px;flex-wrap:wrap}
+  .login-footer a{color:inherit;text-decoration:none;transition:color 0.3s}
+  .login-footer a:hover{color:rgba(var(--cyan),0.8)}
+  
+  /* RIGHT: Cinematic showcase — Big Eye + Floating Words + Live Chat */
+  .login-right{position:relative;background:radial-gradient(ellipse at center,#0a0e1a 0%,#040608 70%);overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:6px 26px 24px;border-left:1px solid rgba(var(--cyan),0.08)}
+  
+  /* Star field background */
+  .login-stars{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden}
+  .login-star{position:absolute;width:1.5px;height:1.5px;background:rgba(var(--ice),0.6);border-radius:50%;animation:lpStarTwinkle var(--st,4s) ease-in-out infinite;opacity:0}
+  
+  /* TOP: Eye showcase (60% of height) */
+  .login-eye-section{flex:1.3;position:relative;display:flex;align-items:center;justify-content:center;min-height:340px}
+  .login-eye-wrap{position:relative;width:100%;max-width:540px;height:100%;display:flex;align-items:center;justify-content:center}
+  .login-eye-svg{width:100%;height:100%;max-height:520px;overflow:visible;filter:drop-shadow(0 0 70px rgba(var(--cyan),0.32));animation:eyeGlowPulse 6s ease-in-out infinite;transition:filter 0.4s}
+  .tier-low .login-eye-svg{animation:none}
+  
+  /* Floating words around the eye */
+  .login-words{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none}
+  .login-word{position:absolute;font-family:'DM Mono',monospace;font-size:11px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:rgba(var(--ice),0.55);opacity:0;white-space:nowrap;will-change:transform,opacity}
+  /* Negative words (attracted to eye) */
+  .login-word.negative{color:rgba(var(--ice),0.55);animation:lpWordAttract 6s ease-in-out infinite}
+  /* Positive words (emerge from eye) */
+  .login-word.positive{color:rgba(var(--cyan),0.85);text-shadow:0 0 12px rgba(var(--cyan),0.5);animation:lpWordEmerge 6s ease-in-out infinite}
+  
+  /* Phase indicator */
+  .login-phase{position:absolute;top:14px;left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:5px;text-transform:uppercase;color:rgba(var(--cyan),0);transition:color 0.6s;white-space:nowrap;z-index:5}
+  .login-phase.on{color:rgba(var(--cyan),0.65)}
+  .login-phase.glow{color:rgba(var(--cyan),0.95);text-shadow:0 0 16px rgba(var(--cyan),0.4)}
+  
+  /* BOTTOM: Live Chat Preview */
+  .login-chat-section{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding-top:20px;position:relative;z-index:2}
+  .login-chat-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(var(--id),0.55);margin-bottom:10px;text-align:center}
+  .login-chat-label::before,.login-chat-label::after{content:'';display:inline-block;width:18px;height:1px;background:rgba(var(--id),0.3);vertical-align:middle;margin:0 10px}
+  
+  .login-chat{background:rgba(var(--ice),0.04);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(var(--cyan),0.2);border-radius:16px;padding:18px;max-width:480px;margin:0 auto;width:100%;min-height:140px;box-shadow:0 6px 30px rgba(0,0,0,0.3),inset 0 1px 0 rgba(var(--ice),0.05)}
+  
+  .login-chat-msg{font-family:'Sora',sans-serif;font-size:13px;line-height:1.5;margin-bottom:10px;opacity:0;transition:opacity 0.4s}
+  .login-chat-msg.show{opacity:1}
+  .login-chat-msg.user{text-align:right}
+  .login-chat-msg.user .login-chat-bubble{background:rgba(var(--cyan),0.18);color:rgba(var(--ice),0.95);border:1px solid rgba(var(--cyan),0.3);border-bottom-right-radius:3px}
+  .login-chat-msg.ai .login-chat-bubble{background:rgba(var(--ice),0.06);color:rgba(var(--ice),0.9);border:1px solid rgba(var(--ice),0.1);border-bottom-left-radius:3px}
+  .login-chat-bubble{display:inline-block;padding:8px 14px;border-radius:14px;max-width:88%;text-align:left}
+  
+  .login-chat-typing{display:inline-flex;gap:4px;padding:10px 14px;background:rgba(var(--ice),0.06);border:1px solid rgba(var(--ice),0.1);border-radius:14px;border-bottom-left-radius:3px}
+  .login-chat-typing span{width:5px;height:5px;background:rgba(var(--cyan),0.7);border-radius:50%;animation:lpDotBounce 1.4s ease-in-out infinite}
+  .login-chat-typing span:nth-child(2){animation-delay:0.2s}
+  .login-chat-typing span:nth-child(3){animation-delay:0.4s}
+  
+  .login-chat-cursor{display:inline-block;width:2px;height:13px;background:rgba(var(--cyan),0.85);vertical-align:middle;margin-left:1px;animation:lpCursorBlink 1s steps(2) infinite}
+  
+  .login-chat-success{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(var(--cyan),0.9);text-align:center;padding-top:8px;border-top:1px dashed rgba(var(--cyan),0.2);margin-top:6px;opacity:0;transition:opacity 0.5s}
+  .login-chat-success.show{opacity:1;text-shadow:0 0 14px rgba(var(--cyan),0.4)}
+  .login-chat-success::before{content:'✦  '}
+  .login-chat-success::after{content:'  ✦'}
+  
+  /* Mobile: stack vertically, eye smaller */
+  @media(max-width:900px){
+    .login-wrap{grid-template-columns:1fr}
+    /* Globe section ON TOP */
+    .login-right{padding:40px 18px 48px;order:1;min-height:auto;border-left:none;border-bottom:2px solid rgba(var(--cyan),0.12);gap:24px;position:relative}
+    .login-eye-section{min-height:340px}
+    .login-eye-svg{max-height:340px}
+    /* Scroll hint at bottom of globe section, pointing down to sign-in */
+    .login-right::after{
+      content:'';position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
+      width:22px;height:22px;
+      background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(180,210,240,0.45)' stroke-width='1.6' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      animation:lssScrollHint 2s ease-in-out infinite;
+    }
+    @keyframes lssScrollHint{0%,100%{transform:translateX(-50%) translateY(0);opacity:0.5}50%{transform:translateX(-50%) translateY(4px);opacity:1}}
+    /* Form + face section BELOW — content grouped, no giant gaps */
+    .login-left{padding:48px 22px 40px;min-height:auto;order:2;position:relative;justify-content:flex-start}
+    .login-left::before{height:0}
+    .login-content{margin:0!important}
+    /* Smaller illustration on mobile so it doesn't dominate */
+    .login-illus{margin-bottom:22px}
+    .login-illus svg{width:215px}
+    .login-headmaze{margin-bottom:18px}
+    .lhmz-svg{width:140px}
+    .login-title{font-size:30px}
+    .login-logo{margin-bottom:24px}
+    .login-word{font-size:9px;letter-spacing:2px}
+    .login-chat{padding:14px;min-height:120px}
+    .login-chat-msg{font-size:12px}
+  }
+  @media(max-width:480px){
+    .login-eye-section{min-height:220px}
+    .login-eye-svg{max-height:240px}
+    .login-word{font-size:8px;letter-spacing:1.5px}
+    .login-chat{padding:12px;min-height:110px}
+    .login-chat-msg{font-size:11px}
+    .login-logo-sub{font-size:7px;letter-spacing:2px}
+    .login-logo-main{font-size:22px}
+  }
+  
+  /* Theme overrides */
+  [data-theme="highcontrast"] .login-right{background:var(--bg)}
+  [data-theme="highcontrast"] .login-btn{background:#000;color:#fff;border:2px solid #000}
+  [data-theme="highcontrast"] .login-btn:hover{background:rgba(var(--cyan),1)}
+  [data-theme="highcontrast"] .login-oauth{border:2px solid #000}
+  
+  /* Low-end: simplify */
+  .low-end .login-stars{display:none}
+  .low-end .login-word{animation-duration:8s!important}
+
+  /* ═══════════════ HIGH CONTRAST MODE (for strong sunlight) ═══════════════ */
+  [data-theme="highcontrast"] {
+    --ice:0,0,0;          /* pure black text */
+    --ib:0,0,0;
+    --id:30,30,30;        /* near-black secondary */
+    --bg:#ffffff;         /* pure white background */
+    --bg2:#f5f5f5;
+    --cyan:0,30,80;       /* deep dark blue for accents */
+  }
+  /* LIGHT MODE (Ander_128) — soft ink-on-white, the moonlight palette inverted.
+     Not harsh black like highcontrast; a calm charcoal-navy that keeps the
+     same restraint and depth as the dark theme. Driving these vars flips
+     everything that references them (text, surfaces, accents) in one place. */
+  [data-theme="light"] {
+    --ice:15,23,42;       /* deep charcoal-navy — the new "ice" (primary text/lines) */
+    --ib:12,19,36;
+    --id:71,85,105;       /* muted slate secondary */
+    --bg:#f0f2f6;         /* cool slate grey — option B */
+    --bg2:#e8ecf2;        /* faint panel */
+    --cyan:30,52,96;      /* deep blue accent (echoes the moonlight cyan, darkened) */
+  }
+  [data-theme="light"] body{background:var(--bg);color:rgba(var(--ice),0.9)}
+  [data-theme="highcontrast"] body{background:#ffffff;color:#000;font-size:16px}
+  [data-theme="highcontrast"] nav{background:rgba(255,255,255,0.98);border-bottom:2px solid #000;box-shadow:0 2px 10px rgba(0,0,0,0.15)}
+  [data-theme="highcontrast"] .loader{background:#ffffff}
+  [data-theme="highcontrast"] .loader-lid{stroke:#000}
+  [data-theme="highcontrast"] .loader-lid-lo{stroke:#333}
+  [data-theme="highcontrast"] .loader-glow{stroke:rgba(0,30,80,0.2)}
+  [data-theme="highcontrast"] #snow{opacity:0!important}
+  [data-theme="highcontrast"] body::after{display:none}
+  /* Text — larger and bolder */
+  [data-theme="highcontrast"] .hero-title{color:#000!important;font-weight:500}
+  [data-theme="highcontrast"] .hero-title em{color:#001e50!important;font-weight:600;text-shadow:none!important}
+  [data-theme="highcontrast"] .hero-sub,[data-theme="highcontrast"] .phil-quote{color:#000!important}
+  [data-theme="highcontrast"] .phil-quote span{color:#001e50!important;text-shadow:none!important;font-weight:600}
+  [data-theme="highcontrast"] p,[data-theme="highcontrast"] span,[data-theme="highcontrast"] a{color:inherit}
+  [data-theme="highcontrast"] .p-glow{color:#001e50!important;text-shadow:none!important;animation:none!important;font-weight:700}
+  /* Nav items — bold, clear */
+  [data-theme="highcontrast"] .nav-item{color:#000!important;font-weight:500}
+  [data-theme="highcontrast"] .nav-item.active{color:#001e50!important;font-weight:700;border-bottom:2px solid #001e50}
+  /* Buttons — strong borders */
+  [data-theme="highcontrast"] .hero-cta,[data-theme="highcontrast"] .act-btn,[data-theme="highcontrast"] .send-btn{border:2px solid #000!important;background:#fff!important;color:#000!important;font-weight:600;animation:none!important}
+  [data-theme="highcontrast"] .hero-cta:hover,[data-theme="highcontrast"] .act-btn:hover,[data-theme="highcontrast"] .send-btn:hover{background:#001e50!important;color:#fff!important}
+  /* Sidebar */
+  [data-theme="highcontrast"] .sidebar{background:#ffffff;border-right:2px solid #000;box-shadow:2px 0 10px rgba(0,0,0,0.15)}
+  [data-theme="highcontrast"] .sidebar-item{color:#000!important;font-weight:500}
+  [data-theme="highcontrast"] .sidebar-item:hover{background:rgba(0,30,80,0.08)}
+  [data-theme="highcontrast"] .sidebar-item.active{background:rgba(0,30,80,0.15);border-left:4px solid #001e50}
+  /* Input bar */
+  [data-theme="highcontrast"] .input-bar{background:#fff!important;border:2px solid #000!important}
+  [data-theme="highcontrast"] .input-bar:focus-within{border-color:#001e50!important}
+  [data-theme="highcontrast"] .msg-user{background:rgba(0,30,80,0.08);border:1.5px solid #001e50;color:#000}
+  [data-theme="highcontrast"] .msg-ai{background:#fff;border:1.5px solid #000;color:#000}
+  /* Process cards */
+  [data-theme="highcontrast"] .proc-card{background:#fff;border:2px solid #000;box-shadow:0 3px 10px rgba(0,0,0,0.1)}
+  [data-theme="highcontrast"] .proc-card:hover{background:#fff;border-color:#001e50;box-shadow:0 8px 25px rgba(0,30,80,0.2)}
+  /* Eye in high contrast */
+  [data-theme="highcontrast"] .hero-eye-svg{filter:none!important;animation:none!important}
+  [data-theme="highcontrast"] .he-lid-up,[data-theme="highcontrast"] .he-lid-lo{stroke:#000!important;stroke-width:4.5!important}
+  [data-theme="highcontrast"] .maze-wall{stroke:#001e50!important;stroke-width:1!important}
+  [data-theme="highcontrast"] .maze-pupil{fill:#001e50!important;filter:none!important;animation:none!important}
+  [data-theme="highcontrast"] .maze-solve-path{stroke:#001e50!important;filter:none!important}
+  [data-theme="highcontrast"] .maze-ring-1,[data-theme="highcontrast"] .maze-ring-2,[data-theme="highcontrast"] .maze-ring-3,[data-theme="highcontrast"] .maze-ring-4,[data-theme="highcontrast"] .maze-ring-5{stroke:rgba(0,30,80,0.6)!important;animation:none!important}
+  [data-theme="highcontrast"] .he-iris{animation:none!important;transform:translate(0,0)!important}
+  [data-theme="highcontrast"] .ne-gap{stroke:#ffffff!important}
+  [data-theme="highcontrast"] .scroll-arrow svg{stroke:#000!important;animation:none!important}
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:rgba(var(--ice),0.9);font-family:'Sora',sans-serif;overflow-x:hidden;transition:background 0.5s,color 0.5s;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+  /* Standalone PWA-specific styles (hides in browser, shows in app) */
+  @media all and (display-mode:standalone){
+    body{user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;overscroll-behavior-y:none}
+    .pwa-install-btn,.pwa-ios-hint{display:none!important}
+  }

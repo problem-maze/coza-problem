@@ -1,0 +1,433 @@
+  /* ── Lite Badge ── */
+  .lite-badge{
+    position:fixed;bottom:14px;left:14px;z-index:9998;
+    align-items:center;gap:6px;
+    padding:5px 8px 5px 11px;border-radius:20px;
+    background:rgba(10,14,22,0.93);
+    border:1px solid rgba(100,212,138,0.25);
+    font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;
+    color:rgba(184,212,240,0.55);
+    -webkit-tap-highlight-color:transparent;
+  }
+  .lite-badge-dot{
+    width:5px;height:5px;border-radius:50%;
+    background:#6ad48a;flex-shrink:0;
+    animation:litePulse 2s ease-in-out infinite;
+  }
+  @keyframes litePulse{0%,100%{opacity:0.7}50%{opacity:1}}
+  .lite-badge-exit{
+    background:none;border:none;
+    color:rgba(184,212,240,0.4);
+    font-size:10px;cursor:pointer;padding:0 2px;
+    line-height:1;-webkit-tap-highlight-color:transparent;
+    transition:color 0.2s;
+  }
+  .lite-badge-exit:active{color:rgba(184,212,240,0.9)}
+
+  /* ══ LITE PAGE CSS v2 — enhanced visuals, zero canvas ═══════════════════════ */
+  #pageLite{
+    background:radial-gradient(ellipse 80% 60% at 50% 30%,#080d1a 0%,#020305 55%,#000 100%);
+    overflow:hidden;
+    position:relative;
+    min-height:100dvh;
+  }
+
+  /* ── Stars v2: 3 sizes + 2 colors + falling streaks ── */
+  .l-stars{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .l-star{
+    position:absolute;border-radius:50%;
+    animation:lTwinkle var(--d,5s) ease-in-out infinite;
+    animation-delay:var(--dl,0s);
+  }
+  .l-star.sz-s{width:1px;height:1px;background:rgba(225,235,248,0.7)}
+  .l-star.sz-m{width:2px;height:2px;background:rgba(200,220,255,0.85)}
+  .l-star.sz-l{width:3px;height:3px;background:rgba(255,245,230,0.9)}
+  .l-star.col-warm{background:rgba(255,220,180,0.8)}
+  .l-star.col-blue{background:rgba(150,200,255,0.9)}
+  @keyframes lTwinkle{
+    0%,100%{opacity:.05;transform:scale(0.8)}
+    40%{opacity:.9;transform:scale(1.1)}
+    60%{opacity:.7;transform:scale(1)}
+  }
+  /* Falling streaks — CSS only */
+  .l-streak{
+    position:absolute;
+    width:1px;height:0;
+    background:linear-gradient(to bottom,rgba(225,235,248,0) 0%,rgba(225,235,248,0.7) 50%,rgba(225,235,248,0) 100%);
+    animation:lStreakFall var(--sd,3s) linear infinite;
+    animation-delay:var(--sdl,0s);
+    opacity:0;
+  }
+  @keyframes lStreakFall{
+    0%{height:0;opacity:0;transform:translateY(-20px)}
+    10%{height:40px;opacity:0.7}
+    90%{height:40px;opacity:0.3}
+    100%{height:0;opacity:0;transform:translateY(120vh)}
+  }
+
+  /* ── 3D Tunnel ── */
+  .l-scene{
+    position:absolute;inset:0;z-index:1;
+    perspective:340px;perspective-origin:50% 46%;
+    pointer-events:none;
+  }
+  .l-tunnel{
+    position:absolute;left:50%;top:46%;
+    width:0;height:0;transform-style:preserve-3d;
+  }
+  .l-frame{
+    position:absolute;
+    border:1.5px solid rgba(190,210,240,var(--op,0.45));
+    border-radius:4px;transform-style:preserve-3d;
+  }
+
+  /* ── Glow v2: ambient pulse ── */
+  .l-glow{
+    position:absolute;left:50%;top:46%;
+    width:22vmin;height:22vmin;
+    transform:translate(-50%,-50%);border-radius:50%;
+    background:radial-gradient(circle,rgba(225,242,255,0.95) 0%,rgba(150,205,255,0.4) 40%,transparent 72%);
+    filter:blur(3px);z-index:2;
+    animation:lGlowPulse 5s ease-in-out infinite;
+  }
+  @keyframes lGlowPulse{
+    0%,100%{opacity:.55;transform:translate(-50%,-50%) scale(0.96)}
+    35%{opacity:.9;transform:translate(-50%,-50%) scale(1.08)}
+    65%{opacity:.75;transform:translate(-50%,-50%) scale(1.04)}
+  }
+
+  /* ── Eye v2: multi-stage pulse with iris glow ── */
+  .l-eye{
+    position:absolute;left:50%;top:46%;
+    width:12vmin;min-width:56px;max-width:90px;
+    transform:translate(-50%,-50%);z-index:3;
+    animation:lEyePulse 5s ease-in-out infinite;
+  }
+  @keyframes lEyePulse{
+    0%,100%{
+      filter:drop-shadow(0 0 6px rgba(190,220,255,0.5))
+             drop-shadow(0 0 16px rgba(130,185,255,0.25));
+    }
+    30%{
+      filter:drop-shadow(0 0 14px rgba(200,230,255,0.95))
+             drop-shadow(0 0 28px rgba(150,200,255,0.55))
+             drop-shadow(0 0 50px rgba(100,170,255,0.2));
+    }
+    60%{
+      filter:drop-shadow(0 0 10px rgba(195,225,255,0.75))
+             drop-shadow(0 0 22px rgba(140,195,255,0.4));
+    }
+  }
+  .l-eye svg{width:100%;height:auto;display:block}
+  .l-lid{stroke:rgba(225,235,248,0.95);stroke-width:2.2;stroke-linecap:round;fill:none}
+
+  /* ── Figure ── */
+  .l-figure{
+    position:absolute;left:50%;top:57%;
+    width:3.5vmin;min-width:14px;
+    transform:translate(-50%,-50%);z-index:2;opacity:0.9;
+    animation:lFloat 7s ease-in-out infinite;
+  }
+  @keyframes lFloat{
+    0%,100%{transform:translate(-50%,-50%) translateY(0)}
+    40%{transform:translate(-50%,-50%) translateY(-5px)}
+    70%{transform:translate(-50%,-50%) translateY(-2px)}
+  }
+  .l-figure svg{width:100%;height:auto;display:block}
+
+  /* ── Fades ── */
+  .l-top-fade{
+    position:absolute;left:0;right:0;top:0;height:20vh;
+    background:linear-gradient(to bottom,#020305 5%,rgba(2,3,5,0.6) 60%,transparent 100%);
+    pointer-events:none;z-index:5;
+  }
+  .l-floor-fade{
+    position:absolute;left:0;right:0;bottom:0;height:45vh;
+    background:linear-gradient(to top,#020305 6%,rgba(2,3,5,0.92) 35%,transparent 100%);
+    pointer-events:none;z-index:5;
+  }
+
+  /* ── Brand ── */
+  .l-brand{
+    position:absolute;top:5vh;left:0;right:0;
+    display:flex;flex-direction:column;align-items:center;
+    z-index:8;gap:5px;
+  }
+  .l-brand-tag{
+    font-family:'DM Mono',monospace;
+    font-size:clamp(7px,1.8vw,10px);letter-spacing:3px;
+    color:rgba(170,185,205,0.55);text-transform:uppercase;
+    animation:lFadeUp 1.2s ease both;
+  }
+  .l-brand-name{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(32px,8vw,60px);font-weight:500;
+    color:rgba(228,238,250,0.96);line-height:1;
+    text-shadow:0 0 30px rgba(0,0,0,0.9),0 0 60px rgba(150,205,255,0.18);
+    animation:lFadeUp 1.2s ease 0.1s both;
+  }
+  .l-brand-name em{font-style:italic;font-weight:600;color:#fff}
+  .l-brand-sub{
+    font-family:'DM Mono',monospace;
+    font-size:clamp(8px,1.6vw,11px);letter-spacing:4px;
+    color:rgba(170,185,205,0.45);text-transform:uppercase;
+    animation:lFadeUp 1.2s ease 0.2s both;
+  }
+  @keyframes lFadeUp{
+    from{opacity:0;transform:translateY(8px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  /* ── Bottom CTA ── */
+  .l-bottom{
+    position:absolute;bottom:0;left:0;right:0;
+    z-index:8;padding:0 28px 28px;
+    display:flex;flex-direction:column;align-items:center;gap:18px;
+    animation:lFadeUp 1.4s ease 0.4s both;
+  }
+  .l-headline{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(24px,6.5vw,38px);font-weight:500;
+    color:rgba(228,238,250,0.96);text-align:center;line-height:1.2;
+    text-shadow:0 0 28px rgba(0,0,0,0.95),0 0 50px rgba(170,205,255,0.2);
+  }
+  .l-headline em{font-style:italic;font-weight:600}
+  .l-actions{display:flex;gap:10px;align-items:center}
+  .l-btn-primary{
+    display:flex;align-items:center;gap:7px;
+    padding:13px 26px;border-radius:28px;
+    background:rgba(225,235,248,0.96);
+    color:#020305;border:none;cursor:pointer;
+    font-family:'Jost',sans-serif;font-weight:500;
+    font-size:14px;letter-spacing:1px;
+    transition:all 0.2s;-webkit-tap-highlight-color:transparent;
+    position:relative;overflow:hidden;
+  }
+  .l-btn-primary:active{transform:scale(0.96);opacity:0.9}
+  /* Loading state */
+  .l-btn-primary.l-loading{pointer-events:none;opacity:0.7}
+  .l-btn-primary.l-loading::after{
+    content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+    background:linear-gradient(to right,transparent,rgba(0,0,0,0.3),transparent);
+    animation:lLoadBar 1s linear infinite;
+  }
+  @keyframes lLoadBar{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+  .l-btn-ghost{
+    padding:13px 22px;border-radius:28px;
+    border:1px solid rgba(225,235,248,0.28);
+    background:transparent;
+    color:rgba(225,235,248,0.75);cursor:pointer;
+    font-family:'Jost',sans-serif;font-weight:300;
+    font-size:13px;letter-spacing:1px;
+    transition:all 0.2s;-webkit-tap-highlight-color:transparent;
+    position:relative;overflow:hidden;
+  }
+  .l-btn-ghost:active{background:rgba(225,235,248,0.1)}
+  .l-btn-ghost.l-loading{pointer-events:none;opacity:0.6}
+
+  /* ── Lite Sign-In Overlay ── */
+  .l-signin-ov{
+    position:absolute;inset:0;z-index:20;
+    background:rgba(2,3,5,0.88);
+    display:flex;align-items:flex-end;
+    opacity:0;pointer-events:none;
+    transition:opacity 0.35s ease;
+    backdrop-filter:blur(8px);
+  }
+  .l-signin-ov.l-sio-open{opacity:1;pointer-events:auto}
+  .l-signin-sheet{
+    width:100%;background:#060a14;
+    border-radius:20px 20px 0 0;
+    border-top:1px solid rgba(225,235,248,0.1);
+    padding:28px 24px 40px;
+    display:flex;flex-direction:column;align-items:center;gap:14px;
+    transform:translateY(100%);
+    transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .l-signin-ov.l-sio-open .l-signin-sheet{transform:translateY(0)}
+  .l-signin-close{
+    position:absolute;top:16px;right:16px;
+    width:30px;height:30px;border-radius:50%;
+    border:1px solid rgba(225,235,248,0.18);
+    background:rgba(8,12,20,0.7);
+    color:rgba(225,235,248,0.6);font-size:13px;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:background 0.2s;
+  }
+  .l-signin-close:active{background:rgba(225,235,248,0.1)}
+  .l-signin-eye{margin-bottom:4px;filter:drop-shadow(0 0 12px rgba(190,220,255,0.7))}
+  .l-signin-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:24px;font-weight:500;
+    color:rgba(228,238,250,0.95);text-align:center;
+  }
+  .l-signin-title em{font-style:italic;font-weight:600}
+  .l-signin-sub{
+    font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;
+    color:rgba(170,185,205,0.45);text-align:center;
+    margin-bottom:6px;
+  }
+  .l-signin-google,.l-signin-apple{
+    width:100%;padding:13px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    cursor:pointer;font-size:14px;font-weight:500;
+    font-family:'Jost',sans-serif;letter-spacing:0.3px;
+    border:none;transition:all 0.15s;
+    -webkit-tap-highlight-color:transparent;
+    position:relative;overflow:hidden;
+  }
+  .l-signin-google{background:rgba(225,235,248,0.96);color:#020305}
+  .l-signin-google:active{opacity:0.88;transform:scale(0.98)}
+  .l-signin-apple{background:transparent;color:rgba(225,235,248,0.85);border:1px solid rgba(225,235,248,0.18)}
+  .l-signin-apple:active{background:rgba(225,235,248,0.06)}
+  /* Button loading state */
+  .l-signin-google.l-btn-loading,.l-signin-apple.l-btn-loading{
+    pointer-events:none;opacity:0.65;
+  }
+  .l-signin-google.l-btn-loading::after,.l-signin-apple.l-btn-loading::after{
+    content:'⋯';margin-left:8px;animation:lDotPulse 1s ease-in-out infinite;
+  }
+  @keyframes lDotPulse{0%,100%{opacity:0.3}50%{opacity:1}}
+  .l-signin-or{
+    width:100%;display:flex;align-items:center;gap:12px;
+    font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;
+    color:rgba(170,185,205,0.35);
+  }
+  .l-signin-or::before,.l-signin-or::after{content:'';flex:1;height:1px;background:rgba(225,235,248,0.1)}
+  .l-signin-input{
+    width:100%;padding:13px 16px;border-radius:12px;
+    background:rgba(225,235,248,0.05);
+    border:1px solid rgba(225,235,248,0.18);
+    color:rgba(225,235,248,0.88);font-size:14px;
+    font-family:'Jost',sans-serif;
+    outline:none;transition:border-color 0.2s,box-shadow 0.2s;
+    -webkit-appearance:none;
+  }
+  .l-signin-input:focus{
+    border-color:rgba(190,220,255,0.5);
+    box-shadow:0 0 0 3px rgba(190,220,255,0.08);
+  }
+  .l-signin-input.l-input-error{
+    border-color:rgba(255,120,120,0.5);
+    box-shadow:0 0 0 3px rgba(255,120,120,0.08);
+    animation:lShake 0.3s ease;
+  }
+  @keyframes lShake{
+    0%,100%{transform:translateX(0)}
+    25%{transform:translateX(-6px)}
+    75%{transform:translateX(6px)}
+  }
+  .l-signin-input::placeholder{color:rgba(225,235,248,0.35)}
+  .l-signin-email{
+    width:100%;padding:13px;border-radius:12px;
+    background:rgba(225,235,248,0.1);
+    border:1px solid rgba(225,235,248,0.2);
+    color:rgba(225,235,248,0.88);font-size:14px;
+    font-family:'Jost',sans-serif;font-weight:500;
+    cursor:pointer;transition:all 0.15s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .l-signin-email:active{background:rgba(225,235,248,0.16)}
+  .l-signin-email.l-btn-loading{pointer-events:none;opacity:0.65}
+  .l-signin-error{
+    font-size:11px;color:rgba(255,130,130,0.85);
+    font-family:'Jost',sans-serif;text-align:center;
+    min-height:14px;transition:opacity 0.2s;
+  }
+  .l-signin-terms{
+    font-size:11px;color:rgba(170,185,205,0.4);text-align:center;
+    font-family:'Jost',sans-serif;
+  }
+  .l-signin-terms a{color:rgba(184,212,240,0.6);text-decoration:underline}
+
+  /* ── Lite Toast ── */
+  .l-toast{
+    position:fixed;bottom:calc(90px + env(safe-area-inset-bottom,0px));
+    left:50%;transform:translateX(-50%) translateY(16px);
+    z-index:9999;
+    background:rgba(6,10,18,0.95);
+    border:1px solid rgba(190,220,255,0.2);
+    border-radius:20px;padding:10px 20px;
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;
+    color:rgba(225,235,248,0.85);
+    opacity:0;pointer-events:none;
+    transition:opacity 0.3s,transform 0.3s;
+    backdrop-filter:blur(10px);
+    white-space:nowrap;
+  }
+  .l-toast.l-toast-show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ══ LITE MODE v2: routing CSS ═════════════════════════════════════════════
+     FIX v1: was #pageHome (doesn't exist!) — now correctly targets #pageLanding
+  ═══════════════════════════════════════════════════════════════════════════ */
+  html.lite-mode #pageLanding{display:none!important}
+  html:not(.lite-mode) #pageLite{display:none!important}
+  html.lite-mode .loader-skip{display:block}
+
+  /* ── Hide top nav + back btn in lite mode ── */
+  html.lite-mode nav{display:none!important}
+  html.lite-mode #backBtn{display:none!important}
+
+  /* ══ LITE TAB BAR ══════════════════════════════════════════════════════════
+     Fixed 4-icon bottom navigation — slides up when lite-mode activates
+  ═══════════════════════════════════════════════════════════════════════════ */
+  .l-tab-bar{
+    display:none;
+    position:fixed;bottom:0;left:0;right:0;
+    z-index:9990;
+    align-items:stretch;
+    justify-content:space-around;
+    padding:6px 0 calc(8px + env(safe-area-inset-bottom,0px));
+    background:rgba(3,5,10,0.94);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-top:1px solid rgba(184,212,240,0.1);
+    /* slide-up entrance */
+    transform:translateY(100%);
+    transition:transform 0.42s cubic-bezier(0.4,0,0.2,1);
+  }
+  /* Show + slide up in lite-mode */
+  html.lite-mode .l-tab-bar{
+    display:flex;
+    transform:translateY(0);
+  }
+  /* Push pageLite content up so tab bar doesn't cover CTA */
+  html.lite-mode #pageLite .l-bottom{
+    padding-bottom:calc(78px + env(safe-area-inset-bottom,0px));
+  }
+  /* Each tab button */
+  .l-tab{
+    flex:1;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:4px;
+    padding:8px 4px 6px;
+    background:none;border:none;cursor:pointer;
+    color:rgba(155,175,200,0.42);
+    font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1px;
+    text-transform:uppercase;
+    transition:color 0.2s;
+    -webkit-tap-highlight-color:transparent;
+    position:relative;
+  }
+  .l-tab svg{width:22px;height:22px;flex-shrink:0}
+  .l-tab span{line-height:1}
+  /* Active state */
+  .l-tab.l-tab--active{
+    color:rgba(225,235,248,0.95);
+  }
+  .l-tab.l-tab--active svg{
+    filter:drop-shadow(0 0 5px rgba(190,220,255,0.65));
+  }
+  /* Active dot indicator */
+  .l-tab.l-tab--active::after{
+    content:'';
+    position:absolute;top:4px;left:50%;
+    transform:translateX(-50%);
+    width:16px;height:2px;border-radius:2px;
+    background:rgba(190,220,255,0.7);
+  }
+  /* Tap feedback */
+  .l-tab:active{color:rgba(200,220,248,0.85);transform:scale(0.94)}
+  /* Lite badge needs to be above tab bar and shifted slightly */
+  html.lite-mode .lite-badge{
+    bottom:calc(68px + env(safe-area-inset-bottom,0px));
+  }

@@ -1,0 +1,1028 @@
+  /* ───── QUICK HIDE — instant blackout overlay ───── */
+  html.pp-quickhide::after{
+    content:'';
+    position:fixed;top:0;left:0;right:0;bottom:0;z-index:9700;
+    background:#040608;
+    pointer-events:none;
+    animation:ppQuickIn 0.25s ease-out;
+  }
+  /* Subtle eye logo in center of blackout — calm, not alarming */
+  html.pp-quickhide::before{
+    content:'';
+    position:fixed;top:50%;left:50%;
+    width:60px;height:36px;z-index:9701;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(ellipse at center,rgba(var(--cyan),0.12),transparent 70%);
+    pointer-events:none;
+    animation:ppQuickPulse 3s ease-in-out infinite;
+  }
+  @keyframes ppQuickIn{from{opacity:0}to{opacity:1}}
+  @keyframes ppQuickPulse{0%,100%{opacity:0.4}50%{opacity:1}}
+
+  /* ───── Quick Hide floating button (FAB) ───── */
+  .pp-quick-fab{
+    position:fixed;bottom:24px;right:24px;z-index:9750;
+    width:52px;height:52px;border-radius:50%;
+    background:rgba(10,14,22,0.92);
+    border:1px solid rgba(var(--cyan),0.25);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    display:none;align-items:center;justify-content:center;
+    cursor:pointer;
+    box-shadow:0 6px 24px rgba(0,0,0,0.4);
+    transition:all 0.3s cubic-bezier(0.22,1,0.36,1);
+  }
+  /* Only show FAB when a privacy mode is active */
+  html.pp-active .pp-quick-fab{display:flex}
+  .pp-quick-fab:hover{
+    border-color:rgba(var(--cyan),0.5);
+    transform:translateY(-2px);
+    box-shadow:0 8px 28px rgba(var(--cyan),0.15);
+  }
+  .pp-quick-fab:active{transform:scale(0.94)}
+  .pp-quick-fab svg{width:22px;height:22px;stroke:rgba(var(--cyan),0.85);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .pp-quick-fab.active{
+    background:rgba(var(--cyan),0.16);
+    border-color:rgba(var(--cyan),0.6);
+    z-index:9760;
+  }
+  .pp-quick-fab.active svg{stroke:rgba(var(--cyan),1)}
+  @media(max-width:768px){
+    .pp-quick-fab{bottom:18px;right:18px;width:48px;height:48px}
+  }
+
+  /* ───── The shield button in the nav ───── */
+  .pp-nav-btn{
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+    width:36px;height:36px;
+    background:transparent;border:none;
+    color:rgba(var(--ice),0.78);
+    cursor:pointer;
+    padding:0;margin:0 4px 0 0;
+    border-radius:10px;
+    transition:all 0.25s cubic-bezier(0.22,1,0.36,1);
+  }
+  .pp-nav-btn:hover{
+    background:rgba(var(--cyan),0.08);
+    color:rgba(var(--cyan),0.95);
+    transform:translateY(-1px);
+  }
+  .pp-nav-svg{width:20px;height:20px}
+  .pp-nav-dot{
+    position:absolute;top:6px;right:6px;
+    width:6px;height:6px;border-radius:50%;
+    background:rgba(34,200,140,0);
+    box-shadow:0 0 0 rgba(34,200,140,0);
+    transition:background 0.3s,box-shadow 0.3s;
+  }
+  /* When privacy is active, button glows + dot lights up + check appears */
+  html.pp-active .pp-nav-btn{
+    color:rgba(var(--cyan),0.95);
+    background:rgba(var(--cyan),0.08);
+    box-shadow:0 0 0 1px rgba(var(--cyan),0.32) inset;
+  }
+  html.pp-active .pp-nav-dot{
+    background:rgba(34,200,140,0.95);
+    box-shadow:0 0 8px rgba(34,200,140,0.8);
+    animation:ppNavDotPulse 2.2s ease-in-out infinite;
+  }
+  html.pp-active .pp-nav-check{opacity:1;animation:ppCheckIn 0.4s ease-out}
+  html.pp-active .pp-nav-eye{opacity:0}
+  @keyframes ppNavDotPulse{
+    0%,100%{opacity:0.7;transform:scale(0.85)}
+    50%    {opacity:1;  transform:scale(1.15)}
+  }
+  @keyframes ppCheckIn{
+    0%  {opacity:0;stroke-dasharray:0 30;stroke-dashoffset:0}
+    100%{opacity:1;stroke-dasharray:30 0}
+  }
+
+  /* ───── The mode-selection menu ───── */
+  .pp-menu{
+    position:fixed;top:60px;right:14px;z-index:9800;
+    width:320px;max-width:calc(100vw - 28px);
+    padding:18px 18px 14px;
+    background:linear-gradient(135deg,rgba(10,14,22,0.96) 0%,rgba(6,10,16,0.96) 100%);
+    border:1px solid rgba(var(--cyan),0.22);
+    border-radius:16px;
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    box-shadow:0 16px 60px rgba(0,0,0,0.7),inset 0 1px 0 rgba(var(--ice),0.06);
+    opacity:0;visibility:hidden;
+    transform:translateY(-8px) scale(0.96);
+    transform-origin:top right;
+    transition:opacity 0.3s,visibility 0.3s,transform 0.4s cubic-bezier(0.22,1,0.36,1);
+    pointer-events:none;
+  }
+  .pp-menu.open{
+    opacity:1;visibility:visible;
+    transform:translateY(0) scale(1);
+    pointer-events:auto;
+  }
+  .pp-menu-head{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:4px;padding-bottom:12px;
+    border-bottom:1px solid rgba(var(--ice),0.08);
+  }
+  .pp-menu-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:18px;font-weight:500;letter-spacing:-0.2px;
+    color:rgba(var(--ice),0.96);
+  }
+  .pp-menu-title em{
+    font-style:italic;font-weight:400;
+    color:rgba(var(--cyan),0.92);
+  }
+  .pp-menu-info{
+    width:24px;height:24px;border-radius:50%;
+    background:rgba(var(--cyan),0.08);
+    border:1px solid rgba(var(--cyan),0.28);
+    color:rgba(var(--cyan),0.9);
+    font-family:'DM Mono',monospace;font-size:10px;font-weight:600;
+    cursor:pointer;padding:0;
+    display:flex;align-items:center;justify-content:center;
+    transition:all 0.25s;
+  }
+  .pp-menu-info:hover{
+    background:rgba(var(--cyan),0.18);transform:scale(1.08);
+  }
+  .pp-menu-options{
+    display:flex;flex-direction:column;gap:6px;
+    margin:12px 0;
+  }
+  .pp-menu-opt{
+    display:flex;flex-direction:column;align-items:flex-start;gap:2px;
+    width:100%;padding:11px 14px;
+    background:rgba(var(--ice),0.03);
+    border:1px solid rgba(var(--ice),0.08);
+    border-radius:10px;
+    color:rgba(var(--ice),0.88);
+    cursor:pointer;text-align:left;
+    transition:all 0.25s;
+    position:relative;
+  }
+  .pp-menu-opt:hover{
+    background:rgba(var(--cyan),0.06);
+    border-color:rgba(var(--cyan),0.3);
+  }
+  .pp-menu-opt.active{
+    background:rgba(var(--cyan),0.1);
+    border-color:rgba(var(--cyan),0.55);
+  }
+  .pp-menu-opt.active::after{
+    content:'';position:absolute;top:50%;right:14px;
+    transform:translateY(-50%);
+    width:18px;height:18px;border-radius:50%;
+    background:rgba(var(--cyan),0.85);
+    box-shadow:0 0 12px rgba(var(--cyan),0.6);
+  }
+  .pp-menu-opt.active::before{
+    content:'';position:absolute;top:50%;right:20px;
+    transform:translateY(-50%) rotate(-45deg);
+    width:8px;height:4px;
+    border-left:1.5px solid rgba(8,12,18,1);
+    border-bottom:1.5px solid rgba(8,12,18,1);
+    z-index:2;
+  }
+  .pp-menu-opt-name{
+    font-family:'DM Mono',monospace;
+    font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    font-weight:600;
+    color:rgba(var(--ice),0.96);
+  }
+  .pp-menu-opt-sub{
+    font-family:'Sora',sans-serif;
+    font-size:11px;font-weight:300;
+    color:rgba(var(--id),0.72);
+  }
+  .pp-menu-tilt{
+    margin-top:8px;padding-top:12px;
+    border-top:1px dashed rgba(var(--ice),0.08);
+  }
+  .pp-menu-tilt-label{
+    display:flex;align-items:center;gap:10px;
+    cursor:pointer;
+    font-family:'Sora',sans-serif;
+    font-size:12px;font-weight:300;
+    color:rgba(var(--id),0.85);
+  }
+  .pp-menu-tilt-label input[type="checkbox"]{
+    width:34px;height:18px;
+    -webkit-appearance:none;appearance:none;
+    background:rgba(var(--ice),0.1);
+    border-radius:9px;position:relative;cursor:pointer;
+    margin:0;flex-shrink:0;
+    transition:background 0.25s;
+  }
+  .pp-menu-tilt-label input[type="checkbox"]::before{
+    content:'';position:absolute;top:2px;left:2px;
+    width:14px;height:14px;border-radius:50%;
+    background:rgba(var(--ice),0.85);
+    transition:transform 0.25s;
+  }
+  .pp-menu-tilt-label input[type="checkbox"]:checked{
+    background:rgba(var(--cyan),0.7);
+  }
+  .pp-menu-tilt-label input[type="checkbox"]:checked::before{
+    transform:translateX(16px);background:#fff;
+  }
+  .pp-menu-foot{
+    margin-top:12px;padding-top:10px;
+    border-top:1px solid rgba(var(--ice),0.06);
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-size:11.5px;
+    color:rgba(var(--id),0.6);text-align:center;
+    line-height:1.45;
+  }
+
+  /* ───── The CORE blur logic ─────
+     This is where Samsung's hardware becomes our software.
+     Selective mode blurs chats + inputs (matches Samsung's "Partial Screen Privacy")
+     Maximum mode adds names, emails, phone numbers, anything marked [data-private]
+     (matches Samsung's "Maximum Privacy Protection")
+
+     The blur is filter-based which is GPU-accelerated. tap/hover/focus removes
+     it for that single element only — others stay blurred. */
+
+  /* Selective mode targets */
+  html.pp-selective .msg,
+  html.pp-selective .tk-msg,
+  html.pp-selective .lp-chat-msg,
+  html.pp-selective .lp-chat-message,
+  html.pp-selective .lp-chat-bubble,
+  html.pp-selective input[type="email"],
+  html.pp-selective input[type="password"],
+  html.pp-selective input[type="tel"],
+  html.pp-selective .login-input{
+    filter:blur(7px) saturate(0.5);
+    transition:filter 0.35s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  /* Maximum mode — add more aggressive targets */
+  html.pp-full .msg,
+  html.pp-full .tk-msg,
+  html.pp-full .lp-chat-msg,
+  html.pp-full .lp-chat-message,
+  html.pp-full .lp-chat-bubble,
+  html.pp-full input[type="email"],
+  html.pp-full input[type="password"],
+  html.pp-full input[type="tel"],
+  html.pp-full input[type="text"],
+  html.pp-full .login-input,
+  html.pp-full .circle-post-text,
+  html.pp-full .esm-eye-text,
+  html.pp-full .esm-box p,
+  html.pp-full [data-private="true"],
+  html.pp-full [data-private]{
+    filter:blur(8px) saturate(0.4);
+    transition:filter 0.35s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  /* Tap/hover/focus → reveal that single element briefly */
+  html.pp-selective .msg:hover,
+  html.pp-selective .msg:focus-within,
+  html.pp-selective .msg.pp-reveal,
+  html.pp-selective .tk-msg:hover,
+  html.pp-selective .tk-msg:focus-within,
+  html.pp-selective .tk-msg.pp-reveal,
+  html.pp-selective .login-input:focus,
+  html.pp-selective input[type="email"]:focus,
+  html.pp-selective input[type="password"]:focus,
+  html.pp-selective input[type="tel"]:focus,
+  html.pp-full .msg:hover,
+  html.pp-full .msg:focus-within,
+  html.pp-full .msg.pp-reveal,
+  html.pp-full .tk-msg:hover,
+  html.pp-full .tk-msg:focus-within,
+  html.pp-full .tk-msg.pp-reveal,
+  html.pp-full input:focus,
+  html.pp-full .login-input:focus,
+  html.pp-full .circle-post-text.pp-reveal,
+  html.pp-full [data-private].pp-reveal,
+  html.pp-full [data-private]:hover{
+    filter:blur(0) saturate(1)!important;
+  }
+
+  /* ── Peek alert — someone detected behind you (Phase 3) ── */
+  html.pp-peek-alert.pp-active .msg,
+  html.pp-peek-alert.pp-active .tk-msg,
+  html.pp-peek-alert.pp-active .lp-chat-msg,
+  html.pp-peek-alert.pp-active input,
+  html.pp-peek-alert.pp-active textarea,
+  html.pp-peek-alert.pp-active [data-private]{
+    filter:blur(22px) saturate(0.2)!important;
+    transition:filter 0.12s linear!important;
+  }
+  /* A subtle warning ribbon when peek is detected */
+  html.pp-peek-alert .pp-peek-ribbon{
+    opacity:1;
+    transform:translateY(0);
+  }
+  .pp-peek-ribbon{
+    position:fixed;top:64px;left:50%;
+    transform:translate(-50%,-12px);
+    z-index:9790;
+    display:flex;align-items:center;gap:8px;
+    padding:8px 16px;border-radius:20px;
+    background:rgba(10,14,22,0.95);
+    border:1px solid rgba(var(--cyan),0.35);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;
+    color:rgba(var(--cyan),0.9);
+    opacity:0;pointer-events:none;
+    transition:opacity 0.3s,transform 0.3s cubic-bezier(0.22,1,0.36,1);
+    box-shadow:0 8px 28px rgba(0,0,0,0.5);
+  }
+  .pp-peek-ribbon-dot{
+    width:6px;height:6px;border-radius:50%;
+    background:rgba(var(--cyan),0.9);
+    box-shadow:0 0 8px rgba(var(--cyan),0.7);
+    animation:ppNavDotPulse 1.2s ease-in-out infinite;
+  }
+  /* Level 1: slight tilt — gentle blur, content still partly visible */
+  html.pp-tilt-low.pp-active .msg,
+  html.pp-tilt-low.pp-active .tk-msg,
+  html.pp-tilt-low.pp-active .lp-chat-msg,
+  html.pp-tilt-low.pp-active [data-private]{
+    filter:blur(5px) saturate(0.6);
+    transition:filter 0.25s ease;
+  }
+  /* Level 2: moderate tilt — stronger blur */
+  html.pp-tilt-mid.pp-active .msg,
+  html.pp-tilt-mid.pp-active .tk-msg,
+  html.pp-tilt-mid.pp-active .lp-chat-msg,
+  html.pp-tilt-mid.pp-active [data-private]{
+    filter:blur(11px) saturate(0.4);
+    transition:filter 0.25s ease;
+  }
+  /* Level 3: sharp tilt — content fully obscured */
+  html.pp-tilt-high.pp-active .msg,
+  html.pp-tilt-high.pp-active .tk-msg,
+  html.pp-tilt-high.pp-active .lp-chat-msg,
+  html.pp-tilt-high.pp-active [data-private]{
+    filter:blur(18px) saturate(0.25);
+    transition:filter 0.25s ease;
+  }
+
+  /* When window loses focus (someone else takes the device) — maximum blur */
+  html.pp-active.pp-window-blurred .msg,
+  html.pp-active.pp-window-blurred .tk-msg,
+  html.pp-active.pp-window-blurred input,
+  html.pp-active.pp-window-blurred [data-private]{
+    filter:blur(20px) saturate(0.2)!important;
+    transition:filter 0.15s linear!important;
+  }
+
+  /* ───── The active indicator bar ─────
+     Shows at the top of the screen when Privacy Display is on.
+     Subtle but always visible — so user knows the state. */
+  .pp-indicator{
+    position:fixed;
+    top:env(safe-area-inset-top,0);left:50%;
+    transform:translateX(-50%) translateY(-100%);
+    z-index:9700;pointer-events:none;
+    padding:4px 14px 5px;
+    background:rgba(8,12,18,0.92);
+    border:1px solid rgba(var(--cyan),0.4);
+    border-top:none;
+    border-radius:0 0 10px 10px;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    display:flex;align-items:center;gap:8px;
+    transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);
+    box-shadow:0 4px 16px rgba(0,0,0,0.5);
+  }
+  html.pp-active .pp-indicator{
+    transform:translateX(-50%) translateY(0);
+  }
+  .pp-indicator svg{
+    width:10px;height:10px;
+    color:rgba(var(--cyan),0.95);
+  }
+  .pp-indicator-text{
+    font-family:'DM Mono',monospace;
+    font-size:8px;letter-spacing:2.5px;text-transform:uppercase;
+    color:rgba(var(--cyan),0.95);
+    font-weight:600;
+  }
+  .pp-indicator-mode{
+    font-family:'DM Mono',monospace;
+    font-size:8px;letter-spacing:1.5px;
+    color:rgba(var(--ice),0.7);
+    margin-left:2px;
+    padding-left:8px;
+    border-left:1px solid rgba(var(--cyan),0.25);
+  }
+
+  /* ───── First-time intro modal ─────
+     Just like Samsung's intro screen when you first enable Privacy Display. */
+  .pp-intro{
+    position:fixed;top:0;left:0;right:0;bottom:0;z-index:9900;
+    background:rgba(4,6,8,0);
+    backdrop-filter:blur(0);
+    -webkit-backdrop-filter:blur(0);
+    opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity 0.5s,visibility 0.5s,background 0.5s,backdrop-filter 0.5s;
+    display:flex;align-items:center;justify-content:center;
+    padding:24px;
+  }
+  .pp-intro.active{
+    opacity:1;visibility:visible;pointer-events:auto;
+    background:rgba(4,6,8,0.82);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+  }
+  .pp-intro-box{
+    max-width:480px;width:100%;
+    padding:36px 32px 28px;
+    background:linear-gradient(135deg,rgba(10,14,22,0.96) 0%,rgba(6,10,16,0.96) 100%);
+    border:1px solid rgba(var(--cyan),0.28);
+    border-radius:18px;
+    box-shadow:0 24px 80px rgba(0,0,0,0.75),inset 0 1px 0 rgba(var(--ice),0.08);
+    transform:scale(0.94) translateY(12px);
+    transition:transform 0.55s cubic-bezier(0.22,1,0.36,1);
+    text-align:center;
+  }
+  .pp-intro.active .pp-intro-box{transform:scale(1) translateY(0)}
+  .pp-intro-shield{
+    width:64px;height:64px;margin:0 auto 18px;
+    display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle, rgba(var(--cyan),0.18) 0%, rgba(var(--cyan),0) 70%);
+    border-radius:50%;
+  }
+  .pp-intro-shield svg{
+    width:42px;height:42px;
+    color:rgba(var(--cyan),0.95);
+    filter:drop-shadow(0 0 12px rgba(var(--cyan),0.6));
+  }
+  .pp-intro-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:30px;font-weight:500;letter-spacing:-0.3px;
+    color:rgba(var(--ice),0.96);
+    margin-bottom:8px;line-height:1.2;
+  }
+  .pp-intro-title em{
+    font-style:italic;font-weight:400;
+    color:rgba(var(--cyan),0.92);
+  }
+  .pp-intro-sub{
+    font-family:'Sora',sans-serif;
+    font-size:13px;font-weight:300;
+    color:rgba(var(--id),0.85);
+    line-height:1.55;margin-bottom:24px;
+  }
+  .pp-intro-rows{
+    display:flex;flex-direction:column;gap:11px;
+    margin-bottom:24px;text-align:left;
+  }
+  .pp-intro-row{
+    display:flex;gap:12px;align-items:flex-start;
+    padding:11px 13px;
+    background:rgba(var(--cyan),0.04);
+    border-left:2px solid rgba(var(--cyan),0.5);
+    border-radius:0 8px 8px 0;
+  }
+  .pp-intro-row-num{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-weight:500;
+    font-size:18px;
+    color:rgba(var(--cyan),0.92);
+    min-width:18px;
+  }
+  .pp-intro-row-text{
+    font-family:'Sora',sans-serif;
+    font-size:12.5px;font-weight:300;
+    color:rgba(var(--ice),0.86);
+    line-height:1.5;flex:1;
+  }
+  .pp-intro-row-text strong{
+    font-weight:500;color:rgba(var(--cyan),0.92);
+  }
+  .pp-intro-actions{
+    display:flex;gap:8px;
+  }
+  .pp-intro-btn{
+    flex:1;padding:13px 18px;
+    background:rgba(var(--ice),0.95);color:#000;
+    border:none;border-radius:10px;
+    font-family:'DM Mono',monospace;
+    font-size:10.5px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;
+    cursor:pointer;transition:all 0.25s;
+  }
+  .pp-intro-btn:hover{
+    background:rgba(var(--cyan),0.95);color:#fff;
+    transform:translateY(-1px);
+    box-shadow:0 4px 16px rgba(var(--cyan),0.3);
+  }
+  .pp-intro-btn-sec{
+    flex:0 0 auto;padding:13px 16px;
+    background:transparent;color:rgba(var(--ice),0.7);
+    border:1px solid rgba(var(--ice),0.2);
+  }
+  .pp-intro-btn-sec:hover{
+    background:rgba(var(--ice),0.06);
+    border-color:rgba(var(--ice),0.4);
+    color:rgba(var(--ice),1);
+  }
+
+  /* ───── Mobile responsive ───── */
+  @media(max-width:760px){
+    .pp-menu{
+      top:auto;bottom:14px;right:14px;left:14px;width:auto;max-width:none;
+      transform-origin:bottom right;
+    }
+    .pp-intro-box{padding:28px 22px 22px}
+    .pp-intro-title{font-size:24px}
+  }
+
+  /* ───── Reduced motion ───── */
+  @media(prefers-reduced-motion:reduce){
+    html.pp-selective .msg,
+    html.pp-selective .tk-msg,
+    html.pp-full .msg,
+    html.pp-full .tk-msg,
+    html.pp-full [data-private]{
+      transition:filter 0.15s linear;
+    }
+    .pp-nav-dot{animation:none}
+  }
+
+  /* ───── On tier-low: simpler blur (cheaper for GPU) ───── */
+  .tier-low html.pp-selective .msg,
+  .tier-low html.pp-selective .tk-msg,
+  .tier-low html.pp-full .msg,
+  .tier-low html.pp-full .tk-msg{
+    filter:blur(5px);  /* drop saturate for perf */
+  }
+
+  /* ══════════════════════════════════════════════════
+     HERO VISUAL v1/v2 SYSTEM
+  ══════════════════════════════════════════════════ */
+  /* ════════════════════════════════════════════════════════
+     LIGHT MODE — EYE ISLAND
+     ────────────────────────────────────────────────────────
+     الصفحة فاتحة، لكن العين تعيش في جزيرتها الغامقة.
+     بالظبط زي العين الحقيقية — البؤبؤ والقزحية دايماً
+     غامقين حتى في أشد النهار إضاءة.
+     ════════════════════════════════════════════════════════ */
+  /* الشريط الكامل — z-index:0 (مش سالب) عشان يظهر مضمون */
+  /* كل محتوى الجزيرة فوق الشريط */
+
+  /* ════════════════════════════════════════════════
+     ألوان العين داخل الجزيرة — HARD-CODED
+     ────────────────────────────────────────────────
+     متصفحات الموبايل بتقرأ var() جوّه SVG <stop> من
+     الجذر مش من الـ ancestor — فبنكتب القيم صريحة
+     عشان نتخطّى المشكلة دي تماماً.
+     ice=225,235,248  cyan=232,242,255
+     ════════════════════════════════════════════════ */
+
+  /* الجفون — نعيد تعريف stops الـ gradient بقيم صريحة فاتحة */
+  /* fallback لو الـ gradient مـا اشتغلش — stroke صريح فاتح */
+
+  /* حلقات المتاهة — قيم ice صريحة */
+
+  /* مسار الحل + البؤبؤ — قيم cyan صريحة */
+
+  /* الـ annotations — قيم صريحة */
+
+  /* الـ toggle فوق الشريط — glass على الغامق */
+
+  /* ══════════════════════════════════════════════════
+     SKY MODE — وضع السماء (Home فقط)
+     ────────────────────────────────────────────────
+     نفس نظام الـ day-mode القديم اللي كان متناسق —
+     بس بألوان السماء الحقيقية: تدرّج أبيض-سماوي للخلفية،
+     ولمعة أزرق سماوي غامق كـ accent جديد.
+     العين بتستخدم var(--ice) و var(--cyan) عشرات المرات
+     → بتتكيّف تلقائياً: الجفون/الحلقات (ice) كحلي غامق،
+       مسار الحل/البؤبؤ (cyan) أزرق سماوي لامع.
+     ══════════════════════════════════════════════════ */
+  .sky-toggle{
+    width:34px;height:34px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:transparent;border:1px solid rgba(var(--ice),0.18);
+    color:rgba(var(--ice),0.85);font-size:14px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    transition:border-color 0.3s,background 0.3s;
+  }
+  .sky-toggle:hover{border-color:rgba(var(--cyan),0.4);background:rgba(var(--cyan),0.06)}
+  /* separate light/dark theme toggle — same shape as the sun button */
+  .theme-toggle{
+    width:34px;height:34px;border-radius:50%;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    background:transparent;border:1px solid rgba(var(--ice),0.18);
+    color:rgba(var(--ice),0.85);cursor:pointer;margin-right:8px;
+    -webkit-tap-highlight-color:transparent;
+    transition:border-color 0.3s,background 0.3s,transform 0.3s;
+  }
+  .theme-toggle:hover{border-color:rgba(var(--cyan),0.4);background:rgba(var(--cyan),0.06)}
+  .theme-toggle svg{transition:transform 0.5s cubic-bezier(.4,0,.2,1)}
+  [data-theme="light"] .theme-toggle svg{transform:rotate(180deg)}
+
+  /* ─── Fast Mode — manual override for the heaviest visual settings.
+       Same .tier-low system the file already uses everywhere, just
+       forced on by the person instead of waiting on auto-detection,
+       and remembered (localStorage) across visits. ─── */
+  .fast-mode-toggle{
+    width:34px;height:34px;border-radius:50%;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    background:transparent;border:1px solid rgba(var(--ice),0.18);
+    color:rgba(var(--ice),0.85);cursor:pointer;margin-right:8px;
+    -webkit-tap-highlight-color:transparent;
+    transition:border-color 0.3s,background 0.3s,color 0.3s;
+  }
+  .fast-mode-toggle:hover{border-color:rgba(var(--cyan),0.4);background:rgba(var(--cyan),0.06)}
+  .fast-mode-toggle.on{
+    border-color:rgba(255,200,90,0.65);
+    background:rgba(255,200,90,0.12);
+    color:rgba(255,200,90,0.95);
+  }
+
+  html.sky-mode, html.sky-mode * {
+    transition: background-color 0.8s ease,
+                color           0.8s ease,
+                border-color    0.5s ease,
+                box-shadow      0.5s ease,
+                stroke          0.5s ease !important;
+  }
+
+  /* ─── متغيرات السماء ─── */
+  html.sky-mode {
+    --ice:  8, 18, 40;        /* الحبر الأساسي — نفس soul light */
+    --ib:   4, 10, 26;
+    --id:   8, 18, 40;        /* نفس عيلة الحبر — الفروق بالـ alpha بس */
+    --cyan: 14, 44, 110;      /* الأزرق العميق — اللمعة والـ accent */
+    --bg:   #edf2f8;
+    --bg2:  #dde8f5;
+  }
+
+  /* ─── الأساس ─── */
+  html.sky-mode body { background-color: #f0f2f6 !important; }
+  html.sky-mode #snow,
+  html.sky-mode body::after { opacity: 0.02 !important; }
+
+  /* ─── Nav ─── */
+  html.sky-mode nav {
+    background: rgba(234,238,244,0.97) !important;
+    border-bottom: 1px solid rgba(8,18,40,0.07) !important;
+    box-shadow: 0 1px 0 rgba(8,18,40,0.04), 0 4px 20px rgba(8,18,40,0.04) !important;
+  }
+  html.sky-mode .sky-toggle{
+    border-color: rgba(14,44,110,0.3) !important;
+    background: rgba(14,44,110,0.08) !important;
+    color: rgba(14,44,110,0.95) !important;
+  }
+
+  /* ─── Hero ─── */
+  html.sky-mode .hero {
+    background: linear-gradient(180deg,#e8ecf2 0%, #f0f2f6 60%) !important;
+  }
+
+  /* ─── Hero text ─── */
+  html.sky-mode .hero-proof-num { color: rgba(var(--cyan),0.95) !important; }
+  html.sky-mode .hero-proof     { color: rgba(var(--id),0.75)   !important; }
+
+  /* ─── Principles ─── */
+  html.sky-mode .hp-icon {
+    background:   rgba(var(--cyan),0.10) !important;
+    border-color: rgba(var(--cyan),0.22) !important;
+  }
+  html.sky-mode .hp-text { color: rgba(var(--cyan),0.9) !important; }
+
+  /* ─── Section dividers ─── */
+  html.sky-mode .divider {
+    background: linear-gradient(90deg,transparent,rgba(14,44,110,0.18),transparent) !important;
+  }
+  html.sky-mode .sec-label { color: rgba(var(--id),0.85) !important; }
+  html.sky-mode .chap-div {
+    background: linear-gradient(90deg,transparent,rgba(14,44,110,0.18) 20%,rgba(14,44,110,0.18) 80%,transparent) !important;
+  }
+  html.sky-mode .chap-div span {
+    border-color: rgba(var(--cyan),0.55) !important;
+    background: var(--bg) !important;
+    box-shadow: 0 0 10px rgba(14,44,110,0.3) !important;
+  }
+
+  /* ─── Process cards ─── */
+  html.sky-mode .proc-card {
+    background:   rgba(255,255,255,0.88) !important;
+    border-color: rgba(14,44,110,0.15)  !important;
+    box-shadow:   0 3px 24px rgba(14,44,110,0.09) !important;
+  }
+  html.sky-mode .proc-card:hover {
+    background:   rgba(255,255,255,0.98) !important;
+    border-color: rgba(14,44,110,0.30)  !important;
+    box-shadow:   0 8px 40px rgba(14,44,110,0.14) !important;
+    transform:    translateY(-4px);
+  }
+  html.sky-mode .proc-card::before {
+    background: linear-gradient(90deg,transparent,rgba(14,44,110,0.35),transparent) !important;
+  }
+  html.sky-mode .card-num   { color: rgba(var(--ice),0.30) !important; }
+  html.sky-mode .card-title { color: rgba(var(--cyan),1)   !important;
+                              text-shadow: 0 0 20px rgba(60,110,230,0.2) !important; }
+  html.sky-mode .card-desc  { color: rgba(var(--id),0.88)  !important; }
+
+  /* ─── Annotated eye section ─── */
+  html.sky-mode #annotatedEye { background: #e6f0fb !important; }
+
+  /* ─── Philosophy ─── */
+  html.sky-mode .phil      { background: #dceaf8 !important; }
+  html.sky-mode .phil-attr { color: rgba(var(--id),0.7) !important; }
+
+  /* ─── Footer ─── */
+  html.sky-mode .footer-section { background: #d3e4f6 !important; }
+  html.sky-mode .footer-brand   { color: rgba(var(--ice),0.95) !important; }
+  html.sky-mode .footer-desc    { color: rgba(var(--id),0.8)   !important; }
+  html.sky-mode .footer-link    { color: rgba(var(--id),0.85)  !important; }
+  html.sky-mode .footer-link:hover { color: rgba(var(--cyan),1) !important; }
+
+  /* ═══ EYE ISLAND — البوابة المؤكدة (Ander_102)، بهوية soul light ═══
+     صندوق مدوّر الحواف + هالة سماوية حوله، والمتغيرات بترجع
+     لقيمها الليلية بالكامل جوّه — فالعين والـ QA والـ dropdown
+     والتعليقات كلهم زي الوضع الغامق بالضبط. */
+  html.sky-mode .hero-visual-wrap {
+    position: relative;
+    z-index: 0;
+    margin-left: -4%; margin-right: -4%;
+    padding: 48px 4% 36px;
+    border-radius: 28px;
+    overflow: hidden;
+  }
+  html.sky-mode .hero-visual-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse 80% 70% at 50% 45%,
+        rgba(8,16,32,0.98) 0%,
+        rgba(4,8,18,0.99) 55%,
+        rgba(2,4,10,1) 100%);
+    border-radius: 28px;
+    z-index: -2;
+  }
+  /* الهالة السماوية — توهّج خفيف على الحافة، بالأزرق العميق الجديد */
+  html.sky-mode .hero-visual-wrap::after {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px; right: -1px; bottom: -1px;
+    border-radius: 29px;
+    border: 1px solid rgba(14,44,110,0.2);
+    box-shadow:
+      0 0 40px rgba(14,44,110,0.08),
+      0 0 80px rgba(14,44,110,0.04),
+      inset 0 1px 0 rgba(255,255,255,0.06),
+      inset 0 -1px 0 rgba(255,255,255,0.02);
+    z-index: -1;
+    pointer-events: none;
+  }
+  html.sky-mode .hero-visual-wrap > * {
+    position: relative;
+    z-index: 1;
+  }
+  /* العين + التعليقات + QA + dropdown — كل الفرعيات ترجع ليلية */
+  html.sky-mode .hero-visual-wrap .hero-eye-svg {
+    --ice: 225,235,248;
+    --cyan: 232,242,255;
+    --id: 150,165,190;
+  }
+  html.sky-mode .hero-visual-wrap .he-ann,
+  html.sky-mode .hero-visual-wrap .he-ann-label { fill: rgba(232,242,255,0.9) !important; }
+  html.sky-mode .hero-visual-wrap .he-ann-arrow { stroke: rgba(232,242,255,0.4) !important; }
+  html.sky-mode .hero-visual-wrap .he-ann-dot   { fill: rgba(232,242,255,0.3) !important; }
+  html.sky-mode .hero-visual-wrap .he-ann-line  { stroke: rgba(232,242,255,0.25) !important; }
+  html.sky-mode .hero-visual-wrap .qa-badge { stroke: rgba(232,242,255,0.6) !important; }
+  html.sky-mode .hero-visual-wrap .qa-glyph { fill: rgba(232,242,255,0.9) !important; }
+  html.sky-mode .hero-visual-wrap .qa-stage-text { fill: rgba(232,242,255,0.7) !important; }
+  html.sky-mode .hero-visual-wrap .qa-stage-num  { fill: rgba(232,242,255,0.85) !important; }
+  html.sky-mode .hero-visual-wrap .qw-outer,
+  html.sky-mode .hero-visual-wrap .qw-middle,
+  html.sky-mode .hero-visual-wrap .qw-inner,
+  html.sky-mode .hero-visual-wrap .qw-center { fill: rgba(232,242,255,0.9) !important; stroke: rgba(232,242,255,0.6) !important; }
+  html.sky-mode .hero-visual-wrap .hvt-trigger {
+    border-color: rgba(255,255,255,0.15) !important;
+    color: rgba(232,242,255,0.9) !important;
+  }
+  html.sky-mode .hero-visual-wrap .hvt-item { color: rgba(225,235,248,0.8) !important; }
+  html.sky-mode .hero-visual-wrap .hvt-item.active { color: rgba(232,242,255,1) !important; background: rgba(255,255,255,0.08) !important; }
+  html.sky-mode .hero-visual-wrap .hvt-menu {
+    background: rgba(10,16,28,0.94) !important;
+    border-color: rgba(225,235,248,0.16) !important;
+  }
+  html.sky-mode .hero-phase { color: rgba(232,242,255,0.9) !important; }
+  html.sky-mode .hero-phase.glow { text-shadow: 0 0 18px rgba(232,242,255,0.6) !important; }
+
+  /* ═══ النصوص خارج الجزيرة — حبر soul light ═══ */
+  html.sky-mode .hero-title { color: rgba(8,18,40,0.92) !important; }
+  html.sky-mode .hero-title em {
+    color: rgba(14,44,110,0.82) !important;
+    text-shadow: 0 0 40px rgba(60,110,230,0.18) !important;
+  }
+  html.sky-mode .hero-desc { color: rgba(8,18,40,0.55) !important; }
+  html.sky-mode .hero-proof { color: rgba(8,18,40,0.4) !important; }
+  html.sky-mode .hero-proof-dot {
+    background: rgba(80,140,230,1) !important;
+    box-shadow: 0 0 7px rgba(80,140,230,0.5) !important;
+  }
+
+  /* الـ CTA — يبقى زرار سماوي صلب بدل الخط السفلي */
+  html.sky-mode .hero-cta {
+    background: rgba(14,44,110,1) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 14px !important;
+    padding: 15px 28px !important;
+    box-shadow: 0 4px 18px rgba(14,44,110,0.28) !important;
+    animation: none !important;
+  }
+  html.sky-mode .hero-cta svg { stroke: #fff !important; fill: #fff !important; }
+
+  .hero-visual-wrap { position:relative; }
+
+  /* Toggle */
+  /* ── iOS 26 Liquid Glass — SVG filter refraction + spring physics ── */
+
+  /* SVG filter للـ refraction — بيخلي الزجاج يكسر الضوء */
+  .hero-vtoggle {
+    position:absolute; top:0; right:0; z-index:30;
+  }
+
+  /* الزرار المدمج — نفس روح الزجاج بس صغير */
+  .hvt-trigger {
+    display:flex; align-items:center; gap:5px;
+    padding:5px 11px;
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:18px;
+    background:rgba(255,255,255,0.04);
+    color:rgba(var(--cyan),0.95);
+    font-size:11px; font-weight:600; letter-spacing:1px;
+    cursor:pointer; user-select:none;
+    -webkit-tap-highlight-color:transparent;
+    opacity:0.55;
+    transition:border-color 0.25s ease, background 0.25s ease, opacity 0.25s ease;
+  }
+  .hvt-trigger.open, .hvt-trigger:hover, .hvt-trigger:active {
+    opacity:1;
+    border-color:rgba(var(--cyan),0.45);
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+  }
+  .hvt-caret {
+    width:10px; height:6px;
+    transition:transform 0.25s ease;
+  }
+  .hvt-trigger.open .hvt-caret { transform:rotate(180deg); }
+
+  /* القائمة المنسدلة */
+  .hvt-menu {
+    position:absolute; top:calc(100% + 8px); right:0;
+    min-width:86px;
+    display:none; flex-direction:column;
+    padding:5px;
+    background:rgba(10,16,28,0.94);
+    border:1px solid rgba(225,235,248,0.16);
+    border-radius:16px;
+    backdrop-filter:blur(18px) saturate(160%);
+    -webkit-backdrop-filter:blur(18px) saturate(160%);
+    box-shadow:0 14px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
+    animation:hvtDrop 0.22s cubic-bezier(0.22,1,0.36,1);
+  }
+  .hvt-menu.open { display:flex; }
+  @keyframes hvtDrop {
+    from { opacity:0; transform:translateY(-6px) scale(0.97); }
+    to   { opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  .hvt-item {
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:8px 12px;
+    border:none; border-radius:11px;
+    background:transparent;
+    color:rgba(var(--id),0.8);
+    font-size:12px; font-weight:600; letter-spacing:0.8px;
+    cursor:pointer; text-align:left;
+    -webkit-tap-highlight-color:transparent;
+    transition:background 0.18s ease, color 0.18s ease;
+  }
+  .hvt-item:hover { background:rgba(255,255,255,0.08); color:rgba(var(--cyan),0.95); }
+  .hvt-item.active { color:rgba(var(--cyan),1); background:rgba(255,255,255,0.06); }
+  .hvt-check { opacity:0; font-size:11px; transition:opacity 0.18s; }
+  .hvt-item.active .hvt-check { opacity:1; }
+  .hvt-sep { height:1px; margin:4px 8px; background:rgba(225,235,248,0.12); }
+  .hvt-item.hvt-person { justify-content:center; }
+  .hvt-item.hvt-person svg { width:16px; height:16px; }
+
+  .hvt-btn {
+    width:34px; height:26px; border:none; border-radius:16px;
+    background:transparent; color:rgba(var(--id),0.75);
+    font-size:11px; font-weight:600; letter-spacing:0.5px;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    position:relative; z-index:1;
+    transition:color 0.2s ease;
+  }
+  .hvt-btn.active {
+    background:rgba(255,255,255,0.15);
+    color:rgba(var(--cyan),1);
+    box-shadow:
+      inset 0 1.5px 0 rgba(255,255,255,0.35),
+      inset 0 -1px 0 rgba(0,0,0,0.12),
+      0 2px 8px rgba(0,0,0,0.2);
+    border-radius:16px;
+  }
+  /* Spring wobble — بيتحرك زي جيلي */
+  .hvt-btn.liquid-press {
+    animation: liquidSpring 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  }
+  @keyframes liquidSpring {
+    0%   { transform:scale(1)    }
+    20%  { transform:scale(0.85) }
+    55%  { transform:scale(1.08) }
+    75%  { transform:scale(0.97) }
+    90%  { transform:scale(1.02) }
+    100% { transform:scale(1)    }
+  }
+  /* V.person button */
+  .hvt-person{
+    display:flex;align-items:center;justify-content:center;
+    width:30px;
+  }
+  .hvt-person svg{width:15px;height:15px;opacity:0.75;transition:opacity 0.2s}
+  .hvt-person:hover svg{opacity:1}
+  .hvt-person.active svg{opacity:1}
+  .hvt-person.active{
+    background:rgba(255,255,255,0.15);
+    box-shadow:inset 0 1.5px 0 rgba(255,255,255,0.35),inset 0 -1px 0 rgba(0,0,0,0.12);
+    border-radius:16px;
+  }
+
+  /* Visual layers — COMPLETE separation (no bleed) */
+  .hero-v { transition:opacity 0.5s ease; }
+  .hero-v:not(.active) {
+    display:none !important;
+    opacity:0;
+    pointer-events:none;
+  }
+  .hero-v.active {
+    display:block;
+    opacity:1;
+  }
+
+  /* ── V3: The Problem Character (canvas) ── */
+  #heroV3Canvas{ width:100%; height:auto; display:block; }
+
+  /* ── V2 SCENE: The Mirror ── */
+  #heroSceneSvg { width:100%; height:auto; display:block; overflow:visible; }
+  #scCaption { transition: opacity 0.4s ease, fill 0.6s ease; }
+  #scSpeech, #scReply { transition: opacity 0.4s ease, fill 0.5s ease; }
+  #scReflection { transition: opacity 0.6s ease; }
+  .ut-tap-hint { animation: utTapHint 3s ease-in-out infinite; }
+  @keyframes utTapHint { 0%,100%{opacity:0.25;} 50%{opacity:0.45;} }
+
+  .ut-spark-group {
+    opacity:0;
+    animation: utSparkAppear 5s ease-in-out infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  @keyframes utSparkAppear {
+    0%, 45%  { opacity:0; }
+    58%      { opacity:1; }
+    80%      { opacity:1; }
+    100%     { opacity:0; }
+  }
+  .ut-spark-halo {
+    animation: utHaloPulse 2.2s ease-in-out infinite;
+    transform-box: fill-box; transform-origin:center;
+  }
+  @keyframes utHaloPulse {
+    0%,100% { opacity:0.5; transform:scale(0.85); }
+    50%     { opacity:1;   transform:scale(1.15); }
+  }
+  .ut-spark-rays {
+    animation: utRaysSpin 12s linear infinite;
+    transform-box: fill-box; transform-origin:center;
+  }
+  @keyframes utRaysSpin { to { transform:rotate(360deg); } }
+  .ut-spark-core {
+    animation: utCorePulse 1.6s ease-in-out infinite;
+    transform-box: fill-box; transform-origin:center;
+  }
+  @keyframes utCorePulse {
+    0%,100% { transform:scale(1);   opacity:0.9; }
+    50%     { transform:scale(1.4); opacity:1; }
+  }
+
+  .ut-label {
+    opacity:0;
+    animation: utLabelFade 5s ease-in-out infinite;
+    font-family: 'Courier New', monospace;
+  }
+  @keyframes utLabelFade {
+    0%,50% { opacity:0; }
+    65%    { opacity:0.5; }
+    85%    { opacity:0.5; }
+    100%   { opacity:0; }
+  }

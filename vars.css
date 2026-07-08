@@ -1,0 +1,11 @@
+
+
+  :root {
+    /* Dark Moonlight — deep black + bright moonlight elements */
+    --ice:225,235,248;   /* cool white — main text */
+    --ib:238,246,255;    /* pure moonlight — accent */
+    --id:150,165,190;    /* silver — secondary */
+    --bg:#040608;        /* deeper than moonlight, lighter than pure black */
+    --bg2:#0a0d12;       /* dark panel */
+    --cyan:232,242,255;  /* moonlight glow */
+  }
