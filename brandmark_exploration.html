@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Problem — Brandmark Exploration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&family=Sora:wght@200;300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#040608; --bg2:#0a0d12;
+    --ice:225,235,248; --ib:238,246,255; --id:150,165,190; --cyan:232,242,255;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:rgba(var(--ice),0.92);font-family:'Sora',sans-serif;overflow-x:hidden}
+  ::selection{background:rgba(var(--cyan),0.25)}
+
+  .grain{position:fixed;inset:0;pointer-events:none;opacity:0.025;z-index:1;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+  section{position:relative;z-index:2;padding:120px 24px;max-width:1100px;margin:0 auto}
+  .eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:rgba(var(--id),0.6);text-align:center;margin-bottom:14px}
+  .section-title{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(24px,3.4vw,34px);text-align:center;color:rgba(var(--ice),0.9);margin-bottom:56px;font-weight:400}
+
+  /* ── HERO ── */
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;
+    background:radial-gradient(ellipse at 50% 38%, rgba(var(--cyan),0.05), transparent 60%);}
+  .hero-mark{width:min(260px,50vw);height:auto;margin-bottom:36px;filter:drop-shadow(0 0 60px rgba(var(--cyan),0.18))}
+  .hero-word{font-family:'Instrument Serif',serif;font-size:clamp(44px,9vw,88px);font-style:italic;font-weight:400;color:rgba(var(--ice),0.95);line-height:1;letter-spacing:-0.01em}
+  .hero-word .glow{color:rgba(var(--cyan),1);text-shadow:0 0 20px rgba(var(--cyan),0.65),0 0 60px rgba(var(--cyan),0.25),0 0 120px rgba(var(--cyan),0.12)}
+  .hero-sub{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:rgba(var(--id),0.75);margin-top:18px}
+  .hero-tag{font-family:'Instrument Serif',serif;font-style:italic;font-size:20px;color:rgba(var(--id),0.7);margin-top:34px}
+  .hero-est{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(var(--id),0.4);margin-top:10px}
+  .scroll-cue{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(var(--id),0.45);display:flex;flex-direction:column;align-items:center;gap:8px}
+  .scroll-cue::after{content:'';width:1px;height:30px;background:linear-gradient(rgba(var(--id),0.5),transparent);animation:cuePulse 2s ease-in-out infinite}
+  @keyframes cuePulse{0%,100%{opacity:0.3}50%{opacity:0.9}}
+
+  /* ── ANATOMY ── */
+  .anatomy-wrap{display:flex;justify-content:center;align-items:center;gap:80px;flex-wrap:wrap}
+  .anatomy-mark{width:280px;height:auto}
+  .anatomy-grid line{stroke:rgba(var(--cyan),0.14);stroke-width:0.4;stroke-dasharray:1,2}
+  .anatomy-grid circle.guide{fill:none;stroke:rgba(var(--cyan),0.16);stroke-width:0.35}
+  .anatomy-labels{display:flex;flex-direction:column;gap:22px;font-family:'DM Mono',monospace;font-size:11px;color:rgba(var(--id),0.7);letter-spacing:0.5px;max-width:280px}
+  .anatomy-labels b{color:rgba(var(--cyan),0.9);font-weight:500}
+  .anatomy-labels div{padding-left:14px;border-left:1px solid rgba(var(--cyan),0.2)}
+
+  /* ── SCALE ── */
+  .scale-row{display:flex;align-items:flex-end;justify-content:center;gap:56px;flex-wrap:wrap}
+  .scale-item{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .scale-item svg{filter:drop-shadow(0 0 16px rgba(var(--cyan),0.15))}
+  .scale-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(var(--id),0.55)}
+
+  /* ── CONTEXT MOCKUPS ── */
+  .context-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:28px}
+  .ctx-card{background:linear-gradient(180deg,var(--bg2),var(--bg));border:1px solid rgba(var(--cyan),0.1);border-radius:18px;padding:40px 24px;display:flex;flex-direction:column;align-items:center;gap:18px}
+  .ctx-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2.5px;color:rgba(var(--id),0.5);text-transform:uppercase}
+
+  .app-tile{width:110px;height:110px;border-radius:26px;background:radial-gradient(ellipse at 34% 28%, #10151d, #040608 75%);border:1px solid rgba(var(--cyan),0.14);display:flex;align-items:center;justify-content:center;box-shadow:0 20px 50px -20px rgba(0,0,0,0.8)}
+  .app-tile svg{width:56px;height:auto}
+
+  .tab-mock{width:100%;max-width:220px;background:#1b1e24;border-radius:8px 8px 0 0;padding:8px 12px;display:flex;align-items:center;gap:8px}
+  .tab-mock svg{width:16px;height:auto;flex-shrink:0}
+  .tab-mock span{font-family:'Sora',sans-serif;font-size:11px;color:rgba(255,255,255,0.75);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tab-mock-bar{width:100%;max-width:220px;height:5px;background:#040608;border-radius:0 0 4px 4px;margin-bottom:6px}
+
+  .plaque{width:180px;height:120px;border-radius:4px;background:linear-gradient(135deg,#0d1015,#040608);border:1px solid rgba(var(--cyan),0.22);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;box-shadow:inset 0 0 30px rgba(var(--cyan),0.04)}
+  .plaque svg{width:38px;height:auto}
+  .plaque-txt{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:rgba(var(--id),0.55)}
+
+  .favicon-row{display:flex;gap:10px;align-items:center}
+  .fav16{width:16px;height:16px;background:#1b1e24;border-radius:3px;display:flex;align-items:center;justify-content:center}
+  .fav16 svg{width:10px;height:auto}
+  .fav32{width:32px;height:32px;background:#1b1e24;border-radius:6px;display:flex;align-items:center;justify-content:center}
+  .fav32 svg{width:20px;height:auto}
+
+  /* ── VARIATIONS ── */
+  .var-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+  .var-tile{aspect-ratio:1;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px}
+  .var-tile svg{width:72px;height:auto}
+  .var-dark{background:var(--bg2);border:1px solid rgba(var(--cyan),0.12)}
+  .var-light{background:#f4f1ea}
+  .var-cyan{background:linear-gradient(160deg,#0a1420,#040608)}
+  .var-tile-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(var(--id),0.5)}
+  .var-light .var-tile-label{color:rgba(15,23,42,0.5)}
+
+  /* ── LOCKUPS ── */
+  .lockup-row{display:flex;justify-content:center;gap:64px;flex-wrap:wrap}
+  .lockup-item{display:flex;flex-direction:column;align-items:center;gap:16px}
+  .lockup-horizontal{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid rgba(var(--cyan),0.1);border-radius:10px;padding:16px 22px}
+  .lockup-horizontal svg{width:30px;height:auto}
+  .lockup-horizontal span{font-family:'Instrument Serif',serif;font-style:italic;font-size:20px;color:rgba(var(--ice),0.92)}
+  .lockup-stacked{display:flex;flex-direction:column;align-items:center;gap:10px;background:var(--bg2);border:1px solid rgba(var(--cyan),0.1);border-radius:10px;padding:26px 30px}
+  .lockup-stacked svg{width:34px;height:auto}
+  .lockup-stacked span{font-family:'Instrument Serif',serif;font-style:italic;font-size:19px;color:rgba(var(--ice),0.92)}
+  .lockup-icon-only{background:var(--bg2);border:1px solid rgba(var(--cyan),0.1);border-radius:10px;padding:26px 34px;display:flex;align-items:center}
+  .lockup-icon-only svg{width:34px;height:auto}
+
+  /* ── CLEAR SPACE ── */
+  .clearspace-demo{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap}
+  .clearspace-box{width:200px;height:200px;border:1px dashed rgba(var(--cyan),0.28);border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative}
+  .clearspace-box::before{content:'';position:absolute;inset:44px;border:1px dashed rgba(var(--cyan),0.16)}
+  .clearspace-box svg{width:80px;height:auto;position:relative;z-index:1}
+  .clearspace-note{display:flex;flex-direction:column;gap:18px;font-family:'DM Mono',monospace;font-size:11px;color:rgba(var(--id),0.7);max-width:280px}
+  .clearspace-note b{color:rgba(var(--cyan),0.9);font-weight:500}
+
+  /* ── PALETTE ── */
+  .palette-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:20px}
+  .swatch{display:flex;flex-direction:column;gap:10px}
+  .swatch-color{width:100%;aspect-ratio:1;border-radius:12px;border:1px solid rgba(var(--cyan),0.12)}
+  .swatch-name{font-family:'Sora',sans-serif;font-size:13px;color:rgba(var(--ice),0.85)}
+  .swatch-hex{font-family:'DM Mono',monospace;font-size:10px;color:rgba(var(--id),0.55)}
+
+  /* ── TYPE SPECIMEN ── */
+  .type-specimen{display:flex;flex-direction:column;gap:36px}
+  .type-row{border-bottom:1px solid rgba(var(--cyan),0.08);padding-bottom:24px}
+  .type-sample{font-size:clamp(22px,4vw,34px);color:rgba(var(--ice),0.92);margin-bottom:10px}
+  .type-meta{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(var(--id),0.5)}
+
+  /* ── MISUSE ── */
+  .dont-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:24px}
+  .dont-tile{aspect-ratio:1;border-radius:14px;background:var(--bg2);border:1px solid rgba(220,60,40,0.18);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;position:relative}
+  .dont-tile svg{width:60px;height:auto;opacity:0.7}
+  .dont-strike{position:absolute;width:70%;height:1.5px;background:rgba(220,70,50,0.55);transform:rotate(-18deg)}
+  .dont-caption{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;color:rgba(220,120,100,0.6);text-transform:uppercase;position:relative}
+
+  footer{text-align:center;padding:60px 24px 100px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(var(--id),0.35)}
+
+  @media(max-width:640px){
+    section{padding:80px 20px}
+    .anatomy-wrap{gap:40px}
+    .scale-row{gap:30px}
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<!-- Shared mark definition — identical geometry to the production nav-eye logo -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="markEyeMaze" viewBox="0 0 32 22">
+      <path class="lid" d="M 1 11 Q 16 1, 31 11" fill="none" stroke="rgba(var(--cyan),0.85)" stroke-width="1.1" stroke-linecap="round"/>
+      <path class="lid" d="M 1 11 Q 16 21, 31 11" fill="none" stroke="rgba(var(--cyan),0.55)" stroke-width="0.9" stroke-linecap="round"/>
+      <g transform="translate(16,11)">
+        <circle cx="0" cy="0" r="6" fill="rgba(var(--cyan),0.04)"/>
+        <circle cx="0" cy="0" r="5.5" fill="none" stroke="rgba(var(--cyan),0.32)" stroke-width="0.5"/>
+        <circle cx="0" cy="0" r="4"   fill="none" stroke="rgba(var(--cyan),0.26)" stroke-width="0.5"/>
+        <circle cx="0" cy="0" r="2.6" fill="none" stroke="rgba(var(--cyan),0.2)"  stroke-width="0.5"/>
+        <circle cx="0" cy="0" r="1.4" fill="none" stroke="rgba(var(--cyan),0.15)" stroke-width="0.5"/>
+        <path d="M -1.2,-5.5 A 5.5,5.5 0 0,1 1.2,-5.5" stroke="#040608" stroke-width="1.2" fill="none"/>
+        <path d="M 4,-1 A 4,4 0 0,1 4,1" stroke="#040608" stroke-width="1.1" fill="none"/>
+        <path d="M -0.8,2.6 A 2.6,2.6 0 0,1 0.8,2.6" stroke="#040608" stroke-width="1" fill="none"/>
+        <path d="M -1.4,-0.5 A 1.4,1.4 0 0,1 -1.4,0.5" stroke="#040608" stroke-width="0.9" fill="none"/>
+        <path class="solve" d="M 0,-5.5 L 0,-4 Q 3,-3.5 4,0 L 2.6,0 Q 1.5,2 0,2.6 L 0,1.4 Q -1.4,1 -1.4,0 L -0.7,0 L 0,0"
+              fill="none" stroke="rgba(var(--cyan),0.75)" stroke-width="0.55" stroke-linecap="round"
+              stroke-dasharray="28" stroke-dashoffset="28"/>
+        <circle cx="0" cy="0" r="0.9" fill="rgba(var(--cyan),0.95)"/>
+        <circle cx="0.8" cy="-0.8" r="0.35" fill="rgba(230,242,255,0.7)"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <svg class="hero-mark" id="heroMark" viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg>
+  <div class="hero-word"><span class="glow">P</span>roblem</div>
+  <div class="hero-sub">The Maze Eye</div>
+  <div class="hero-tag">Seeing what others can't.</div>
+  <div class="hero-est">EST. 2027</div>
+  <div class="scroll-cue">ANATOMY OF A MARK</div>
+</div>
+
+<!-- ═══ ANATOMY ═══ -->
+<section>
+  <div class="eyebrow">Construction</div>
+  <div class="section-title">Every line already means something</div>
+  <div class="anatomy-wrap">
+    <svg class="anatomy-mark" viewBox="0 0 32 22">
+      <use href="#markEyeMaze"/>
+      <g class="anatomy-grid">
+        <line x1="16" y1="0" x2="16" y2="22"/>
+        <line x1="0" y1="11" x2="32" y2="11"/>
+        <circle class="guide" cx="16" cy="11" r="9"/>
+      </g>
+    </svg>
+    <div class="anatomy-labels">
+      <div><b>The lids</b> — a single continuous eye shape, no lashes, no iris color. Reads at any size.</div>
+      <div><b>The rings</b> — a labyrinth in plan view, standing in for the iris.</div>
+      <div><b>The solve path</b> — one unbroken line from rim to pupil. The mark literally depicts finding the way through.</div>
+      <div><b>The pupil</b> — where the path ends. The answer, already there.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SCALE ═══ -->
+<section>
+  <div class="eyebrow">Scale integrity</div>
+  <div class="section-title">Billboard to browser tab</div>
+  <div class="scale-row">
+    <div class="scale-item"><svg width="180" viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg><span class="scale-label">180PX</span></div>
+    <div class="scale-item"><svg width="96" viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg><span class="scale-label">96PX</span></div>
+    <div class="scale-item"><svg width="48" viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg><span class="scale-label">48PX</span></div>
+    <div class="scale-item"><svg width="24" viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg><span class="scale-label">24PX</span></div>
+    <div class="scale-item"><svg width="14" viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg><span class="scale-label">14PX</span></div>
+  </div>
+</section>
+
+<!-- ═══ CONTEXT ═══ -->
+<section>
+  <div class="eyebrow">In the world</div>
+  <div class="section-title">As if it already shipped a billion times</div>
+  <div class="context-grid">
+    <div class="ctx-card">
+      <div class="app-tile"><svg viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg></div>
+      <div class="ctx-label">App icon</div>
+    </div>
+    <div class="ctx-card">
+      <div>
+        <div class="tab-mock"><svg viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg><span>Problem — The Maze Eye</span></div>
+        <div class="tab-mock-bar"></div>
+      </div>
+      <div class="ctx-label">Browser tab</div>
+    </div>
+    <div class="ctx-card">
+      <div class="plaque">
+        <svg viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg>
+        <div class="plaque-txt">PROBLEM · EST. 2027</div>
+      </div>
+      <div class="ctx-label">Plaque / letterhead</div>
+    </div>
+    <div class="ctx-card">
+      <div class="favicon-row">
+        <div class="fav32"><svg viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg></div>
+        <div class="fav16"><svg viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg></div>
+      </div>
+      <div class="ctx-label">Favicon 32 / 16</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VARIATIONS ═══ -->
+<section>
+  <div class="eyebrow">Reversibility</div>
+  <div class="section-title">Holds on any ground</div>
+  <div class="var-grid">
+    <div class="var-tile var-cyan"><svg viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg><span class="var-tile-label">PRIMARY</span></div>
+    <div class="var-tile var-dark"><svg viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg><span class="var-tile-label">FLAT DARK</span></div>
+    <div class="var-tile var-light" style="--cyan:20,30,50"><svg viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg><span class="var-tile-label">ON LIGHT</span></div>
+  </div>
+</section>
+
+<!-- ═══ LOCKUPS ═══ -->
+<section>
+  <div class="eyebrow">Lockups</div>
+  <div class="section-title">One mark, three ways to say it</div>
+  <div class="lockup-row">
+    <div class="lockup-item">
+      <div class="lockup-horizontal">
+        <svg viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg>
+        <span>Problem</span>
+      </div>
+      <span class="scale-label">HORIZONTAL — NAV, HEADERS</span>
+    </div>
+    <div class="lockup-item">
+      <div class="lockup-stacked">
+        <svg viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg>
+        <span>Problem</span>
+      </div>
+      <span class="scale-label">STACKED — SPLASH, COVERS</span>
+    </div>
+    <div class="lockup-item">
+      <div class="lockup-icon-only">
+        <svg viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg>
+      </div>
+      <span class="scale-label">MARK ALONE — ICONS, STAMPS</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CLEAR SPACE ═══ -->
+<section>
+  <div class="eyebrow">Protection</div>
+  <div class="section-title">The mark needs room to breathe</div>
+  <div class="clearspace-demo">
+    <div class="clearspace-box">
+      <svg viewBox="0 0 32 22"><use href="#markEyeMaze"/></svg>
+    </div>
+    <div class="clearspace-note">
+      <div><b>Clear space</b> — keep at least the eye's own height free on every side. Nothing else enters that margin: no text, no edge, no other mark.</div>
+      <div><b>Minimum size</b> — never below 14px digital / 6mm print. Below that the solve-path fuses and the mark reads as noise.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ COLOR ═══ -->
+<section>
+  <div class="eyebrow">Palette</div>
+  <div class="section-title">Five values, nothing borrowed</div>
+  <div class="palette-grid">
+    <div class="swatch"><div class="swatch-color" style="background:#040608"></div><span class="swatch-name">Void</span><span class="swatch-hex">#040608</span></div>
+    <div class="swatch"><div class="swatch-color" style="background:#0a0d12"></div><span class="swatch-name">Deep Void</span><span class="swatch-hex">#0A0D12</span></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgb(150,165,190)"></div><span class="swatch-name">Depth</span><span class="swatch-hex">rgb 150,165,190</span></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgb(225,235,248)"></div><span class="swatch-name">Ice</span><span class="swatch-hex">rgb 225,235,248</span></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgb(232,242,255)"></div><span class="swatch-name">Moonlight</span><span class="swatch-hex">rgb 232,242,255</span></div>
+  </div>
+</section>
+
+<!-- ═══ TYPE ═══ -->
+<section>
+  <div class="eyebrow">Typeface</div>
+  <div class="section-title">Three roles, never mixed</div>
+  <div class="type-specimen">
+    <div class="type-row"><div class="type-sample" style="font-family:'Instrument Serif',serif;font-style:italic">Seeing what others can't</div><div class="type-meta">INSTRUMENT SERIF ITALIC — DISPLAY, VOICE</div></div>
+    <div class="type-row"><div class="type-sample" style="font-family:'Sora',sans-serif;font-weight:300">Tell us what's on your mind</div><div class="type-meta">SORA — BODY, INTERFACE</div></div>
+    <div class="type-row"><div class="type-sample" style="font-family:'DM Mono',monospace;letter-spacing:2px">03 / 06 · ANALYZING</div><div class="type-meta">DM MONO — DATA, LABELS, SYSTEM</div></div>
+  </div>
+</section>
+
+<!-- ═══ MISUSE ═══ -->
+<section>
+  <div class="eyebrow">Integrity</div>
+  <div class="section-title">What the mark never does</div>
+  <div class="dont-grid">
+    <div class="dont-tile"><svg viewBox="0 0 32 22" style="transform:rotate(25deg)"><use href="#markEyeMaze"/></svg><div class="dont-strike"></div><span class="dont-caption">Never rotated</span></div>
+    <div class="dont-tile"><svg viewBox="0 0 32 22" style="transform:scaleX(1.6)"><use href="#markEyeMaze"/></svg><div class="dont-strike"></div><span class="dont-caption">Never stretched</span></div>
+    <div class="dont-tile"><svg viewBox="0 0 32 22" style="--cyan:220,60,40"><use href="#markEyeMaze"/></svg><div class="dont-strike"></div><span class="dont-caption">Never recolored</span></div>
+    <div class="dont-tile"><svg viewBox="0 0 32 22" style="filter:drop-shadow(3px 4px 0 rgba(0,0,0,0.8))"><use href="#markEyeMaze"/></svg><div class="dont-strike"></div><span class="dont-caption">Never given a hard shadow</span></div>
+  </div>
+</section>
+
+<footer>BRAND EXPLORATION — FOR INTERNAL EVALUATION ONLY — NOT PART OF THE LIVE PRODUCT</footer>
+
+<script>
+  // Signature moment: the hero mark's solve-path draws itself once, on load.
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const p = document.querySelector('#heroMark .solve');
+    if(p){
+      p.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(0.65,0,0.35,1) 0.3s';
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{ p.style.strokeDashoffset = '0'; }));
+    }
+  }
+</script>
+</body>
+</html>
