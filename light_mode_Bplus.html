@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Problem — B+ Light Mode</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400&family=Sora:wght@200;300;400;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+  font-family:'Sora',sans-serif;
+  -webkit-font-smoothing:antialiased;
+
+  /* ═══════════════════════════════════════════
+     B+ PALETTE
+     فلسفة B (أزرق غني + عمق) مقلوبة على فاتح
+
+     في B الداكن:
+       الخلفية غامقة   → العناصر بتتوهّج للخارج
+     في B+ الفاتح:
+       الخلفية فاتحة بارزة → العناصر بتعمق للداخل
+     نفس الإحساس، عكس الاتجاه.
+     ═══════════════════════════════════════════ */
+
+  --bg:     #e4eef9;   /* جليد أزرق بارد — مش كريمي */
+  --bg2:    #d8e7f5;   /* طبقة أعمق للعمق */
+  --bg3:    #ccdff2;   /* أعمق */
+  --navy:   8,20,52;   /* deep navy — النص الأساسي */
+  --blue:   15,50,140; /* rich blue — الـ accent */
+  --glow:   100,155,255; /* لون التوهّج */
+
+  background:var(--bg);
+  color:rgba(var(--navy),0.88);
+  min-height:100vh;
+}
+
+/* ── NAV ── */
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;height:60px;
+  background:rgba(228,238,249,0.96);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(var(--blue),0.1);
+  box-shadow:
+    0 1px 0 rgba(var(--blue),0.06),
+    0 4px 24px rgba(var(--blue),0.05);
+  position:sticky;top:0;z-index:10;
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+}
+.nav-logo-text{
+  font-family:'Instrument Serif',serif;
+  font-size:20px;
+  color:rgba(var(--navy),0.9);
+}
+.nav-links{
+  display:flex;gap:28px;
+  font-size:10.5px;letter-spacing:2.5px;
+  font-family:'DM Mono',monospace;
+  color:rgba(var(--navy),0.38);
+}
+.nav-links .active{
+  color:rgba(var(--navy),0.78);
+  border-bottom:1px solid rgba(var(--navy),0.3);
+  padding-bottom:2px;
+}
+
+/* ── HERO ── */
+.hero{
+  padding:36px 24px 48px;
+  display:flex;flex-direction:column;align-items:center;
+
+  /* B+'s soul: خلفية بتتدرّج من فاتح لأعمق قليلاً
+     زي ما في B الخلفية بتتدرّج من غامق لأغمق */
+  background:
+    radial-gradient(
+      ellipse at 50% 30%,
+      rgba(var(--glow),0.07) 0%,
+      rgba(var(--glow),0)    65%
+    ),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+}
+
+/* ── TAG PILL ── */
+.tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;letter-spacing:3px;
+  font-family:'DM Mono',monospace;
+  color:rgba(var(--blue),0.85);
+  padding:6px 16px;
+  border-radius:20px;
+  border:1px solid rgba(var(--blue),0.2);
+  background:rgba(var(--blue),0.06);
+  margin-bottom:28px;
+}
+.tag-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(var(--blue),1);
+  /* نفس الـ dot في B بس بتوهّج باتجاه عكسي */
+  box-shadow:0 0 6px rgba(var(--glow),0.5);
+}
+
+/* ── EYE WRAP ── */
+.eye-wrap{
+  width:100%;max-width:360px;
+  margin:0 auto 12px;
+  /* عمق خفيف تحت العين — B+ shadow بدل B glow */
+  filter:drop-shadow(0 8px 32px rgba(var(--blue),0.12));
+}
+.eye-svg{width:100%;height:auto;overflow:visible}
+
+/* ── HEADLINE ── */
+.headline{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(40px,11vw,58px);
+  line-height:1.08;
+  text-align:center;
+  color:rgba(var(--navy),0.9);
+  margin:16px 0 16px;
+}
+.headline em{
+  font-style:italic;
+  /* نفس لون الـ accent في B لكن على فاتح */
+  color:rgba(var(--blue),0.82);
+  /* subtle glow — B's signature حتى على الفاتح */
+  text-shadow:0 0 40px rgba(var(--glow),0.18);
+}
+.subline{
+  font-size:14px;line-height:1.75;
+  text-align:center;
+  color:rgba(var(--navy),0.52);
+  max-width:340px;
+  margin-bottom:28px;
+}
+
+/* ── CTA ── */
+.cta{
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:'DM Mono',monospace;
+  font-size:11px;letter-spacing:3px;
+  padding:15px 30px;
+  border-radius:4px;
+
+  /* B+ CTA: solid navy-blue — في B كان border فاتح على غامق */
+  background:rgba(var(--blue),1);
+  color:#fff;
+  box-shadow:
+    0 4px 16px rgba(var(--blue),0.25),
+    0 1px 3px rgba(var(--blue),0.3);
+  cursor:pointer;
+  transition:all 0.25s;
+}
+.cta:hover{
+  box-shadow:
+    0 8px 28px rgba(var(--blue),0.32),
+    0 2px 6px rgba(var(--blue),0.35);
+  transform:translateY(-1px);
+}
+
+/* ── STAT ── */
+.stat{
+  display:flex;align-items:center;gap:9px;
+  margin-top:22px;
+  font-size:10px;letter-spacing:2px;
+  font-family:'DM Mono',monospace;
+  color:rgba(var(--navy),0.38);
+}
+.stat-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(var(--glow),1);
+  box-shadow:0 0 7px rgba(var(--glow),0.5);
+}
+
+/* ── BOTTOM TEXT ── */
+.ann-bottom{
+  font-size:9px;letter-spacing:2.5px;
+  font-family:'DM Mono',monospace;
+  color:rgba(var(--navy),0.28);
+  text-align:center;
+  margin-bottom:4px;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg width="30" height="20" viewBox="0 0 60 38" fill="none">
+      <!-- نفس عين الناف بس بألوان B+ -->
+      <path d="M4 19 Q30 2 56 19 Q30 36 4 19Z"
+            stroke="rgba(15,50,140,0.65)" stroke-width="2" fill="none"/>
+      <circle cx="30" cy="19" r="7"
+              stroke="rgba(15,50,140,0.3)" stroke-width="1" fill="none"/>
+      <circle cx="30" cy="19" r="3" fill="rgba(15,50,140,0.9)"/>
+    </svg>
+    <span class="nav-logo-text">Problem</span>
+  </div>
+  <div class="nav-links">
+    <span class="active">HOME</span>
+    <span>SOLVE</span>
+    <span>PRICING</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+
+  <div class="tag">
+    <span class="tag-dot"></span>
+    CHANGE YOUR THINKING
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       THE EYE — B+'s core
+       في B: العين بتتوهّج على غامق
+       في B+: العين بتعمق على فاتح
+       نفس المتاهة، نفس الدقة، عكس الضوء
+       ═══════════════════════════════════════ -->
+  <div class="eye-wrap">
+    <svg class="eye-svg" viewBox="0 0 420 290">
+      <defs>
+
+        <!-- Aura — في B كان أبيض على غامق، هنا أزرق على فاتح -->
+        <radialGradient id="bpAura" cx="50%" cy="50%" r="55%">
+          <stop offset="0%"   stop-color="rgba(100,155,255,0.1)"/>
+          <stop offset="60%"  stop-color="rgba(100,155,255,0.04)"/>
+          <stop offset="100%" stop-color="rgba(100,155,255,0)"/>
+        </radialGradient>
+
+        <!-- Lid gradients — نفس فكرة hU/hL بس للفاتح -->
+        <linearGradient id="bpLidUp" x1="0%" x2="100%">
+          <stop offset="0%"   stop-color="rgba(15,50,140,0.15)"/>
+          <stop offset="50%"  stop-color="rgba(15,50,140,0.85)"/>
+          <stop offset="100%" stop-color="rgba(15,50,140,0.15)"/>
+        </linearGradient>
+        <linearGradient id="bpLidLo" x1="0%" x2="100%">
+          <stop offset="0%"   stop-color="rgba(15,50,140,0.08)"/>
+          <stop offset="50%"  stop-color="rgba(15,50,140,0.5)"/>
+          <stop offset="100%" stop-color="rgba(15,50,140,0.08)"/>
+        </linearGradient>
+
+        <!-- Glow filter — للمسار وللبؤبؤ -->
+        <filter id="bpGlow">
+          <feGaussianBlur stdDeviation="3.5" result="b"/>
+          <feMerge>
+            <feMergeNode in="b"/>
+            <feMergeNode in="b"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <!-- Softer glow for solve path -->
+        <filter id="bpGlowSoft">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge>
+            <feMergeNode in="b"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+      </defs>
+
+      <!-- Background aura -->
+      <ellipse cx="210" cy="145" rx="205" ry="148" fill="url(#bpAura)"/>
+
+      <!-- ── EYELIDS ── -->
+      <!-- Glow behind upper lid -->
+      <path d="M 55 145 Q 210 38 365 145"
+            fill="none"
+            stroke="rgba(100,155,255,0.18)"
+            stroke-width="14"
+            stroke-linecap="round"
+            filter="url(#bpGlowSoft)"/>
+      <!-- Upper lid -->
+      <path d="M 55 145 Q 210 38 365 145"
+            fill="none"
+            stroke="url(#bpLidUp)"
+            stroke-width="2.8"
+            stroke-linecap="round"/>
+      <!-- Lower lid -->
+      <path d="M 55 145 Q 210 218 365 145"
+            fill="none"
+            stroke="url(#bpLidLo)"
+            stroke-width="2.4"
+            stroke-linecap="round"/>
+
+      <!-- ── MAZE IRIS ── -->
+      <g transform="translate(210,145)">
+
+        <!-- Iris boundary -->
+        <ellipse cx="0" cy="0" rx="118" ry="78"
+                 fill="none"
+                 stroke="rgba(15,50,140,0.12)"
+                 stroke-width="0.9"/>
+
+        <!-- 5 rings — B+ style: deep navy, clear contrast -->
+        <circle r="88" fill="none" stroke="rgba(15,50,140,0.52)" stroke-width="1.5"/>
+        <circle r="70" fill="none" stroke="rgba(15,50,140,0.42)" stroke-width="1.3"/>
+        <circle r="52" fill="none" stroke="rgba(15,50,140,0.33)" stroke-width="1.2"/>
+        <circle r="36" fill="none" stroke="rgba(15,50,140,0.25)" stroke-width="1"/>
+        <circle r="21" fill="none" stroke="rgba(15,50,140,0.19)" stroke-width="0.9"/>
+
+        <!-- Radial walls -->
+        <line x1="0"   y1="-88"  x2="0"   y2="-70"  stroke="rgba(15,50,140,0.22)" stroke-width="1"/>
+        <line x1="70"  y1="0"    x2="52"  y2="0"    stroke="rgba(15,50,140,0.17)" stroke-width="0.9"/>
+        <line x1="-52" y1="0"    x2="-70" y2="0"    stroke="rgba(15,50,140,0.16)" stroke-width="0.9"/>
+        <line x1="32"  y1="-58"  x2="24"  y2="-44"  stroke="rgba(15,50,140,0.14)" stroke-width="0.8"/>
+        <line x1="-28" y1="40"   x2="-20" y2="28"   stroke="rgba(15,50,140,0.12)" stroke-width="0.8"/>
+        <line x1="52"  y1="-28"  x2="36"  y2="-20"  stroke="rgba(15,50,140,0.15)" stroke-width="0.85"/>
+        <line x1="-62" y1="-38"  x2="-46" y2="-28"  stroke="rgba(15,50,140,0.12)" stroke-width="0.8"/>
+
+        <!-- ── SOLVE PATH — B+'s signature ──
+             في B الداكن: خيط سيان متوهّج على غامق
+             في B+: نفس الخيط بس بتوهّج أزرق على فاتح
+             الجمال إن التوهّج لسه مرئي حتى على الفاتح -->
+        <path d="M 0,-88 Q 50,-58 70,0 L 52,0 Q 36,36 0,52
+                 L 0,36 Q -36,24 -36,0 L -21,0
+                 Q -11,-21 0,-21 L 0,0"
+              fill="none"
+              stroke="rgba(15,50,140,0.9)"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              filter="url(#bpGlowSoft)"/>
+
+        <!-- Leading spark on solve path -->
+        <circle r="3" cx="0" cy="0"
+                fill="rgba(100,155,255,1)"
+                filter="url(#bpGlow)"/>
+
+        <!-- ── PUPIL ── -->
+        <!-- Glow ring behind pupil -->
+        <circle r="18" fill="none"
+                stroke="rgba(100,155,255,0.2)"
+                stroke-width="8"
+                filter="url(#bpGlowSoft)"/>
+        <!-- Pupil body -->
+        <circle r="12"
+                fill="rgba(15,50,140,0.92)"
+                filter="url(#bpGlow)"/>
+        <!-- Pupil center (light) -->
+        <circle r="4" fill="rgba(228,238,249,0.95)"/>
+        <!-- Highlight spec 1 -->
+        <circle cx="5" cy="-5" r="3.5"
+                fill="rgba(255,255,255,0.75)"/>
+        <!-- Highlight spec 2 -->
+        <circle cx="-2.5" cy="-8" r="1.8"
+                fill="rgba(255,255,255,0.4)"/>
+
+        <!-- Orbiting awareness dot -->
+        <circle cx="0" cy="-40" r="2.2"
+                fill="rgba(100,155,255,0.85)"
+                filter="url(#bpGlow)">
+          <animateTransform attributeName="transform"
+            type="rotate" from="0" to="360" dur="5s" repeatCount="indefinite"/>
+        </circle>
+
+      </g>
+
+      <!-- ── ANNOTATIONS ── -->
+      <!-- Left: YOUR PROBLEM IS TRAPPED -->
+      <text x="82"  y="104" font-family="DM Mono,monospace"
+            font-size="7.5" fill="rgba(8,20,52,0.38)" letter-spacing="1.5">YOUR PROBLEM</text>
+      <text x="64"  y="122" font-family="DM Mono,monospace"
+            font-size="13.5" fill="rgba(15,50,140,0.88)"
+            font-weight="600" letter-spacing="0.8">IS TRAPPED</text>
+      <text x="79"  y="137" font-family="DM Mono,monospace"
+            font-size="7" fill="rgba(8,20,52,0.28)" letter-spacing="1.5">INSIDE THIS MAZE</text>
+
+      <!-- Right: WE FIND THE ANSWER -->
+      <text x="296" y="190" font-family="DM Mono,monospace"
+            font-size="7.5" fill="rgba(8,20,52,0.38)" letter-spacing="1.5">WE FIND</text>
+      <text x="276" y="207" font-family="DM Mono,monospace"
+            font-size="13.5" fill="rgba(15,50,140,0.88)"
+            font-weight="600" letter-spacing="0.8">THE ANSWER</text>
+      <text x="288" y="222" font-family="DM Mono,monospace"
+            font-size="7" fill="rgba(8,20,52,0.28)" letter-spacing="1.5">AT THE CENTER</text>
+
+    </svg>
+  </div>
+
+  <p class="ann-bottom">TAP THE EYE · DISCOVER THE STORY BEHIND IT</p>
+
+  <h1 class="headline">
+    Seeing<br>
+    <em>what others</em><br>
+    can't.
+  </h1>
+
+  <p class="subline">
+    Stuck. Lost. Confused. Every problem builds walls you
+    can't see. We help you trace them, understand them,
+    and find the path through.
+  </p>
+
+  <a class="cta">TELL US WHAT'S ON YOUR MIND &nbsp;→</a>
+
+  <div class="stat">
+    <span class="stat-dot"></span>
+    1.5K PATHS TRACED TODAY
+  </div>
+
+</div>
+
+</body>
+</html>
