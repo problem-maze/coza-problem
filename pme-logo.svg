@@ -1,0 +1,24 @@
+<svg viewBox="0 0 134 112" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <text x="126" y="10" font-family="'DM Mono',monospace" font-size="6" letter-spacing="0.5" fill="#8693ae" text-anchor="end">TM</text>
+
+  <!-- P -->
+  <path d="M10,40 L10,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/>
+  <path d="M10,40 C25.5,40 35,45.3 35,51.5 C35,57.7 25.5,63 10,63" stroke="#e8eff9" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- location pin inside the P bowl -->
+  <circle cx="20.5" cy="48.3" r="3.6" stroke="#e8eff9" stroke-width="1.7"/>
+  <path d="M17.5,50.8 C17.9,54 19.3,58.4 20.5,58.4 C21.7,58.4 23.1,54 23.5,50.8" stroke="#e8eff9" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- M -->
+  <path d="M44,86 L44,40 L62,64 L80,40 L80,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- E -->
+  <path d="M92,40 L92,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/>
+  <path d="M92,40 L118,40" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/>
+  <path d="M92,63 L112,63" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/>
+  <path d="M92,86 L118,86" stroke="#e8eff9" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="112" cy="63" r="3.4" fill="#cfe3ff"/>
+
+  <!-- smile -->
+  <path d="M6,99 Q67,113 128,97" stroke="#5a6478" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.75"/>
+</svg>
