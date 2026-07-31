@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visible Eye — Final Candidate 02</title>
+<style>
+  /* ══════════════════════════════════════════════════════════════
+     ISOLATED GEOMETRY STUDY — FINAL CANDIDATE 02.
+     Not connected to production: no heroEyeSvg / HeroV1Life /
+     AtmosphereGL / Journey / Q-A reference anywhere in this file.
+     Geometry only — no color, no glow, no motion, no UI, no badge.
+
+     Refinement pass on Candidate 01, same containment -> field ->
+     convergence logic, four corrections from review:
+
+     · Convergence rebuilt as a BASIN, not a denser tangle: three
+       broken rings (down from four) with few, evenly-spaced
+       segments, and every fibril sweeping the same rotational
+       sense at the same curvature — a coherent draw toward the
+       pupil, not independent scratches at random angles.
+     · One primary route only: single bend, boldest and widest line
+       in the piece, unmistakable start-to-center.
+     · One secondary route that CANNOT be mistaken for a second main
+       path: it forks off the primary, bends away from it, and fades
+       over three shortening, lightening segments to nothing — a
+       route considered, not taken.
+     · Mid-field corridors placed at four explicit, evenly-spread
+       angles (two upper, two lower) instead of wherever the
+       containment layer's gaps happened to fall, and the primary
+       route itself was moved into the lower field — that combination
+       is what was reading as top/upper-left-loaded.
+     · Outer containment ink raised a step (0.22-0.32 -> 0.30-0.42)
+       while spans stay short, so it reads as a stronger structural
+       field without becoming a closed ring.
+
+     LOCKED, unchanged: outer lid silhouette, pupil anchor and size,
+     overall proportions, calm negative space, monochrome graphite.
+     The internal field is still clipped to the eye's actual opening
+     (the lens between the two lid curves) so nothing crosses the lid
+     line — with no glow to soften that edge, an overrun reads as an
+     error, not as depth.
+
+     Ink weight still rises monotonically inward — lightest at the
+     outer boundary, densest at the convergence — and every layer's
+     gaps stay golden-angle offset from the layer inside it, so nothing
+     can settle into a radar/target read.
+     ══════════════════════════════════════════════════════════════ */
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{
+    background:#f4f5f7;
+    color:#1e2430;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    padding:48px 24px;
+  }
+  .stage{
+    width:840px; max-width:100%;
+    background:#ffffff;
+    border:1px solid #e4e6ea;
+    border-radius:20px;
+    padding:28px 22px;
+  }
+  .stage svg{ display:block; width:100%; height:auto; }
+  .eye-lid{ fill:none; stroke:#232936; stroke-width:2.2; stroke-linecap:round; }
+  .eye-pupil{ fill:#232936; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <svg viewBox="-320 -140 640 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="lensFinal" clipPathUnits="userSpaceOnUse">
+          <path d="M -290 0 Q 0 -70 290 0 Q 0 240 -290 0 Z"/>
+        </clipPath>
+      </defs>
+      <path class="eye-lid" d="M -290 0 Q 0 -70, 290 0"/>
+      <path class="eye-lid" d="M -290 0 Q 0 240, 290 0"/>
+      <g clip-path="url(#lensFinal)">
+        <path d="M 0.00,-72.00 L 3.00,-71.99 L 6.00,-71.96 L 9.00,-71.90 L 12.00,-71.82 L 14.99,-71.73 L 17.98,-71.61 L 20.96,-71.46 L 23.94,-71.30 L 26.91,-71.11 L 29.87,-70.91 L 32.82,-70.68 L 35.76,-70.43 L 38.69,-70.15 L 41.61,-69.86 L 44.52,-69.55 L 47.41,-69.21 L 50.29,-68.85 L 53.15,-68.48 L 56.00,-68.08 L 58.83,-67.66 L 61.64,-67.22 L 64.43,-66.76 L 67.21,-66.28 L 69.96,-65.78" fill="none" stroke="rgba(30,36,48,0.3)" stroke-width="1.25" stroke-linecap="round"/>
+        <path d="M 148.96,-36.00 L 150.43,-34.91 L 151.87,-33.80 L 153.25,-32.69 L 154.59,-31.56 L 155.88,-30.43 L 157.13,-29.29 L 158.33,-28.13 L 159.48,-26.97 L 160.58,-25.80 L 161.63,-24.63 L 162.63,-23.44 L 163.58,-22.25 L 164.48,-21.05 L 165.34,-19.85 L 166.14,-18.63 L 166.89,-17.42 L 167.59,-16.20 L 168.24,-14.97 L 168.84,-13.74 L 169.39,-12.50 L 169.88,-11.26 L 170.33,-10.02 L 170.72,-8.77 L 171.06,-7.53" fill="none" stroke="rgba(30,36,48,0.3)" stroke-width="1.25" stroke-linecap="round"/>
+        <path d="M 148.96,36.00 L 147.43,37.08 L 145.86,38.15 L 144.25,39.21 L 142.59,40.26 L 140.89,41.30 L 139.15,42.32 L 137.37,43.33 L 135.54,44.33 L 133.67,45.31 L 131.76,46.28 L 129.81,47.24 L 127.82,48.18 L 125.79,49.10 L 123.73,50.02 L 121.62,50.91 L 119.48,51.79 L 117.30,52.66 L 115.09,53.51 L 112.84,54.34 L 110.56,55.16 L 108.24,55.95 L 105.89,56.74 L 103.51,57.50 L 101.10,58.25" fill="none" stroke="rgba(30,36,48,0.3)" stroke-width="1.25" stroke-linecap="round"/>
+        <path d="M 0.00,72.00 L -3.00,71.99 L -6.00,71.96 L -9.00,71.90 L -12.00,71.82 L -14.99,71.73 L -17.98,71.61 L -20.96,71.46 L -23.94,71.30 L -26.91,71.11 L -29.87,70.91 L -32.82,70.68 L -35.76,70.43 L -38.69,70.15 L -41.61,69.86 L -44.52,69.55 L -47.41,69.21 L -50.29,68.85 L -53.15,68.48 L -56.00,68.08 L -58.83,67.66 L -61.64,67.22 L -64.43,66.76 L -67.21,66.28 L -69.96,65.78" fill="none" stroke="rgba(30,36,48,0.3)" stroke-width="1.25" stroke-linecap="round"/>
+        <path d="M -148.96,36.00 L -150.43,34.91 L -151.87,33.80 L -153.25,32.69 L -154.59,31.56 L -155.88,30.43 L -157.13,29.29 L -158.33,28.13 L -159.48,26.97 L -160.58,25.80 L -161.63,24.63 L -162.63,23.44 L -163.58,22.25 L -164.48,21.05 L -165.34,19.85 L -166.14,18.63 L -166.89,17.42 L -167.59,16.20 L -168.24,14.97 L -168.84,13.74 L -169.39,12.50 L -169.88,11.26 L -170.33,10.02 L -170.72,8.77 L -171.06,7.53" fill="none" stroke="rgba(30,36,48,0.3)" stroke-width="1.25" stroke-linecap="round"/>
+        <path d="M -148.96,-36.00 L -147.43,-37.08 L -145.86,-38.15 L -144.25,-39.21 L -142.59,-40.26 L -140.89,-41.30 L -139.15,-42.32 L -137.37,-43.33 L -135.54,-44.33 L -133.67,-45.31 L -131.76,-46.28 L -129.81,-47.24 L -127.82,-48.18 L -125.79,-49.10 L -123.73,-50.02 L -121.62,-50.91 L -119.48,-51.79 L -117.30,-52.66 L -115.09,-53.51 L -112.84,-54.34 L -110.56,-55.16 L -108.24,-55.95 L -105.89,-56.74 L -103.51,-57.50 L -101.10,-58.25" fill="none" stroke="rgba(30,36,48,0.3)" stroke-width="1.25" stroke-linecap="round"/>
+        <path d="M 97.59,44.60 L 95.56,45.36 L 93.50,46.11 L 91.40,46.84 L 89.27,47.56 L 87.10,48.25 L 84.91,48.93 L 82.68,49.60 L 80.43,50.24 L 78.14,50.87 L 75.83,51.48 L 73.49,52.07 L 71.13,52.64 L 68.74,53.20 L 66.32,53.73 L 63.88,54.25 L 61.42,54.74 L 58.94,55.22 L 56.43,55.68 L 53.91,56.11 L 51.37,56.53 L 48.80,56.93 L 46.22,57.30 L 43.63,57.66 L 41.02,57.99" fill="none" stroke="rgba(30,36,48,0.36)" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M -71.16,52.64 L -73.53,52.06 L -75.87,51.47 L -78.18,50.86 L -80.46,50.23 L -82.71,49.59 L -84.94,48.92 L -87.13,48.24 L -89.30,47.55 L -91.43,46.83 L -93.53,46.10 L -95.59,45.35 L -97.62,44.58 L -99.62,43.80 L -101.58,43.01 L -103.50,42.20 L -105.39,41.37 L -107.24,40.53 L -109.05,39.67 L -110.83,38.80 L -112.56,37.92 L -114.25,37.02 L -115.90,36.11 L -117.51,35.19 L -119.08,34.25" fill="none" stroke="rgba(30,36,48,0.36)" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M -141.58,-12.07 L -141.01,-13.18 L -140.38,-14.30 L -139.71,-15.41 L -138.99,-16.51 L -138.22,-17.61 L -137.40,-18.70 L -136.53,-19.78 L -135.62,-20.86 L -134.65,-21.93 L -133.63,-22.99 L -132.57,-24.04 L -131.46,-25.09 L -130.31,-26.12 L -129.10,-27.15 L -127.85,-28.17 L -126.56,-29.17 L -125.22,-30.17 L -123.83,-31.16 L -122.40,-32.13 L -120.93,-33.09 L -119.41,-34.05 L -117.86,-34.98 L -116.25,-35.91 L -114.61,-36.82" fill="none" stroke="rgba(30,36,48,0.36)" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M -16.34,-60.09 L -13.62,-60.21 L -10.90,-60.31 L -8.17,-60.38 L -5.44,-60.44 L -2.71,-60.47 L 0.02,-60.48 L 2.75,-60.47 L 5.48,-60.44 L 8.21,-60.38 L 10.94,-60.31 L 13.66,-60.21 L 16.38,-60.09 L 19.09,-59.95 L 21.79,-59.79 L 24.49,-59.61 L 27.17,-59.40 L 29.85,-59.17 L 32.52,-58.93 L 35.18,-58.66 L 37.82,-58.37 L 40.45,-58.06 L 43.06,-57.73 L 45.66,-57.38 L 48.25,-57.01" fill="none" stroke="rgba(30,36,48,0.36)" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M 131.48,-25.07 L 132.59,-24.03 L 133.65,-22.97 L 134.66,-21.91 L 135.63,-20.84 L 136.55,-19.77 L 137.41,-18.68 L 138.23,-17.59 L 139.00,-16.49 L 139.72,-15.39 L 140.39,-14.28 L 141.01,-13.17 L 141.58,-12.05 L 142.10,-10.93 L 142.57,-9.80 L 142.99,-8.67 L 143.35,-7.54 L 143.67,-6.40 L 143.93,-5.26 L 144.14,-4.12 L 144.30,-2.98 L 144.41,-1.84 L 144.47,-0.70 L 144.48,0.45 L 144.43,1.59" fill="none" stroke="rgba(30,36,48,0.36)" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M -113.09,-4.15 L -112.86,-5.12 L -112.59,-6.08 L -112.27,-7.04 L -111.90,-7.99 L -111.49,-8.94 L -111.03,-9.89 L -110.53,-10.84 L -109.98,-11.78 L -109.38,-12.71 L -108.74,-13.64 L -108.06,-14.57 L -107.33,-15.48 L -106.55,-16.39 L -105.73,-17.30 L -104.87,-18.20 L -103.96,-19.09 L -103.01,-19.97 L -102.02,-20.84 L -100.98,-21.71 L -99.91,-22.56 L -98.79,-23.41 L -97.63,-24.25 L -96.43,-25.08 L -95.19,-25.89" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="1.15" stroke-linecap="round"/>
+        <path d="M 9.92,-47.34 L 12.23,-47.24 L 14.52,-47.13 L 16.81,-47.00 L 19.09,-46.84 L 21.37,-46.67 L 23.63,-46.48 L 25.89,-46.27 L 28.13,-46.04 L 30.37,-45.79 L 32.59,-45.52 L 34.79,-45.23 L 36.99,-44.93 L 39.17,-44.60 L 41.33,-44.26 L 43.47,-43.90 L 45.60,-43.52 L 47.70,-43.12 L 49.79,-42.71 L 51.86,-42.27 L 53.90,-41.82 L 55.93,-41.35 L 57.93,-40.87 L 59.90,-40.37 L 61.85,-39.85" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="1.15" stroke-linecap="round"/>
+        <path d="M 113.09,4.15 L 112.86,5.12 L 112.59,6.08 L 112.27,7.04 L 111.90,7.99 L 111.49,8.94 L 111.03,9.89 L 110.53,10.84 L 109.98,11.78 L 109.38,12.71 L 108.74,13.64 L 108.06,14.57 L 107.33,15.48 L 106.55,16.39 L 105.73,17.30 L 104.87,18.20 L 103.96,19.09 L 103.01,19.97 L 102.02,20.84 L 100.98,21.71 L 99.91,22.56 L 98.79,23.41 L 97.63,24.25 L 96.43,25.08 L 95.19,25.89" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="1.15" stroke-linecap="round"/>
+        <path d="M -9.92,47.34 L -12.23,47.24 L -14.52,47.13 L -16.81,47.00 L -19.09,46.84 L -21.37,46.67 L -23.63,46.48 L -25.89,46.27 L -28.13,46.04 L -30.37,45.79 L -32.59,45.52 L -34.79,45.23 L -36.99,44.93 L -39.17,44.60 L -41.33,44.26 L -43.47,43.90 L -45.60,43.52 L -47.70,43.12 L -49.79,42.71 L -51.86,42.27 L -53.90,41.82 L -55.93,41.35 L -57.93,40.87 L -59.90,40.37 L -61.85,39.85" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="1.15" stroke-linecap="round"/>
+        <path d="M 35.76,-70.43 L 30.75,-60.57" fill="none" stroke="rgba(30,36,48,0.2)" stroke-width="0.8" stroke-linecap="round"/>
+        <path d="M 127.82,48.18 L 109.93,41.43" fill="none" stroke="rgba(30,36,48,0.2)" stroke-width="0.8" stroke-linecap="round"/>
+        <path d="M 67.77,-36.31 L 59.85,-27.82 L 49.49,-20.01" fill="none" stroke="rgba(30,36,48,0.44)" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -67.77,-36.31 L -59.85,-27.82 L -49.49,-20.01" fill="none" stroke="rgba(30,36,48,0.44)" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 103.44,15.76 L 85.06,18.14 L 67.02,18.92" fill="none" stroke="rgba(30,36,48,0.44)" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -106.33,11.93 L -88.51,14.97 L -70.70,16.41" fill="none" stroke="rgba(30,36,48,0.44)" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -34.33,67.61 L 1.74,41.75 L 5.75,17.11" fill="none" stroke="rgba(30,36,48,0.62)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 1.74,41.75 L -46.17,28.65" fill="none" stroke="rgba(30,36,48,0.32)" stroke-width="0.95" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -46.17,28.65 L -50.73,20.51" fill="none" stroke="rgba(30,36,48,0.2)" stroke-width="0.65" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -50.73,20.51 L -50.72,14.87" fill="none" stroke="rgba(30,36,48,0.11)" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 0.00,-25.92 L 1.80,-25.91 L 3.60,-25.88 L 5.40,-25.82 L 7.19,-25.74 L 8.97,-25.65 L 10.75,-25.53 L 12.52,-25.38 L 14.28,-25.22 L 16.03,-25.04 L 17.76,-24.83 L 19.48,-24.60 L 21.18,-24.36 L 22.86,-24.09 L 24.53,-23.80 L 26.17,-23.49 L 27.79,-23.16 L 29.39,-22.81 L 30.96,-22.45 L 32.51,-22.06 L 34.03,-21.66 L 35.52,-21.23 L 36.98,-20.79 L 38.40,-20.33 L 39.80,-19.86" fill="none" stroke="rgba(30,36,48,0.5)" stroke-width="0.85" stroke-linecap="round"/>
+        <path d="M 58.89,-8.01 L 59.42,-7.29 L 59.90,-6.56 L 60.33,-5.83 L 60.71,-5.09 L 61.04,-4.35 L 61.32,-3.61 L 61.54,-2.86 L 61.71,-2.11 L 61.84,-1.36 L 61.90,-0.60 L 61.92,0.15 L 61.88,0.90 L 61.79,1.66 L 61.65,2.41 L 61.46,3.16 L 61.21,3.91 L 60.92,4.65 L 60.57,5.39 L 60.17,6.12 L 59.72,6.85 L 59.21,7.58 L 58.66,8.30 L 58.06,9.01 L 57.41,9.71" fill="none" stroke="rgba(30,36,48,0.5)" stroke-width="0.85" stroke-linecap="round"/>
+        <path d="M 36.40,20.97 L 34.92,21.40 L 33.42,21.82 L 31.89,22.22 L 30.33,22.60 L 28.75,22.96 L 27.14,23.30 L 25.51,23.62 L 23.86,23.92 L 22.19,24.20 L 20.50,24.46 L 18.79,24.70 L 17.07,24.92 L 15.33,25.11 L 13.58,25.29 L 11.81,25.44 L 10.04,25.58 L 8.26,25.69 L 6.47,25.78 L 4.68,25.85 L 2.88,25.89 L 1.08,25.92 L -0.72,25.92 L -2.52,25.90 L -4.32,25.86" fill="none" stroke="rgba(30,36,48,0.5)" stroke-width="0.85" stroke-linecap="round"/>
+        <path d="M -36.40,20.97 L -37.84,20.52 L -39.25,20.05 L -40.62,19.56 L -41.97,19.06 L -43.27,18.54 L -44.54,18.01 L -45.77,17.46 L -46.97,16.89 L -48.12,16.31 L -49.23,15.72 L -50.31,15.11 L -51.33,14.49 L -52.32,13.86 L -53.26,13.22 L -54.16,12.57 L -55.01,11.90 L -55.81,11.23 L -56.57,10.54 L -57.28,9.85 L -57.94,9.15 L -58.55,8.44 L -59.11,7.72 L -59.62,7.00 L -60.08,6.27" fill="none" stroke="rgba(30,36,48,0.5)" stroke-width="0.85" stroke-linecap="round"/>
+        <path d="M -58.89,-8.01 L -58.31,-8.72 L -57.68,-9.43 L -57.00,-10.13 L -56.27,-10.82 L -55.49,-11.50 L -54.67,-12.17 L -53.80,-12.83 L -52.89,-13.48 L -51.93,-14.12 L -50.93,-14.74 L -49.88,-15.36 L -48.79,-15.96 L -47.66,-16.55 L -46.49,-17.12 L -45.29,-17.68 L -44.04,-18.22 L -42.75,-18.75 L -41.43,-19.26 L -40.08,-19.76 L -38.69,-20.24 L -37.26,-20.70 L -35.81,-21.15 L -34.33,-21.57 L -32.81,-21.98" fill="none" stroke="rgba(30,36,48,0.5)" stroke-width="0.85" stroke-linecap="round"/>
+        <path d="M 44.34,-2.44 L 44.51,-1.82 L 44.63,-1.20 L 44.70,-0.57 L 44.72,0.06 L 44.69,0.68 L 44.61,1.31 L 44.48,1.93 L 44.30,2.55 L 44.07,3.17 L 43.80,3.79 L 43.47,4.40 L 43.09,5.00 L 42.67,5.60 L 42.20,6.20 L 41.68,6.79 L 41.11,7.37 L 40.50,7.94 L 39.84,8.50 L 39.14,9.05 L 38.40,9.60 L 37.61,10.13 L 36.78,10.65 L 35.91,11.16 L 35.00,11.65" fill="none" stroke="rgba(30,36,48,0.59)" stroke-width="0.93" stroke-linecap="round"/>
+        <path d="M 5.83,18.56 L 4.35,18.63 L 2.86,18.68 L 1.36,18.71 L -0.13,18.72 L -1.63,18.71 L -3.12,18.67 L -4.61,18.62 L -6.10,18.55 L -7.58,18.45 L -9.05,18.33 L -10.51,18.20 L -11.95,18.04 L -13.39,17.86 L -14.81,17.66 L -16.21,17.45 L -17.60,17.21 L -18.96,16.95 L -20.31,16.68 L -21.63,16.39 L -22.92,16.07 L -24.20,15.74 L -25.44,15.40 L -26.66,15.03 L -27.84,14.65" fill="none" stroke="rgba(30,36,48,0.59)" stroke-width="0.93" stroke-linecap="round"/>
+        <path d="M -44.34,2.44 L -44.51,1.82 L -44.63,1.20 L -44.70,0.57 L -44.72,-0.06 L -44.69,-0.68 L -44.61,-1.31 L -44.48,-1.93 L -44.30,-2.55 L -44.07,-3.17 L -43.80,-3.79 L -43.47,-4.40 L -43.09,-5.00 L -42.67,-5.60 L -42.20,-6.20 L -41.68,-6.79 L -41.11,-7.37 L -40.50,-7.94 L -39.84,-8.50 L -39.14,-9.05 L -38.40,-9.60 L -37.61,-10.13 L -36.78,-10.65 L -35.91,-11.16 L -35.00,-11.65" fill="none" stroke="rgba(30,36,48,0.59)" stroke-width="0.93" stroke-linecap="round"/>
+        <path d="M -5.83,-18.56 L -4.35,-18.63 L -2.86,-18.68 L -1.36,-18.71 L 0.13,-18.72 L 1.63,-18.71 L 3.12,-18.67 L 4.61,-18.62 L 6.10,-18.55 L 7.58,-18.45 L 9.05,-18.33 L 10.51,-18.20 L 11.95,-18.04 L 13.39,-17.86 L 14.81,-17.66 L 16.21,-17.45 L 17.60,-17.21 L 18.96,-16.95 L 20.31,-16.68 L 21.63,-16.39 L 22.92,-16.07 L 24.20,-15.74 L 25.44,-15.40 L 26.66,-15.03 L 27.84,-14.65" fill="none" stroke="rgba(30,36,48,0.59)" stroke-width="0.93" stroke-linecap="round"/>
+        <path d="M 8.01,12.52 L 6.87,12.64 L 5.73,12.74 L 4.57,12.82 L 3.41,12.88 L 2.24,12.93 L 1.08,12.95 L -0.10,12.96 L -1.27,12.95 L -2.43,12.92 L -3.60,12.87 L -4.76,12.81 L -5.91,12.72 L -7.06,12.62 L -8.19,12.50 L -9.31,12.36 L -10.42,12.20 L -11.52,12.03 L -12.60,11.84 L -13.66,11.63 L -14.70,11.41 L -15.72,11.17 L -16.71,10.91 L -17.69,10.64 L -18.64,10.35" fill="none" stroke="rgba(30,36,48,0.68)" stroke-width="1.01" stroke-linecap="round"/>
+        <path d="M -29.90,-3.36 L -29.58,-3.83 L -29.21,-4.29 L -28.80,-4.75 L -28.35,-5.20 L -27.86,-5.65 L -27.33,-6.09 L -26.76,-6.51 L -26.16,-6.93 L -25.51,-7.34 L -24.83,-7.74 L -24.11,-8.13 L -23.36,-8.50 L -22.58,-8.87 L -21.76,-9.22 L -20.91,-9.56 L -20.03,-9.88 L -19.13,-10.19 L -18.19,-10.49 L -17.23,-10.77 L -16.25,-11.03 L -15.24,-11.28 L -14.21,-11.51 L -13.16,-11.73 L -12.09,-11.93" fill="none" stroke="rgba(30,36,48,0.68)" stroke-width="1.01" stroke-linecap="round"/>
+        <path d="M 21.90,-9.16 L 22.71,-8.81 L 23.49,-8.44 L 24.23,-8.07 L 24.94,-7.68 L 25.62,-7.28 L 26.26,-6.87 L 26.86,-6.45 L 27.42,-6.02 L 27.95,-5.58 L 28.43,-5.13 L 28.87,-4.68 L 29.27,-4.22 L 29.63,-3.75 L 29.95,-3.28 L 30.23,-2.80 L 30.46,-2.32 L 30.65,-1.84 L 30.79,-1.35 L 30.89,-0.86 L 30.95,-0.37 L 30.96,0.12 L 30.93,0.61 L 30.85,1.09 L 30.73,1.58" fill="none" stroke="rgba(30,36,48,0.68)" stroke-width="1.01" stroke-linecap="round"/>
+        <path d="M 5.26,-10.35 Q 11.09,-12.75 18.57,-14.62" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="0.7" stroke-linecap="round"/>
+        <path d="M 21.20,-5.76 Q 38.74,-7.56 57.57,-7.37" fill="none" stroke="rgba(30,36,48,0.56)" stroke-width="0.9" stroke-linecap="round"/>
+        <path d="M 24.73,2.20 Q 30.47,4.64 34.93,7.77" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="0.7" stroke-linecap="round"/>
+        <path d="M 13.77,8.88 Q 13.70,12.30 11.57,15.84" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="0.7" stroke-linecap="round"/>
+        <path d="M -5.26,10.35 Q -14.62,16.81 -28.26,22.25" fill="none" stroke="rgba(30,36,48,0.56)" stroke-width="0.9" stroke-linecap="round"/>
+        <path d="M -21.20,5.76 Q -29.38,5.74 -37.83,4.84" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="0.7" stroke-linecap="round"/>
+        <path d="M -24.73,-2.20 Q -40.16,-6.12 -53.15,-11.83" fill="none" stroke="rgba(30,36,48,0.56)" stroke-width="0.9" stroke-linecap="round"/>
+        <path d="M -13.77,-8.88 Q -13.70,-12.30 -11.57,-15.84" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="0.7" stroke-linecap="round"/>
+      </g>
+      <circle class="eye-pupil" cx="0" cy="0" r="13"/>
+    </svg>
+  </div>
+</body>
+</html>
