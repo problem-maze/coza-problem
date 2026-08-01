@@ -1,0 +1,70 @@
+[+   0s] tier high: goto
+[+  14s]   tier high iter0 -> solve agreed=true in 332ms
+[+  15s]   tier high iter0 -> circle agreed=true in 355ms
+[+  15s]   tier high iter0 -> watch agreed=true in 322ms
+[+  15s]   tier high iter0 -> talk agreed=true in 332ms
+[+  16s]   tier high iter0 -> landing agreed=true in 338ms
+[+  16s]   tier high iter1 -> solve agreed=true in 327ms
+[+  16s]   tier high iter1 -> circle agreed=true in 342ms
+[+  17s]   tier high iter1 -> watch agreed=true in 319ms
+[+  17s]   tier high iter1 -> talk agreed=true in 325ms
+[+  17s]   tier high iter1 -> landing agreed=true in 329ms
+[+  17s]   tier high iter2 -> solve agreed=true in 315ms
+[+  18s]   tier high iter2 -> circle agreed=true in 323ms
+[+  18s]   tier high iter2 -> watch agreed=true in 321ms
+[+  18s]   tier high iter2 -> talk agreed=true in 322ms
+[+  19s]   tier high iter2 -> landing agreed=true in 333ms
+[+  21s] tier high: done
+[+  21s] tier mid: goto
+[+  35s]   tier mid iter0 -> solve agreed=true in 340ms
+[+  35s]   tier mid iter0 -> circle agreed=true in 351ms
+[+  36s]   tier mid iter0 -> watch agreed=true in 318ms
+[+  36s]   tier mid iter0 -> talk agreed=true in 331ms
+[+  36s]   tier mid iter0 -> landing agreed=true in 373ms
+[+  37s]   tier mid iter1 -> solve agreed=true in 313ms
+[+  37s]   tier mid iter1 -> circle agreed=true in 324ms
+[+  37s]   tier mid iter1 -> watch agreed=true in 322ms
+[+  38s]   tier mid iter1 -> talk agreed=true in 338ms
+[+  38s]   tier mid iter1 -> landing agreed=true in 333ms
+[+  38s]   tier mid iter2 -> solve agreed=true in 343ms
+[+  39s]   tier mid iter2 -> circle agreed=true in 327ms
+[+  39s]   tier mid iter2 -> watch agreed=true in 316ms
+[+  39s]   tier mid iter2 -> talk agreed=true in 329ms
+[+  40s]   tier mid iter2 -> landing agreed=true in 342ms
+[+  42s] tier mid: done
+[+  42s] tier low: goto
+[+  56s]   tier low iter0 -> solve agreed=true in 315ms
+[+  56s]   tier low iter0 -> circle agreed=true in 333ms
+[+  56s]   tier low iter0 -> watch agreed=true in 315ms
+[+  57s]   tier low iter0 -> talk agreed=true in 333ms
+[+  57s]   tier low iter0 -> landing agreed=true in 332ms
+[+  57s]   tier low iter1 -> solve agreed=true in 327ms
+[+  58s]   tier low iter1 -> circle agreed=true in 329ms
+[+  58s]   tier low iter1 -> watch agreed=true in 320ms
+[+  58s]   tier low iter1 -> talk agreed=true in 324ms
+[+  59s]   tier low iter1 -> landing agreed=true in 328ms
+[+  59s]   tier low iter2 -> solve agreed=true in 323ms
+[+  59s]   tier low iter2 -> circle agreed=true in 322ms
+[+  60s]   tier low iter2 -> watch agreed=true in 324ms
+[+  60s]   tier low iter2 -> talk agreed=true in 321ms
+[+  60s]   tier low iter2 -> landing agreed=true in 331ms
+[+  63s] tier low: done
+[+  63s] tier auto: goto
+[+  77s]   tier auto iter0 -> solve agreed=true in 334ms
+[+  77s]   tier auto iter0 -> circle agreed=true in 349ms
+[+  77s]   tier auto iter0 -> watch agreed=true in 332ms
+[+  78s]   tier auto iter0 -> talk agreed=true in 323ms
+[+  78s]   tier auto iter0 -> landing agreed=true in 340ms
+[+  78s]   tier auto iter1 -> solve agreed=true in 343ms
+[+  79s]   tier auto iter1 -> circle agreed=true in 341ms
+[+  79s]   tier auto iter1 -> watch agreed=true in 319ms
+[+  79s]   tier auto iter1 -> talk agreed=true in 322ms
+[+  80s]   tier auto iter1 -> landing agreed=true in 350ms
+[+  80s]   tier auto iter2 -> solve agreed=true in 325ms
+[+  80s]   tier auto iter2 -> circle agreed=true in 327ms
+[+  81s]   tier auto iter2 -> watch agreed=true in 323ms
+[+  81s]   tier auto iter2 -> talk agreed=true in 323ms
+[+  81s]   tier auto iter2 -> landing agreed=true in 338ms
+[+  83s] tier auto: done
+[+  83s] scenario: missing-hiPanel
+[+ 105s] scenario: hiPanel-present

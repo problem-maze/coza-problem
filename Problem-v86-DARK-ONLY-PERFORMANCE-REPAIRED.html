@@ -21762,16 +21762,27 @@ function enterRealty(choice){
   let current=0;
   let started=false;
 
-  function showNext(){
-    // PERF: self-owned stop path — do not rely solely on another script (insight-cards)
-    // to ever clear this module's timers; a hidden tab or an inactive Landing route
-    // must not keep this carousel ticking.
+  // PERF / lifecycle ownership: this legacy carousel shares its screen zone with
+  // the insight-cards engine, which supersedes it whenever #hiPanel exists (that
+  // engine hides #heroPrinciples and clears these timers at init). This module
+  // must never create a recurring interval while it is ineligible to run, and
+  // never leave one alive past its Landing context. With no #hiPanel there is no
+  // owner for this zone, so the carousel stays static instead of cycling
+  // unsupervised forever.
+  function eligible(){
+    if(document.hidden)return false;
     const landing=document.getElementById('pageLanding');
-    if(document.hidden||!landing||!landing.classList.contains('active')){
-      if(window._showNextBootTimer){clearTimeout(window._showNextBootTimer);window._showNextBootTimer=0;}
-      if(window._showNextInterval){clearInterval(window._showNextInterval);window._showNextInterval=0;}
-      return;
-    }
+    if(!landing||!landing.classList.contains('active'))return false;
+    if(!document.getElementById('hiPanel'))return false;
+    return true;
+  }
+  function stop(){
+    if(window._showNextBootTimer){clearTimeout(window._showNextBootTimer);window._showNextBootTimer=0;}
+    if(window._showNextInterval){clearInterval(window._showNextInterval);window._showNextInterval=0;}
+  }
+
+  function showNext(){
+    if(!eligible()){stop();return;}
     // اخفي اللي قبلها
     items.forEach(it=>{it.classList.remove('hp-in');it.classList.add('hp-out')});
     // بعد ما تختفي، ظهّر الجديدة
@@ -21784,10 +21795,21 @@ function enterRealty(choice){
 
   // ابدأ بعد ما الـ loader يخلص والعين تفتح
   window._showNextBootTimer=setTimeout(()=>{
+    window._showNextBootTimer=0;
+    // The interval may only be created if the owning Landing context is still
+    // active, visible and eligible at the moment this callback actually runs.
+    if(!eligible()){stop();return;}
     started=true;
     showNext();
-    window._showNextInterval = setInterval(showNext,3500); // كل 3.5 ثانية تتغير
+    if(!window._showNextInterval)window._showNextInterval=setInterval(showNext,3500); // كل 3.5 ثانية تتغير
   },4000);
+
+  // Stop at the lifecycle exit itself, not up to one tick afterwards.
+  document.addEventListener('visibilitychange',function(){if(document.hidden)stop();});
+  const landingRoute=document.getElementById('pageLanding');
+  if(landingRoute&&'MutationObserver'in window){
+    new MutationObserver(function(){if(!eligible())stop();}).observe(landingRoute,{attributes:true,attributeFilter:['class']});
+  }
 })();
 
 // === BACK TO TOP ===

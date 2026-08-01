@@ -1,0 +1,139 @@
+--- Problem-v86-DARK-ONLY.html (authorized original, SHA-256 7608fa8bede185c28e4cc905cc8f60e700fdee5d3bd1f7660c66280b9c28bb26)
++++ Problem-v86-DARK-ONLY-PERFORMANCE-REPAIRED.html (Repair-4-updated)
+@@ -18916,6 +18916,7 @@
+ 
+   function loop(ts){
+     if(!_alive) return;
++    if(document.hidden){ _finish(); return; } // PERF: don't keep drawing an intro cinematic the user can't see
+     const t=ts-_t0;
+     const cv=document.getElementById('brandCanvas');
+     if(cv){
+@@ -18952,33 +18953,11 @@
+     skip(){ _finish(); }
+   };
+ })();
++document.addEventListener('visibilitychange',()=>{
++  if(document.hidden&&typeof BrandReveal!=='undefined'&&BrandReveal.skip)BrandReveal.skip();
++});
+ 
+ 
+-// ── Skip intro & brand reveal entirely ──
+-function skipIntro(){
+-  try{ localStorage.setItem('introSeen','1'); }catch(e){}
+-  stopIntroClock();
+-
+-  // Stop/hide cinematic brand reveal if running
+-  const br = document.getElementById('brandReveal');
+-  if(br){ br.style.display='none'; br.classList.remove('active','playing'); }
+-  if(typeof BrandReveal !== 'undefined'){
+-    if(BrandReveal.stop) BrandReveal.stop();
+-    if(BrandReveal._timers) BrandReveal._timers.forEach(t=>clearTimeout(t));
+-  }
+-
+-  // Hide intro
+-  const intro = document.getElementById('pageIntro');
+-  if(intro){ intro.classList.remove('active','fading-out'); }
+-
+-  // Go straight to destination
+-  if(typeof showLogin === 'function'){ showLogin(); }
+-  else {
+-    const l = document.getElementById('pageLanding');
+-    if(l) l.classList.add('active');
+-  }
+-}
+-
+ function openProblemFromIntro(){
+   const intro = document.getElementById('pageIntro');
+   if(!intro) return;
+@@ -19024,6 +19003,7 @@
+   const intro = document.getElementById('pageIntro');
+   if(!intro) return;
+   intro.classList.add('fading-out');
++  if(typeof BrandReveal !== 'undefined' && BrandReveal.skip) BrandReveal.skip();
+   setTimeout(() => {
+     intro.classList.remove('active');
+     intro.classList.remove('fading-out');
+@@ -21782,7 +21762,27 @@
+   let current=0;
+   let started=false;
+ 
++  // PERF / lifecycle ownership: this legacy carousel shares its screen zone with
++  // the insight-cards engine, which supersedes it whenever #hiPanel exists (that
++  // engine hides #heroPrinciples and clears these timers at init). This module
++  // must never create a recurring interval while it is ineligible to run, and
++  // never leave one alive past its Landing context. With no #hiPanel there is no
++  // owner for this zone, so the carousel stays static instead of cycling
++  // unsupervised forever.
++  function eligible(){
++    if(document.hidden)return false;
++    const landing=document.getElementById('pageLanding');
++    if(!landing||!landing.classList.contains('active'))return false;
++    if(!document.getElementById('hiPanel'))return false;
++    return true;
++  }
++  function stop(){
++    if(window._showNextBootTimer){clearTimeout(window._showNextBootTimer);window._showNextBootTimer=0;}
++    if(window._showNextInterval){clearInterval(window._showNextInterval);window._showNextInterval=0;}
++  }
++
+   function showNext(){
++    if(!eligible()){stop();return;}
+     // اخفي اللي قبلها
+     items.forEach(it=>{it.classList.remove('hp-in');it.classList.add('hp-out')});
+     // بعد ما تختفي، ظهّر الجديدة
+@@ -21795,10 +21795,21 @@
+ 
+   // ابدأ بعد ما الـ loader يخلص والعين تفتح
+   window._showNextBootTimer=setTimeout(()=>{
++    window._showNextBootTimer=0;
++    // The interval may only be created if the owning Landing context is still
++    // active, visible and eligible at the moment this callback actually runs.
++    if(!eligible()){stop();return;}
+     started=true;
+     showNext();
+-    window._showNextInterval = setInterval(showNext,3500); // كل 3.5 ثانية تتغير
++    if(!window._showNextInterval)window._showNextInterval=setInterval(showNext,3500); // كل 3.5 ثانية تتغير
+   },4000);
++
++  // Stop at the lifecycle exit itself, not up to one tick afterwards.
++  document.addEventListener('visibilitychange',function(){if(document.hidden)stop();});
++  const landingRoute=document.getElementById('pageLanding');
++  if(landingRoute&&'MutationObserver'in window){
++    new MutationObserver(function(){if(!eligible())stop();}).observe(landingRoute,{attributes:true,attributeFilter:['class']});
++  }
+ })();
+ 
+ // === BACK TO TOP ===
+@@ -36168,9 +36179,8 @@
+ (function(){
+   let devtoolsOpen=false;
+   const threshold=160;
+-  
+-  window._devToolsInterval = setInterval(()=>{
+-    if(document.hidden) return; /* PageLife rule: nothing polls while tab is hidden */
++
++  function checkDevTools(){
+     const widthDiff=window.outerWidth-window.innerWidth>threshold;
+     const heightDiff=window.outerHeight-window.innerHeight>threshold;
+     if(widthDiff||heightDiff){
+@@ -36182,7 +36192,19 @@
+     }else{
+       devtoolsOpen=false;
+     }
+-  },2000);
++  }
++  function stopDevToolsPoll(){
++    if(window._devToolsInterval){clearInterval(window._devToolsInterval);window._devToolsInterval=null;}
++  }
++  function startDevToolsPoll(){
++    if(window._devToolsInterval||document.hidden)return;
++    window._devToolsInterval=setInterval(checkDevTools,2000);
++  }
++  // PERF: a hidden tab should own no repeating timer at all, not merely skip its work.
++  document.addEventListener('visibilitychange',()=>{
++    if(document.hidden)stopDevToolsPoll();else startDevToolsPoll();
++  });
++  startDevToolsPoll();
+ })();
+ 
+ // ═══ Form Submission Protection ═══

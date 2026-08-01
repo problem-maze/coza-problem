@@ -131,24 +131,66 @@ forever regardless of route or tab visibility.
 visibility gate; the module relies entirely on an external script to ever call
 `clearTimeout`/`clearInterval` on its two module-level globals.
 
-**After:** `showNext()` early-returns (without toggling classes) when
-`document.hidden` or `#pageLanding` is not `.active`, matching the guard style used by
-`insight-cards`/`startIntroClock`. This does not remove the external clear-on-init from
-`insight-cards` (still correct, still first line of defense); it adds a second,
-self-owned line of defense so this module is never the sole point of failure for its
-own cancellation.
+> ### SUPERSEDED — first attempt was incomplete
+>
+> The originally-applied version of this repair added a `document.hidden` /
+> `#pageLanding.active` guard *inside* `showNext()` only. Independent review found
+> it did not actually close the leak, and the review was correct on both counts:
+>
+> 1. **The guard was defeated by the very next line.** The boot callback ran
+>    `showNext(); window._showNextInterval = setInterval(showNext,3500);` — so even
+>    when `showNext()` early-returned and cleared the timers, the following
+>    statement unconditionally created a new interval and re-assigned the global.
+>    An interval was therefore created in exactly the ineligible states the guard
+>    was supposed to prevent.
+> 2. **The `#hiPanel`-absent case was still unbounded.** The guard only tested
+>    hidden/route-active. With `#hiPanel` missing while Landing was active and
+>    visible, the guard passed through and the 3.5s interval ran forever — which is
+>    the precise `failure_scenario` this record was opened for. The first attempt
+>    did not fix the defect it claimed to fix.
+>
+> The corrected repair below replaces it. The earlier `gate_b_c_outcome` text in
+> `PERFORMANCE-INVENTORY-v86.json` overstated that attempt and has been corrected.
 
-**Compatibility risk:** Low. On every page variant that currently has `#hiPanel`, this
-change is inert (the module is already cleared before its first 3.5s tick in practice).
-On a hypothetical variant without `#hiPanel`, this is strictly a new guard, not a
-behavior change to any currently-shipping visual.
+**After (corrected repair, as delivered):**
 
-**Rollback:** remove the added guard line at the top of `showNext()`.
+1. A single `eligible()` predicate is the one authority on whether this module may
+   run: not `document.hidden`, `#pageLanding` present and `.active`, and `#hiPanel`
+   present. A single `stop()` clears both owned globals.
+2. `showNext()` calls `stop()` and returns when `!eligible()`.
+3. **The boot callback re-checks `eligible()` before creating the interval**, and
+   creates it only behind an `if(!window._showNextInterval)` guard. This is the fix
+   for defect 1 — no interval can be created in an ineligible state.
+4. **`#hiPanel` absent ⇒ ineligible**, so the carousel safely no-ops and creates no
+   recurring interval. This is the fix for defect 2.
+5. The module now stops **at** its lifecycle exit rather than up to one 3.5s tick
+   later: a `visibilitychange` listener calls `stop()` when hidden, and a
+   `MutationObserver` on `#pageLanding`'s `class` attribute calls `stop()` when the
+   route is left — the same idiom the `insight-cards` engine already uses in this
+   file.
 
-**Acceptance check:** with `#hiPanel` present (current default), confirm no behavior
-change. With `#hiPanel` temporarily removed for a manual test, confirm
-`window._showNextInterval` still self-stops toggling `.hp-item` classes when
-`document.hidden` is true or `#pageLanding` is not active.
+**Behavior note (stated, not hidden):** on a hypothetical variant where `#hiPanel`
+is absent, the principles zone is now static instead of cycling forever. No shipping
+page is affected: `#hiPanel` is present in this source, so `insight-cards` hides
+`#heroPrinciples` and clears these timers at init exactly as before. Requirement 5
+of the review ("preserve intended behavior when `#hiPanel` exists") is met because
+that path is unchanged.
+
+**Compatibility risk:** Low. With `#hiPanel` present the boot timer is cleared by
+`insight-cards` before it can fire, so the new code never executes on the shipping
+page. `MutationObserver` and `visibilitychange` are both already used elsewhere in
+this file, so no new platform requirement is introduced.
+
+**Rollback:** restore the original IIFE body (`showNext()` without `eligible()`/
+`stop()`, unconditional `setInterval` in the boot callback, no listeners).
+
+**Acceptance check:** (a) with `#hiPanel` present and Landing active, the live
+insight-cards interval starts and is cleared on route exit while the legacy carousel
+owns no interval; (b) with `#hiPanel` removed before the insight-cards script runs
+and Landing active, no 3500ms interval is ever created — before or after navigating
+away — and no uncaught error occurs. Both are asserted from wrapped
+`setInterval`/`clearInterval` observations in
+`test-results/gate-c-runtime-repair4.js`, not from assuming an external cleanup.
 
 ---
 

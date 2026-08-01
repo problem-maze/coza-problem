@@ -1,0 +1,21 @@
+node --check results for all physical <script> blocks extracted from the Repair-4-corrected Problem-v86-DARK-ONLY.html
+node version: v22.22.2
+script_1.js: exit=0 
+script_2.js: exit=0 
+script_3.js: exit=0 
+script_4.js: exit=0 
+script_5.js: exit=0 
+script_6.js: exit=0 
+script_7.js: exit=0 
+script_8.js: exit=0 
+script_9.js: exit=0 
+script_10.js: exit=0 
+script_11.js: exit=0 
+script_12.js: exit=0 
+script_13.js: exit=0 
+script_14.js: exit=0 
+script_15.js: exit=0 
+script_16.js: exit=0 
+script_17.js: exit=0 
+script_18.js: exit=0 
+script_19.js: exit=0 
