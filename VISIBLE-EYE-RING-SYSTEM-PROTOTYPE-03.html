@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visible Eye — Ring System Prototype 03</title>
+<style>
+  /* ══════════════════════════════════════════════════════════════
+     RING SYSTEM PROTOTYPE 03 — spatial-registration and mobile-
+     legibility calibration pass on Prototype 02.
+
+     Root cause found and fixed: the outer almond's lid paths use
+     quadratic Beziers whose CONTROL points sit at y=-70 (upper) and
+     y=240 (lower), but a quadratic Bezier does not pass through its
+     control point — the actual rendered curve at x=0 only reaches
+     y=-35 (upper) and y=120 (lower). The true visible lens is only
+     155 units tall at its center, not the ~310 units the control
+     points imply. Prototype 02's ring system (centered at cy=-8, with
+     outer radii up to ry=128) was sized against the wrong, much taller
+     assumed opening, so most of its upper structure was silently lost
+     to clipping — exactly the "lower U-shaped contours" symptom.
+
+     Fixed by: (1) moving the whole assembly down to cy=22 (room above
+     is now ~57 units, below ~98, at x=0 — still asymmetric like the
+     real eye, but no longer starved); (2) resizing every ring's radii
+     against the TRUE lens boundary, verified point-by-point in Python
+     before this file was written (see the calibration note) so every
+     one of the 8 rings has confirmed, non-trivial visible arc both
+     above and below the pupil after clipping, not just in theory.
+     ══════════════════════════════════════════════════════════════ */
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{ width:100%; overflow-x:hidden; background:#FAFBFD; }
+  body{
+    width:100%; min-height:100vh; overflow-x:hidden;
+    background:#FAFBFD; color:#24272E;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    padding:48px 24px;
+  }
+  .stage{
+    width:640px; max-width:100%; background:#FFFFFF;
+    border:1px solid #E4E7EC; border-radius:20px; padding:28px 22px;
+  }
+  .stage svg{ display:block; width:100%; height:auto; }
+  /* Mobile: the eye must be a direct, full-width specimen, not a small
+     drawing inside a card inside a page — no border, no rounded card,
+     minimal padding. */
+  @media (max-width:480px){
+    body{ padding:14px; }
+    .stage{ border:none; border-radius:0; background:transparent; padding:0; }
+  }
+  svg{
+    --bg:#FAFBFD;
+    --ink:#24272E;
+    --support:#7C8088;
+    --quiet:#C9CDD3;
+    --red:#D17B73;
+    --red-72: color-mix(in srgb, var(--red) 72%, var(--bg) 28%);
+    --red-40: color-mix(in srgb, var(--red) 40%, var(--bg) 60%);
+  }
+  .eye-lid{ fill:none; stroke:var(--ink); stroke-width:2.2; stroke-linecap:round; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <svg viewBox="-320 -140 640 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="lensRing3" clipPathUnits="userSpaceOnUse">
+          <path d="M -290 0 Q 0 -70 290 0 Q 0 240 -290 0 Z"/>
+        </clipPath>
+      </defs>
+
+      <!-- #eyeAssembly — every visible artwork element, for accurate bounding-box
+           measurement (this is what was measured at 390x844, not .stage) -->
+      <g id="eyeAssembly">
+
+        <!-- outer almond — locked Problem eye silhouette, unchanged geometry -->
+        <path class="eye-lid" d="M -290 0 Q 0 -70, 290 0"/>
+        <path class="eye-lid" d="M -290 0 Q 0 240, 290 0"/>
+
+        <g clip-path="url(#lensRing3)">
+
+          <!-- ═══ OUTER QUIET SYSTEM — resized against the true lens boundary ═══ -->
+          <g id="outerQuietSystem">
+            <path id="ringO2" d="M 125.04,-36.99 A 180,82 0 1 1 -158.93,60.5" fill="none" stroke="var(--quiet)" stroke-width="0.85" stroke-opacity="0.34" stroke-linecap="round"/>
+            <path id="ringO1" d="M -155.15,14.06 A 156,76 0 1 1 122.93,68.79" fill="none" stroke="var(--quiet)" stroke-width="1.00" stroke-opacity="0.42" stroke-linecap="round"/>
+          </g>
+
+          <!-- ═══ MID GRAPHITE SYSTEM — connects the red core to the wider field ═══ -->
+          <g id="midGraphiteSystem">
+            <path id="ringM3" d="M 131.68,16.98 A 132,72 0 1 1 -91.69,-29.79" fill="none" stroke="var(--support)" stroke-width="1.20" stroke-opacity="0.50" stroke-linecap="round"/>
+            <path id="ringM2" d="M -81.75,-22.16 A 110,66 0 1 1 -51.64,80.27" fill="none" stroke="var(--support)" stroke-width="1.40" stroke-opacity="0.60" stroke-linecap="round"/>
+            <path id="ringM1" d="M -3.07,79.96 A 88,58 0 1 1 87.79,26.05" fill="none" stroke="var(--support)" stroke-width="1.65" stroke-opacity="0.72" stroke-linecap="round"/>
+          </g>
+
+          <!-- ═══ INNER IDENTITY SYSTEM — strong arc, wider-reach arc, pale
+               counter-arc on the opposite side ═══ -->
+          <g id="innerIdentitySystem">
+            <path id="ringR3" d="M -23.94,72.74 A 70,54 0 0 1 -57.34,-8.97" fill="none" stroke="var(--red-40)" stroke-width="1.30" stroke-opacity="0.50" stroke-linecap="round"/>
+            <path id="ringR2" d="M -9.72,-21.33 A 56,44 0 0 1 14.49,64.5" fill="none" stroke="var(--red-72)" stroke-width="1.90" stroke-opacity="0.78" stroke-linecap="round"/>
+            <path id="ringR1" d="M 21.0,-7.44 A 42,34 0 0 1 27.0,48.05" fill="none" stroke="var(--red)" stroke-width="2.40" stroke-opacity="0.95" stroke-linecap="round"/>
+          </g>
+
+        </g>
+
+        <!-- pupil — recentered with the whole ring system, inside the eye's body -->
+        <circle cx="0" cy="22" r="23" fill="var(--ink)"/>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>
