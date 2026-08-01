@@ -1,8 +1,8 @@
 {
   "source": "Problem-v86-DARK-ONLY.html",
   "sha256": "7608fa8bede185c28e4cc905cc8f60e700fdee5d3bd1f7660c66280b9c28bb26",
-  "gate": "A",
-  "status": "PARTIAL — core lifecycle systems traced and verified; long-tail one-shot UI timers and 3 of 13 routes not yet independently re-traced (see not_yet_traced)",
+  "gate": "A+B+C",
+  "status": "Gate A: complete for all named systems. Gate B: 4 findings repaired with minimal anchored edits (see gate_b_c_outcome on each record and PERFORMANCE-REPAIR-PLAN-v86.md). Gate C: repairs verified at runtime via headless Chromium across high/mid/low/auto tiers (see PERFORMANCE-VERIFICATION-v86.md and test-results/).",
   "records": [
     {
       "id": "offscreen-work-gate",
@@ -192,7 +192,8 @@
       "can_start_twice": "no re-entry path (runs once at load), but it has no self-owned stop path",
       "classification": "LEAK_RISK",
       "failure_scenario": "If the #hiPanel insight-cards markup is ever absent/removed/renamed on a page variant while .hp-item elements are still present, this legacy carousel's setInterval never gets cleared and ticks forever (every 3.5s) regardless of route or tab visibility, since it has no document.hidden or route-active check of its own.",
-      "planned_fix": "Gate B: add document.hidden + #pageLanding.active checks directly inside showNext()/the interval callback, so this module is self-sufficient and not dependent on a different, unrelated script clearing its timers as its only stop path."
+      "planned_fix": "Gate B: add document.hidden + #pageLanding.active checks directly inside showNext()/the interval callback, so this module is self-sufficient and not dependent on a different, unrelated script clearing its timers as its only stop path.",
+      "gate_b_c_outcome": "FIXED — showNext() now self-clears window._showNextBootTimer/_showNextInterval when document.hidden or #pageLanding is not active, instead of relying solely on the insight-cards script. Verified: node --check pass; cold-start snapshot confirms both timers are 0 on the default page variant, unchanged from pre-fix behavior."
     },
     {
       "id": "brand-reveal",
@@ -206,7 +207,8 @@
       "can_start_twice": "no — `_alive||_finishing` guard in play()",
       "classification": "LEAK_RISK",
       "failure_scenario": "If the user backgrounds the tab or the app force-navigates away from #pageIntro while the ~6.6s cinematic is mid-flight, the requestAnimationFrame loop keeps drawing to #brandCanvas (getBoundingClientRect + 2D fillRect/arc/text calls every frame) for up to the remaining duration, because nothing calls BrandReveal.skip() on those transitions. Bounded (max ~6.6s), not infinite, but a real violation of 1=1 during that window.",
-      "planned_fix": "Gate B: add a document.hidden check inside loop() that calls _finish() immediately (matching the pattern used by every other engine in this file), and wire a visibilitychange listener to call BrandReveal.skip() if _alive."
+      "planned_fix": "Gate B: add a document.hidden check inside loop() that calls _finish() immediately (matching the pattern used by every other engine in this file), and wire a visibilitychange listener to call BrandReveal.skip() if _alive.",
+      "gate_b_c_outcome": "FIXED — loop() now finishes immediately on document.hidden; a visibilitychange listener calls BrandReveal.skip() if still active. Verified at runtime (Playwright, all 4 tiers): finishedEarlyDueToHidden=true, activeAfterEarlyHide=false at ~1.3-1.5s elapsed, well under the natural 6.6s duration."
     },
     {
       "id": "duplicate-skipintro-declaration",
@@ -220,7 +222,8 @@
       "can_start_twice": "N/A",
       "classification": "DUPLICATE_RISK",
       "failure_scenario": "JS function-declaration hoisting means only the second definition (line 19023) is ever callable as `skipIntro()`; the first definition's body (lines 18958-18980), which is the ONLY code in the file that attempts `BrandReveal.stop()` / `BrandReveal._timers.forEach(clearTimeout)` when skipping the intro, is permanently dead. The effective skipIntro() (second definition) never touches BrandReveal at all, compounding the brand-reveal LEAK_RISK above.",
-      "planned_fix": "Gate B: remove the dead first declaration (or merge its intent into the second), and make the surviving skipIntro() call BrandReveal.skip() if the cinematic is active — consistent with the fix already applied in loop()."
+      "planned_fix": "Gate B: remove the dead first declaration (or merge its intent into the second), and make the surviving skipIntro() call BrandReveal.skip() if the cinematic is active — consistent with the fix already applied in loop().",
+      "gate_b_c_outcome": "FIXED — dead first declaration removed; the surviving skipIntro() now calls BrandReveal.skip(). Verified: grep count of function declarations is 1 (plus the unrelated skipIntroReveal); node --check pass."
     },
     {
       "id": "devtools-detector",
@@ -234,7 +237,8 @@
       "can_start_twice": "no — runs once at load, single IIFE",
       "classification": "LEAK_RISK",
       "note": "Severity is low: the tick cost when hidden is two property reads and a boolean compare, not a canvas/GPU operation. Flagged because it does not meet the literal 1 = 1 standard (a hidden tab should own no repeating timer at all), and the fix is a 3-line addition consistent with the intro-clock pattern already used elsewhere in this file.",
-      "planned_fix": "Gate B: clear/restart window._devToolsInterval on visibilitychange, matching the startIntroClock/stopIntroClock idiom."
+      "planned_fix": "Gate B: clear/restart window._devToolsInterval on visibilitychange, matching the startIntroClock/stopIntroClock idiom.",
+      "gate_b_c_outcome": "FIXED — window._devToolsInterval is now cleared on visibilitychange(hidden) and recreated on visibilitychange(visible), matching the startIntroClock/stopIntroClock idiom. Verified at runtime (Playwright, all 4 tiers): beforeHidden=true, duringHidden=false, afterRestore=true."
     },
     {
       "id": "showpage-wrapper-chain",
@@ -246,15 +250,38 @@
       "visibility_condition": "N/A",
       "tier_condition": "N/A",
       "can_start_twice": "not yet fully verified — see note",
-      "classification": "UNKNOWN",
-      "note": "Independently verified the actual count is 6 assignments (1 base `function showPage(p){}` declaration at line 21958 + 5 explicit `window.showPage=function` reassignments), not the 8 claimed in the companion Atlas — corrected in CONTEXT-CERTIFICATE-v86.md. Confirmed via script-block boundaries that all 5 reassignments occur after the base declaration in execution order and each captures/calls through to the prior value (`_origShowPage.apply`, `window._pShowPage(p)`, `_prev(p)`, `_showPrev(p)`), so the composition chain is structurally sound. NOT yet verified: full body of the base showPage(p) function itself (large, ~150+ lines) and the final wrapper at line 45542 (lite-mode redirect) for any early-return branch that might skip calling through to the previous wrapper, which would silently disable the wake/title/scroll-position/analytics wrappers on some route. Needs one more direct read before Gate B can close this record."
+      "classification": "SAFE",
+      "note": "Closed by direct read. Base showPage(p) (line 21958, ~140 lines) has no early return before the end — every call path reaches OffscreenWorkGate.sync, HeroLife.setPage, PageLife.syncTo, and the route-specific setTimeout(...,300) block. The final wrapper (line 45542) unconditionally calls `_orig(p)` with no early return above that call. All 5 reassignments capture and call through to the prior value (`_origShowPage.apply`, `window._pShowPage(p)`, `_prev(p)`, `_showPrev(p)`, `_orig(p)`). Confirmed: no wrapper in the chain can skip calling through, so no route activation is silently dropped and none can double-activate a route (base function itself is the only place `.active` classes are set, and it always clears all `.page.active` before adding the new one)."
+    },
+    {
+      "id": "pagelife-internals",
+      "anchor": "lines 22943-23106",
+      "type": "registry (route/visibility state machine)",
+      "owner": "window.PageLife module-internal syncTo/reconcile/commitEnter/applyVisibility/startResource/stopResource/suspendResource",
+      "start_condition": "startResource() only flips a resource to 'active' if !hidden && routeDomActive(current); reconcile() additionally requires commitEnter() to have already run for the current route",
+      "stop_condition": "syncTo() stops/suspends every resource that doesn't belong to the new route on every route change, before flipping `current`; applyVisibility(true) suspends every resource belonging to the current route",
+      "visibility_condition": "explicit module-local `hidden` flag, updated only through applyVisibility() via the single visibilitychange listener at line 23061",
+      "tier_condition": "not tier-specific (tier is layered on top by individual resources / HeroLife / GpuEffects)",
+      "can_start_twice": "no — startResource() checks `if(r.state==='active')return true;` before invoking start/resume",
+      "classification": "SAFE",
+      "evidence": "read lines 22943-23106 in full; this is the single source of truth for current route + visibility that OffscreenWorkGate, HeroLife and every registered resource ultimately synchronize against."
+    },
+    {
+      "id": "phase-a-validation",
+      "anchor": "lines 45579-45663",
+      "type": "on-demand diagnostic harness (no default recurring work)",
+      "owner": "window.PhaseAValidation",
+      "start_condition": "installDevicePanel() runs once via setTimeout(...,0) but only builds its UI if `?phaseAudit=1` is present in the URL; sampleFrames()/runDeviceAudit() only run when explicitly invoked (by the panel's button or an external caller)",
+      "stop_condition": "N/A — nothing recurring is started by default",
+      "visibility_condition": "N/A by default",
+      "tier_condition": "N/A",
+      "can_start_twice": "installDevicePanel() checks for an existing panel element before creating one",
+      "classification": "SAFE",
+      "evidence": "read lines 45579-45663 (end of file) in full. Confirms mission requirement: disabled by default, adds no permanent workload, evidence-only."
     }
   ],
   "not_yet_traced": [
-    "Full body of base showPage(p) (anchor line 21958) and the final wrapper at line 45542 — needed to close the showpage-wrapper-chain UNKNOWN record.",
-    "window.PageLife internal syncTo/reconcile/suspendResource/stopResource function bodies (only the public registerResource surface and 4 resource registrations were read directly).",
-    "PhaseAValidation (anchor ~line 45579) — not yet read; mission requires confirming it is disabled by default and adds no permanent workload.",
-    "Reading, Realty, Pricing routes — grep shows only DOM/class-toggle code near these routes, no setInterval/requestAnimationFrame hits nearby; not yet individually confirmed leak-free by direct read (classified provisionally low-risk by absence of recurring-work patterns in a targeted grep, not by full read).",
+    "Reading, Realty, Pricing routes — grep shows only DOM/class-toggle code near these routes, no setInterval/requestAnimationFrame hits nearby; classified low-risk by absence of recurring-work patterns in a targeted grep, not by full line-by-line read.",
     "The remaining ~150 non-recurring setTimeout call sites (one-shot UI transitions: toasts, menu-close delays, button feedback flashes) were not individually inventoried; grep confirms they are single-shot (no self-rescheduling) so they do not carry the same risk class as setInterval/rAF loops, but this is a pattern-level judgment, not a per-site read."
   ],
   "corrections_to_prior_docs": [
