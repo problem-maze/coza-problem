@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visible Eye — Morning Wine Refine 01</title>
+<style>
+  /* ══════════════════════════════════════════════════════════════
+     MORNING WINE REFINE 01 — single-specimen color-concentration pass
+     on Dawn Red Integration Lab 01 / Candidate B lineage. Geometry is
+     byte-identical to VISIBLE-EYE-RING-SYSTEM-PROTOTYPE-04.html: same
+     outer almond, same pupil (cx=0,cy=22,r=23), same 23 segments, same
+     coordinates, same lens clip. Only color role assignment changed,
+     and only to CONCENTRATE red (7-8 red-family segments, down from
+     11; see the calibration note for exact spans), not to redistribute
+     it further. --red-14 removed entirely; the outer system carries
+     zero red in this pass.
+     ══════════════════════════════════════════════════════════════ */
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{ width:100%; overflow-x:hidden; background:#FAFBFD; }
+  body{
+    width:100%; min-height:100vh; overflow-x:hidden;
+    background:#FAFBFD; color:#30333A;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    padding:48px 24px;
+  }
+  .stage{
+    width:640px; max-width:100%; background:#FFFFFF;
+    border:1px solid #E4E7EC; border-radius:20px; padding:28px 22px;
+  }
+  .stage svg{ display:block; width:100%; height:auto; }
+  @media (max-width:480px){
+    body{ padding:14px; }
+    .stage{ border:none; border-radius:0; background:transparent; padding:0; }
+  }
+  svg{
+    --bg:#FAFBFD;
+    --ink:#30333A;
+    --support:#777A82;
+    --quiet:#C4C8CF;
+    --red-base:#B95B5A;
+    --red-100: var(--red-base);
+    --red-78: color-mix(in srgb, var(--red-base) 78%, var(--bg) 22%);
+    --red-50: color-mix(in srgb, var(--red-base) 50%, var(--bg) 50%);
+    --red-26: color-mix(in srgb, var(--red-base) 26%, var(--bg) 74%);
+  }
+  .eye-lid-upper{ fill:none; stroke:var(--ink); stroke-width:2.2; stroke-linecap:round; stroke-opacity:0.94; }
+  .eye-lid-lower{ fill:none; stroke:var(--ink); stroke-width:2.2; stroke-linecap:round; stroke-opacity:0.80; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <svg viewBox="-320 -140 640 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="lensWine1" clipPathUnits="userSpaceOnUse">
+          <path d="M -290 0 Q 0 -70 290 0 Q 0 240 -290 0 Z"/>
+        </clipPath>
+      </defs>
+
+      <g id="eyeAssembly">
+        <path class="eye-lid-upper" d="M -290 0 Q 0 -70, 290 0"/>
+        <path class="eye-lid-lower" d="M -290 0 Q 0 240, 290 0"/>
+
+        <g clip-path="url(#lensWine1)">
+
+          <!-- ═══ OUTER SYSTEM — all 6 segments quiet graphite, zero red ═══ -->
+          <path d="M 147.45,-25.03 A 180,82 0 0 1 169.14,50.05" fill="none" stroke="var(--quiet)" stroke-width="0.85" stroke-opacity="0.34" stroke-linecap="round"/>
+          <path d="M 137.89,74.71 A 180,82 0 0 1 -115.7,84.82" fill="none" stroke="var(--quiet)" stroke-width="0.85" stroke-opacity="0.34" stroke-linecap="round"/>
+          <path d="M -155.88,63.0 A 180,82 0 0 1 -137.89,-30.71" fill="none" stroke="var(--quiet)" stroke-width="0.85" stroke-opacity="0.34" stroke-linecap="round"/>
+          <path d="M 119.5,-26.85 A 156,76 0 0 1 135.1,60.0" fill="none" stroke="var(--quiet)" stroke-width="1.00" stroke-opacity="0.42" stroke-linecap="round"/>
+          <path d="M 110.31,75.74 A 156,76 0 0 1 -119.5,70.85" fill="none" stroke="var(--quiet)" stroke-width="1.00" stroke-opacity="0.42" stroke-linecap="round"/>
+          <path d="M -144.64,50.47 A 156,76 0 0 1 -110.31,-31.74" fill="none" stroke="var(--quiet)" stroke-width="1.00" stroke-opacity="0.42" stroke-linecap="round"/>
+
+          <!-- ═══ MID SYSTEM — 4 red-family fragments (1 red-50 + 3 red-26), spread
+               across M1/M2/M3 and both dominant/counter directions; 7 remain graphite ═══ -->
+          <path d="M 101.12,-24.28 A 132,72 0 0 1 131.5,15.72" fill="none" stroke="var(--support)" stroke-width="1.20" stroke-opacity="0.50" stroke-linecap="round"/>
+          <path d="M 131.5,28.28 A 132,72 0 0 1 -45.15,89.66" fill="none" stroke="var(--support)" stroke-width="1.20" stroke-opacity="0.50" stroke-linecap="round"/>
+          <path d="M -75.71,80.98 A 132,72 0 0 1 -93.34,-28.91" fill="none" stroke="var(--red-26)" stroke-width="1.20" stroke-opacity="0.40" stroke-linecap="round"/>
+          <path d="M 70.71,-28.56 A 110,66 0 0 1 103.37,-0.57" fill="none" stroke="var(--red-26)" stroke-width="1.40" stroke-opacity="0.40" stroke-linecap="round"/>
+          <path d="M 108.33,10.54 A 110,66 0 0 1 58.29,77.97" fill="none" stroke="var(--support)" stroke-width="1.40" stroke-opacity="0.60" stroke-linecap="round"/>
+          <path d="M 33.99,84.77 A 110,66 0 0 1 -103.37,44.57" fill="none" stroke="var(--support)" stroke-width="1.40" stroke-opacity="0.60" stroke-linecap="round"/>
+          <path d="M -108.93,31.19 A 110,66 0 0 1 -58.29,-33.97" fill="none" stroke="var(--support)" stroke-width="1.40" stroke-opacity="0.60" stroke-linecap="round"/>
+          <path d="M -9.2,79.68 A 88,58 0 0 1 -76.21,51.0" fill="none" stroke="var(--support)" stroke-width="1.65" stroke-opacity="0.72" stroke-linecap="round"/>
+          <path d="M -81.59,43.73 A 88,58 0 0 1 -58.88,-21.1" fill="none" stroke="var(--support)" stroke-width="1.65" stroke-opacity="0.72" stroke-linecap="round"/>
+          <path d="M -46.63,-27.19 A 88,58 0 0 1 -22.78,-34.02" fill="none" stroke="var(--red-26)" stroke-width="1.65" stroke-opacity="0.40" stroke-linecap="round"/>
+          <path d="M 22.78,-34.02 A 88,58 0 0 1 87.79,26.05" fill="none" stroke="var(--red-50)" stroke-width="1.65" stroke-opacity="0.62" stroke-linecap="round"/>
+
+          <!-- ═══ INNER SYSTEM — 2 red-100 + 2 red-78 + 2 graphite; not 5-of-6 red ═══ -->
+          <path d="M -26.22,72.07 A 70,54 0 0 1 -68.47,33.23" fill="none" stroke="var(--red-78)" stroke-width="1.40" stroke-opacity="0.80" stroke-linecap="round"/>
+          <path d="M -69.96,23.88 A 70,54 0 0 1 -61.81,-3.35" fill="none" stroke="var(--ink)" stroke-width="1.05" stroke-opacity="0.75" stroke-linecap="round"/>
+          <path d="M -11.64,-21.04 A 56,44 0 0 1 46.43,-2.6" fill="none" stroke="var(--red-78)" stroke-width="1.90" stroke-opacity="0.80" stroke-linecap="round"/>
+          <path d="M 51.16,4.1 A 56,44 0 0 1 52.62,37.05" fill="none" stroke="var(--ink)" stroke-width="1.70" stroke-opacity="0.75" stroke-linecap="round"/>
+          <path d="M 24.09,-5.85 A 42,34 0 0 1 39.47,10.37" fill="none" stroke="var(--red-100)" stroke-width="2.40" stroke-opacity="0.95" stroke-linecap="round"/>
+          <path d="M 41.08,14.93 A 42,34 0 0 1 36.37,39.0" fill="none" stroke="var(--red-100)" stroke-width="2.15" stroke-opacity="0.95" stroke-linecap="round"/>
+        </g>
+
+        <circle cx="0" cy="22" r="23" fill="var(--ink)"/>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>
