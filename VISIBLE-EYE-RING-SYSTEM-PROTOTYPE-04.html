@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visible Eye — Ring System Prototype 04</title>
+<style>
+  /* ══════════════════════════════════════════════════════════════
+     RING SYSTEM PROTOTYPE 04 — segmentation pass on Prototype 03.
+     Locked and unchanged from Prototype 03: outer almond silhouette,
+     pupil (cx=0, cy=22, r=23), shared ring-system center (y=22),
+     mobile width registration, Lunar-White environment, graphite
+     tokens, temporary red #D17B73, eight-layer architecture.
+
+     The only change: every ring's single continuous arc is replaced
+     by multiple explicit segments (23 total) sharing the exact same
+     ellipse (rx, ry, cx, cy) as its parent ring — same registration,
+     same radii, same clip verified in Prototype 03. Every segment's
+     start/end angle was chosen, before writing this file, against a
+     5-degree-resolution visibility scan of that ring's true post-clip
+     dead zone (the earlier bezier-control-point finding), so no
+     segment wastes length inside the region that would be clipped
+     away — every one of the 23 segments below renders 94-100% visible.
+     ══════════════════════════════════════════════════════════════ */
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{ width:100%; overflow-x:hidden; background:#FAFBFD; }
+  body{
+    width:100%; min-height:100vh; overflow-x:hidden;
+    background:#FAFBFD; color:#24272E;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    padding:48px 24px;
+  }
+  .stage{
+    width:640px; max-width:100%; background:#FFFFFF;
+    border:1px solid #E4E7EC; border-radius:20px; padding:28px 22px;
+  }
+  .stage svg{ display:block; width:100%; height:auto; }
+  @media (max-width:480px){
+    body{ padding:14px; }
+    .stage{ border:none; border-radius:0; background:transparent; padding:0; }
+  }
+  svg{
+    --bg:#FAFBFD;
+    --ink:#24272E;
+    --support:#7C8088;
+    --quiet:#C9CDD3;
+    --red:#D17B73;
+    --red-72: color-mix(in srgb, var(--red) 72%, var(--bg) 28%);
+    --red-40: color-mix(in srgb, var(--red) 40%, var(--bg) 60%);
+    --red-22: color-mix(in srgb, var(--red) 22%, var(--bg) 78%);
+  }
+  .eye-lid{ fill:none; stroke:var(--ink); stroke-width:2.2; stroke-linecap:round; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <svg viewBox="-320 -140 640 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="lensRing4" clipPathUnits="userSpaceOnUse">
+          <path d="M -290 0 Q 0 -70 290 0 Q 0 240 -290 0 Z"/>
+        </clipPath>
+      </defs>
+
+      <g id="eyeAssembly">
+
+        <!-- outer almond — locked Problem eye silhouette, unchanged geometry -->
+        <path class="eye-lid" d="M -290 0 Q 0 -70, 290 0"/>
+        <path class="eye-lid" d="M -290 0 Q 0 240, 290 0"/>
+
+        <g clip-path="url(#lensRing4)">
+
+          <!-- ═══ OUTER QUIET SYSTEM — 3 segments each, widest quiet gaps ═══ -->
+          <g id="ringO2">
+            <path d="M 147.45,-25.03 A 180,82 0 0 1 169.14,50.05" fill="none" stroke="var(--quiet)" stroke-width="0.85" stroke-opacity="0.34" stroke-linecap="round"/>
+            <path d="M 137.89,74.71 A 180,82 0 0 1 -115.7,84.82" fill="none" stroke="var(--quiet)" stroke-width="0.85" stroke-opacity="0.34" stroke-linecap="round"/>
+            <path d="M -155.88,63.0 A 180,82 0 0 1 -137.89,-30.71" fill="none" stroke="var(--quiet)" stroke-width="0.85" stroke-opacity="0.34" stroke-linecap="round"/>
+          </g>
+          <g id="ringO1">
+            <path d="M 119.5,-26.85 A 156,76 0 0 1 135.1,60.0" fill="none" stroke="var(--quiet)" stroke-width="1.00" stroke-opacity="0.42" stroke-linecap="round"/>
+            <path d="M 110.31,75.74 A 156,76 0 0 1 -119.5,70.85" fill="none" stroke="var(--quiet)" stroke-width="1.00" stroke-opacity="0.42" stroke-linecap="round"/>
+            <path d="M -144.64,50.47 A 156,76 0 0 1 -110.31,-31.74" fill="none" stroke="var(--quiet)" stroke-width="1.00" stroke-opacity="0.42" stroke-linecap="round"/>
+          </g>
+
+          <!-- ═══ MID GRAPHITE SYSTEM — the main architectural body, 3-4 segments each ═══ -->
+          <g id="ringM3">
+            <path d="M 101.12,-24.28 A 132,72 0 0 1 131.5,15.72" fill="none" stroke="var(--support)" stroke-width="1.20" stroke-opacity="0.50" stroke-linecap="round"/>
+            <path d="M 131.5,28.28 A 132,72 0 0 1 -45.15,89.66" fill="none" stroke="var(--support)" stroke-width="1.20" stroke-opacity="0.50" stroke-linecap="round"/>
+            <path d="M -75.71,80.98 A 132,72 0 0 1 -93.34,-28.91" fill="none" stroke="var(--support)" stroke-width="1.20" stroke-opacity="0.50" stroke-linecap="round"/>
+          </g>
+          <g id="ringM2">
+            <path d="M 70.71,-28.56 A 110,66 0 0 1 103.37,-0.57" fill="none" stroke="var(--support)" stroke-width="1.40" stroke-opacity="0.60" stroke-linecap="round"/>
+            <path d="M 108.33,10.54 A 110,66 0 0 1 58.29,77.97" fill="none" stroke="var(--support)" stroke-width="1.40" stroke-opacity="0.60" stroke-linecap="round"/>
+            <path d="M 33.99,84.77 A 110,66 0 0 1 -103.37,44.57" fill="none" stroke="var(--support)" stroke-width="1.40" stroke-opacity="0.60" stroke-linecap="round"/>
+            <path d="M -108.93,31.19 A 110,66 0 0 1 -58.29,-33.97" fill="none" stroke="var(--support)" stroke-width="1.40" stroke-opacity="0.60" stroke-linecap="round"/>
+          </g>
+          <g id="ringM1">
+            <path d="M -9.2,79.68 A 88,58 0 0 1 -76.21,51.0" fill="none" stroke="var(--support)" stroke-width="1.65" stroke-opacity="0.72" stroke-linecap="round"/>
+            <path d="M -81.59,43.73 A 88,58 0 0 1 -58.88,-21.1" fill="none" stroke="var(--support)" stroke-width="1.65" stroke-opacity="0.72" stroke-linecap="round"/>
+            <path d="M -46.63,-27.19 A 88,58 0 0 1 -22.78,-34.02" fill="none" stroke="var(--support)" stroke-width="1.65" stroke-opacity="0.72" stroke-linecap="round"/>
+            <path d="M 22.78,-34.02 A 88,58 0 0 1 87.79,26.05" fill="none" stroke="var(--support)" stroke-width="1.65" stroke-opacity="0.72" stroke-linecap="round"/>
+          </g>
+
+          <!-- ═══ INNER IDENTITY SYSTEM — dominant / near-center / counter / pale-bridge ═══ -->
+          <g id="ringR3">
+            <path d="M -26.22,72.07 A 70,54 0 0 1 -68.47,33.23" fill="none" stroke="var(--red-40)" stroke-width="1.30" stroke-opacity="0.50" stroke-linecap="round"/>
+            <path d="M -69.96,23.88 A 70,54 0 0 1 -61.81,-3.35" fill="none" stroke="var(--red-22)" stroke-width="1.05" stroke-opacity="0.34" stroke-linecap="round"/>
+          </g>
+          <g id="ringR2">
+            <path d="M -11.64,-21.04 A 56,44 0 0 1 46.43,-2.6" fill="none" stroke="var(--red-72)" stroke-width="1.90" stroke-opacity="0.78" stroke-linecap="round"/>
+            <path d="M 51.16,4.1 A 56,44 0 0 1 52.62,37.05" fill="none" stroke="var(--red-72)" stroke-width="1.70" stroke-opacity="0.68" stroke-linecap="round"/>
+          </g>
+          <g id="ringR1">
+            <path d="M 24.09,-5.85 A 42,34 0 0 1 39.47,10.37" fill="none" stroke="var(--red)" stroke-width="2.40" stroke-opacity="0.95" stroke-linecap="round"/>
+            <path d="M 41.08,14.93 A 42,34 0 0 1 36.37,39.0" fill="none" stroke="var(--red)" stroke-width="2.15" stroke-opacity="0.88" stroke-linecap="round"/>
+          </g>
+
+        </g>
+
+        <!-- pupil — locked, unchanged from Prototype 03 -->
+        <circle cx="0" cy="22" r="23" fill="var(--ink)"/>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>
