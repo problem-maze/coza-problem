@@ -1,0 +1,22 @@
+Visible Eye — Isolated Home Integration Test 01
+Artifact Handoff — Commit Identity
+Generated: 2026-08-03T23:05:22Z
+
+BRANCH:            claude/start-claude-code-v86-tdn3cy
+COMMIT SHA:        c57cec26039cbb5afe09a235d0f34a9e7d8b688f
+COMMIT SUBJECT:    Isolated Home Integration Test 01: Visible Eye (Prototype 05)
+
+GIT STATUS AT HANDOFF TIME:
+  HEAD == c57cec2       : confirmed (c57cec26039cbb5afe09a235d0f34a9e7d8b688f)
+  working tree           : clean (git status --porcelain returned no output)
+
+SOURCE FILE INTEGRITY (read-only inputs, verified unchanged):
+  Problem-v86-DARK-ONLY.html (production Home source)
+    SHA-256: c2b62cc98f1e3d0fa00d3709818f79f9ee73bd568700dcb6b665adef20b0d6b1
+
+  VISIBLE-EYE-MECHANICAL-FOCUS-PROTOTYPE-05.html (approved source eye)
+    SHA-256: 2e35daad2024c847eeac14948a898e598a20da1c5c62ccbc2dbe66d99e53b24e
+
+DELIVERABLE FILE INTEGRITY (new integration file, as committed in c57cec2):
+  Problem-v86-VISIBLE-EYE-ISOLATED-INTEGRATION-01.html
+    SHA-256: b131aefb01166783a0a4e81b579960d5294d3b6ac760989d56cbd97c82090cff
