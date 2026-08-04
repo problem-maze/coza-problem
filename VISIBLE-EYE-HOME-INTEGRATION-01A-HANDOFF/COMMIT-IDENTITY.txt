@@ -1,0 +1,25 @@
+Visible Eye — Isolated Home Integration Correction 01A
+Artifact Handoff — Commit Identity
+Generated: 2026-08-04T00:08:14Z
+
+BRANCH:            claude/start-claude-code-v86-tdn3cy
+COMMIT SHA:        360ba0e3ebe0d643c0d6e90e38834dc1192f2def
+COMMIT SUBJECT:    Add Isolated Home Integration Correction 01A: restore Lunar-White environment
+
+GIT STATUS AT HANDOFF TIME:
+  HEAD                    : 360ba0e3ebe0d643c0d6e90e38834dc1192f2def
+  working tree            : clean (git status --porcelain returned no output)
+
+SOURCE FILE INTEGRITY (read-only inputs, verified unchanged):
+  Problem-v86-DARK-ONLY.html (production Home source)
+    SHA-256: c2b62cc98f1e3d0fa00d3709818f79f9ee73bd568700dcb6b665adef20b0d6b1
+
+  VISIBLE-EYE-MECHANICAL-FOCUS-PROTOTYPE-05.html (approved source eye)
+    SHA-256: 2e35daad2024c847eeac14948a898e598a20da1c5c62ccbc2dbe66d99e53b24e
+
+  Problem-v86-VISIBLE-EYE-ISOLATED-INTEGRATION-01.html (prior structural baseline, read-only in this task)
+    SHA-256: b131aefb01166783a0a4e81b579960d5294d3b6ac760989d56cbd97c82090cff
+
+DELIVERABLE FILE INTEGRITY (this correction, as committed in 360ba0e3ebe0d643c0d6e90e38834dc1192f2def):
+  Problem-v86-VISIBLE-EYE-ISOLATED-INTEGRATION-01A.html
+    SHA-256: baef1c8d1ab7f36a816284c63e519f5832213449549137a87c53612693834245
