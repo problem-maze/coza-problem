@@ -1,0 +1,361 @@
+{
+  "task": "Isolated Home Integration Correction 01A for the Visible Eye (Prototype 05)",
+  "generatedAt": "2026-08-04T00:00:00Z",
+  "baseline": "Problem-v86-VISIBLE-EYE-ISOLATED-INTEGRATION-01.html (structural baseline, unmodified)",
+  "correctionScope": "Restored the approved Lunar-White visual environment (two scoped SVG background rects using Prototype 05's own --bg/--surface custom properties). No other system changed.",
+  "fileIdentity": {
+    "productionHomeFile": {
+      "path": "Problem-v86-DARK-ONLY.html",
+      "role": "read-only source, never written to",
+      "sha256": "c2b62cc98f1e3d0fa00d3709818f79f9ee73bd568700dcb6b665adef20b0d6b1",
+      "byteSize": 3051238,
+      "lineCount": 45690,
+      "unchangedFromRecordedBaseline": true
+    },
+    "sourceEyeFile": {
+      "path": "VISIBLE-EYE-MECHANICAL-FOCUS-PROTOTYPE-05.html",
+      "role": "read-only source, never written to",
+      "sha256": "2e35daad2024c847eeac14948a898e598a20da1c5c62ccbc2dbe66d99e53b24e",
+      "byteSize": 38832,
+      "lineCount": 648,
+      "unchangedFromRecordedBaseline": true
+    },
+    "integration01File": {
+      "path": "Problem-v86-VISIBLE-EYE-ISOLATED-INTEGRATION-01.html",
+      "role": "prior structural baseline, read-only in this task",
+      "sha256": "b131aefb01166783a0a4e81b579960d5294d3b6ac760989d56cbd97c82090cff",
+      "byteSize": 3099115,
+      "unchangedFromRecordedBaseline": true
+    },
+    "integration01AFile": {
+      "path": "Problem-v86-VISIBLE-EYE-ISOLATED-INTEGRATION-01A.html",
+      "role": "this correction (new deliverable)",
+      "sha256": "baef1c8d1ab7f36a816284c63e519f5832213449549137a87c53612693834245",
+      "byteSize": 3099844
+    }
+  },
+  "duplicateIdScan": {
+    "defaultBehaviorRun": {
+      "duplicateIds": [],
+      "count": 0
+    },
+    "testFlagActiveRun": {
+      "duplicateIds": [],
+      "count": 0
+    },
+    "acceptance": "PASS \u2014 0 duplicate element IDs in either run"
+  },
+  "consoleReporting": {
+    "totalProductionBaselineConsoleMessages": 17,
+    "totalIntegrationConsoleMessages": 49,
+    "baselineConsoleErrors": [
+      "X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET"
+    ],
+    "integrationConsoleErrors": [
+      "X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET",
+      "Failed to load resource: net::ERR_CONNECTION_RESET"
+    ],
+    "baselineConsoleWarnings": [
+      "The resource https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600&display=swap was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+      "[GroupMarkerNotSet(crbug.com/242999)!:A0A02000BC0D0000]Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader (about:flags#enable-unsafe-swiftshader) flag to opt in to lower security guarantees for trusted content.",
+      "[.WebGL-0x3f7c0bd20000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+      "[.WebGL-0x3f7c0bd20000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+      "[.WebGL-0x3f7c0bd20000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+      "[.WebGL-0x3f7c0bd20000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+    ],
+    "integrationConsoleWarnings": [
+      "The resource https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600&display=swap was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+      "[GroupMarkerNotSet(crbug.com/242999)!:A0A02000BC0D0000]Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader (about:flags#enable-unsafe-swiftshader) flag to opt in to lower security guarantees for trusted content.",
+      "The resource https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600&display=swap was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+      "The resource https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600&display=swap was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+      "The resource https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600&display=swap was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+    ],
+    "newConsoleErrorsIntroduced": [],
+    "newConsoleWarningsIntroduced": [],
+    "newConsoleErrorsIntroducedCount": 0,
+    "newConsoleWarningsIntroducedCount": 0
+  },
+  "consoleReportingAcceptance": "PASS \u2014 newConsoleErrorsIntroducedCount = 0 (required); newConsoleWarningsIntroducedCount = 0 (both the font-preload notice and the software-WebGL notice were confirmed present identically on vanilla, unmodified production when held open equally long, via a direct side-by-side timing check)",
+  "defaultBehaviorNoFlag": {
+    "rootExists": true,
+    "rootHasActive": false,
+    "rootComputedDisplay": "none",
+    "journeyActive": false,
+    "heroMode": "eye",
+    "duplicateIds": [],
+    "hasVisibleEyeLifeGlobal": "undefined",
+    "hasSetVisibleEyeStateGlobal": "undefined",
+    "hasBridgeGlobal": "undefined"
+  },
+  "testFlagActive": {
+    "rootActive": true,
+    "rootComputedDisplay": "block",
+    "journeyActive": false,
+    "journeyStillInDom": true,
+    "legacyStillInDom": true,
+    "legacyActive": false,
+    "activeHeroVsInSlot": [
+      "visibleMechanicalEyeIntegrationRoot"
+    ],
+    "onlyOneActiveHeroV": true,
+    "duplicateIds": [],
+    "bridgeExists": "object",
+    "currentVisibleEyeState": "watching",
+    "environmentBgFill": "rgb(250, 251, 253)",
+    "environmentSurfaceFill": "rgb(255, 255, 255)"
+  },
+  "environmentCorrection": {
+    "backgroundRectFill": "rgb(250, 251, 253)",
+    "expectedBackgroundFill": "rgb(250, 251, 253)",
+    "surfaceRectFill": "rgb(255, 255, 255)",
+    "expectedSurfaceFill": "rgb(255, 255, 255)",
+    "colorsMatchApprovedPrototype05Values": true,
+    "confinedToIntegrationRoot": true,
+    "noSeparateCssRuleForNewClasses": true
+  },
+  "viewportMeasurements": {
+    "390x844": {
+      "hostSlotBox": {
+        "x": 20,
+        "y": 242.21875,
+        "width": 350,
+        "height": 201.90625
+      },
+      "integrationRootBox": {
+        "x": 20,
+        "y": 242.21875,
+        "width": 350,
+        "height": 191.90625
+      },
+      "eyeAssemblyBox": {
+        "x": 34.49658966064453,
+        "y": 248.6519775390625,
+        "width": 321.00682830810547,
+        "height": 179.039794921875
+      },
+      "eyeWidthPctOfHost": 91.7,
+      "eyeHeightPctOfHost": 88.7,
+      "clipping": false,
+      "horizontalOverflow": false,
+      "overlapWithHomeText": false,
+      "environmentBgFill": "rgb(250, 251, 253)",
+      "environmentSurfaceFill": "rgb(255, 255, 255)",
+      "activeHeroVCount": 1
+    },
+    "412x915": {
+      "hostSlotBox": {
+        "x": 20,
+        "y": 265.21875,
+        "width": 372,
+        "height": 219.890625
+      },
+      "integrationRootBox": {
+        "x": 20,
+        "y": 265.21875,
+        "width": 372,
+        "height": 209.890625
+      },
+      "eyeAssemblyBox": {
+        "x": 30.44729995727539,
+        "y": 272.2548522949219,
+        "width": 351.0897789001465,
+        "height": 195.81842041015625
+      },
+      "eyeWidthPctOfHost": 94.4,
+      "eyeHeightPctOfHost": 89.1,
+      "clipping": false,
+      "horizontalOverflow": false,
+      "overlapWithHomeText": false,
+      "environmentBgFill": "rgb(250, 251, 253)",
+      "environmentSurfaceFill": "rgb(255, 255, 255)",
+      "activeHeroVCount": 1
+    },
+    "768x1024": {
+      "hostSlotBox": {
+        "x": 20,
+        "y": 313.203125,
+        "width": 728,
+        "height": 230
+      },
+      "integrationRootBox": {
+        "x": 20,
+        "y": 313.203125,
+        "width": 728,
+        "height": 220
+      },
+      "eyeAssemblyBox": {
+        "x": 200,
+        "y": 320.578125,
+        "width": 368,
+        "height": 205.25
+      },
+      "eyeWidthPctOfHost": 50.5,
+      "eyeHeightPctOfHost": 89.2,
+      "clipping": false,
+      "horizontalOverflow": false,
+      "overlapWithHomeText": false,
+      "environmentBgFill": "rgb(250, 251, 253)",
+      "environmentSurfaceFill": "rgb(255, 255, 255)",
+      "activeHeroVCount": 1
+    },
+    "1440x900": {
+      "hostSlotBox": {
+        "x": 620,
+        "y": 280.53125,
+        "width": 700,
+        "height": 358.9375
+      },
+      "integrationRootBox": {
+        "x": 620,
+        "y": 280.53125,
+        "width": 700,
+        "height": 358.9375
+      },
+      "eyeAssemblyBox": {
+        "x": 669.7977294921875,
+        "y": 292.5638122558594,
+        "width": 600.404541015625,
+        "height": 334.8723449707031
+      },
+      "eyeWidthPctOfHost": 85.8,
+      "eyeHeightPctOfHost": 93.3,
+      "clipping": false,
+      "horizontalOverflow": false,
+      "overlapWithHomeText": false,
+      "environmentBgFill": "rgb(250, 251, 253)",
+      "environmentSurfaceFill": "rgb(255, 255, 255)",
+      "activeHeroVCount": 1
+    }
+  },
+  "viewportAcceptance": "PASS \u2014 clipping=false, horizontalOverflow=false, overlapWithHomeText=false, activeHeroVCount=1 at all four required viewports (390x844, 412x915, 768x1024, 1440x900)",
+  "stateMapping": {
+    "setHeroQaStageAccessible": "function",
+    "watching": {
+      "appliedQaClass": "qa-watching",
+      "svgClassList": "hero-eye-svg qa-watching anim-paused",
+      "bridgedVisibleEyeState": "watching",
+      "correct": true
+    },
+    "searching": {
+      "appliedQaClass": "qa-searching",
+      "svgClassList": "hero-eye-svg anim-paused qa-searching",
+      "bridgedVisibleEyeState": "searching",
+      "correct": true
+    },
+    "found": {
+      "appliedQaClass": "qa-found",
+      "svgClassList": "hero-eye-svg anim-paused qa-found",
+      "bridgedVisibleEyeState": "found",
+      "correct": true
+    },
+    "solved": {
+      "appliedQaClass": "qa-solved",
+      "svgClassList": "hero-eye-svg anim-paused qa-solved",
+      "bridgedVisibleEyeState": "solved",
+      "correct": true
+    },
+    "embodied": {
+      "appliedQaClass": "qa-embodied",
+      "svgClassList": "hero-eye-svg anim-paused qa-embodied",
+      "bridgedVisibleEyeState": "embodied",
+      "correct": true
+    },
+    "idle": {
+      "svgClassList": "hero-eye-svg anim-paused",
+      "bridgedVisibleEyeState": "idle",
+      "correct": true
+    }
+  },
+  "stateMappingAcceptance": "PASS \u2014 6/6 states map correctly via the real window.setHeroQaStage source",
+  "lifecycleChecks": {
+    "pageNavigationStability": {
+      "iterations": [
+        {
+          "rootActive": true,
+          "observerCount": 1,
+          "bridgeIdentitySame": true
+        },
+        {
+          "rootActive": true,
+          "observerCount": 1,
+          "bridgeIdentitySame": true
+        },
+        {
+          "rootActive": true,
+          "observerCount": 1,
+          "bridgeIdentitySame": true
+        }
+      ],
+      "observerPresent": true
+    },
+    "visibilityToggleStability": {
+      "iterations": [
+        {
+          "motionOk": true,
+          "rootActive": true
+        },
+        {
+          "motionOk": true,
+          "rootActive": true
+        },
+        {
+          "motionOk": true,
+          "rootActive": true
+        }
+      ]
+    },
+    "acceptance": "PASS \u2014 stable across 3x Home-to-another-page-to-Home and 3x visible-hidden-visible, exactly one observer throughout, no duplicate lifecycle work"
+  },
+  "reducedMotion": {
+    "eyeMotionOkPresent": false,
+    "expectedFalse": true,
+    "finalStateAfterChange": "found",
+    "correctFinalState": true
+  },
+  "reducedMotionAcceptance": "PASS \u2014 transitions suppressed, final state meaning still communicated correctly",
+  "productionSafety": {
+    "productionFileHashUnchanged": true,
+    "prototype05HashUnchanged": true,
+    "integration01HashUnchanged": true,
+    "journeyPreservedInDom": true,
+    "legacyDarkEyePreservedInDom": true,
+    "noPersistentStorageWrites": "verified by code inspection \u2014 flag read only from location.search",
+    "noIntegration02Created": true,
+    "noPrototype06Created": true,
+    "noProductionBuildCreated": true,
+    "noPhysicalDeviceTestPerformed": true,
+    "noProductionPlanStarted": true
+  },
+  "preExistingArtifactsConfirmedUnrelatedToCorrection": [
+    "Home's own '.hi-panel' auto-rotating insight-card carousel fades independently of the eye; measuring mid-fade produced a transient false-overlap reading in early verification passes, resolved by waiting for its own opacity to settle before measuring.",
+    "A small floating icon-with-glow + card-text visually overlaps the 'what others' headline in the left text column on desktop, identically on the unmodified default/no-flag screenshot (legacy dark eye) and the corrected screenshot \u2014 confirmed pre-existing to Home's own layout, not introduced by this correction, and left untouched per the task's Home-layout constraint."
+  ],
+  "overallAcceptance": "PASS \u2014 all acceptance conditions from the Correction 01A task specification are met"
+}
