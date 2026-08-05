@@ -1,0 +1,75 @@
+{
+  "file": "Problem-v86-nav-logo-simplified-signin-continuous-hand-20-2-world-derived-global-earth-refinement.html",
+  "generated_by": "validate_v20_2_geometry.py (shapely-based, n=24 samples per bezier segment), cross-checked against the actual embedded path data",
+  "core_radius": 53.4,
+  "geometry_authoring_method": "Asia and Australia (plus two minor accent shapes, New Guinea and the Philippines) were re-derived directly from the real World system's CONTINENTS lon/lat dataset and its project() orthographic projection, viewed from a camera centered at rotY=213deg/rotX=0deg. This rotation was chosen because Asia's main landmass projects large/frontal, Australia lands below it, and Africa/Europe/India have 0 visible points at this angle. Raw projected point sets were simplified via Shapely Douglas-Peucker (Asia tolerance=0.045, Australia=0.035, New Guinea/Philippines=0.02) down to node counts comparable to the file's existing hand-authored continents (12 curves for the approved Africa shape; Asia now has 19 anchor points, Australia 9), then re-smoothed with the exact same Catmull-Rom spline (tension 1/8) drawContinents() itself uses.",
+  "views": {
+    "lhmzEarthViewAfricaEurope": {
+      "member_ids": ["lhmzEarthNorthAmericaA","lhmzEarthCentralAmericaA","lhmzEarthSouthAmericaA","lhmzEarthEuropeA","lhmzEarthAfricaA","lhmzEarthGreenland","lhmzEarthIceland","lhmzEarthBritishIsles"],
+      "changed_in_v20_2": false,
+      "land_area_svg2": 2676.31,
+      "land_ratio_pct": 29.87,
+      "self_intersections": 0,
+      "containment_violations": 0,
+      "internal_overlaps": [{"pair": ["lhmzEarthNorthAmericaA","lhmzEarthCentralAmericaA"], "area": 0.19, "note": "intentional Central America bridge"}],
+      "internal_overlaps_all_other_pairs": 0.0
+    },
+    "lhmzEarthViewAsiaPacific": {
+      "member_ids": ["lhmzEarthAsia","lhmzEarthAustralia","lhmzEarthNewGuinea","lhmzEarthPhilippines"],
+      "changed_in_v20_2": true,
+      "change_summary": "Asia and Australia paths fully replaced (were hand-approximated in v20.1 without consulting the real World system despite it being present in the file). New Guinea and Philippines added as minor accent shapes.",
+      "land_area_svg2": 1968.44,
+      "land_ratio_pct": 21.97,
+      "land_ratio_pct_v20_1_before": 43.16,
+      "self_intersections": 0,
+      "containment_violations": 0,
+      "max_radius_by_id": {"lhmzEarthAsia": 50.54, "lhmzEarthAustralia": 50.63, "lhmzEarthNewGuinea": 24.87, "lhmzEarthPhilippines": 19.81},
+      "internal_overlaps": {
+        "lhmzEarthAsia<->lhmzEarthAustralia": 0.0,
+        "lhmzEarthAsia<->lhmzEarthNewGuinea": 0.0,
+        "lhmzEarthAsia<->lhmzEarthPhilippines": 0.0,
+        "lhmzEarthAustralia<->lhmzEarthNewGuinea": 0.0,
+        "lhmzEarthAustralia<->lhmzEarthPhilippines": 0.0,
+        "lhmzEarthNewGuinea<->lhmzEarthPhilippines": 0.0
+      }
+    },
+    "lhmzEarthViewAmericas": {
+      "member_ids": ["lhmzEarthNorthAmericaD","lhmzEarthCentralAmericaD","lhmzEarthSouthAmericaD"],
+      "changed_in_v20_2": false,
+      "land_area_svg2": 1325.93,
+      "land_ratio_pct": 14.80,
+      "self_intersections": 0,
+      "containment_violations": 0,
+      "internal_overlaps": [{"pair": ["lhmzEarthNorthAmericaD","lhmzEarthCentralAmericaD"], "area": 0.19, "note": "intentional Central America bridge"}],
+      "internal_overlaps_all_other_pairs": 0.0
+    }
+  },
+  "land_density_progression": {
+    "v20_1": {"view_a_pct": 29.88, "view_b_pct": 43.16, "view_d_pct": 14.80, "note": "balanced -> heavily filled -> sparse, flagged by independent audit as a density spike"},
+    "v20_2": {"view_a_pct": 29.87, "view_b_pct": 21.97, "view_d_pct": 14.80, "note": "monotonically decreasing, no longer a spike; View A and View B now within ~8 points of each other"}
+  },
+  "mandatory_checks": {
+    "asia_vs_africa_same_active_view": {"value": 0.0, "note": "Asia is not a member of View A; also 0.0 cross-view at this rotation since Africa has 0 visible points."},
+    "australia_vs_africa_same_active_view": {"value": 0.0, "note": "Same construction; also 0.0 cross-view."},
+    "north_america_vs_south_america": {"value": 0.0, "note": "unchanged from v20.1, only the intentional 0.19-area Central America bridge exists"},
+    "europe_readability": "unchanged v19.1 Europe shape, not modified in v20.2"
+  },
+  "readability_contrast_fix": {
+    "opacity_swing_before": "0.75 (inactive) -> 1.00 (active), delta 0.25",
+    "opacity_swing_after": "0.35 (inactive) -> 1.00 (active), delta 0.65",
+    "glow_mechanism": "per-continent feGaussianBlur+feMerge filter, stdDeviation driven continuously by that continent's own emph value (0 when inactive, up to 1.6 at full emphasis), independent per continent so an inactive neighbor is never blurred by an active sibling's glow",
+    "pixel_diff_before_asia_vs_australia": {"mean_abs_diff_255": 0.546, "pct_pixels_diff_gt10": 0.45},
+    "pixel_diff_after_asia_vs_australia": {"mean_abs_diff_255": 4.445, "pct_pixels_diff_gt10": 13.44},
+    "pixel_diff_before_na_vs_sa": {"mean_abs_diff_255": 0.269, "pct_pixels_diff_gt10": 0.47},
+    "pixel_diff_after_na_vs_sa": {"mean_abs_diff_255": 3.437, "pct_pixels_diff_gt10": 17.21}
+  },
+  "all_paths_closed": true,
+  "duplicate_ids": 0,
+  "sequence_timing": {
+    "globeSequenceProgress_factor": 0.02200,
+    "threshold": 0.003,
+    "target_range_ms": [4000, 5500],
+    "measured_total_duration_ms": [4291, 4399, 4547],
+    "note": "unchanged from v20.1 (v20.2 touched only geometry/opacity/glow, not the sequence/crossfade timing windows)"
+  }
+}
