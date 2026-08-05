@@ -1,0 +1,80 @@
+{
+  "file": "Problem-v86-nav-logo-simplified-signin-continuous-hand-20-1-coherent-global-earth-views.html",
+  "generated_by": "validate_v20_1_geometry.py (shapely-based, n=24 samples per bezier segment)",
+  "core_radius": 53.4,
+  "views": {
+    "lhmzEarthViewAfricaEurope": {
+      "purpose": "View A - Atlantic/Africa-Europe. Final settled view. Byte-identical continent path data to v19.1.",
+      "member_ids": ["lhmzEarthNorthAmericaA","lhmzEarthCentralAmericaA","lhmzEarthSouthAmericaA","lhmzEarthEuropeA","lhmzEarthAfricaA","lhmzEarthGreenland","lhmzEarthIceland","lhmzEarthBritishIsles"],
+      "self_intersections": 0,
+      "containment_violations": 0,
+      "max_radius_by_id": {
+        "lhmzEarthNorthAmericaA": 48.17,
+        "lhmzEarthCentralAmericaA": 36.77,
+        "lhmzEarthSouthAmericaA": 50.16,
+        "lhmzEarthEuropeA": 46.86,
+        "lhmzEarthAfricaA": 48.01,
+        "lhmzEarthGreenland": 47.28,
+        "lhmzEarthIceland": 31.94,
+        "lhmzEarthBritishIsles": 27.29
+      },
+      "internal_overlaps": [
+        {"pair": ["lhmzEarthNorthAmericaA","lhmzEarthCentralAmericaA"], "area": 0.19, "pct_of_first": 0.0, "pct_of_second": 0.9, "note": "intentional Central America bridge"}
+      ],
+      "internal_overlaps_all_other_pairs": 0.0
+    },
+    "lhmzEarthViewAsiaPacific": {
+      "purpose": "View B - Asia-Pacific. New geometry authored for v20.1. No Africa/Europe present.",
+      "member_ids": ["lhmzEarthAsia","lhmzEarthAustralia"],
+      "self_intersections": 0,
+      "containment_violations": 0,
+      "max_radius_by_id": {
+        "lhmzEarthAsia": 53.05,
+        "lhmzEarthAustralia": 51.43
+      },
+      "internal_overlaps": [
+        {"pair": ["lhmzEarthAsia","lhmzEarthAustralia"], "area": 0.0, "pct_of_first": 0.0, "pct_of_second": 0.0}
+      ]
+    },
+    "lhmzEarthViewAmericas": {
+      "purpose": "View D - Americas. Reuses View A's North/Central/South America path data (ids suffixed -D).",
+      "member_ids": ["lhmzEarthNorthAmericaD","lhmzEarthCentralAmericaD","lhmzEarthSouthAmericaD"],
+      "self_intersections": 0,
+      "containment_violations": 0,
+      "max_radius_by_id": {
+        "lhmzEarthNorthAmericaD": 48.17,
+        "lhmzEarthCentralAmericaD": 36.77,
+        "lhmzEarthSouthAmericaD": 50.16
+      },
+      "internal_overlaps": [
+        {"pair": ["lhmzEarthNorthAmericaD","lhmzEarthCentralAmericaD"], "area": 0.19, "pct_of_first": 0.0, "pct_of_second": 0.9, "note": "intentional Central America bridge"},
+        {"pair": ["lhmzEarthNorthAmericaD","lhmzEarthSouthAmericaD"], "area": 0.0, "pct_of_first": 0.0, "pct_of_second": 0.0}
+      ]
+    }
+  },
+  "mandatory_checks": {
+    "asia_vs_africa_same_active_view": {
+      "value": 0.0,
+      "note": "Asia lives only in View B; Africa lives only in View A. They are never members of the same view group, so same-view overlap is 0 by construction. Cross-view raw path overlap (informational only, since the two groups are never both dominant at a steady moment) is 872.53 (25.4% of Asia, 79.1% of Africa)."
+    },
+    "australia_vs_africa_same_active_view": {
+      "value": 0.0,
+      "note": "Same construction as above. Cross-view informational overlap: 61.64 (14.3% of Australia, 5.6% of Africa)."
+    },
+    "north_america_vs_south_america": {
+      "value": 0.0,
+      "note": "No overlap except the controlled 0.19-area Central America bridge (0.9% of Central America), identical in View A and View D since they share path data."
+    },
+    "europe_readability": "Europe path (lhmzEarthEuropeA) is the unmodified v19.1 Europe shape - unchanged, previously approved as readable, not a random crown/cloud shape."
+  },
+  "all_paths_closed": true,
+  "duplicate_ids": 0,
+  "sequence_timing": {
+    "globeSequenceProgress_factor": 0.02200,
+    "threshold": 0.003,
+    "target_range_ms": [4000, 5500],
+    "measured_total_duration_ms": [4291, 4399],
+    "measured_runs": 2,
+    "source": "real-flow Playwright trace (trace_v20_1_sequence.js), hold-stage entry to lhmz-story-complete class"
+  }
+}
