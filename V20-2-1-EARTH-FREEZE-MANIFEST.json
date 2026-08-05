@@ -1,0 +1,427 @@
+{
+  "purpose": "Content-addressed proof that the V20.2 Earth subsystem (Future Earth SVG geometry, continent paths, glow filters, globeSequenceProgress, bell() sequence windows, opacity/glow-drive constants, gaze formula, v19.1 arrival formulas) is byte-identical between V20.2 and V20.2.1. V20.2.1 changed ONLY the English/LTR swiper settle logic; this manifest is the automated proof that scope promise was kept.",
+  "method": "extract_earth_manifest.py regex-extracts a fixed, enumerated set of Earth-subsystem code regions from each HTML file and SHA-256-hashes each region individually, then hashes the concatenation of all region hashes into one combined_sha256. Two files with matching combined_sha256 are byte-identical across every enumerated Earth-subsystem region.",
+  "v20_2_file": "Problem-v86-nav-logo-simplified-signin-continuous-hand-20-2-world-derived-global-earth-refinement.html",
+  "v20_2_1_file": "Problem-v86-nav-logo-simplified-signin-continuous-hand-20-2-1-english-ltr-viewport-settle-correction.html",
+  "v20_2_combined_sha256": "0b8f68c6ec69c965ba5d95587f6d2f1d6e9723e905f561f62f98dcca85cb688a",
+  "v20_2_1_combined_sha256": "0b8f68c6ec69c965ba5d95587f6d2f1d6e9723e905f561f62f98dcca85cb688a",
+  "combined_sha256_match": true,
+  "total_keys_checked": 65,
+  "missing_keys_v20_2": [
+    "path:lhmzEarthViewAfricaEurope",
+    "path:lhmzEarthViewAmericas",
+    "path:lhmzEarthViewAsiaPacific",
+    "filter:lhmzGlowAfricaABlur",
+    "filter:lhmzGlowAsiaBlur",
+    "filter:lhmzGlowAustraliaBlur",
+    "filter:lhmzGlowEuropeABlur",
+    "filter:lhmzGlowNorthAmericaDBlur",
+    "filter:lhmzGlowSouthAmericaDBlur"
+  ],
+  "missing_keys_v20_2_1": [
+    "path:lhmzEarthViewAfricaEurope",
+    "path:lhmzEarthViewAmericas",
+    "path:lhmzEarthViewAsiaPacific",
+    "filter:lhmzGlowAfricaABlur",
+    "filter:lhmzGlowAsiaBlur",
+    "filter:lhmzGlowAustraliaBlur",
+    "filter:lhmzGlowEuropeABlur",
+    "filter:lhmzGlowNorthAmericaDBlur",
+    "filter:lhmzGlowSouthAmericaDBlur"
+  ],
+  "keys_identical": 65,
+  "keys_different": 0,
+  "per_key_diff": [
+    {
+      "key": "arrival:holdEarthGaze",
+      "v20_2_sha256": "d01c1eceddfed37ca5fb9ab66819141e38d71214684913e7f4c6b43f1312e5ec",
+      "v20_2_1_sha256": "d01c1eceddfed37ca5fb9ab66819141e38d71214684913e7f4c6b43f1312e5ec",
+      "identical": true
+    },
+    {
+      "key": "arrival:holdOrbReveal",
+      "v20_2_sha256": "80771be9c07e532476654e55e33b6103bbee27aa0c293d71c45abbe0007790fe",
+      "v20_2_1_sha256": "80771be9c07e532476654e55e33b6103bbee27aa0c293d71c45abbe0007790fe",
+      "identical": true
+    },
+    {
+      "key": "arrival:holdOrbTravel",
+      "v20_2_sha256": "a676cc00e541a51fd1e92ee1204f24e3f66494e62e113855761d817180e957c8",
+      "v20_2_1_sha256": "a676cc00e541a51fd1e92ee1204f24e3f66494e62e113855761d817180e957c8",
+      "identical": true
+    },
+    {
+      "key": "arrival:orbX",
+      "v20_2_sha256": "321f9373ee9606073827878b5ba53e2fd5b8777840a44a535227985809f88b29",
+      "v20_2_1_sha256": "321f9373ee9606073827878b5ba53e2fd5b8777840a44a535227985809f88b29",
+      "identical": true
+    },
+    {
+      "key": "arrival:orbY",
+      "v20_2_sha256": "44f6fef30af29fb85d3860e5d2b2a8c00849e705b46bdeda5223e54f611c1bc7",
+      "v20_2_1_sha256": "44f6fef30af29fb85d3860e5d2b2a8c00849e705b46bdeda5223e54f611c1bc7",
+      "identical": true
+    },
+    {
+      "key": "bell:emphAfrica",
+      "v20_2_sha256": "49838f7e720e4ce079d7f886e2e88d639881efbd79d9aae8e05f6cccb315dedb",
+      "v20_2_1_sha256": "49838f7e720e4ce079d7f886e2e88d639881efbd79d9aae8e05f6cccb315dedb",
+      "identical": true
+    },
+    {
+      "key": "bell:emphAsia",
+      "v20_2_sha256": "f1ce70d95ed1c3a0315778e74670035806c61f85b8f982c6b465523dee772758",
+      "v20_2_1_sha256": "f1ce70d95ed1c3a0315778e74670035806c61f85b8f982c6b465523dee772758",
+      "identical": true
+    },
+    {
+      "key": "bell:emphAustralia",
+      "v20_2_sha256": "532127b23c47f438abcdee21f3a617871e2947b369cfe6000e87c9623578ca08",
+      "v20_2_1_sha256": "532127b23c47f438abcdee21f3a617871e2947b369cfe6000e87c9623578ca08",
+      "identical": true
+    },
+    {
+      "key": "bell:emphEurope",
+      "v20_2_sha256": "70023b6062a3471f68b2d97c5a27c9939532e51393cbe8131e6ae1b5278d48b3",
+      "v20_2_1_sha256": "70023b6062a3471f68b2d97c5a27c9939532e51393cbe8131e6ae1b5278d48b3",
+      "identical": true
+    },
+    {
+      "key": "bell:emphNorthAmerica",
+      "v20_2_sha256": "c85b7f6a460e583a22cb4cc912a0f64727719f5b01cd6b08d42a7b530f0d6891",
+      "v20_2_1_sha256": "c85b7f6a460e583a22cb4cc912a0f64727719f5b01cd6b08d42a7b530f0d6891",
+      "identical": true
+    },
+    {
+      "key": "bell:emphSouthAmerica",
+      "v20_2_sha256": "04f5d91012c75cd04c311945a955a660a49f52ccc983ba374b76f0a29859bc9b",
+      "v20_2_1_sha256": "04f5d91012c75cd04c311945a955a660a49f52ccc983ba374b76f0a29859bc9b",
+      "identical": true
+    },
+    {
+      "key": "bell:toAmericas",
+      "v20_2_sha256": "7f4867585fef5f8ebc118eb2516a93b8ec44b1c294b90eac6187ef3f4d8a1173",
+      "v20_2_1_sha256": "7f4867585fef5f8ebc118eb2516a93b8ec44b1c294b90eac6187ef3f4d8a1173",
+      "identical": true
+    },
+    {
+      "key": "bell:toAsiaPacific",
+      "v20_2_sha256": "651a2dcb93c16d08897990b35e462334f93752909d509303b315653868bb1d1b",
+      "v20_2_1_sha256": "651a2dcb93c16d08897990b35e462334f93752909d509303b315653868bb1d1b",
+      "identical": true
+    },
+    {
+      "key": "const:holdEarthAfrica",
+      "v20_2_sha256": "ede878fbb381e11a5d791d0f0d89b1270b97460933a0df67f319621d6a88f232",
+      "v20_2_1_sha256": "ede878fbb381e11a5d791d0f0d89b1270b97460933a0df67f319621d6a88f232",
+      "identical": true
+    },
+    {
+      "key": "const:holdEarthAsiaEmph",
+      "v20_2_sha256": "8035c491f9eee62105c738639e87cc51aaf53f89073b83e6249b6f32ddd6bfcd",
+      "v20_2_1_sha256": "8035c491f9eee62105c738639e87cc51aaf53f89073b83e6249b6f32ddd6bfcd",
+      "identical": true
+    },
+    {
+      "key": "const:holdEarthAustraliaEmph",
+      "v20_2_sha256": "fd2660892af171151b99832ea7edf3d78023c8ea70bcd8c848f465dad913ce82",
+      "v20_2_1_sha256": "fd2660892af171151b99832ea7edf3d78023c8ea70bcd8c848f465dad913ce82",
+      "identical": true
+    },
+    {
+      "key": "const:holdEarthEurope",
+      "v20_2_sha256": "8a552b0d6aa51c80dd8327571fc9b43e4dc9d948d4162444be06c2d537f0fc6f",
+      "v20_2_1_sha256": "8a552b0d6aa51c80dd8327571fc9b43e4dc9d948d4162444be06c2d537f0fc6f",
+      "identical": true
+    },
+    {
+      "key": "const:holdEarthNorthAmerica",
+      "v20_2_sha256": "bb6202e9b06f5145006b746334d99bcdb3a330e009fc614b165ddd58252388cd",
+      "v20_2_1_sha256": "bb6202e9b06f5145006b746334d99bcdb3a330e009fc614b165ddd58252388cd",
+      "identical": true
+    },
+    {
+      "key": "const:holdEarthSouthAmerica",
+      "v20_2_sha256": "0db21a4721bf4e0adfe2e747a00de991b7ae6351bad6a6bac70426d7ab416368",
+      "v20_2_1_sha256": "0db21a4721bf4e0adfe2e747a00de991b7ae6351bad6a6bac70426d7ab416368",
+      "identical": true
+    },
+    {
+      "key": "eyeGazeX",
+      "v20_2_sha256": "d0725e121437fb55d1f54516ec12700e77db82ffba0171aee561942194a93c4f",
+      "v20_2_1_sha256": "d0725e121437fb55d1f54516ec12700e77db82ffba0171aee561942194a93c4f",
+      "identical": true
+    },
+    {
+      "key": "eyeGazeY",
+      "v20_2_sha256": "79614160778bdc76484e6f9912399aed8b10178d155f5beff962645cc7889e15",
+      "v20_2_1_sha256": "79614160778bdc76484e6f9912399aed8b10178d155f5beff962645cc7889e15",
+      "identical": true
+    },
+    {
+      "key": "filter:lhmzGlowAfricaA",
+      "v20_2_sha256": "65fd5bc2a4bdf692b9670f9f23f70543a05ae719b4b74ad292fd547256eca929",
+      "v20_2_1_sha256": "65fd5bc2a4bdf692b9670f9f23f70543a05ae719b4b74ad292fd547256eca929",
+      "identical": true
+    },
+    {
+      "key": "filter:lhmzGlowAfricaABlur",
+      "v20_2_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "v20_2_1_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "identical": true
+    },
+    {
+      "key": "filter:lhmzGlowAsia",
+      "v20_2_sha256": "81ed6d2ddbdc64ba1ea67f8db9285145d7f6e72a605481a877cfb65e771f79a9",
+      "v20_2_1_sha256": "81ed6d2ddbdc64ba1ea67f8db9285145d7f6e72a605481a877cfb65e771f79a9",
+      "identical": true
+    },
+    {
+      "key": "filter:lhmzGlowAsiaBlur",
+      "v20_2_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "v20_2_1_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "identical": true
+    },
+    {
+      "key": "filter:lhmzGlowAustralia",
+      "v20_2_sha256": "866c1480c8e5e9285f402c150fbb38857f2c7c9f88d430273be63890fbd53fb0",
+      "v20_2_1_sha256": "866c1480c8e5e9285f402c150fbb38857f2c7c9f88d430273be63890fbd53fb0",
+      "identical": true
+    },
+    {
+      "key": "filter:lhmzGlowAustraliaBlur",
+      "v20_2_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "v20_2_1_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "identical": true
+    },
+    {
+      "key": "filter:lhmzGlowEuropeA",
+      "v20_2_sha256": "aa686f7f7734f19e365f5459fee5d7ec129b0de6952aed2b6b31cd6abc5219ae",
+      "v20_2_1_sha256": "aa686f7f7734f19e365f5459fee5d7ec129b0de6952aed2b6b31cd6abc5219ae",
+      "identical": true
+    },
+    {
+      "key": "filter:lhmzGlowEuropeABlur",
+      "v20_2_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "v20_2_1_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "identical": true
+    },
+    {
+      "key": "filter:lhmzGlowNorthAmericaD",
+      "v20_2_sha256": "24d801b909f3fc755d3db6c96eb7e62546aa7cbf2faf7af1bb0ac70e1a8a6410",
+      "v20_2_1_sha256": "24d801b909f3fc755d3db6c96eb7e62546aa7cbf2faf7af1bb0ac70e1a8a6410",
+      "identical": true
+    },
+    {
+      "key": "filter:lhmzGlowNorthAmericaDBlur",
+      "v20_2_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "v20_2_1_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "identical": true
+    },
+    {
+      "key": "filter:lhmzGlowSouthAmericaD",
+      "v20_2_sha256": "8b6b294422880e0b824c4700413dcb952556a507cb6c77efab96e9938e6b9320",
+      "v20_2_1_sha256": "8b6b294422880e0b824c4700413dcb952556a507cb6c77efab96e9938e6b9320",
+      "identical": true
+    },
+    {
+      "key": "filter:lhmzGlowSouthAmericaDBlur",
+      "v20_2_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "v20_2_1_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "identical": true
+    },
+    {
+      "key": "globeSequenceProgress_init_one_count",
+      "v20_2_sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "v20_2_1_sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "identical": true
+    },
+    {
+      "key": "globeSequenceProgress_init_zero_count",
+      "v20_2_sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+      "v20_2_1_sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+      "identical": true
+    },
+    {
+      "key": "glowdrive:earthGlowAfricaA",
+      "v20_2_sha256": "def069a807e47d2760cc5038e88d3f78667c919bbed1e3f2ec164c15ea90a204",
+      "v20_2_1_sha256": "def069a807e47d2760cc5038e88d3f78667c919bbed1e3f2ec164c15ea90a204",
+      "identical": true
+    },
+    {
+      "key": "glowdrive:earthGlowAsia",
+      "v20_2_sha256": "f0b1576dbd2c5f274a42f911bb626c57c96cb61801a69d4f46298ef09cafd770",
+      "v20_2_1_sha256": "f0b1576dbd2c5f274a42f911bb626c57c96cb61801a69d4f46298ef09cafd770",
+      "identical": true
+    },
+    {
+      "key": "glowdrive:earthGlowAustralia",
+      "v20_2_sha256": "2fb6b3e0c0ac0861b76a5999a7f0a353a2d790e7ac05d2ba1b81b63e8f8d3f03",
+      "v20_2_1_sha256": "2fb6b3e0c0ac0861b76a5999a7f0a353a2d790e7ac05d2ba1b81b63e8f8d3f03",
+      "identical": true
+    },
+    {
+      "key": "glowdrive:earthGlowEuropeA",
+      "v20_2_sha256": "a9e16505d8fef878b44daafc27d3f3f6296744a1be221c58da3dc7cf1c24d449",
+      "v20_2_1_sha256": "a9e16505d8fef878b44daafc27d3f3f6296744a1be221c58da3dc7cf1c24d449",
+      "identical": true
+    },
+    {
+      "key": "glowdrive:earthGlowNorthAmericaD",
+      "v20_2_sha256": "980c058a7a9c369b8c79e872fe065cc5172a6743ff7345b6a6b44b6e091e135f",
+      "v20_2_1_sha256": "980c058a7a9c369b8c79e872fe065cc5172a6743ff7345b6a6b44b6e091e135f",
+      "identical": true
+    },
+    {
+      "key": "glowdrive:earthGlowSouthAmericaD",
+      "v20_2_sha256": "0ec94118629bf6d04e41fda25afb06a9421aff117517de98de2fa157a26434ff",
+      "v20_2_1_sha256": "0ec94118629bf6d04e41fda25afb06a9421aff117517de98de2fa157a26434ff",
+      "identical": true
+    },
+    {
+      "key": "holdRegionGazeX",
+      "v20_2_sha256": "fbf681b479a9a8b9fd30ce4e5fd90e25256a98588d08e8348f876cfe41161d6c",
+      "v20_2_1_sha256": "fbf681b479a9a8b9fd30ce4e5fd90e25256a98588d08e8348f876cfe41161d6c",
+      "identical": true
+    },
+    {
+      "key": "holdRegionGazeY",
+      "v20_2_sha256": "0b6d829edfcd02b13955016f694ace9d55fd845304323451206a1f3f8007123b",
+      "v20_2_1_sha256": "0b6d829edfcd02b13955016f694ace9d55fd845304323451206a1f3f8007123b",
+      "identical": true
+    },
+    {
+      "key": "hold_stage_factors",
+      "v20_2_sha256": "fb7a2397d6af20e6a829a1414bbbab52a477b84147be47c0665b4187ba09132e",
+      "v20_2_1_sha256": "fb7a2397d6af20e6a829a1414bbbab52a477b84147be47c0665b4187ba09132e",
+      "identical": true
+    },
+    {
+      "key": "lhmzEarthViewAfricaEurope",
+      "v20_2_sha256": "fe14f68620678304351eb9a2136cb8b9c7e50446e86f29624baa0bee37b87fe4",
+      "v20_2_1_sha256": "fe14f68620678304351eb9a2136cb8b9c7e50446e86f29624baa0bee37b87fe4",
+      "identical": true
+    },
+    {
+      "key": "lhmzEarthViewAmericas",
+      "v20_2_sha256": "07ceef7c59ec8e6e72a190e865296b25b9dd89aa10574fdf804fc2f19260f2d6",
+      "v20_2_1_sha256": "07ceef7c59ec8e6e72a190e865296b25b9dd89aa10574fdf804fc2f19260f2d6",
+      "identical": true
+    },
+    {
+      "key": "lhmzEarthViewAsiaPacific",
+      "v20_2_sha256": "88b48e9cc817d4cf35a546e80416f1a727fb0361c0f64fa5d8c858563ad2c6aa",
+      "v20_2_1_sha256": "88b48e9cc817d4cf35a546e80416f1a727fb0361c0f64fa5d8c858563ad2c6aa",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthAfricaA",
+      "v20_2_sha256": "ed9c150c822b643cdc2848b6d988e3d61de343e4b1fb7a61ab4ab54d37464c06",
+      "v20_2_1_sha256": "ed9c150c822b643cdc2848b6d988e3d61de343e4b1fb7a61ab4ab54d37464c06",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthAsia",
+      "v20_2_sha256": "8b774f3f0a290cc670cd003633298c3fd14b8463f6e874b3ff61198abc1134eb",
+      "v20_2_1_sha256": "8b774f3f0a290cc670cd003633298c3fd14b8463f6e874b3ff61198abc1134eb",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthAustralia",
+      "v20_2_sha256": "2b0dd453431a63ad2578ab2225b20c2f5a554f658651ee3b63d64355bbcc4988",
+      "v20_2_1_sha256": "2b0dd453431a63ad2578ab2225b20c2f5a554f658651ee3b63d64355bbcc4988",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthBritishIsles",
+      "v20_2_sha256": "580dcd49bfc96ba2ff5ff92b765bc0312ef7b7b31260215ec46b7f4156380270",
+      "v20_2_1_sha256": "580dcd49bfc96ba2ff5ff92b765bc0312ef7b7b31260215ec46b7f4156380270",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthCentralAmericaA",
+      "v20_2_sha256": "eb2cdbfea321108ade3b4ce7ea5744492fc07c8de28ddaa358da420e8d126ee8",
+      "v20_2_1_sha256": "eb2cdbfea321108ade3b4ce7ea5744492fc07c8de28ddaa358da420e8d126ee8",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthCentralAmericaD",
+      "v20_2_sha256": "eb2cdbfea321108ade3b4ce7ea5744492fc07c8de28ddaa358da420e8d126ee8",
+      "v20_2_1_sha256": "eb2cdbfea321108ade3b4ce7ea5744492fc07c8de28ddaa358da420e8d126ee8",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthEuropeA",
+      "v20_2_sha256": "ab5f352bc1ef00d5886a19f37655399d3c32ecf3489bd7b21c1607721c240dbd",
+      "v20_2_1_sha256": "ab5f352bc1ef00d5886a19f37655399d3c32ecf3489bd7b21c1607721c240dbd",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthGreenland",
+      "v20_2_sha256": "aa99e497846af178f5645bc40daf23a14e2664ddfc0dd3746084ba2886d24094",
+      "v20_2_1_sha256": "aa99e497846af178f5645bc40daf23a14e2664ddfc0dd3746084ba2886d24094",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthIceland",
+      "v20_2_sha256": "2e7f33d251c78872eee9d891c8db8abe2adad9ff85f761b32c5e184c86ffb8ad",
+      "v20_2_1_sha256": "2e7f33d251c78872eee9d891c8db8abe2adad9ff85f761b32c5e184c86ffb8ad",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthNewGuinea",
+      "v20_2_sha256": "41b45fa33104e185a182bc730fdc0d5ae66245527b0a731009ea0baa6c473d14",
+      "v20_2_1_sha256": "41b45fa33104e185a182bc730fdc0d5ae66245527b0a731009ea0baa6c473d14",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthNorthAmericaA",
+      "v20_2_sha256": "9e75def4456b048fab2bb214f7b9b2156c3537e1b986bfe2253c2c1a5dbd9616",
+      "v20_2_1_sha256": "9e75def4456b048fab2bb214f7b9b2156c3537e1b986bfe2253c2c1a5dbd9616",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthNorthAmericaD",
+      "v20_2_sha256": "9e75def4456b048fab2bb214f7b9b2156c3537e1b986bfe2253c2c1a5dbd9616",
+      "v20_2_1_sha256": "9e75def4456b048fab2bb214f7b9b2156c3537e1b986bfe2253c2c1a5dbd9616",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthPhilippines",
+      "v20_2_sha256": "37e5eb7e5e254ccaf1e26800aedef3a1f9e67d8d13f0a0dd6860b0eacfa15c1b",
+      "v20_2_1_sha256": "37e5eb7e5e254ccaf1e26800aedef3a1f9e67d8d13f0a0dd6860b0eacfa15c1b",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthSouthAmericaA",
+      "v20_2_sha256": "39a08508b0b4081c3c64299f134ebb5fc6fae337cfd5602770e3245b616aed4c",
+      "v20_2_1_sha256": "39a08508b0b4081c3c64299f134ebb5fc6fae337cfd5602770e3245b616aed4c",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthSouthAmericaD",
+      "v20_2_sha256": "39a08508b0b4081c3c64299f134ebb5fc6fae337cfd5602770e3245b616aed4c",
+      "v20_2_1_sha256": "39a08508b0b4081c3c64299f134ebb5fc6fae337cfd5602770e3245b616aed4c",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthViewAfricaEurope",
+      "v20_2_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "v20_2_1_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthViewAmericas",
+      "v20_2_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "v20_2_1_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "identical": true
+    },
+    {
+      "key": "path:lhmzEarthViewAsiaPacific",
+      "v20_2_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "v20_2_1_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "identical": true
+    }
+  ],
+  "verdict": "EARTH_SUBSYSTEM_BYTE_IDENTICAL"
+}

@@ -1,0 +1,3642 @@
+[
+  {
+    "scenario": "en-mobile-firstopen-0",
+    "checkpoint": "transition-complete",
+    "t": 1785914608225,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-firstopen-0",
+    "checkpoint": "hold-entry",
+    "t": 1785914620319,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-firstopen-0",
+    "checkpoint": "final-hold",
+    "t": 1785914625013,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-firstopen-1",
+    "checkpoint": "transition-complete",
+    "t": 1785914642712,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-firstopen-1",
+    "checkpoint": "hold-entry",
+    "t": 1785914654820,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-firstopen-1",
+    "checkpoint": "final-hold",
+    "t": 1785914659432,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-firstopen-2",
+    "checkpoint": "transition-complete",
+    "t": 1785914676199,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-firstopen-2",
+    "checkpoint": "hold-entry",
+    "t": 1785914688145,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-firstopen-2",
+    "checkpoint": "final-hold",
+    "t": 1785914692777,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-reopen-0",
+    "checkpoint": "first-open-transition-complete",
+    "t": 1785914709686,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-reopen-0",
+    "checkpoint": "reopen-transition-complete",
+    "t": 1785914711095,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-reopen-0",
+    "checkpoint": "reopen-hold-entry",
+    "t": 1785914723175,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-reopen-0",
+    "checkpoint": "reopen-final-hold",
+    "t": 1785914727893,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-reopen-1",
+    "checkpoint": "first-open-transition-complete",
+    "t": 1785914745316,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-reopen-1",
+    "checkpoint": "reopen-transition-complete",
+    "t": 1785914746774,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-reopen-1",
+    "checkpoint": "reopen-hold-entry",
+    "t": 1785914758945,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-mobile-reopen-1",
+    "checkpoint": "reopen-final-hold",
+    "t": 1785914763563,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-desktop-0",
+    "checkpoint": "transition-complete",
+    "t": 1785914779940,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 900,
+          "width": 900
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-desktop-0",
+    "checkpoint": "hold-entry",
+    "t": 1785914791942,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 900,
+          "width": 900
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-desktop-0",
+    "checkpoint": "final-hold",
+    "t": 1785914796577,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 900,
+          "width": 900
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-desktop-1",
+    "checkpoint": "transition-complete",
+    "t": 1785914813745,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 900,
+          "width": 900
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-desktop-1",
+    "checkpoint": "hold-entry",
+    "t": 1785914825660,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 900,
+          "width": 900
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-desktop-1",
+    "checkpoint": "final-hold",
+    "t": 1785914830377,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 900,
+          "width": 900
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-desktop-2",
+    "checkpoint": "transition-complete",
+    "t": 1785914847433,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 900,
+          "width": 900
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-desktop-2",
+    "checkpoint": "hold-entry",
+    "t": 1785914859408,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 900,
+          "width": 900
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-desktop-2",
+    "checkpoint": "final-hold",
+    "t": 1785914864056,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 260,
+          "right": 640,
+          "width": 380
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 900,
+          "width": 900
+        }
+      }
+    }
+  },
+  {
+    "scenario": "ar-mobile-0",
+    "checkpoint": "transition-complete",
+    "t": 1785914881003,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "ar-mobile-0",
+    "checkpoint": "hold-entry",
+    "t": 1785914893105,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "ar-mobile-0",
+    "checkpoint": "final-hold",
+    "t": 1785914897802,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "ar-mobile-1",
+    "checkpoint": "transition-complete",
+    "t": 1785914915127,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "ar-mobile-1",
+    "checkpoint": "hold-entry",
+    "t": 1785914927268,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "ar-mobile-1",
+    "checkpoint": "final-hold",
+    "t": 1785914931885,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-resize-regression",
+    "checkpoint": "before-resize",
+    "t": 1785914948748,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-resize-regression",
+    "checkpoint": "after-resize-wide",
+    "t": 1785914949786,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 220,
+          "right": 600,
+          "width": 380
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 220,
+          "right": 600,
+          "width": 380
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 220,
+          "right": 600,
+          "width": 380
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 220,
+          "right": 600,
+          "width": 380
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 220,
+          "right": 600,
+          "width": 380
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 220,
+          "right": 600,
+          "width": 380
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 220,
+          "right": 600,
+          "width": 380
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 820,
+          "width": 820
+        }
+      }
+    }
+  },
+  {
+    "scenario": "en-resize-regression",
+    "checkpoint": "after-resize-back-to-390",
+    "t": 1785914950682,
+    "allPass": true,
+    "results": {
+      ".login-headmaze": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-title": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-oauth-primary": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-input-wrap": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-btn": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-sub": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-content": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 28,
+          "right": 362,
+          "width": 334
+        }
+      },
+      ".login-left": {
+        "pass": true,
+        "visible": true,
+        "withinViewport": true,
+        "withinSwiper": true,
+        "positiveWidth": true,
+        "rect": {
+          "left": 0,
+          "right": 390,
+          "width": 390
+        }
+      }
+    }
+  }
+]
