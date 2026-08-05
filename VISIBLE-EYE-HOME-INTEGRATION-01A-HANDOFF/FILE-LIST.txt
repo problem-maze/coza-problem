@@ -1,0 +1,23 @@
+Visible Eye — Isolated Home Integration Correction 01A — Handoff File List
+Generated: 2026-08-04T00:08:23Z
+
+      5868 bytes   2026-08-04-visible-eye-home-integration-01A-correction.md
+      1285 bytes   COMMIT-IDENTITY.txt
+   3099844 bytes   Problem-v86-VISIBLE-EYE-ISOLATED-INTEGRATION-01A.html
+      1963 bytes   SHA256SUMS.txt
+     10535 bytes   VISIBLE-EYE-HOME-INTEGRATION-01A-NOTE.md
+     15445 bytes   VISIBLE-EYE-HOME-INTEGRATION-01A-VERIFICATION-REPORT.json
+    142497 bytes   VISIBLE-EYE-HOME-INTEGRATION-01A-close-eye.png
+    467707 bytes   VISIBLE-EYE-HOME-INTEGRATION-01A-default-no-flag.png
+    440576 bytes   VISIBLE-EYE-HOME-INTEGRATION-01A-desktop.png
+    176332 bytes   VISIBLE-EYE-HOME-INTEGRATION-01A-mobile-390x844.png
+    418869 bytes   VISIBLE-EYE-HOME-INTEGRATION-01A-original-vs-corrected.png
+     51304 bytes   VISIBLE-EYE-HOME-INTEGRATION-01A-state-embodied.png
+     49072 bytes   VISIBLE-EYE-HOME-INTEGRATION-01A-state-found.png
+     49765 bytes   VISIBLE-EYE-HOME-INTEGRATION-01A-state-idle.png
+     51024 bytes   VISIBLE-EYE-HOME-INTEGRATION-01A-state-searching.png
+     49943 bytes   VISIBLE-EYE-HOME-INTEGRATION-01A-state-solved.png
+     50603 bytes   VISIBLE-EYE-HOME-INTEGRATION-01A-state-watching.png
+    296203 bytes   VISIBLE-EYE-HOME-INTEGRATION-01A-states-strip.png
+
+(This file, FILE-LIST.txt, is generated last and is not included in its own listing or in SHA256SUMS.txt.)

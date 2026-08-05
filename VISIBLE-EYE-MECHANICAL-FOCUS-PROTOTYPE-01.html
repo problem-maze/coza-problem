@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visible Eye — Mechanical Focus Prototype 01</title>
+<style>
+  /* ══════════════════════════════════════════════════════════════
+     MECHANICAL FOCUS PROTOTYPE 01 — standalone, isolated reconstruction
+     of the Tier-1 mechanical/technical eye reference. This is a NEW
+     geometry lineage: it does not reuse or extend the Ring System
+     Prototype 04 / Morning Wine Refine 01 arcs. Only the color tokens
+     (Lunar White / graphite tiers / Morning Wine red tiers) and the
+     calm operational rhythm (borrowed from the Home hero's HeroV1Life
+     scheduler and its qa-watching/qa-searching/qa-found/qa-solved/
+     qa-embodied lifecycle, see the NOTE for exact source lines) carry
+     over. No production file is read from or written to at runtime.
+     ══════════════════════════════════════════════════════════════ */
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{ width:100%; overflow-x:hidden; background:#FAFBFD; }
+  body{
+    width:100%; min-height:100vh; overflow-x:hidden;
+    background:#FAFBFD; color:#30333A;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    padding:48px 24px;
+  }
+  .stage{
+    width:720px; max-width:100%; background:#FFFFFF;
+    border:1px solid #E4E7EC; border-radius:20px; padding:28px 22px;
+  }
+  .stage svg{ display:block; width:100%; height:auto; }
+  @media (max-width:480px){
+    body{ padding:14px; }
+    .stage{ border:none; border-radius:0; background:transparent; padding:0; }
+  }
+
+  svg.mech-eye{
+    --bg:#FAFBFD;
+    --surface:#FFFFFF;
+    --ink:#30333A;
+    --support:#777A82;
+    --quiet:#C4C8CF;
+    --red-base:#B95B5A;
+    --red-100: var(--red-base);
+    --red-78: color-mix(in srgb, var(--red-base) 78%, var(--bg) 22%);
+    --red-50: color-mix(in srgb, var(--red-base) 50%, var(--bg) 50%);
+    --red-26: color-mix(in srgb, var(--red-base) 26%, var(--bg) 74%);
+    --core: #14161B;
+  }
+
+  /* ── frame ── */
+  .eye-lid-upper{ fill:none; stroke:var(--ink); stroke-width:5; stroke-linecap:round; stroke-opacity:0.95; }
+  .eye-lid-lower{ fill:none; stroke:var(--ink); stroke-width:5; stroke-linecap:round; stroke-opacity:0.80; }
+
+  /* ── quiet measurement field ── */
+  .qmf-axis{ fill:none; stroke:var(--quiet); stroke-width:1.2; stroke-opacity:0.18; stroke-dasharray:2 7; }
+  .qmf-diag{ fill:none; stroke:var(--quiet); stroke-width:1; stroke-opacity:0.12; stroke-dasharray:2 9; }
+  .qmf-circle{ fill:none; stroke:var(--quiet); stroke-width:1; stroke-opacity:0.14; stroke-dasharray:3 8; }
+  .qmf-circle-outer{ stroke-opacity:0.09; }
+  .qmf-axisdot circle:first-child{ fill:none; stroke:var(--quiet); stroke-width:1.4; stroke-opacity:0.4; }
+  .qmf-axisdot-core{ fill:var(--red-100); opacity:0.6; }
+  .qmf-topmark{ fill:none; stroke:var(--quiet); stroke-width:1.4; stroke-opacity:0.35; transition:stroke-opacity 0.6s ease; }
+
+  /* ── left control assembly ── */
+  .lc-bracket{ fill:none; stroke:var(--support); stroke-width:3; stroke-linecap:round; stroke-opacity:0.7;
+    transform-box:fill-box; transform-origin:center; transition:transform 0.45s cubic-bezier(0.4,0,0.2,1); }
+  .lc-connector{ fill:none; stroke:var(--support); stroke-width:2.6; stroke-opacity:0.6; }
+  .lc-dot{ fill:var(--bg); stroke:var(--support); stroke-width:2; stroke-opacity:0.7; }
+  .lc-dot-active{ fill:var(--red-100); stroke:var(--red-100); opacity:0.85; transition:opacity 0.5s ease; }
+
+  /* ── right process bridge ── */
+  .rb-line{ fill:none; stroke:var(--support); stroke-width:3; stroke-opacity:0.65; }
+  .rb-signal-ring{ fill:none; stroke:var(--red-78); stroke-width:1.6; stroke-opacity:0.5; transition:stroke-opacity 0.5s ease; }
+  .rb-signal{ fill:var(--red-100); opacity:0.75; transition:opacity 0.5s ease, r 0.5s ease; }
+  .rb-terminal{ fill:none; stroke:var(--support); stroke-width:3; stroke-linecap:round; stroke-opacity:0.5; }
+
+  /* ── segmented operation rings (6 levels, depth taper) ── */
+  .seg{ fill:none; stroke-linecap:round; transition:stroke-opacity 0.5s ease; }
+  .ring-level[data-ring="r1"]{ opacity:1; }
+  .ring-level[data-ring="r2"]{ opacity:0.94; }
+  .ring-level[data-ring="r3"]{ opacity:0.88; }
+  .ring-level[data-ring="r4"]{ opacity:0.8; }
+  .ring-level[data-ring="r5"]{ opacity:0.72; }
+  .ring-level[data-ring="r6"]{ opacity:0.64; }
+  .role-ink{ stroke:var(--ink); stroke-opacity:0.85; }
+  .role-support{ stroke:var(--support); stroke-opacity:0.75; }
+  .role-quiet{ stroke:var(--quiet); stroke-opacity:0.55; }
+  .role-red-100{ stroke:var(--red-100); stroke-opacity:0.95; }
+  .role-red-78{ stroke:var(--red-78); stroke-opacity:0.85; }
+  .role-red-50{ stroke:var(--red-50); stroke-opacity:0.7; }
+  .role-red-26{ stroke:var(--red-26); stroke-opacity:0.55; }
+
+  /* ── inner optical chamber ── */
+  .chamber-boundary{ fill:none; stroke:var(--ink); stroke-width:2; stroke-opacity:0.5; }
+  .tick{ stroke:var(--support); stroke-width:1.6; stroke-opacity:0.55; }
+  .tick-major{ stroke:var(--ink); stroke-width:2; stroke-opacity:0.7; }
+  .tick-accent{ stroke:var(--red-78); stroke-width:2; stroke-opacity:0.75; transition:stroke-opacity 0.5s ease; }
+
+  /* ── central focus core ── */
+  .core-rim{ fill:none; stroke:#FFFFFF; stroke-width:2.4; stroke-opacity:0.9;
+    transition:stroke-opacity 0.5s ease, stroke-width 0.5s ease; }
+  .core-body{ fill:var(--core); }
+  .catchlight{ fill:#FFFFFF; transform-box:fill-box; transform-origin:center;
+    transition:opacity 0.5s ease, transform 0.55s cubic-bezier(0.4,0,0.2,1); }
+  .catchlight-primary{ opacity:0.95; }
+  .catchlight-secondary{ opacity:0.75; }
+
+  /* ══ semantic state deltas — calm, one-shot, never continuous ══ */
+  /* watching (baseline / stage 01 — ANALYZING): no overrides, this IS the resting look */
+
+  /* searching (stage 02 — TRACING): a small attention shift toward the process bridge */
+  #eyeAssembly.state-searching #catchlightPrimary{ transform:translate(1.6px,-1.1px); }
+  #eyeAssembly.state-searching .tick-accent{ stroke-opacity:0.92; }
+  #eyeAssembly.state-searching #bridgeSignal{ opacity:0.95; }
+  #eyeAssembly.state-searching .rb-signal-ring{ stroke-opacity:0.72; }
+
+  /* found (stage 03 — PATH FOUND): tiny gate-alignment change + attention arrives */
+  #eyeAssembly.state-found .lc-bracket{ transform:translateX(-4px); }
+  #eyeAssembly.state-found #bridgeSignal{ opacity:1; r:7.5; }
+  #eyeAssembly.state-found .rb-signal-ring{ stroke-opacity:0.85; }
+
+  /* solved (stage 04 — SOLVED): full calm clarity across the red-family + rim + active indicator */
+  #eyeAssembly.state-solved .core-rim{ stroke-opacity:1; stroke-width:3; }
+  #eyeAssembly.state-solved .role-red-100{ stroke-opacity:1; }
+  #eyeAssembly.state-solved .role-red-78{ stroke-opacity:0.95; }
+  #eyeAssembly.state-solved .lc-dot-active{ opacity:1; }
+
+  /* embodied (stage 05 — EMBODIED): deepest, quietest presence; subtle depth, not a burst */
+  #eyeAssembly.state-embodied .catchlight-primary{ opacity:1; transform:scale(1.06); }
+  #eyeAssembly.state-embodied .catchlight-secondary{ opacity:0.9; }
+  #eyeAssembly.state-embodied .qmf-topmark{ stroke-opacity:0.55; }
+  #eyeAssembly.state-embodied .core-rim{ stroke-width:3.2; stroke-opacity:1; }
+
+  /* idle (system at rest / cleared, mirrors production's all-classes-removed state) */
+  #eyeAssembly.state-idle .role-red-100,
+  #eyeAssembly.state-idle .role-red-78,
+  #eyeAssembly.state-idle .role-red-50,
+  #eyeAssembly.state-idle .role-red-26{ stroke-opacity:0.28; }
+  #eyeAssembly.state-idle #bridgeSignal{ opacity:0.35; }
+  #eyeAssembly.state-idle .rb-signal-ring{ stroke-opacity:0.25; }
+  #eyeAssembly.state-idle .lc-dot-active{ opacity:0.4; }
+
+  /* Motion is gated by VisibleEyeLife: only plays while the tab is visible,
+     the assembly is in view, and the user has not requested reduced motion.
+     Otherwise every state is still fully legible, just reached instantly. */
+  html:not(.eye-motion-ok) #eyeAssembly *{ transition:none !important; }
+  @media (prefers-reduced-motion:reduce){
+    #eyeAssembly *{ transition:none !important; }
+  }
+
+  /* ── debug panel (built by JS only when ?debug=1; absent from normal DOM) ── */
+  #eyeDebugPanel{
+    position:fixed; right:16px; bottom:16px; z-index:9999;
+    background:#FFFFFF; border:1px solid #E4E7EC; border-radius:14px;
+    padding:12px 14px; font:12px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    width:200px;
+  }
+  #eyeDebugPanel h4{ font-size:11px; text-transform:uppercase; letter-spacing:0.04em; color:#777A82; margin-bottom:8px; }
+  #eyeDebugPanel button{
+    display:block; width:100%; margin-bottom:6px; padding:6px 8px;
+    border:1px solid #E4E7EC; border-radius:8px; background:#FAFBFD; color:#30333A;
+    font-size:12px; cursor:pointer; text-align:left;
+  }
+  #eyeDebugPanel button:hover{ background:#F0F1F4; }
+  #eyeDebugPanel button.is-active{ border-color:#B95B5A; color:#B95B5A; }
+  #eyeDebugPanel .eye-debug-readout{ margin-top:6px; color:#777A82; font-size:11px; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <svg class="mech-eye" viewBox="-760 -440 1520 880" xmlns="http://www.w3.org/2000/svg">
+      <g id="eyeAssembly" class="state-watching">
+
+        <!-- quiet measurement field -->
+        <g class="qmf">
+          <path class="qmf-axis" d="M -696,0 L 696,0"/>
+          <path class="qmf-axis" d="M 0,-345.9 L 0,364.3"/>
+          <path class="qmf-diag" d="M -450.1,-233.1 L 450.1,245.5"/>
+          <path class="qmf-diag" d="M -450.1,245.5 L 450.1,-233.1"/>
+          <circle class="qmf-circle" cx="0" cy="0" r="340"/>
+          <circle class="qmf-circle qmf-circle-outer" cx="0" cy="0" r="410"/>
+          <g class="qmf-axisdot" transform="translate(-538.7,0)"><circle r="13"/><circle class="qmf-axisdot-core" r="3.5"/></g>
+          <g class="qmf-axisdot" transform="translate(538.7,0)"><circle r="13"/><circle class="qmf-axisdot-core" r="3.5"/></g>
+          <circle class="qmf-topmark" cx="0" cy="-327.1" r="10"/>
+        </g>
+
+        <!-- outer almond frame -->
+        <path class="eye-lid-upper" d="M -726 0 Q 0 -752, 726 0"/>
+        <path class="eye-lid-lower" d="M -726 0 Q 0 792, 726 0"/>
+
+        <!-- left control assembly -->
+        <g id="leftControl" class="left-control">
+          <path class="lc-bracket" d="M -270,-40 L -292,-40 L -292,40 L -270,40"/>
+          <path class="lc-connector" d="M -246,0 L -270,0"/>
+          <circle class="lc-dot" cx="-310" cy="-33" r="5.5"/>
+          <circle id="indicatorActive" class="lc-dot lc-dot-active" cx="-310" cy="-11" r="5.5"/>
+          <circle class="lc-dot" cx="-310" cy="11" r="5.5"/>
+          <circle class="lc-dot" cx="-310" cy="33" r="5.5"/>
+        </g>
+
+        <!-- right process bridge -->
+        <g id="rightBridge" class="right-bridge">
+          <path class="rb-line" d="M 246,0 L 380,0"/>
+          <circle class="rb-signal-ring" cx="330" cy="0" r="11"/>
+          <circle id="bridgeSignal" class="rb-signal" cx="330" cy="0" r="6"/>
+          <path class="rb-terminal" d="M 380,-14 L 380,14"/>
+        </g>
+
+        <!-- segmented operation rings (6 levels) -->
+        <g class="ring-system">
+          <g class="ring-level" data-ring="r1">
+            <path class="seg role-ink" d="M 138.64,19.48 A 140,140 0 0 1 -138.64,19.48" stroke-width="9.5"/>
+            <path class="seg role-red-100" d="M -138.64,-19.48 A 140,140 0 0 1 138.64,-19.48" stroke-width="9.5"/>
+          </g>
+          <g class="ring-level" data-ring="r2">
+            <path class="seg role-support" d="M 156.5,33.27 A 160,160 0 0 1 -155.25,38.71" stroke-width="8.5"/>
+            <path class="seg role-red-100" d="M -159.61,11.16 A 160,160 0 0 1 -5.58,-159.9" stroke-width="8.5"/>
+            <path class="seg role-red-78" d="M 16.72,-159.12 A 160,160 0 0 1 153.8,-44.1" stroke-width="8.5"/>
+          </g>
+          <g class="ring-level" data-ring="r3">
+            <path class="seg role-ink" d="M 174.65,43.55 A 180,180 0 0 1 -169.14,61.56" stroke-width="8"/>
+            <path class="seg role-red-78" d="M -177.27,31.26 A 180,180 0 0 1 174.65,-43.55" stroke-width="8"/>
+          </g>
+          <g class="ring-level" data-ring="r4">
+            <path class="seg role-support" d="M 190.21,61.8 A 200,200 0 0 1 -195.63,41.58" stroke-width="7"/>
+            <path class="seg role-red-78" d="M -199.88,6.98 A 200,200 0 0 1 -13.95,-199.51" stroke-width="7"/>
+            <path class="seg role-red-50" d="M 55.13,-192.25 A 200,200 0 0 1 185.44,-74.92" stroke-width="7"/>
+          </g>
+          <g class="ring-level" data-ring="r5">
+            <path class="seg role-quiet" d="M 208.61,75.93 A 222,222 0 0 1 -213.4,61.19" stroke-width="6.5"/>
+            <path class="seg role-red-50" d="M -219.84,30.9 A 222,222 0 0 1 218.63,-38.55" stroke-width="6.5"/>
+          </g>
+          <g class="ring-level" data-ring="r6">
+            <path class="seg role-quiet" d="M 224.73,100.06 A 246,246 0 0 1 -228.09,92.15" stroke-width="6"/>
+            <path class="seg role-red-26" d="M -240.62,51.15 A 246,246 0 0 1 -34.24,-243.61" stroke-width="6"/>
+            <path class="seg role-red-26" d="M 123.0,-213.04 A 246,246 0 0 1 224.73,-100.06" stroke-width="6"/>
+          </g>
+        </g>
+
+        <!-- inner optical chamber -->
+        <g id="opticalChamber" class="optical-chamber">
+          <circle class="chamber-boundary" cx="0" cy="0" r="118"/>
+          <g class="chamber-ticks">
+            <path class="tick tick-accent" d="M 88.0,0.0 L 104.0,0.0"/>
+            <path class="tick" d="M 87.52,9.2 L 97.46,10.24"/>
+            <path class="tick" d="M 86.08,18.3 L 95.86,20.38"/>
+            <path class="tick" d="M 83.69,27.19 L 93.2,30.28"/>
+            <path class="tick" d="M 80.39,35.79 L 89.53,39.86"/>
+            <path class="tick tick-major" d="M 76.21,44.0 L 90.07,52.0"/>
+            <path class="tick" d="M 71.19,51.73 L 79.28,57.6"/>
+            <path class="tick" d="M 65.4,58.88 L 72.83,65.57"/>
+            <path class="tick" d="M 58.88,65.4 L 65.57,72.83"/>
+            <path class="tick" d="M 51.73,71.19 L 57.6,79.28"/>
+            <path class="tick tick-major" d="M 44.0,76.21 L 52.0,90.07"/>
+            <path class="tick" d="M 35.79,80.39 L 39.86,89.53"/>
+            <path class="tick" d="M 27.19,83.69 L 30.28,93.2"/>
+            <path class="tick" d="M 18.3,86.08 L 20.38,95.86"/>
+            <path class="tick" d="M 9.2,87.52 L 10.24,97.46"/>
+            <path class="tick tick-major" d="M 0.0,88.0 L 0.0,104.0"/>
+            <path class="tick" d="M -9.2,87.52 L -10.24,97.46"/>
+            <path class="tick" d="M -18.3,86.08 L -20.38,95.86"/>
+            <path class="tick" d="M -27.19,83.69 L -30.28,93.2"/>
+            <path class="tick" d="M -35.79,80.39 L -39.86,89.53"/>
+            <path class="tick tick-major" d="M -44.0,76.21 L -52.0,90.07"/>
+            <path class="tick" d="M -51.73,71.19 L -57.6,79.28"/>
+            <path class="tick" d="M -58.88,65.4 L -65.57,72.83"/>
+            <path class="tick" d="M -65.4,58.88 L -72.83,65.57"/>
+            <path class="tick" d="M -71.19,51.73 L -79.28,57.6"/>
+            <path class="tick tick-major" d="M -76.21,44.0 L -90.07,52.0"/>
+            <path class="tick" d="M -80.39,35.79 L -89.53,39.86"/>
+            <path class="tick" d="M -83.69,27.19 L -93.2,30.28"/>
+            <path class="tick" d="M -86.08,18.3 L -95.86,20.38"/>
+            <path class="tick" d="M -87.52,9.2 L -97.46,10.24"/>
+            <path class="tick tick-major" d="M -88.0,0.0 L -104.0,0.0"/>
+            <path class="tick" d="M -87.52,-9.2 L -97.46,-10.24"/>
+            <path class="tick" d="M -86.08,-18.3 L -95.86,-20.38"/>
+            <path class="tick" d="M -83.69,-27.19 L -93.2,-30.28"/>
+            <path class="tick" d="M -80.39,-35.79 L -89.53,-39.86"/>
+            <path class="tick tick-major" d="M -76.21,-44.0 L -90.07,-52.0"/>
+            <path class="tick" d="M -71.19,-51.73 L -79.28,-57.6"/>
+            <path class="tick" d="M -65.4,-58.88 L -72.83,-65.57"/>
+            <path class="tick" d="M -58.88,-65.4 L -65.57,-72.83"/>
+            <path class="tick" d="M -51.73,-71.19 L -57.6,-79.28"/>
+            <path class="tick tick-major" d="M -44.0,-76.21 L -52.0,-90.07"/>
+            <path class="tick" d="M -35.79,-80.39 L -39.86,-89.53"/>
+            <path class="tick" d="M -27.19,-83.69 L -30.28,-93.2"/>
+            <path class="tick" d="M -18.3,-86.08 L -20.38,-95.86"/>
+            <path class="tick" d="M -9.2,-87.52 L -10.24,-97.46"/>
+            <path class="tick tick-major" d="M -0.0,-88.0 L -0.0,-104.0"/>
+            <path class="tick" d="M 9.2,-87.52 L 10.24,-97.46"/>
+            <path class="tick" d="M 18.3,-86.08 L 20.38,-95.86"/>
+            <path class="tick" d="M 27.19,-83.69 L 30.28,-93.2"/>
+            <path class="tick" d="M 35.79,-80.39 L 39.86,-89.53"/>
+            <path class="tick tick-major" d="M 44.0,-76.21 L 52.0,-90.07"/>
+            <path class="tick" d="M 51.73,-71.19 L 57.6,-79.28"/>
+            <path class="tick" d="M 58.88,-65.4 L 65.57,-72.83"/>
+            <path class="tick" d="M 65.4,-58.88 L 72.83,-65.57"/>
+            <path class="tick" d="M 71.19,-51.73 L 79.28,-57.6"/>
+            <path class="tick tick-major" d="M 76.21,-44.0 L 90.07,-52.0"/>
+            <path class="tick" d="M 80.39,-35.79 L 89.53,-39.86"/>
+            <path class="tick" d="M 83.69,-27.19 L 93.2,-30.28"/>
+            <path class="tick tick-accent" d="M 86.08,-18.3 L 95.86,-20.38"/>
+            <path class="tick" d="M 87.52,-9.2 L 97.46,-10.24"/>
+          </g>
+        </g>
+
+        <!-- central focus core -->
+        <g id="focusCore" class="focus-core">
+          <circle class="core-rim" cx="0" cy="0" r="72"/>
+          <circle class="core-body" cx="0" cy="0" r="64"/>
+          <circle id="catchlightPrimary" class="catchlight catchlight-primary" cx="14" cy="-18" r="13"/>
+          <circle id="catchlightSecondary" class="catchlight catchlight-secondary" cx="-4" cy="4" r="5"/>
+        </g>
+
+      </g>
+    </svg>
+  </div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── VisibleEyeLife — a small lifecycle gate, borrowing the operational
+  // rhythm of the Home hero's HeroV1Life scheduler: motion is only allowed
+  // while the tab is visible, the assembly is actually in view, and the
+  // user has not requested reduced motion. It owns no timers (this
+  // prototype has no autoplay loop — every transition is caused directly
+  // by a setVisibleEyeState call, keeping the page deterministic), so its
+  // only job is to toggle one class and clean up its own listeners.
+  var VisibleEyeLife = (function(){
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var reduced = mq.matches;
+    var docVisible = !document.hidden;
+    var inView = true;
+    var observer = null;
+    var root = document.documentElement;
+
+    function applyMotionState(){
+      var allow = !reduced && docVisible && inView;
+      root.classList.toggle('eye-motion-ok', allow);
+    }
+    function onVisibilityChange(){ docVisible = !document.hidden; applyMotionState(); }
+    function onMqChange(e){ reduced = e.matches; applyMotionState(); }
+
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    if(mq.addEventListener) mq.addEventListener('change', onMqChange);
+    else if(mq.addListener) mq.addListener(onMqChange);
+
+    function observe(el){
+      if(!el || !('IntersectionObserver' in window)) return;
+      observer = new IntersectionObserver(function(entries){
+        var entry = entries[0];
+        inView = !!(entry && entry.isIntersecting);
+        applyMotionState();
+      }, {threshold:0.01});
+      observer.observe(el);
+    }
+    function destroy(){
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      if(mq.removeEventListener) mq.removeEventListener('change', onMqChange);
+      else if(mq.removeListener) mq.removeListener(onMqChange);
+      if(observer) observer.disconnect();
+    }
+
+    applyMotionState();
+    return { observe: observe, destroy: destroy, isReduced: function(){ return reduced; } };
+  })();
+
+  // ── setVisibleEyeState — mapped to the real semantic lifecycle
+  // discovered in Problem-v86-DARK-ONLY.html's Home hero: the Q/A badge
+  // states qa-watching (stage 01/04, ANALYZING) → qa-searching (stage
+  // 02/04, TRACING) → qa-found (stage 03/04, PATH FOUND) → qa-solved
+  // (stage 04/04, SOLVED) → qa-embodied (stage 5, appears ~3s after
+  // solved). 'idle' mirrors the production reset (all stage classes
+  // cleared) used between loop iterations / when the hero isn't active.
+  var STATES = ['watching','searching','found','solved','embodied','idle'];
+  var current = 'watching';
+
+  function setVisibleEyeState(name){
+    if(STATES.indexOf(name) === -1) name = 'watching';
+    var assembly = document.getElementById('eyeAssembly');
+    if(!assembly) return current;
+    for(var i=0;i<STATES.length;i++) assembly.classList.remove('state-'+STATES[i]);
+    assembly.classList.add('state-'+name);
+    current = name;
+    var readout = document.getElementById('eyeDebugReadout');
+    if(readout) readout.textContent = name;
+    var buttons = document.querySelectorAll('#eyeDebugPanel button[data-state]');
+    for(var b=0;b<buttons.length;b++){
+      buttons[b].classList.toggle('is-active', buttons[b].getAttribute('data-state')===name);
+    }
+    return name;
+  }
+  window.setVisibleEyeState = setVisibleEyeState;
+  window.getVisibleEyeState = function(){ return current; };
+
+  document.addEventListener('DOMContentLoaded', function(){
+    VisibleEyeLife.observe(document.getElementById('eyeAssembly'));
+    setVisibleEyeState('watching');
+
+    // Debug controls: only when the URL explicitly requests them.
+    // Normal view and screenshots never contain this panel.
+    var params = new URLSearchParams(window.location.search);
+    if(params.get('debug') === '1'){
+      var panel = document.createElement('div');
+      panel.id = 'eyeDebugPanel';
+      var h = document.createElement('h4');
+      h.textContent = 'Visible Eye — debug';
+      panel.appendChild(h);
+      STATES.forEach(function(s){
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.setAttribute('data-state', s);
+        btn.textContent = s;
+        btn.addEventListener('click', function(){ setVisibleEyeState(s); });
+        panel.appendChild(btn);
+      });
+      var readout = document.createElement('div');
+      readout.className = 'eye-debug-readout';
+      readout.id = 'eyeDebugReadout';
+      readout.textContent = current;
+      panel.appendChild(readout);
+      var rmNote = document.createElement('div');
+      rmNote.className = 'eye-debug-readout';
+      rmNote.textContent = 'reduced-motion: ' + (VisibleEyeLife.isReduced() ? 'on' : 'off');
+      panel.appendChild(rmNote);
+      document.body.appendChild(panel);
+      setVisibleEyeState('watching');
+    }
+  });
+})();
+</script>
+</body>
+</html>

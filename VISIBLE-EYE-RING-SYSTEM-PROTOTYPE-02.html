@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visible Eye — Ring System Prototype 02</title>
+<style>
+  /* ══════════════════════════════════════════════════════════════
+     RING SYSTEM PROTOTYPE 02 — strict visual-calibration pass on
+     Prototype 01. Same locked almond lid, Lunar-White environment,
+     graphite+muted-red direction, static SVG, and 8-ring concept.
+     Corrected: pupil size/centering, ring proportions (less flat),
+     gap sizes (55-75% coverage instead of ~30-55%), graphite opacity
+     (strengthened so it survives at mobile scale), red system (one
+     strong inner arc + one wider-reach arc + one pale counter-arc on
+     the opposite side, integrated rather than three separate marks),
+     and below-pupil-line density (~52% of weighted arc length sits
+     below the pupil's horizontal line, vs. the required >=30%).
+     Anchor nodes temporarily removed per this pass's instruction.
+     ══════════════════════════════════════════════════════════════ */
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{ width:100%; overflow-x:hidden; background:#FAFBFD; }
+  body{
+    width:100%; min-height:100vh; overflow-x:hidden;
+    background:#FAFBFD; color:#24272E;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    padding:48px 24px;
+  }
+  .stage{
+    width:640px; max-width:100%; background:#FFFFFF;
+    border:1px solid #E4E7EC; border-radius:20px; padding:28px 22px;
+  }
+  .stage svg{ display:block; width:100%; height:auto; }
+  /* mobile specimen calibration: at phone widths, the eye should occupy most of
+     the viewport rather than sit in a mostly-empty desktop-proportioned card */
+  @media (max-width:480px){
+    body{ padding:40px 20px; }
+  }
+  svg{
+    --bg:#FAFBFD;
+    --ink:#24272E;
+    --support:#7C8088;
+    --quiet:#C9CDD3;
+    --red:#D17B73;
+    --red-72: color-mix(in srgb, var(--red) 72%, var(--bg) 28%);
+    --red-40: color-mix(in srgb, var(--red) 40%, var(--bg) 60%);
+  }
+  .eye-lid{ fill:none; stroke:var(--ink); stroke-width:2.2; stroke-linecap:round; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <svg viewBox="-320 -140 640 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="lensRing2" clipPathUnits="userSpaceOnUse">
+          <path d="M -290 0 Q 0 -70 290 0 Q 0 240 -290 0 Z"/>
+        </clipPath>
+      </defs>
+
+      <!-- outer almond — locked Problem eye silhouette, unchanged geometry -->
+      <path class="eye-lid" d="M -290 0 Q 0 -70, 290 0"/>
+      <path class="eye-lid" d="M -290 0 Q 0 240, 290 0"/>
+
+      <g clip-path="url(#lensRing2)">
+
+        <!-- ═══ OUTER QUIET SYSTEM — widest, lightest, still legible at mobile scale ═══ -->
+        <g id="outerQuietSystem">
+          <path id="ringO2" d="M 138.96,-95.3 A 190,128 0 1 1 -169.29,50.11" fill="none" stroke="var(--quiet)" stroke-width="0.8" stroke-opacity="0.30" stroke-linecap="round"/>
+          <path id="ringO1" d="M -161.51,-27.45 A 164,112 0 1 1 125.63,63.99" fill="none" stroke="var(--quiet)" stroke-width="0.95" stroke-opacity="0.40" stroke-linecap="round"/>
+        </g>
+
+        <!-- ═══ MID GRAPHITE SYSTEM — connects the red core to the wider field ═══ -->
+        <g id="midGraphiteSystem">
+          <path id="ringM3" d="M 138.0,-8.0 A 138,102 0 1 1 -88.7,-86.14" fill="none" stroke="var(--support)" stroke-width="1.05" stroke-opacity="0.42" stroke-linecap="round"/>
+          <path id="ringM2" d="M -76.28,-71.91 A 114,86 0 1 1 -60.41,64.93" fill="none" stroke="var(--support)" stroke-width="1.25" stroke-opacity="0.52" stroke-linecap="round"/>
+          <path id="ringM1" d="M -11.21,61.48 A 92,70 0 1 1 89.99,6.55" fill="none" stroke="var(--support)" stroke-width="1.5" stroke-opacity="0.66" stroke-linecap="round"/>
+        </g>
+
+        <!-- ═══ INNER IDENTITY SYSTEM — one strong arc, one wider-reach arc, one pale
+             counter-arc on the opposite side — one integrated system, not 3 marks ═══ -->
+        <g id="innerIdentitySystem">
+          <path id="ringR3" d="M -12.85,51.09 A 74,60 0 0 1 -67.07,-33.36" fill="none" stroke="var(--red-40)" stroke-width="1.15" stroke-opacity="0.38" stroke-linecap="round"/>
+          <path id="ringR2" d="M -24.51,-51.5 A 58,48 0 1 1 19.84,37.11" fill="none" stroke="var(--red-72)" stroke-width="1.75" stroke-opacity="0.72" stroke-linecap="round"/>
+          <path id="ringR1" d="M 11.39,-42.77 A 44,36 0 0 1 31.11,17.46" fill="none" stroke="var(--red)" stroke-width="2.3" stroke-opacity="0.95" stroke-linecap="round"/>
+        </g>
+
+      </g>
+
+      <!-- pupil — calibrated: centered on the ring system, no longer overpowering it -->
+      <circle cx="0" cy="-8" r="25" fill="var(--ink)"/>
+    </svg>
+  </div>
+</body>
+</html>

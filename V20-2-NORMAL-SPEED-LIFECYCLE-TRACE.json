@@ -1,0 +1,922 @@
+{
+  "description": "v20.2 normal-speed real-flow lifecycle trace, hold-stage entry to full settle. Includes a fixed-interval opacity/view-state sample AND a direct-transform eye-gaze sample (the eye's actual live SVGTransformList matrix, not reconstructed from the render() formula) \u2014 addressing the independent audit's finding that v20.1's eye-gaze evidence only proved intended math, not the actual rendered result.",
+  "methodology": "Real Playwright browser drive: page.goto -> window.showLogin() -> click .lp-dot[data-action=signin] -> poll for lhmz-stage-hold class -> sample -> poll for lhmz-story-complete class. No fake timers used.",
+  "stage_progression": {
+    "click_to_hold_stage_ms": [
+      12843,
+      14005
+    ],
+    "hold_stage_entry_to_complete_ms": [
+      4291,
+      4399,
+      4547,
+      4747
+    ],
+    "target_range_ms": [
+      4000,
+      5500
+    ],
+    "note": "All measured runs land inside the 4.0-5.5s target; timing is unchanged from v20.1 since v20.2 did not touch globeSequenceProgress or any bell() window."
+  },
+  "interval_trace_200ms": [
+    {
+      "t": 0,
+      "viewA": 0,
+      "viewB": 0,
+      "viewD": 0,
+      "africa": 0.445271,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 228,
+      "viewA": 0,
+      "viewB": 0,
+      "viewD": 0,
+      "africa": 1,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 434,
+      "viewA": 0.0422725,
+      "viewB": 0,
+      "viewD": 0,
+      "africa": 1,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 647,
+      "viewA": 0.564005,
+      "viewB": 0,
+      "viewD": 0,
+      "africa": 1,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 854,
+      "viewA": 0.995581,
+      "viewB": 0,
+      "viewD": 0,
+      "africa": 0.996517,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 1064,
+      "viewA": 1,
+      "viewB": 0,
+      "viewD": 0,
+      "africa": 0.450112,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 1280,
+      "viewA": 0.999706,
+      "viewB": 0.00029392,
+      "viewD": 0,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 0.350446,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 1501,
+      "viewA": 0.161225,
+      "viewB": 0.838775,
+      "viewD": 0,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 0.998399,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 1733,
+      "viewA": 0,
+      "viewB": 1,
+      "viewD": 0,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 1,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 1944,
+      "viewA": 0,
+      "viewB": 1,
+      "viewD": 0,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 1,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 2155,
+      "viewA": 0,
+      "viewB": 1,
+      "viewD": 0,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 0.412142,
+      "australia": 0.937858,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 2370,
+      "viewA": 0,
+      "viewB": 1,
+      "viewD": 0,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 1,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 2581,
+      "viewA": 0,
+      "viewB": 1,
+      "viewD": 0,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 1,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 2796,
+      "viewA": 0.295432,
+      "viewB": 0.704568,
+      "viewD": 0,
+      "africa": 0.35,
+      "europe": 0.694682,
+      "asia": 0.35,
+      "australia": 0.655318,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 3002,
+      "viewA": 1,
+      "viewB": 0,
+      "viewD": 0,
+      "africa": 0.35,
+      "europe": 1,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 3252,
+      "viewA": 0.832463,
+      "viewB": 0,
+      "viewD": 0.167537,
+      "africa": 0.35,
+      "europe": 0.891101,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.458899,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 3468,
+      "viewA": 0,
+      "viewB": 0,
+      "viewD": 1,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 1,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 3675,
+      "viewA": 0,
+      "viewB": 0,
+      "viewD": 1,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 1,
+      "sa": 0.35,
+      "complete": false
+    },
+    {
+      "t": 3913,
+      "viewA": 0,
+      "viewB": 0,
+      "viewD": 1,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.967755,
+      "sa": 0.382245,
+      "complete": false
+    },
+    {
+      "t": 4142,
+      "viewA": 0,
+      "viewB": 0,
+      "viewD": 1,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 1,
+      "complete": false
+    },
+    {
+      "t": 4345,
+      "viewA": 0.998733,
+      "viewB": 0,
+      "viewD": 0.00126718,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.356072,
+      "complete": false
+    },
+    {
+      "t": 4547,
+      "viewA": 1,
+      "viewB": 0,
+      "viewD": 0,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35,
+      "complete": true
+    }
+  ],
+  "sequence_capture_trace": [
+    {
+      "t": 1118,
+      "label": "africa",
+      "loginBox": {
+        "x": 450,
+        "y": 92.75,
+        "width": 380,
+        "height": 258.3125
+      },
+      "orbBox": {
+        "x": 660.929443359375,
+        "y": 151.11717224121094,
+        "width": 135.697021484375,
+        "height": 135.6969757080078
+      },
+      "viewA": 0.943394,
+      "viewB": 0,
+      "viewD": 0,
+      "africa": 1,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35
+    },
+    {
+      "t": 1838,
+      "label": "asia",
+      "loginBox": {
+        "x": 450,
+        "y": 92.75,
+        "width": 380,
+        "height": 258.3125
+      },
+      "orbBox": {
+        "x": 662.821533203125,
+        "y": 141.28392028808594,
+        "width": 126.036376953125,
+        "height": 126.03639221191406
+      },
+      "viewA": 0.0164076,
+      "viewB": 0.983592,
+      "viewD": 0,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 1,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35
+    },
+    {
+      "t": 2575,
+      "label": "australia",
+      "loginBox": {
+        "x": 450,
+        "y": 92.75,
+        "width": 380,
+        "height": 258.3125
+      },
+      "orbBox": {
+        "x": 662.821533203125,
+        "y": 141.28392028808594,
+        "width": 126.036376953125,
+        "height": 126.03639221191406
+      },
+      "viewA": 0,
+      "viewB": 1,
+      "viewD": 0,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 0.350012,
+      "australia": 0.999988,
+      "na": 0.35,
+      "sa": 0.35
+    },
+    {
+      "t": 3258,
+      "label": "europe",
+      "loginBox": {
+        "x": 450,
+        "y": 92.75,
+        "width": 380,
+        "height": 258.3125
+      },
+      "orbBox": {
+        "x": 662.821533203125,
+        "y": 141.28392028808594,
+        "width": 126.036376953125,
+        "height": 126.03639221191406
+      },
+      "viewA": 0.995996,
+      "viewB": 0.0040039,
+      "viewD": 0,
+      "africa": 0.35,
+      "europe": 1,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35
+    },
+    {
+      "t": 3670,
+      "label": "north-america",
+      "loginBox": {
+        "x": 450,
+        "y": 92.75,
+        "width": 380,
+        "height": 258.3125
+      },
+      "orbBox": {
+        "x": 662.821533203125,
+        "y": 141.28392028808594,
+        "width": 126.036376953125,
+        "height": 126.03639221191406
+      },
+      "viewA": 0.0907797,
+      "viewB": 0,
+      "viewD": 0.90922,
+      "africa": 0.35,
+      "europe": 0.409007,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.940993,
+      "sa": 0.35
+    },
+    {
+      "t": 4344,
+      "label": "south-america",
+      "loginBox": {
+        "x": 450,
+        "y": 92.75,
+        "width": 380,
+        "height": 258.3125
+      },
+      "orbBox": {
+        "x": 662.821533203125,
+        "y": 141.28392028808594,
+        "width": 126.036376953125,
+        "height": 126.03639221191406
+      },
+      "viewA": 0,
+      "viewB": 0,
+      "viewD": 1,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.35975,
+      "sa": 0.99025
+    },
+    {
+      "t": 5042,
+      "label": "final-hold",
+      "loginBox": {
+        "x": 450,
+        "y": 92.75,
+        "width": 380,
+        "height": 258.3125
+      },
+      "viewA": 1,
+      "viewB": 0,
+      "viewD": 0,
+      "africa": 0.35,
+      "europe": 0.35,
+      "asia": 0.35,
+      "australia": 0.35,
+      "na": 0.35,
+      "sa": 0.35
+    }
+  ],
+  "direct_eye_transform_trace": [
+    {
+      "t": 0,
+      "active_continent": "africa",
+      "active_opacity": 0.999515,
+      "eyeGaze_matrix_e_f": [
+        7.095,
+        -4.072
+      ],
+      "eyeGaze_boundingRect_center": [
+        0.5,
+        207.8
+      ],
+      "complete": false
+    },
+    {
+      "t": 166,
+      "active_continent": "africa",
+      "active_opacity": 1,
+      "eyeGaze_matrix_e_f": [
+        8.634,
+        -4.777
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.9,
+        207.1
+      ],
+      "complete": false
+    },
+    {
+      "t": 346,
+      "active_continent": "africa",
+      "active_opacity": 1,
+      "eyeGaze_matrix_e_f": [
+        8.64,
+        -4.78
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.9,
+        207.1
+      ],
+      "complete": false
+    },
+    {
+      "t": 502,
+      "active_continent": "africa",
+      "active_opacity": 1,
+      "eyeGaze_matrix_e_f": [
+        8.64,
+        -4.78
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.9,
+        207.1
+      ],
+      "complete": false
+    },
+    {
+      "t": 669,
+      "active_continent": "africa",
+      "active_opacity": 1,
+      "eyeGaze_matrix_e_f": [
+        8.64,
+        -4.78
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.9,
+        207.1
+      ],
+      "complete": false
+    },
+    {
+      "t": 834,
+      "active_continent": "africa",
+      "active_opacity": 0.824255,
+      "eyeGaze_matrix_e_f": [
+        8.521,
+        -4.812
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.8,
+        207.1
+      ],
+      "complete": false
+    },
+    {
+      "t": 1040,
+      "active_continent": "africa",
+      "active_opacity": 0.355803,
+      "eyeGaze_matrix_e_f": [
+        8.204,
+        -4.899
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.5,
+        207.0
+      ],
+      "complete": false
+    },
+    {
+      "t": 1202,
+      "active_continent": "africa",
+      "active_opacity": 0.35,
+      "eyeGaze_matrix_e_f": [
+        8.2,
+        -4.9
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.5,
+        207.0
+      ],
+      "complete": false
+    },
+    {
+      "t": 1421,
+      "active_continent": "asia",
+      "active_opacity": 0.464643,
+      "eyeGaze_matrix_e_f": [
+        8.306,
+        -4.942
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.6,
+        207.0
+      ],
+      "complete": false
+    },
+    {
+      "t": 1586,
+      "active_continent": "asia",
+      "active_opacity": 0.959637,
+      "eyeGaze_matrix_e_f": [
+        8.763,
+        -5.125
+      ],
+      "eyeGaze_boundingRect_center": [
+        2.1,
+        206.8
+      ],
+      "complete": false
+    },
+    {
+      "t": 1746,
+      "active_continent": "asia",
+      "active_opacity": 1,
+      "eyeGaze_matrix_e_f": [
+        8.8,
+        -5.14
+      ],
+      "eyeGaze_boundingRect_center": [
+        2.1,
+        206.8
+      ],
+      "complete": false
+    },
+    {
+      "t": 1906,
+      "active_continent": "asia",
+      "active_opacity": 1,
+      "eyeGaze_matrix_e_f": [
+        8.8,
+        -5.14
+      ],
+      "eyeGaze_boundingRect_center": [
+        2.1,
+        206.8
+      ],
+      "complete": false
+    },
+    {
+      "t": 2116,
+      "active_continent": "asia",
+      "active_opacity": 1,
+      "eyeGaze_matrix_e_f": [
+        8.8,
+        -5.14
+      ],
+      "eyeGaze_boundingRect_center": [
+        2.1,
+        206.8
+      ],
+      "complete": false
+    },
+    {
+      "t": 2307,
+      "active_continent": "asia",
+      "active_opacity": 0.99813,
+      "eyeGaze_matrix_e_f": [
+        8.799,
+        -5.138
+      ],
+      "eyeGaze_boundingRect_center": [
+        2.1,
+        206.8
+      ],
+      "complete": false
+    },
+    {
+      "t": 2473,
+      "active_continent": "australia",
+      "active_opacity": 0.839388,
+      "eyeGaze_matrix_e_f": [
+        8.649,
+        -4.508
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.9,
+        207.4
+      ],
+      "complete": false
+    },
+    {
+      "t": 2627,
+      "active_continent": "australia",
+      "active_opacity": 1,
+      "eyeGaze_matrix_e_f": [
+        8.6,
+        -4.3
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.9,
+        207.6
+      ],
+      "complete": false
+    },
+    {
+      "t": 2798,
+      "active_continent": "australia",
+      "active_opacity": 1,
+      "eyeGaze_matrix_e_f": [
+        8.6,
+        -4.3
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.9,
+        207.6
+      ],
+      "complete": false
+    },
+    {
+      "t": 2954,
+      "active_continent": "australia",
+      "active_opacity": 1,
+      "eyeGaze_matrix_e_f": [
+        8.6,
+        -4.3
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.9,
+        207.6
+      ],
+      "complete": false
+    },
+    {
+      "t": 3122,
+      "active_continent": "europe",
+      "active_opacity": 0.710019,
+      "eyeGaze_matrix_e_f": [
+        8.578,
+        -4.965
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.9,
+        207.0
+      ],
+      "complete": false
+    },
+    {
+      "t": 3278,
+      "active_continent": "europe",
+      "active_opacity": 1,
+      "eyeGaze_matrix_e_f": [
+        8.56,
+        -5.5
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.9,
+        206.5
+      ],
+      "complete": false
+    },
+    {
+      "t": 3436,
+      "active_continent": "europe",
+      "active_opacity": 1,
+      "eyeGaze_matrix_e_f": [
+        8.56,
+        -5.5
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.9,
+        206.5
+      ],
+      "complete": false
+    },
+    {
+      "t": 3598,
+      "active_continent": "europe",
+      "active_opacity": 0.902794,
+      "eyeGaze_matrix_e_f": [
+        8.428,
+        -5.482
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.7,
+        206.5
+      ],
+      "complete": false
+    },
+    {
+      "t": 3755,
+      "active_continent": "na",
+      "active_opacity": 0.997822,
+      "eyeGaze_matrix_e_f": [
+        7.683,
+        -5.38
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.0,
+        206.6
+      ],
+      "complete": false
+    },
+    {
+      "t": 3923,
+      "active_continent": "na",
+      "active_opacity": 1,
+      "eyeGaze_matrix_e_f": [
+        7.68,
+        -5.38
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.0,
+        206.6
+      ],
+      "complete": false
+    },
+    {
+      "t": 4093,
+      "active_continent": "na",
+      "active_opacity": 1,
+      "eyeGaze_matrix_e_f": [
+        7.68,
+        -5.38
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.0,
+        206.6
+      ],
+      "complete": false
+    },
+    {
+      "t": 4260,
+      "active_continent": "na",
+      "active_opacity": 0.9228,
+      "eyeGaze_matrix_e_f": [
+        7.69,
+        -5.271
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.0,
+        206.7
+      ],
+      "complete": false
+    },
+    {
+      "t": 4418,
+      "active_continent": "sa",
+      "active_opacity": 1,
+      "eyeGaze_matrix_e_f": [
+        7.76,
+        -4.46
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.1,
+        207.4
+      ],
+      "complete": false
+    },
+    {
+      "t": 4589,
+      "active_continent": "sa",
+      "active_opacity": 0.840089,
+      "eyeGaze_matrix_e_f": [
+        7.868,
+        -4.568
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.2,
+        207.3
+      ],
+      "complete": false
+    },
+    {
+      "t": 4747,
+      "active_continent": "africa",
+      "active_opacity": 0.35,
+      "eyeGaze_matrix_e_f": [
+        8.2,
+        -4.9
+      ],
+      "eyeGaze_boundingRect_center": [
+        1.5,
+        207.0
+      ],
+      "complete": true
+    }
+  ],
+  "eye_transform_trace_note": "eyeGaze_matrix_e_f is the [e,f] (translation) component of the live SVGTransformList.consolidate().matrix read directly off #lhmzEyeGaze at each sample -- not reconstructed from holdRegionGazeX/Y. Confirms: smooth continuous motion (no discrete jumps between consecutive samples), restrained magnitude (translation stays within roughly [7.68,8.80] x and [-5.5,-4.3] y across the whole tour), and a return to the same calm base position (8.20,-4.90) both mid-tour (between focus bumps) and at final settle.",
+  "console_errors_during_capture_run": [
+    "console.error: X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+    "console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "900sq console.error: X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+    "900sq console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "900sq console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "900sq console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "900sq console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "900sq console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "AR console.error: X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+    "AR console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "AR console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "AR console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "AR console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "AR console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "mobileEN console.error: X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+    "mobileEN console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "mobileEN console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "mobileEN console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "mobileEN console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "mobileEN console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "mobileAR console.error: X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+    "mobileAR console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "mobileAR console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "mobileAR console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "mobileAR console.error: Failed to load resource: net::ERR_CONNECTION_RESET",
+    "mobileAR console.error: Failed to load resource: net::ERR_CONNECTION_RESET"
+  ],
+  "console_errors_note": "Identical benign error set (X-Frame-Options meta warning + 5x net::ERR_CONNECTION_RESET from a blocked external resource) observed in every v19.1/v20/v20.1 capture run and pre-dates all v20.x changes; zero NEW errors introduced by v20.2."
+}

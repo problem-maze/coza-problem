@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visible Eye — Mechanical Focus Prototype 05</title>
+<style>
+  /* ══════════════════════════════════════════════════════════════
+     MECHANICAL FOCUS PROTOTYPE 05 — final character calibration pass.
+     Prototype 04 is the protected baseline (outer almond, viewBox,
+     optical center, #eyeAssembly footprint, focus-core/chamber geometry,
+     six ring radii/clusters, protected ids, state engine/API,
+     reduced-motion/debug mechanisms all preserved unchanged — see the
+     NOTE for the full matrix). No new geometry, ring levels, or colors
+     were introduced in this pass: every change below is a numeric
+     calibration (opacity/width/size) of an element that already existed
+     in Prototype 04. Tension paths were made subtly more readable at
+     mobile scale; the left/right assemblies and white plates were given
+     slightly more separation from the white surface; the focus core's
+     primary catchlight was reduced to read less photographic; FOUND was
+     corrected to communicate route alignment through gate/connector/
+     plate clarity rather than system-wide dimming (no role-support/
+     role-quiet/r5/r6 element drops below ~45% of its normal strength);
+     SOLVED was moderated so the red-family no longer pushes uniformly to
+     maximum opacity. No production file is read from or written to at
+     runtime. Prototype 04 itself was not modified to build this file.
+     ══════════════════════════════════════════════════════════════ */
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{ width:100%; overflow-x:hidden; background:#FAFBFD; }
+  body{
+    width:100%; min-height:100vh; overflow-x:hidden;
+    background:#FAFBFD; color:#30333A;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    padding:48px 24px;
+  }
+  .stage{
+    width:720px; max-width:100%; background:#FFFFFF;
+    border:1px solid #E4E7EC; border-radius:20px; padding:28px 22px;
+  }
+  .stage svg{ display:block; width:100%; height:auto; }
+  @media (max-width:480px){
+    body{ padding:14px; }
+    .stage{ border:none; border-radius:0; background:transparent; padding:0; }
+  }
+
+  svg.mech-eye{
+    --bg:#FAFBFD;
+    --surface:#FFFFFF;
+    --ink:#30333A;
+    --support:#777A82;
+    --quiet:#C4C8CF;
+    --red-base:#B95B5A;
+    --red-100: var(--red-base);
+    --red-78: color-mix(in srgb, var(--red-base) 78%, var(--bg) 22%);
+    --red-50: color-mix(in srgb, var(--red-base) 50%, var(--bg) 50%);
+    --red-26: color-mix(in srgb, var(--red-base) 26%, var(--bg) 74%);
+    --core: #14161B;
+  }
+
+  /* ── frame (unchanged) ── */
+  .eye-lid-upper{ fill:none; stroke:var(--ink); stroke-width:5; stroke-linecap:round; stroke-opacity:0.95; }
+  .eye-lid-lower{ fill:none; stroke:var(--ink); stroke-width:5; stroke-linecap:round; stroke-opacity:0.80; }
+
+  /* ── quiet measurement field (unchanged) ── */
+  .qmf-axis{ fill:none; stroke:var(--quiet); stroke-width:1.2; stroke-opacity:0.18; stroke-dasharray:2 7; }
+  .qmf-diag{ fill:none; stroke:var(--quiet); stroke-width:1; stroke-opacity:0.12; stroke-dasharray:2 9; }
+  .qmf-circle{ fill:none; stroke:var(--quiet); stroke-width:1; stroke-opacity:0.14; stroke-dasharray:3 8; }
+  .qmf-circle-outer{ stroke-opacity:0.09; }
+  .qmf-axisdot circle:first-child{ fill:none; stroke:var(--quiet); stroke-width:1.4; stroke-opacity:0.4; }
+  .qmf-axisdot-core{ fill:var(--red-100); opacity:0.6; }
+  .qmf-topmark{ fill:none; stroke:var(--quiet); stroke-width:1.4; stroke-opacity:0.35; transition:stroke-opacity 0.6s ease; }
+
+  /* ── outer-eye tension paths: quiet tapered lines tying the mechanism
+     to the wider eye interior (section 2/10) — thicker near the
+     mechanism, thinner toward the lids; never touches the lids ── */
+  .tension-path{ fill:none; stroke:var(--support); stroke-linecap:round; transition:stroke-opacity 0.6s ease; }
+  .tension-thick{ stroke-width:1.7; stroke-opacity:0.32; }
+  .tension-thin{ stroke-width:0.95; stroke-opacity:0.17; }
+
+  /* ── left control assembly: strengthened input gate, better hierarchy ── */
+  .lc-sleeve{ fill:var(--support); opacity:0.2; }
+  .lc-bracket{ fill:none; stroke:var(--support); stroke-width:3.6; stroke-linecap:round; stroke-opacity:0.78;
+    transform-box:fill-box; transform-origin:center; transition:transform 0.55s cubic-bezier(0.4,0,0.2,1); }
+  .lc-connector{ fill:none; stroke:var(--support); stroke-width:3.2; stroke-opacity:0.68; }
+  .lc-dot{ fill:var(--bg); stroke:var(--support); stroke-width:2; stroke-opacity:0.65; }
+  .lc-dot-active{ fill:var(--red-100); stroke:var(--red-100); opacity:0.88; transition:opacity 0.5s ease; }
+
+  /* ── right process bridge: strengthened output gateway ── */
+  .rb-sleeve{ fill:var(--support); opacity:0.2; }
+  .rb-line{ fill:none; stroke:var(--support); stroke-width:3.6; stroke-opacity:0.68; }
+  .rb-signal-ring{ fill:none; stroke:var(--red-78); stroke-width:1.9; stroke-opacity:0.52; transition:stroke-opacity 0.5s ease; }
+  .rb-signal{ fill:var(--red-100); opacity:0.75; transition:opacity 0.5s ease, r 0.5s ease; }
+  .rb-terminal{ fill:none; stroke:var(--support); stroke-width:3.6; stroke-linecap:round; stroke-opacity:0.52; }
+  .rb-terminal-anchor{ fill:none; stroke:var(--support); stroke-width:2.2; stroke-linecap:round; stroke-opacity:0.48; }
+
+  /* ── segmented operation rings: 3 readable clusters ── */
+  .seg{ fill:none; stroke-linecap:round; transition:stroke-opacity 0.55s ease; }
+  .channel-backing{ fill:none; stroke:var(--ink); stroke-opacity:0.44; stroke-linecap:round; }
+  .plate-keyline{ fill:none; stroke:var(--ink); stroke-opacity:0.58; stroke-linecap:round; }
+  .plate{ fill:none; stroke:var(--surface); stroke-opacity:0.98; stroke-linecap:round; transition:stroke-opacity 0.55s ease; }
+  .connector-bridge{ fill:none; stroke:var(--support); stroke-width:2.2; stroke-opacity:0.5; stroke-linecap:round; }
+  .connector-signal{ stroke:var(--red-78); stroke-opacity:0.72; }
+  .connector-offset{ stroke-opacity:0.45; }
+  .gate-emergence-cap{ fill:var(--ink); opacity:0.32; }
+  .chamber-link{ fill:none; stroke:var(--support); stroke-width:1.8; stroke-opacity:0.42; stroke-linecap:round; }
+  .chamber-link-signal{ stroke:var(--red-78); stroke-opacity:0.58; }
+  .counter-signal{ transition:stroke-opacity 0.5s ease; }
+  .ring-gate{ transform-box:fill-box; transform-origin:center; transition:transform 0.55s cubic-bezier(0.4,0,0.2,1); }
+  /* FOCUS cluster (r1/r2): concentrated, near-full opacity */
+  .ring-level[data-cluster="focus"]{ transition:opacity 0.55s ease; }
+  .ring-level[data-ring="r1"]{ opacity:1; }
+  .ring-level[data-ring="r2"]{ opacity:0.95; }
+  /* PROCESS cluster (r3/r4): the working middle */
+  .ring-level[data-cluster="process"]{ transition:opacity 0.55s ease; }
+  .ring-level[data-ring="r3"]{ opacity:0.87; }
+  .ring-level[data-ring="r4"]{ opacity:0.8; }
+  /* SUPPORT cluster (r5/r6): quiet, open */
+  .ring-level[data-cluster="support"]{ transition:opacity 0.55s ease; }
+  .ring-level[data-ring="r5"]{ opacity:0.68; }
+  .ring-level[data-ring="r6"]{ opacity:0.6; }
+  .role-ink{ stroke:var(--ink); stroke-opacity:0.85; }
+  .role-support{ stroke:var(--support); stroke-opacity:0.75; }
+  .role-quiet{ stroke:var(--quiet); stroke-opacity:0.55; }
+  .role-red-100{ stroke:var(--red-100); stroke-opacity:0.95; }
+  .role-red-78{ stroke:var(--red-78); stroke-opacity:0.85; }
+  .role-red-50{ stroke:var(--red-50); stroke-opacity:0.7; }
+  .role-red-26{ stroke:var(--red-26); stroke-opacity:0.5; }
+
+  /* ── inner optical chamber (unchanged from Prototype 03) ── */
+  .chamber-boundary{ fill:none; stroke:var(--ink); stroke-width:2.2; stroke-opacity:0.5; }
+  .chamber-boundary-outer{ stroke:var(--quiet); stroke-width:1.8; stroke-opacity:0.5; }
+  .chamber-boundary-inner{ stroke:#FFFFFF; stroke-width:2.2; stroke-opacity:0.88; transition:stroke-opacity 0.5s ease; }
+  .tick{ stroke:var(--support); stroke-width:1.8; stroke-opacity:0.55; transition:stroke-opacity 0.5s ease; }
+  .tick-major{ stroke:var(--ink); stroke-width:2.2; stroke-opacity:0.72; transition:stroke-opacity 0.5s ease; }
+  .chamber-orientation-signal{ fill:var(--red-100); opacity:0.88; transition:opacity 0.5s ease, transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    transform-box:fill-box; transform-origin:center; }
+
+  /* ── central focus core (unchanged layer radii; catchlight hierarchy
+     refined — primary is now a slightly flattened ellipse, less "cute"
+     at mobile scale) ── */
+  .core-rim{ fill:none; stroke:#FFFFFF; stroke-width:3; stroke-opacity:0.96;
+    transition:stroke-opacity 0.5s ease, stroke-width 0.5s ease; }
+  .core-chamber{ fill:url(#coreChamberGrad); }
+  .core-body{ fill:url(#corePupilGrad); }
+  .core-reflection-soft{ fill:url(#softReflectionGrad); transition:opacity 0.5s ease, transform 0.5s ease; }
+  .core-shadow-lower{ fill:#000000; opacity:0.2; }
+  .catchlight{ fill:#FFFFFF; transform-box:fill-box; transform-origin:center;
+    transition:opacity 0.5s ease, transform 0.55s cubic-bezier(0.4,0,0.2,1); }
+  .catchlight-primary{ opacity:1; }
+  .catchlight-secondary{ opacity:0.6; }
+
+  /* ══ semantic state deltas — structural + spatial, not opacity-only;
+     bigger and more legible at mobile scale than Prototype 03 ══ */
+  /* watching (baseline): stable unified architecture, quiet red path */
+
+  /* searching: focus orientation becomes directional; the red path
+     progresses from chamber through r3/r4; right gateway opens slightly */
+  #eyeAssembly.state-searching #catchlightPrimary{ transform:translate(2.6px,-2px); }
+  #eyeAssembly.state-searching .chamber-orientation-signal{ opacity:1; transform:translate(3px,-2.2px) rotate(5deg); }
+  #eyeAssembly.state-searching .chamber-link-signal{ stroke-opacity:0.9; }
+  #eyeAssembly.state-searching .role-red-78,
+  #eyeAssembly.state-searching .role-red-50,
+  #eyeAssembly.state-searching .role-red-100{ stroke-opacity:1; }
+  #eyeAssembly.state-searching .connector-signal{ stroke-opacity:1; }
+  #eyeAssembly.state-searching .ring-level[data-ring="r3"],
+  #eyeAssembly.state-searching .ring-level[data-ring="r4"]{ opacity:0.97; }
+  #eyeAssembly.state-searching .ring-level[data-ring="r3"] .role-ink,
+  #eyeAssembly.state-searching .ring-level[data-ring="r3"] .role-support,
+  #eyeAssembly.state-searching .ring-level[data-ring="r4"] .role-quiet{ stroke-opacity:1; }
+  #eyeAssembly.state-searching .core-chamber{ opacity:0.75; }
+  #eyeAssembly.state-searching .ring-gate[data-gate="right"]{ transform:translateX(3.5px) rotate(1.3deg); }
+  #eyeAssembly.state-searching .tick-major{ stroke-opacity:0.85; }
+  #eyeAssembly.state-searching .tick{ stroke-opacity:0.72; }
+  #eyeAssembly.state-searching .ring-level[data-ring="r1"] .role-ink,
+  #eyeAssembly.state-searching .ring-level[data-ring="r2"] .role-support{ stroke-opacity:1; }
+  #eyeAssembly.state-searching #bridgeSignal{ opacity:0.96; r:8; }
+  #eyeAssembly.state-searching .rb-signal-ring{ stroke-opacity:0.8; }
+
+  /* found: a complete route visibly aligns from focus to right bridge —
+     communicated through gate alignment, connector/plate clarity, and
+     local contrast along the successful path, NOT through system-wide
+     dimming. role-support/role-quiet/r5/r6 never drop below ~45% of
+     their normal (watching) strength (corrected from Prototype 04, which
+     read as partial erasure rather than alignment). */
+  #eyeAssembly.state-found .lc-bracket{ transform:translateX(-4px) rotate(-1deg); }
+  #eyeAssembly.state-found .ring-gate[data-gate="left"]{ transform:translateX(-4px); }
+  #eyeAssembly.state-found .ring-gate[data-gate="right"]{ transform:translateX(6px) rotate(2deg); }
+  #eyeAssembly.state-found .core-reflection-soft{ opacity:0.6; transform:scale(0.88); }
+  #eyeAssembly.state-found .role-quiet{ stroke-opacity:0.26; }
+  #eyeAssembly.state-found .role-support{ stroke-opacity:0.34; }
+  #eyeAssembly.state-found .role-ink{ stroke-opacity:0.5; }
+  #eyeAssembly.state-found .ring-level[data-ring="r5"]{ opacity:0.32; }
+  #eyeAssembly.state-found .ring-level[data-ring="r6"]{ opacity:0.28; }
+  #eyeAssembly.state-found .tension-path.tension-thick{ stroke-opacity:0.14; }
+  #eyeAssembly.state-found .tension-path.tension-thin{ stroke-opacity:0.08; }
+  #eyeAssembly.state-found .tick{ stroke-opacity:0.4; }
+  #eyeAssembly.state-found .tick-major{ stroke-opacity:0.55; }
+  #eyeAssembly.state-found .core-chamber{ opacity:0.75; }
+  #eyeAssembly.state-found .role-red-78,
+  #eyeAssembly.state-found .role-red-50,
+  #eyeAssembly.state-found .role-red-100{ stroke-opacity:1; }
+  #eyeAssembly.state-found .connector-signal{ stroke-opacity:1; }
+  #eyeAssembly.state-found .plate,
+  #eyeAssembly.state-found .plate-keyline{ stroke-opacity:1; }
+  #eyeAssembly.state-found #bridgeSignal{ opacity:1; r:8.8; }
+  #eyeAssembly.state-found .rb-signal-ring{ stroke-opacity:0.92; }
+
+  /* solved: aligned route settles into calm clarity — the architecture
+     resolves (plates/channels/chamber clear up, gates settle, noise
+     recedes); red is concentrated, not pushed uniformly to maximum
+     (moderated from Prototype 04, where every red tier read as "brighter
+     everywhere" rather than "resolved"). */
+  #eyeAssembly.state-solved .core-rim{ stroke-opacity:1; stroke-width:3.4; }
+  #eyeAssembly.state-solved .role-red-100{ stroke-opacity:1; }
+  #eyeAssembly.state-solved .role-red-78{ stroke-opacity:0.9; }
+  #eyeAssembly.state-solved .role-red-50{ stroke-opacity:0.8; }
+  #eyeAssembly.state-solved .counter-signal{ stroke-opacity:0.15; }
+  #eyeAssembly.state-solved .lc-dot-active{ opacity:1; }
+  #eyeAssembly.state-solved .chamber-boundary-inner{ stroke-opacity:1; }
+  #eyeAssembly.state-solved .plate,
+  #eyeAssembly.state-solved .plate-keyline,
+  #eyeAssembly.state-solved .channel-backing{ stroke-opacity:1; }
+  #eyeAssembly.state-solved .tick{ stroke-opacity:0.25; }
+  #eyeAssembly.state-solved .tick-major{ stroke-opacity:0.4; }
+  #eyeAssembly.state-solved .role-quiet{ stroke-opacity:0.35; }
+  #eyeAssembly.state-solved .role-support{ stroke-opacity:0.5; }
+  #eyeAssembly.state-solved .ring-level[data-ring="r5"],
+  #eyeAssembly.state-solved .ring-level[data-ring="r6"]{ opacity:0.48; }
+  #eyeAssembly.state-solved .ring-gate{ transform:rotate(0.8deg); }
+  #eyeAssembly.state-solved .ring-level[data-ring="r1"] .role-ink,
+  #eyeAssembly.state-solved .ring-level[data-ring="r3"] .role-ink{ stroke-opacity:1; }
+
+  /* embodied: the whole eye feels integrated, outer support relationships
+     become slightly more present, focus depth richer, no burst */
+  #eyeAssembly.state-embodied .catchlight-primary{ opacity:1; transform:scale(1.1); }
+  #eyeAssembly.state-embodied .catchlight-secondary{ opacity:0.72; }
+  #eyeAssembly.state-embodied .qmf-topmark{ stroke-opacity:0.55; }
+  #eyeAssembly.state-embodied .core-rim{ stroke-width:3.6; stroke-opacity:1; }
+  #eyeAssembly.state-embodied .core-body{ fill:url(#corePupilGradEmbodied); }
+  #eyeAssembly.state-embodied .ring-level[data-ring="r3"]{ opacity:0.93; }
+  #eyeAssembly.state-embodied .ring-level[data-ring="r4"]{ opacity:0.88; }
+  #eyeAssembly.state-embodied .ring-level[data-ring="r5"]{ opacity:0.9; }
+  #eyeAssembly.state-embodied .ring-level[data-ring="r6"]{ opacity:0.85; }
+  #eyeAssembly.state-embodied .role-support{ stroke-opacity:0.9; }
+  #eyeAssembly.state-embodied .role-quiet{ stroke-opacity:0.7; }
+  #eyeAssembly.state-embodied .tension-thick{ stroke-opacity:0.4; }
+  #eyeAssembly.state-embodied .tension-thin{ stroke-opacity:0.28; }
+  #eyeAssembly.state-embodied .chamber-boundary-outer,
+  #eyeAssembly.state-embodied .chamber-boundary{ stroke-opacity:0.68; }
+
+  /* idle: active red nearly disappears; mechanical architecture and
+     personality remain; focus stays alive but quiet */
+  #eyeAssembly.state-idle .role-red-100,
+  #eyeAssembly.state-idle .role-red-78,
+  #eyeAssembly.state-idle .role-red-50,
+  #eyeAssembly.state-idle .role-red-26{ stroke-opacity:0.13; }
+  #eyeAssembly.state-idle .counter-signal{ stroke-opacity:0.08; }
+  #eyeAssembly.state-idle #bridgeSignal{ opacity:0.22; }
+  #eyeAssembly.state-idle .rb-signal-ring{ stroke-opacity:0.16; }
+  #eyeAssembly.state-idle .lc-dot-active{ opacity:0.35; }
+  #eyeAssembly.state-idle .chamber-orientation-signal{ opacity:0.2; }
+  #eyeAssembly.state-idle .chamber-link-signal{ stroke-opacity:0.16; }
+  #eyeAssembly.state-idle .connector-signal{ stroke-opacity:0.18; }
+  #eyeAssembly.state-idle .core-rim{ stroke-opacity:0.65; }
+  #eyeAssembly.state-idle .core-reflection-soft{ opacity:0.55; }
+  #eyeAssembly.state-idle .catchlight-secondary{ opacity:0.4; }
+  #eyeAssembly.state-idle .tension-path{ stroke-opacity:0.08; }
+  #eyeAssembly.state-idle .role-ink{ stroke-opacity:0.62; }
+  #eyeAssembly.state-idle .role-support{ stroke-opacity:0.55; }
+  #eyeAssembly.state-idle .core-chamber{ opacity:0.8; }
+
+  /* Motion is gated by VisibleEyeLife: only plays while the tab is visible,
+     the assembly is in view, and the user has not requested reduced motion.
+     Otherwise every state is still fully legible, just reached instantly. */
+  html:not(.eye-motion-ok) #eyeAssembly *{ transition:none !important; }
+  @media (prefers-reduced-motion:reduce){
+    #eyeAssembly *{ transition:none !important; }
+  }
+
+  /* ── debug panel (built by JS only when ?debug=1; absent from normal DOM) ── */
+  #eyeDebugPanel{
+    position:fixed; right:16px; bottom:16px; z-index:9999;
+    background:#FFFFFF; border:1px solid #E4E7EC; border-radius:14px;
+    padding:12px 14px; font:12px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    width:200px;
+  }
+  #eyeDebugPanel h4{ font-size:11px; text-transform:uppercase; letter-spacing:0.04em; color:#777A82; margin-bottom:8px; }
+  #eyeDebugPanel button{
+    display:block; width:100%; margin-bottom:6px; padding:6px 8px;
+    border:1px solid #E4E7EC; border-radius:8px; background:#FAFBFD; color:#30333A;
+    font-size:12px; cursor:pointer; text-align:left;
+  }
+  #eyeDebugPanel button:hover{ background:#F0F1F4; }
+  #eyeDebugPanel button.is-active{ border-color:#B95B5A; color:#B95B5A; }
+  #eyeDebugPanel .eye-debug-readout{ margin-top:6px; color:#777A82; font-size:11px; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <svg class="mech-eye" viewBox="-760 -440 1520 880" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- restrained gradients, scoped to the focus core and its immediate
+             rim only — no gradients appear anywhere else in the piece. -->
+        <radialGradient id="coreChamberGrad" cx="42%" cy="38%" r="65%">
+          <stop offset="0%" stop-color="#2A2D34"/>
+          <stop offset="100%" stop-color="#1A1C22"/>
+        </radialGradient>
+        <radialGradient id="corePupilGrad" cx="45%" cy="40%" r="70%">
+          <stop offset="0%" stop-color="#22242B"/>
+          <stop offset="55%" stop-color="#0E0F13"/>
+          <stop offset="100%" stop-color="#000000"/>
+        </radialGradient>
+        <radialGradient id="corePupilGradEmbodied" cx="45%" cy="40%" r="70%">
+          <stop offset="0%" stop-color="#24262E"/>
+          <stop offset="55%" stop-color="#07080A"/>
+          <stop offset="100%" stop-color="#000000"/>
+        </radialGradient>
+        <radialGradient id="softReflectionGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.16"/>
+          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <g id="eyeAssembly" class="state-watching">
+
+        <!-- quiet measurement field (unchanged) -->
+        <g class="qmf">
+          <path class="qmf-axis" d="M -696,0 L 696,0"/>
+          <path class="qmf-axis" d="M 0,-345.9 L 0,364.3"/>
+          <path class="qmf-diag" d="M -450.1,-233.1 L 450.1,245.5"/>
+          <path class="qmf-diag" d="M -450.1,245.5 L 450.1,-233.1"/>
+          <circle class="qmf-circle" cx="0" cy="0" r="340"/>
+          <circle class="qmf-circle qmf-circle-outer" cx="0" cy="0" r="410"/>
+          <g class="qmf-axisdot" transform="translate(-538.7,0)"><circle r="13"/><circle class="qmf-axisdot-core" r="3.5"/></g>
+          <g class="qmf-axisdot" transform="translate(538.7,0)"><circle r="13"/><circle class="qmf-axisdot-core" r="3.5"/></g>
+          <circle class="qmf-topmark" cx="0" cy="-327.1" r="10"/>
+        </g>
+
+        <!-- outer almond frame (unchanged) -->
+        <path class="eye-lid-upper" d="M -726 0 Q 0 -752, 726 0"/>
+        <path class="eye-lid-lower" d="M -726 0 Q 0 792, 726 0"/>
+
+        <!-- outer-eye tension paths: quiet tapered relationships tying the
+             mechanism to the wider eye interior (section 2/10) -->
+        <g class="tension-paths">
+          <path class="tension-path tension-thick tension-upper" d="M -0.0,-296.0 L -0.0,-330.0"/>
+          <path class="tension-path tension-thin tension-upper" d="M -0.0,-330.0 L -0.0,-362.0"/>
+          <path class="tension-path tension-thick tension-lower" d="M 0.0,296.0 L 0.0,340.0"/>
+          <path class="tension-path tension-thin tension-lower" d="M 0.0,340.0 L 0.0,380.0"/>
+          <path class="tension-path tension-thick tension-right" d="M 278.15,101.24 L 302.58,110.13"/>
+          <path class="tension-path tension-thin tension-right" d="M 302.58,110.13 L 330.77,120.39"/>
+          <path class="tension-path tension-thick tension-left" d="M -278.15,101.24 L -295.06,107.39"/>
+          <path class="tension-path tension-thin tension-left" d="M -295.06,107.39 L -323.25,117.65"/>
+        </g>
+
+        <!-- left control assembly (protected id, strengthened input gate) -->
+        <g id="leftControl" class="left-control">
+          <path class="lc-sleeve" d="M -352,-36 L -296,-36 L -296,36 L -352,36 Z"/>
+          <path class="lc-bracket" d="M -327,-47 L -352,-47 L -352,47 L -327,47"/>
+          <path class="lc-connector" d="M -296,0 L -327,0"/>
+          <circle class="lc-dot" cx="-372" cy="-38" r="5.4"/>
+          <circle id="indicatorActive" class="lc-dot lc-dot-active" cx="-372" cy="-12.5" r="7.4"/>
+          <circle class="lc-dot" cx="-372" cy="12.5" r="5.4"/>
+          <circle class="lc-dot" cx="-372" cy="38" r="5.4"/>
+        </g>
+
+        <!-- right process bridge (protected id, strengthened output gateway) -->
+        <g id="rightBridge" class="right-bridge">
+          <path class="rb-sleeve" d="M 234,-19 L 295,-19 L 295,19 L 234,19 Z"/>
+          <path class="rb-line" d="M 288,0 L 439,0"/>
+          <circle class="rb-signal-ring" cx="383" cy="0" r="12.4"/>
+          <circle id="bridgeSignal" class="rb-signal" cx="383" cy="0" r="6.8"/>
+          <path class="rb-terminal" d="M 439,-16 L 439,16"/>
+          <path class="rb-terminal-anchor" d="M 439,-16 L 453,-16 M 439,16 L 453,16"/>
+        </g>
+
+        <!-- segmented operation rings: 3 readable clusters
+             FOCUS (r1,r2) / PROCESS (r3,r4) / SUPPORT (r5,r6),
+             separated by larger intentional voids; lower U-shapes
+             shortened/redistributed; one stepped-curved-path piece -->
+        <g class="ring-system">
+          <g class="ring-level" data-ring="r1" data-cluster="focus">
+            <path class="seg role-ink" d="M 155.6,27.44 A 158,158 0 0 1 -105.72,117.42" stroke-width="11"/>
+            <path class="seg role-ink" d="M -121.04,101.56 A 158,158 0 0 1 -155.6,27.44" stroke-width="11"/>
+            <path class="seg role-ink" d="M -155.6,-27.44 A 158,158 0 0 1 -88.35,-130.99" stroke-width="11"/>
+            <path class="seg role-red-78" d="M -5.51,-157.9 A 158,158 0 0 1 92.87,-127.82" stroke-width="11"/>
+            <path class="seg role-red-100" d="M 105.72,-117.42 A 158,158 0 0 1 157.13,-16.52" stroke-width="11"/>
+          </g>
+          <g class="ring-level" data-ring="r2" data-cluster="focus">
+            <path class="seg role-support" d="M 171.1,49.06 A 178,178 0 0 1 94.33,150.95" stroke-width="9.5"/>
+            <path class="seg role-support" d="M 72.4,162.61 A 178,178 0 0 1 -154.15,89.0" stroke-width="9.5"/>
+            <path class="seg role-support" d="M -171.1,-49.06 A 178,178 0 0 1 -55.01,-169.29" stroke-width="9.5"/>
+            <path class="seg role-red-26 counter-signal" d="M -167.27,60.88 A 178,178 0 0 1 -176.27,24.77" stroke-width="9.5"/>
+            <g class="occlusion-pair">
+              <path class="channel-backing" d="M 136.36,-114.42 A 178,178 0 0 1 176.27,-24.77" stroke-width="12.5"/>
+              <path class="plate-keyline" d="M 136.36,-114.42 A 178,178 0 0 1 176.27,-24.77" stroke-width="8"/>
+              <path class="seg role-red-100" d="M 136.36,-114.42 A 178,178 0 0 1 176.27,-24.77" stroke-width="6"/>
+            </g>
+          </g>
+          <g class="ring-level" data-ring="r3" data-cluster="process">
+            <path class="seg role-ink" d="M -199.21,-72.51 A 212,212 0 0 1 -118.55,-175.76 L -114.63,-169.95 A 205,205 0 0 1 -7.15,-204.88" stroke-width="8.6"/>
+            <path class="seg role-ink" d="M -65.51,201.62 A 212,212 0 0 1 -207.37,44.08" stroke-width="8.6"/>
+            <path class="seg role-support" d="M 44.08,-207.37 A 212,212 0 0 1 183.6,-106.0" stroke-width="8.6"/>
+            <path class="seg role-red-78" d="M 193.67,-86.23 A 212,212 0 0 1 211.48,-14.79" stroke-width="8.6"/>
+          </g>
+          <g class="ring-level" data-ring="r4" data-cluster="process">
+            <path class="seg role-quiet" d="M -234.0,0.0 A 234,234 0 0 1 -173.9,-156.58" stroke-width="7.6"/>
+            <path class="seg role-quiet" d="M -144.06,-184.39 A 234,234 0 0 1 -0.0,-234.0" stroke-width="7.6"/>
+            <path class="seg role-red-50" d="M 102.58,-210.32 A 234,234 0 0 1 216.96,-87.66" stroke-width="7.6"/>
+            <path class="seg role-support lower-right-plate" d="M 124.0,198.44 A 234,234 0 0 1 -16.32,233.43" stroke-width="7.6"/>
+            <path class="seg role-ink lower-left-plate" d="M -102.58,210.32 A 234,234 0 0 1 -202.65,117.0" stroke-width="6.4"/>
+            <g class="ring-gate" data-gate="right">
+              <path class="channel-backing" d="M 222.55,-72.31 A 234,234 0 0 1 219.89,80.03" stroke-width="11.6"/>
+              <path class="plate-keyline" d="M 222.55,-72.31 A 234,234 0 0 1 219.89,80.03" stroke-width="9.6"/>
+              <path class="plate role-gateway-plate" d="M 222.55,-72.31 A 234,234 0 0 1 219.89,80.03" stroke-width="8.8"/>
+            </g>
+          </g>
+          <g class="ring-level" data-ring="r5" data-cluster="support">
+            <path class="seg role-quiet" d="M 244.47,119.24 A 272,272 0 0 1 93.03,255.6" stroke-width="6.8"/>
+            <path class="seg role-quiet" d="M -174.84,208.36 A 272,272 0 0 1 -271.83,9.49" stroke-width="6.8"/>
+            <path class="seg role-quiet" d="M -244.47,-119.24 A 272,272 0 0 1 255.6,-93.03" stroke-width="6.8"/>
+          </g>
+          <g class="ring-level" data-ring="r6" data-cluster="support">
+            <path class="seg role-quiet" d="M 245.4,165.52 A 296,296 0 0 1 51.4,291.5" stroke-width="6.2"/>
+            <path class="seg role-quiet" d="M -120.39,-270.41 A 296,296 0 0 1 270.41,-120.39" stroke-width="6.2"/>
+            <g class="ring-gate" data-gate="left">
+              <path class="channel-backing" d="M -256.34,148.0 A 296,296 0 0 1 -270.41,-120.39" stroke-width="10.6"/>
+              <path class="plate-keyline" d="M -256.34,148.0 A 296,296 0 0 1 -270.41,-120.39" stroke-width="8.6"/>
+              <path class="plate role-left-gate-plate" d="M -256.34,148.0 A 296,296 0 0 1 -270.41,-120.39" stroke-width="7.8"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- connector bridges: 6 physical links, deliberately non-matching
+             angles; 2 carry the red signal path forward; 1 is an OFFSET
+             lower connector between the process and support clusters -->
+        <g class="ring-connectors">
+          <path class="connector-bridge connector-signal" d="M 121.04,-101.56 L 136.36,-114.42"/>
+          <path class="connector-bridge" d="M 154.15,89.0 L 183.6,106.0"/>
+          <path class="connector-bridge connector-signal" d="M 199.21,-72.51 L 219.89,-80.03"/>
+          <path class="connector-bridge" d="M 233.11,20.39 L 270.96,23.71"/>
+          <path class="connector-bridge" d="M -267.87,-47.23 L -291.5,-51.4"/>
+          <path class="connector-bridge connector-offset" d="M -60.56,226.03 L -70.4,262.73"/>
+        </g>
+        <!-- small graphite cap: the r4->r5 connector visually emerges from
+             beneath it near the right gateway -->
+        <rect class="gate-emergence-cap" x="226.11" y="15.39" width="14" height="10" rx="2"/>
+
+        <!-- focus-region attachments: the red link now starts at the CORE
+             RIM itself (not just the chamber), so it visibly originates
+             from the focus region; the graphite link ties the chamber to
+             r1 on the quiet side -->
+        <g class="chamber-links">
+          <path class="chamber-link chamber-link-signal" d="M 80.81,-29.41 L 148.47,-54.04"/>
+          <path class="chamber-link" d="M -124.98,45.49 L -148.47,54.04"/>
+        </g>
+
+        <!-- inner optical chamber (protected id, unchanged from Prototype 03) -->
+        <g id="opticalChamber" class="optical-chamber">
+          <path class="chamber-boundary chamber-boundary-outer" d="M -140.01,-50.96 A 149,149 0 1 1 -146.74,25.87"/>
+          <path class="chamber-boundary" d="M -76.29,-108.95 A 133,133 0 1 1 -108.95,-76.29"/>
+          <path class="chamber-boundary chamber-boundary-inner" d="M -102.19,59.0 A 118,118 0 1 1 -75.85,90.39"/>
+          <g class="chamber-ticks">
+            <path class="tick tick-major" d="M 99.0,0.0 L 118.0,0.0"/>
+            <path class="tick" d="M 98.46,10.35 L 110.39,11.6"/>
+            <path class="tick" d="M 96.84,20.58 L 108.57,23.08"/>
+            <path class="tick" d="M 94.15,30.59 L 105.57,34.3"/>
+            <path class="tick" d="M 90.44,40.27 L 101.4,45.15"/>
+            <path class="tick tick-major" d="M 85.74,49.5 L 102.19,59.0"/>
+            <path class="tick" d="M 80.09,58.19 L 89.8,65.24"/>
+            <path class="tick" d="M 73.57,66.24 L 82.49,74.27"/>
+            <path class="tick" d="M 66.24,73.57 L 74.27,82.49"/>
+            <path class="tick" d="M 58.19,80.09 L 65.24,89.8"/>
+            <path class="tick tick-major" d="M 49.5,85.74 L 59.0,102.19"/>
+            <path class="tick" d="M 40.27,90.44 L 45.15,101.4"/>
+            <path class="tick" d="M 30.59,94.15 L 34.3,105.57"/>
+            <path class="tick" d="M 20.58,96.84 L 23.08,108.57"/>
+            <path class="tick" d="M 10.35,98.46 L 11.6,110.39"/>
+            <path class="tick tick-major" d="M 0.0,99.0 L 0.0,118.0"/>
+            <path class="tick" d="M -10.35,98.46 L -11.6,110.39"/>
+            <path class="tick" d="M -20.58,96.84 L -23.08,108.57"/>
+            <path class="tick" d="M -30.59,94.15 L -34.3,105.57"/>
+            <path class="tick" d="M -40.27,90.44 L -45.15,101.4"/>
+            <path class="tick tick-major" d="M -49.5,85.74 L -59.0,102.19"/>
+            <path class="tick" d="M -90.44,40.27 L -101.4,45.15"/>
+            <path class="tick" d="M -94.15,30.59 L -105.57,34.3"/>
+            <path class="tick" d="M -96.84,20.58 L -108.57,23.08"/>
+            <path class="tick" d="M -98.46,10.35 L -110.39,11.6"/>
+            <path class="tick tick-major" d="M -99.0,0.0 L -118.0,0.0"/>
+            <path class="tick" d="M -98.46,-10.35 L -110.39,-11.6"/>
+            <path class="tick" d="M -96.84,-20.58 L -108.57,-23.08"/>
+            <path class="tick" d="M -94.15,-30.59 L -105.57,-34.3"/>
+            <path class="tick" d="M -90.44,-40.27 L -101.4,-45.15"/>
+            <path class="tick" d="M -58.19,-80.09 L -65.24,-89.8"/>
+            <path class="tick tick-major" d="M -49.5,-85.74 L -59.0,-102.19"/>
+            <path class="tick" d="M -40.27,-90.44 L -45.15,-101.4"/>
+            <path class="tick" d="M -30.59,-94.15 L -34.3,-105.57"/>
+            <path class="tick" d="M -20.58,-96.84 L -23.08,-108.57"/>
+            <path class="tick" d="M -10.35,-98.46 L -11.6,-110.39"/>
+            <path class="tick tick-major" d="M -0.0,-99.0 L -0.0,-118.0"/>
+            <path class="tick" d="M 10.35,-98.46 L 11.6,-110.39"/>
+            <path class="tick" d="M 20.58,-96.84 L 23.08,-108.57"/>
+            <path class="tick" d="M 30.59,-94.15 L 34.3,-105.57"/>
+            <path class="tick" d="M 40.27,-90.44 L 45.15,-101.4"/>
+            <path class="tick tick-major" d="M 49.5,-85.74 L 59.0,-102.19"/>
+            <path class="tick" d="M 58.19,-80.09 L 65.24,-89.8"/>
+            <path class="tick" d="M 66.24,-73.57 L 74.27,-82.49"/>
+            <path class="tick" d="M 73.57,-66.24 L 82.49,-74.27"/>
+            <path class="tick" d="M 80.09,-58.19 L 89.8,-65.24"/>
+            <path class="tick tick-major" d="M 85.74,-49.5 L 102.19,-59.0"/>
+            <path class="tick" d="M 90.44,-40.27 L 101.4,-45.15"/>
+            <path class="tick" d="M 94.15,-30.59 L 105.57,-34.3"/>
+            <path class="tick" d="M 96.84,-20.58 L 108.57,-23.08"/>
+            <path class="tick" d="M 98.46,-10.35 L 110.39,-11.6"/>
+          </g>
+          <path class="chamber-orientation-signal" d="M 89.94,-36.34 L 116.03,-37.7 L 94.12,-23.47 Z"/>
+        </g>
+
+        <!-- central focus core (protected id, unchanged layer radii; refined
+             catchlight hierarchy) -->
+        <g id="focusCore" class="focus-core">
+          <circle class="core-rim" cx="0" cy="0" r="86"/>
+          <circle class="core-chamber" cx="0" cy="0" r="77"/>
+          <circle class="core-body" cx="4" cy="-3" r="63"/>
+          <ellipse class="core-reflection-soft" cx="-18" cy="16" rx="25" ry="17"/>
+          <path class="core-shadow-lower" d="M -1.32,57.77 A 61,61 0 0 1 -1.32,-63.77 L 0.25,-45.84 A 43,43 0 0 0 0.25,39.84 Z"/>
+          <ellipse id="catchlightPrimary" class="catchlight catchlight-primary" cx="15" cy="-19" rx="11.5" ry="8.5"/>
+          <circle id="catchlightSecondary" class="catchlight catchlight-secondary" cx="-5" cy="5" r="4.2"/>
+        </g>
+
+      </g>
+    </svg>
+  </div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── VisibleEyeLife — unchanged in behavior from Prototype 01-03: motion
+  // is only allowed while the tab is visible, the assembly is in view, and
+  // the user has not requested reduced motion. Still no autoplay loop.
+  // Still exposed on window for introspection.
+  var VisibleEyeLife = (function(){
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var reduced = mq.matches;
+    var docVisible = !document.hidden;
+    var inView = true;
+    var observer = null;
+    var root = document.documentElement;
+
+    function applyMotionState(){
+      var allow = !reduced && docVisible && inView;
+      root.classList.toggle('eye-motion-ok', allow);
+    }
+    function onVisibilityChange(){ docVisible = !document.hidden; applyMotionState(); }
+    function onMqChange(e){ reduced = e.matches; applyMotionState(); }
+
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    if(mq.addEventListener) mq.addEventListener('change', onMqChange);
+    else if(mq.addListener) mq.addListener(onMqChange);
+
+    function observe(el){
+      if(!el || !('IntersectionObserver' in window)) return;
+      observer = new IntersectionObserver(function(entries){
+        var entry = entries[0];
+        inView = !!(entry && entry.isIntersecting);
+        applyMotionState();
+      }, {threshold:0.01});
+      observer.observe(el);
+    }
+    function destroy(){
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      if(mq.removeEventListener) mq.removeEventListener('change', onMqChange);
+      else if(mq.removeListener) mq.removeListener(onMqChange);
+      if(observer) observer.disconnect();
+    }
+
+    applyMotionState();
+    return { observe: observe, destroy: destroy, isReduced: function(){ return reduced; } };
+  })();
+  window.VisibleEyeLife = VisibleEyeLife;
+
+  // ── setVisibleEyeState — identical API and state list to Prototype
+  // 01-03, mapped to the same real semantic lifecycle discovered in
+  // Problem-v86-DARK-ONLY.html's Home hero. This pass only makes each
+  // state's CSS deltas structural/spatial rather than opacity-only; it
+  // does not change the state list, the function signature, or the
+  // class-swap mechanism.
+  var STATES = ['watching','searching','found','solved','embodied','idle'];
+  var current = 'watching';
+
+  function setVisibleEyeState(name){
+    if(STATES.indexOf(name) === -1) name = 'watching';
+    var assembly = document.getElementById('eyeAssembly');
+    if(!assembly) return current;
+    for(var i=0;i<STATES.length;i++) assembly.classList.remove('state-'+STATES[i]);
+    assembly.classList.add('state-'+name);
+    current = name;
+    var readout = document.getElementById('eyeDebugReadout');
+    if(readout) readout.textContent = name;
+    var buttons = document.querySelectorAll('#eyeDebugPanel button[data-state]');
+    for(var b=0;b<buttons.length;b++){
+      buttons[b].classList.toggle('is-active', buttons[b].getAttribute('data-state')===name);
+    }
+    return name;
+  }
+  window.setVisibleEyeState = setVisibleEyeState;
+  window.getVisibleEyeState = function(){ return current; };
+
+  document.addEventListener('DOMContentLoaded', function(){
+    VisibleEyeLife.observe(document.getElementById('eyeAssembly'));
+    setVisibleEyeState('watching');
+
+    // Debug controls: only when the URL explicitly requests them.
+    // Normal view and screenshots never contain this panel.
+    var params = new URLSearchParams(window.location.search);
+    if(params.get('debug') === '1'){
+      var panel = document.createElement('div');
+      panel.id = 'eyeDebugPanel';
+      var h = document.createElement('h4');
+      h.textContent = 'Visible Eye — debug';
+      panel.appendChild(h);
+      STATES.forEach(function(s){
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.setAttribute('data-state', s);
+        btn.textContent = s;
+        btn.addEventListener('click', function(){ setVisibleEyeState(s); });
+        panel.appendChild(btn);
+      });
+      var readout = document.createElement('div');
+      readout.className = 'eye-debug-readout';
+      readout.id = 'eyeDebugReadout';
+      readout.textContent = current;
+      panel.appendChild(readout);
+      var rmNote = document.createElement('div');
+      rmNote.className = 'eye-debug-readout';
+      rmNote.textContent = 'reduced-motion: ' + (VisibleEyeLife.isReduced() ? 'on' : 'off');
+      panel.appendChild(rmNote);
+      document.body.appendChild(panel);
+      setVisibleEyeState('watching');
+    }
+  });
+})();
+</script>
+</body>
+</html>

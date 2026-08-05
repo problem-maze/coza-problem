@@ -1,0 +1,3175 @@
+{
+  "generatedAtNote": "timestamps below are wall-clock from this run, not baked into the deterministic inventory files",
+  "tiers": {
+    "high": {
+      "tier": "high",
+      "consoleErrorsAtColdStart": [
+        "X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET"
+      ],
+      "coldStart": {
+        "label": "cold-start",
+        "time": 1785553742130,
+        "activeRoute": "landing",
+        "tier": "high",
+        "tierCoherent": true,
+        "gpu": {
+          "mode": "full",
+          "tier": "high",
+          "emergency": false,
+          "coverage": {
+            "backdropSelectors": 91,
+            "blurSelectors": 45,
+            "blendSelectors": 2,
+            "inaccessibleSheets": 4
+          }
+        },
+        "pageLife": {
+          "route": "landing",
+          "previous": null,
+          "hidden": false,
+          "enteredRoute": null,
+          "domReady": true,
+          "resources": {
+            "watchTs": {
+              "state": "idle",
+              "pages": [
+                "watch"
+              ]
+            },
+            "talkStatus": {
+              "state": "idle",
+              "pages": [
+                "talk"
+              ]
+            },
+            "solveBlink": {
+              "state": "idle",
+              "pages": [
+                "solve"
+              ]
+            },
+            "solveReplyPoll": {
+              "state": "idle",
+              "pages": [
+                "solve"
+              ]
+            },
+            "landingSnow": {
+              "state": "active",
+              "pages": [
+                "landing"
+              ]
+            },
+            "introClock": {
+              "state": "idle",
+              "pages": [
+                "intro"
+              ]
+            },
+            "circleTicker": {
+              "state": "idle",
+              "pages": [
+                "circle"
+              ]
+            },
+            "watchTicker": {
+              "state": "idle",
+              "pages": [
+                "watch"
+              ]
+            },
+            "watchLiveUpdates": {
+              "state": "idle",
+              "pages": [
+                "watch"
+              ]
+            },
+            "adminRefresh": {
+              "state": "idle",
+              "pages": [
+                "admin"
+              ]
+            }
+          },
+          "serial": 0
+        },
+        "emergency": {
+          "active": false,
+          "reason": "",
+          "activatedAt": 0,
+          "pausedAnimations": 0
+        },
+        "visible": true,
+        "timers": {
+          "snowActive": true,
+          "snowRaf": true,
+          "circle": false,
+          "watch": false,
+          "watchLive": false,
+          "watchTs": false,
+          "talk": false,
+          "solveBlink": false,
+          "admin": false
+        }
+      },
+      "navLoop": [
+        {
+          "label": "nav-loop-iteration",
+          "time": 1785553742973,
+          "activeRoute": "talk",
+          "tier": "high",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "full",
+            "tier": "high",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 10
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        {
+          "label": "nav-loop-iteration",
+          "time": 1785553743783,
+          "activeRoute": "talk",
+          "tier": "high",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "full",
+            "tier": "high",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 20
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        {
+          "label": "nav-loop-iteration",
+          "time": 1785553744613,
+          "activeRoute": "talk",
+          "tier": "high",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "full",
+            "tier": "high",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 30
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        }
+      ],
+      "visibility": {
+        "beforeHide": {
+          "label": "before-hide",
+          "time": 1785553744616,
+          "activeRoute": "talk",
+          "tier": "high",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "full",
+            "tier": "high",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 30
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        "hidden": true,
+        "afterHideWait": {
+          "label": "after-hide-wait",
+          "time": 1785553744937,
+          "activeRoute": "landing",
+          "tier": "high",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "full",
+            "tier": "high",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": true,
+            "enteredRoute": null,
+            "domReady": true,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 31
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        "restored": false,
+        "afterRestore": {
+          "label": "after-restore",
+          "time": 1785553745257,
+          "activeRoute": "landing",
+          "tier": "high",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "full",
+            "tier": "high",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": "landing",
+            "domReady": true,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "active",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 31
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": true,
+            "snowRaf": true,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        }
+      },
+      "tierForcePersistence": {
+        "applicable": true,
+        "before": "high",
+        "attemptedChange": false,
+        "after": "high",
+        "heldForced": true
+      },
+      "brandReveal": {
+        "applicable": true,
+        "activeShortlyAfterPlay": true,
+        "elapsedMsWhenChecked": 1379,
+        "activeAfterEarlyHide": false,
+        "finishedEarlyDueToHidden": true,
+        "finishedNaturallyFlagAlreadyTrue": true
+      },
+      "devtoolsInterval": {
+        "beforeHidden": true,
+        "duringHidden": false,
+        "afterRestore": true
+      },
+      "heroPrinciplesColdState": {
+        "bootTimer": 0,
+        "interval": 0,
+        "hiPanelPresent": true
+      },
+      "consoleErrorsFull": [
+        "X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET"
+      ],
+      "pageErrors": []
+    },
+    "mid": {
+      "tier": "mid",
+      "consoleErrorsAtColdStart": [
+        "X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET"
+      ],
+      "coldStart": {
+        "label": "cold-start",
+        "time": 1785553760516,
+        "activeRoute": "landing",
+        "tier": "mid",
+        "tierCoherent": true,
+        "gpu": {
+          "mode": "reduced",
+          "tier": "mid",
+          "emergency": false,
+          "coverage": {
+            "backdropSelectors": 91,
+            "blurSelectors": 45,
+            "blendSelectors": 2,
+            "inaccessibleSheets": 4
+          }
+        },
+        "pageLife": {
+          "route": "landing",
+          "previous": null,
+          "hidden": false,
+          "enteredRoute": null,
+          "domReady": true,
+          "resources": {
+            "watchTs": {
+              "state": "idle",
+              "pages": [
+                "watch"
+              ]
+            },
+            "talkStatus": {
+              "state": "idle",
+              "pages": [
+                "talk"
+              ]
+            },
+            "solveBlink": {
+              "state": "idle",
+              "pages": [
+                "solve"
+              ]
+            },
+            "solveReplyPoll": {
+              "state": "idle",
+              "pages": [
+                "solve"
+              ]
+            },
+            "landingSnow": {
+              "state": "active",
+              "pages": [
+                "landing"
+              ]
+            },
+            "introClock": {
+              "state": "idle",
+              "pages": [
+                "intro"
+              ]
+            },
+            "circleTicker": {
+              "state": "idle",
+              "pages": [
+                "circle"
+              ]
+            },
+            "watchTicker": {
+              "state": "idle",
+              "pages": [
+                "watch"
+              ]
+            },
+            "watchLiveUpdates": {
+              "state": "idle",
+              "pages": [
+                "watch"
+              ]
+            },
+            "adminRefresh": {
+              "state": "idle",
+              "pages": [
+                "admin"
+              ]
+            }
+          },
+          "serial": 0
+        },
+        "emergency": {
+          "active": false,
+          "reason": "",
+          "activatedAt": 0,
+          "pausedAnimations": 0
+        },
+        "visible": true,
+        "timers": {
+          "snowActive": true,
+          "snowRaf": true,
+          "circle": false,
+          "watch": false,
+          "watchLive": false,
+          "watchTs": false,
+          "talk": false,
+          "solveBlink": false,
+          "admin": false
+        }
+      },
+      "navLoop": [
+        {
+          "label": "nav-loop-iteration",
+          "time": 1785553761344,
+          "activeRoute": "talk",
+          "tier": "mid",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "reduced",
+            "tier": "mid",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 10
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        {
+          "label": "nav-loop-iteration",
+          "time": 1785553762165,
+          "activeRoute": "talk",
+          "tier": "mid",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "reduced",
+            "tier": "mid",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 20
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        {
+          "label": "nav-loop-iteration",
+          "time": 1785553762976,
+          "activeRoute": "talk",
+          "tier": "mid",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "reduced",
+            "tier": "mid",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 30
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        }
+      ],
+      "visibility": {
+        "beforeHide": {
+          "label": "before-hide",
+          "time": 1785553762981,
+          "activeRoute": "talk",
+          "tier": "mid",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "reduced",
+            "tier": "mid",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 30
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        "hidden": true,
+        "afterHideWait": {
+          "label": "after-hide-wait",
+          "time": 1785553763300,
+          "activeRoute": "landing",
+          "tier": "mid",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "reduced",
+            "tier": "mid",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": true,
+            "enteredRoute": null,
+            "domReady": true,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 31
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        "restored": false,
+        "afterRestore": {
+          "label": "after-restore",
+          "time": 1785553763615,
+          "activeRoute": "landing",
+          "tier": "mid",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "reduced",
+            "tier": "mid",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": "landing",
+            "domReady": true,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "active",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 31
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": true,
+            "snowRaf": true,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        }
+      },
+      "tierForcePersistence": {
+        "applicable": true,
+        "before": "mid",
+        "attemptedChange": false,
+        "after": "mid",
+        "heldForced": true
+      },
+      "brandReveal": {
+        "applicable": true,
+        "activeShortlyAfterPlay": true,
+        "elapsedMsWhenChecked": 1404,
+        "activeAfterEarlyHide": false,
+        "finishedEarlyDueToHidden": true,
+        "finishedNaturallyFlagAlreadyTrue": true
+      },
+      "devtoolsInterval": {
+        "beforeHidden": true,
+        "duringHidden": false,
+        "afterRestore": true
+      },
+      "heroPrinciplesColdState": {
+        "bootTimer": 0,
+        "interval": 0,
+        "hiPanelPresent": true
+      },
+      "consoleErrorsFull": [
+        "X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET"
+      ],
+      "pageErrors": []
+    },
+    "low": {
+      "tier": "low",
+      "consoleErrorsAtColdStart": [
+        "X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET"
+      ],
+      "coldStart": {
+        "label": "cold-start",
+        "time": 1785553780266,
+        "activeRoute": "landing",
+        "tier": "low",
+        "tierCoherent": true,
+        "gpu": {
+          "mode": "minimal",
+          "tier": "low",
+          "emergency": false,
+          "coverage": {
+            "backdropSelectors": 91,
+            "blurSelectors": 45,
+            "blendSelectors": 2,
+            "inaccessibleSheets": 4
+          }
+        },
+        "pageLife": {
+          "route": "landing",
+          "previous": null,
+          "hidden": false,
+          "enteredRoute": null,
+          "domReady": true,
+          "resources": {
+            "watchTs": {
+              "state": "idle",
+              "pages": [
+                "watch"
+              ]
+            },
+            "talkStatus": {
+              "state": "idle",
+              "pages": [
+                "talk"
+              ]
+            },
+            "solveBlink": {
+              "state": "idle",
+              "pages": [
+                "solve"
+              ]
+            },
+            "solveReplyPoll": {
+              "state": "idle",
+              "pages": [
+                "solve"
+              ]
+            },
+            "landingSnow": {
+              "state": "active",
+              "pages": [
+                "landing"
+              ]
+            },
+            "introClock": {
+              "state": "idle",
+              "pages": [
+                "intro"
+              ]
+            },
+            "circleTicker": {
+              "state": "idle",
+              "pages": [
+                "circle"
+              ]
+            },
+            "watchTicker": {
+              "state": "idle",
+              "pages": [
+                "watch"
+              ]
+            },
+            "watchLiveUpdates": {
+              "state": "idle",
+              "pages": [
+                "watch"
+              ]
+            },
+            "adminRefresh": {
+              "state": "idle",
+              "pages": [
+                "admin"
+              ]
+            }
+          },
+          "serial": 0
+        },
+        "emergency": {
+          "active": false,
+          "reason": "",
+          "activatedAt": 0,
+          "pausedAnimations": 0
+        },
+        "visible": true,
+        "timers": {
+          "snowActive": false,
+          "snowRaf": false,
+          "circle": false,
+          "watch": false,
+          "watchLive": false,
+          "watchTs": false,
+          "talk": false,
+          "solveBlink": false,
+          "admin": false
+        }
+      },
+      "navLoop": [
+        {
+          "label": "nav-loop-iteration",
+          "time": 1785553781080,
+          "activeRoute": "talk",
+          "tier": "low",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "minimal",
+            "tier": "low",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 10
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        {
+          "label": "nav-loop-iteration",
+          "time": 1785553781895,
+          "activeRoute": "talk",
+          "tier": "low",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "minimal",
+            "tier": "low",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 20
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        {
+          "label": "nav-loop-iteration",
+          "time": 1785553782714,
+          "activeRoute": "talk",
+          "tier": "low",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "minimal",
+            "tier": "low",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 30
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        }
+      ],
+      "visibility": {
+        "beforeHide": {
+          "label": "before-hide",
+          "time": 1785553782723,
+          "activeRoute": "talk",
+          "tier": "low",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "minimal",
+            "tier": "low",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 30
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        "hidden": true,
+        "afterHideWait": {
+          "label": "after-hide-wait",
+          "time": 1785553783033,
+          "activeRoute": "landing",
+          "tier": "low",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "minimal",
+            "tier": "low",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": true,
+            "enteredRoute": null,
+            "domReady": true,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 31
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        "restored": false,
+        "afterRestore": {
+          "label": "after-restore",
+          "time": 1785553783342,
+          "activeRoute": "landing",
+          "tier": "low",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "minimal",
+            "tier": "low",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 4
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": "landing",
+            "domReady": true,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "active",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 31
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        }
+      },
+      "tierForcePersistence": {
+        "applicable": true,
+        "before": "low",
+        "attemptedChange": false,
+        "after": "low",
+        "heldForced": true
+      },
+      "brandReveal": {
+        "applicable": true,
+        "activeShortlyAfterPlay": true,
+        "elapsedMsWhenChecked": 1352,
+        "activeAfterEarlyHide": false,
+        "finishedEarlyDueToHidden": true,
+        "finishedNaturallyFlagAlreadyTrue": true
+      },
+      "devtoolsInterval": {
+        "beforeHidden": true,
+        "duringHidden": false,
+        "afterRestore": true
+      },
+      "heroPrinciplesColdState": {
+        "bootTimer": 0,
+        "interval": 0,
+        "hiPanelPresent": true
+      },
+      "consoleErrorsFull": [
+        "X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET"
+      ],
+      "pageErrors": []
+    },
+    "auto": {
+      "tier": "auto",
+      "consoleErrorsAtColdStart": [
+        "X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET"
+      ],
+      "coldStart": {
+        "label": "cold-start",
+        "time": 1785553798626,
+        "activeRoute": "landing",
+        "tier": "high",
+        "tierCoherent": true,
+        "gpu": {
+          "mode": "full",
+          "tier": "high",
+          "emergency": false,
+          "coverage": {
+            "backdropSelectors": 91,
+            "blurSelectors": 45,
+            "blendSelectors": 2,
+            "inaccessibleSheets": 3
+          }
+        },
+        "pageLife": {
+          "route": "landing",
+          "previous": null,
+          "hidden": false,
+          "enteredRoute": null,
+          "domReady": true,
+          "resources": {
+            "watchTs": {
+              "state": "idle",
+              "pages": [
+                "watch"
+              ]
+            },
+            "talkStatus": {
+              "state": "idle",
+              "pages": [
+                "talk"
+              ]
+            },
+            "solveBlink": {
+              "state": "idle",
+              "pages": [
+                "solve"
+              ]
+            },
+            "solveReplyPoll": {
+              "state": "idle",
+              "pages": [
+                "solve"
+              ]
+            },
+            "landingSnow": {
+              "state": "active",
+              "pages": [
+                "landing"
+              ]
+            },
+            "introClock": {
+              "state": "idle",
+              "pages": [
+                "intro"
+              ]
+            },
+            "circleTicker": {
+              "state": "idle",
+              "pages": [
+                "circle"
+              ]
+            },
+            "watchTicker": {
+              "state": "idle",
+              "pages": [
+                "watch"
+              ]
+            },
+            "watchLiveUpdates": {
+              "state": "idle",
+              "pages": [
+                "watch"
+              ]
+            },
+            "adminRefresh": {
+              "state": "idle",
+              "pages": [
+                "admin"
+              ]
+            }
+          },
+          "serial": 0
+        },
+        "emergency": {
+          "active": false,
+          "reason": "",
+          "activatedAt": 0,
+          "pausedAnimations": 0
+        },
+        "visible": true,
+        "timers": {
+          "snowActive": true,
+          "snowRaf": true,
+          "circle": false,
+          "watch": false,
+          "watchLive": false,
+          "watchTs": false,
+          "talk": false,
+          "solveBlink": false,
+          "admin": false
+        }
+      },
+      "navLoop": [
+        {
+          "label": "nav-loop-iteration",
+          "time": 1785553799443,
+          "activeRoute": "talk",
+          "tier": "high",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "full",
+            "tier": "high",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 3
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 10
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        {
+          "label": "nav-loop-iteration",
+          "time": 1785553800261,
+          "activeRoute": "talk",
+          "tier": "high",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "full",
+            "tier": "high",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 3
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 20
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        {
+          "label": "nav-loop-iteration",
+          "time": 1785553801095,
+          "activeRoute": "talk",
+          "tier": "high",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "full",
+            "tier": "high",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 3
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 30
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        }
+      ],
+      "visibility": {
+        "beforeHide": {
+          "label": "before-hide",
+          "time": 1785553801098,
+          "activeRoute": "talk",
+          "tier": "high",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "full",
+            "tier": "high",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 3
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": null,
+            "domReady": false,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 30
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        "hidden": true,
+        "afterHideWait": {
+          "label": "after-hide-wait",
+          "time": 1785553801423,
+          "activeRoute": "landing",
+          "tier": "high",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "full",
+            "tier": "high",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 3
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": true,
+            "enteredRoute": null,
+            "domReady": true,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "idle",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 31
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": false,
+            "snowRaf": false,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        },
+        "restored": false,
+        "afterRestore": {
+          "label": "after-restore",
+          "time": 1785553801747,
+          "activeRoute": "landing",
+          "tier": "high",
+          "tierCoherent": true,
+          "gpu": {
+            "mode": "full",
+            "tier": "high",
+            "emergency": false,
+            "coverage": {
+              "backdropSelectors": 91,
+              "blurSelectors": 45,
+              "blendSelectors": 2,
+              "inaccessibleSheets": 3
+            }
+          },
+          "pageLife": {
+            "route": "landing",
+            "previous": "talk",
+            "hidden": false,
+            "enteredRoute": "landing",
+            "domReady": true,
+            "resources": {
+              "watchTs": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "talkStatus": {
+                "state": "idle",
+                "pages": [
+                  "talk"
+                ]
+              },
+              "solveBlink": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "solveReplyPoll": {
+                "state": "idle",
+                "pages": [
+                  "solve"
+                ]
+              },
+              "landingSnow": {
+                "state": "active",
+                "pages": [
+                  "landing"
+                ]
+              },
+              "introClock": {
+                "state": "idle",
+                "pages": [
+                  "intro"
+                ]
+              },
+              "circleTicker": {
+                "state": "idle",
+                "pages": [
+                  "circle"
+                ]
+              },
+              "watchTicker": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "watchLiveUpdates": {
+                "state": "idle",
+                "pages": [
+                  "watch"
+                ]
+              },
+              "adminRefresh": {
+                "state": "idle",
+                "pages": [
+                  "admin"
+                ]
+              }
+            },
+            "serial": 31
+          },
+          "emergency": {
+            "active": false,
+            "reason": "",
+            "activatedAt": 0,
+            "pausedAnimations": 0
+          },
+          "visible": true,
+          "timers": {
+            "snowActive": true,
+            "snowRaf": true,
+            "circle": false,
+            "watch": false,
+            "watchLive": false,
+            "watchTs": false,
+            "talk": false,
+            "solveBlink": false,
+            "admin": false
+          }
+        }
+      },
+      "tierForcePersistence": {
+        "applicable": false,
+        "reason": "tier not forced in this run"
+      },
+      "brandReveal": {
+        "applicable": true,
+        "activeShortlyAfterPlay": true,
+        "elapsedMsWhenChecked": 1366,
+        "activeAfterEarlyHide": false,
+        "finishedEarlyDueToHidden": true,
+        "finishedNaturallyFlagAlreadyTrue": true
+      },
+      "devtoolsInterval": {
+        "beforeHidden": true,
+        "duringHidden": false,
+        "afterRestore": true
+      },
+      "heroPrinciplesColdState": {
+        "bootTimer": 0,
+        "interval": 0,
+        "hiPanelPresent": true
+      },
+      "consoleErrorsFull": [
+        "X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET",
+        "Failed to load resource: net::ERR_CONNECTION_RESET"
+      ],
+      "pageErrors": []
+    }
+  },
+  "overallPageErrors": []
+}

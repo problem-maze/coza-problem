@@ -1,0 +1,144 @@
+{
+  "task": "Isolated Home Integration Test 01 for the approved Visible Eye (Prototype 05)",
+  "generatedAt": "2026-08-03T22:48:00Z",
+  "sourceIdentity": {
+    "productionHomeFile": {
+      "path": "Problem-v86-DARK-ONLY.html",
+      "role": "read-only source, never written to",
+      "sha256Before": "c2b62cc98f1e3d0fa00d3709818f79f9ee73bd568700dcb6b665adef20b0d6b1",
+      "sha256After": "c2b62cc98f1e3d0fa00d3709818f79f9ee73bd568700dcb6b665adef20b0d6b1",
+      "byteSizeBefore": 3051238,
+      "byteSizeAfter": 3051238,
+      "lineCountBefore": 45690,
+      "lineCountAfter": 45690,
+      "unchanged": true
+    },
+    "sourceEyeFile": {
+      "path": "VISIBLE-EYE-MECHANICAL-FOCUS-PROTOTYPE-05.html",
+      "role": "read-only source, never written to",
+      "sha256Before": "2e35daad2024c847eeac14948a898e598a20da1c5c62ccbc2dbe66d99e53b24e",
+      "sha256After": "2e35daad2024c847eeac14948a898e598a20da1c5c62ccbc2dbe66d99e53b24e",
+      "byteSizeBefore": 38832,
+      "byteSizeAfter": 38832,
+      "lineCountBefore": 648,
+      "lineCountAfter": 648,
+      "unchanged": true
+    }
+  },
+  "integrationIdentity": {
+    "path": "Problem-v86-VISIBLE-EYE-ISOLATED-INTEGRATION-01.html",
+    "role": "new copy-derived deliverable, built from productionHomeFile + sourceEyeFile",
+    "sha256": "b131aefb01166783a0a4e81b579960d5294d3b6ac760989d56cbd97c82090cff",
+    "byteSize": 3099115,
+    "lineCount": 46375,
+    "insertionPoints": [
+      "before </head>: <style id=\"visibleEyeIntegrationStyle\"> (sizing + scoped Prototype 05 CSS + unscoped #eyeDebugPanel CSS)",
+      "inside .hero-visual-wrap, as a sibling after .hero-vperson's closing </div>: <div id=\"visibleMechanicalEyeIntegrationRoot\" class=\"hero-eye hero-v\"> containing Prototype 05's unmodified <svg class=\"mech-eye\"> markup",
+      "before </body>: <script id=\"visibleEyeIntegrationScript\"> (flag-gated engine + slot activation + Home state bridge)"
+    ]
+  },
+  "duplicateIdScan": {
+    "defaultBehaviorRun": { "duplicateIds": [], "count": 0 },
+    "testFlagActiveRun": { "duplicateIds": [], "count": 0 },
+    "acceptance": "PASS — 0 duplicate element IDs in either run"
+  },
+  "consoleErrors": {
+    "productionBaseline": [
+      "X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.",
+      "Failed to load resource: net::ERR_CONNECTION_RESET (x5, sandboxed external resource loads)"
+    ],
+    "defaultBehaviorRun": { "errorSet": "identical to productionBaseline", "newErrors": 0 },
+    "testFlagActiveRun": { "errorSet": "identical to productionBaseline", "newErrors": 0 },
+    "pageNavigationStabilityRun": { "errorSet": "identical to productionBaseline", "newErrors": 0 },
+    "visibilityToggleStabilityRun": { "errorSet": "identical to productionBaseline", "newErrors": 0 },
+    "acceptance": "PASS — 0 console errors introduced by the integration in any tested run"
+  },
+  "defaultBehaviorNoFlag": {
+    "rootExists": true,
+    "rootHasActiveClass": false,
+    "rootComputedDisplay": "none",
+    "journeyActive": false,
+    "dataHeroMode": "eye",
+    "note": "journeyActive=false / data-hero-mode=eye reproduces Problem-v86-DARK-ONLY.html's own deliberate 'VISUAL PREVIEW ONLY' boot hardcode (experience='1', the legacy dark eye), not a change introduced by this integration — confirmed identical to a direct load of the untouched production file.",
+    "newGlobalsPresentWithoutFlag": {
+      "VisibleEyeLife": "undefined",
+      "setVisibleEyeState": "undefined",
+      "__visibleEyeIntegrationBridge": "undefined"
+    },
+    "acceptance": "PASS — zero DOM/JS side effects without ?visibleEyeTest=1"
+  },
+  "testFlagActive": {
+    "rootActive": true,
+    "rootComputedDisplay": "block",
+    "onlyOneActiveHeroVInSlot": true,
+    "activeHeroVsInSlot": ["visibleMechanicalEyeIntegrationRoot"],
+    "journeyStillInDom": true,
+    "journeyActive": false,
+    "legacyStillInDom": true,
+    "legacyActive": false,
+    "bridgeExists": true,
+    "initialBridgedState": "watching",
+    "acceptance": "PASS — exactly one hero-v active, both Journey and legacy dark eye preserved in DOM and suppressed (not deleted), no competing engines running simultaneously"
+  },
+  "viewportMeasurements": {
+    "390x844": { "hostSlotBox": {"width": 350, "height": 201.90625}, "eyeAssemblyBox": {"width": 321.01, "height": 179.04}, "eyeWidthPctOfHost": 91.7, "eyeHeightPctOfHost": 88.7, "horizontalOverflow": false },
+    "412x915": { "hostSlotBox": {"width": 372, "height": 219.890625}, "eyeAssemblyBox": {"width": 351.09, "height": 195.82}, "eyeWidthPctOfHost": 94.4, "eyeHeightPctOfHost": 89.1, "horizontalOverflow": false },
+    "768x1024": { "hostSlotBox": {"width": 728, "height": 230}, "eyeAssemblyBox": {"width": 368, "height": 205.25}, "eyeWidthPctOfHost": 50.5, "eyeHeightPctOfHost": 89.2, "horizontalOverflow": false, "note": "width% is lower here by design: the 768px breakpoint caps the eye at max-width:380px so it doesn't stretch oversized on tablet-width hero slots; height fill and no clipping/overflow both hold." },
+    "1440x900": { "hostSlotBox": {"width": 700, "height": 358.9375}, "eyeAssemblyBox": {"width": 600.40, "height": 334.87}, "eyeWidthPctOfHost": 85.8, "eyeHeightPctOfHost": 93.3, "horizontalOverflow": false },
+    "acceptance": "PASS — full almond visible, no horizontal overflow, no clipping at any required viewport"
+  },
+  "stateMapping": {
+    "setHeroQaStageAccessible": true,
+    "watching": { "homeQaClassApplied": "qa-watching", "bridgedVisibleEyeState": "watching", "correct": true },
+    "searching": { "homeQaClassApplied": "qa-searching", "bridgedVisibleEyeState": "searching", "correct": true },
+    "found": { "homeQaClassApplied": "qa-found", "bridgedVisibleEyeState": "found", "correct": true },
+    "solved": { "homeQaClassApplied": "qa-solved", "bridgedVisibleEyeState": "solved", "correct": true },
+    "embodied": { "homeQaClassApplied": "qa-embodied", "bridgedVisibleEyeState": "embodied", "correct": true },
+    "idle": { "homeQaClassApplied": "(none — Home's own reset/inactive state)", "bridgedVisibleEyeState": "idle", "correct": true },
+    "method": "Driven via the real production window.setHeroQaStage(svg, removeClasses, addClass) function against the real #heroEyeSvg element — not a fabricated/duplicated state machine.",
+    "acceptance": "PASS — all 6 semantic states map correctly via the real Home state source"
+  },
+  "lifecycleChecks": {
+    "pageNavigationStability": {
+      "sequence": "Home -> #pageCircle -> Home, x3",
+      "iterations": [
+        { "rootActive": true, "observerCount": 1 },
+        { "rootActive": true, "observerCount": 1 },
+        { "rootActive": true, "observerCount": 1 }
+      ],
+      "observerPresentAfter": true,
+      "newConsoleErrors": 0,
+      "acceptance": "PASS — no duplicate observers/listeners created across repeated navigation"
+    },
+    "visibilityToggleStability": {
+      "sequence": "visible -> hidden -> visible, x3",
+      "iterations": [
+        { "motionOk": true, "rootActive": true },
+        { "motionOk": true, "rootActive": true },
+        { "motionOk": true, "rootActive": true }
+      ],
+      "newConsoleErrors": 0,
+      "acceptance": "PASS — stable across repeated tab visibility changes, no duplicate lifecycle work"
+    }
+  },
+  "reducedMotion": {
+    "eyeMotionOkClassPresent": false,
+    "expectedAbsentUnderReducedMotion": true,
+    "stateChangeAppliedDuringReducedMotion": "qa-found",
+    "finalBridgedState": "found",
+    "correctFinalState": true,
+    "acceptance": "PASS — transitions suppressed, final state meaning still communicated correctly"
+  },
+  "productionSafety": {
+    "productionFileHashUnchanged": true,
+    "prototype05HashUnchanged": true,
+    "journeyPreservedInDom": true,
+    "legacyDarkEyePreservedInDom": true,
+    "noPersistentStorageWrites": "verified by code inspection — flag is read only from location.search, never written to localStorage/sessionStorage/cookies",
+    "noProductionRoutingChanges": true,
+    "noPrototype06Created": true,
+    "noProductionBuildCreated": true,
+    "acceptance": "PASS — all production-safety constraints held"
+  },
+  "overallAcceptance": "PASS — all 12 acceptance conditions from the task specification are met"
+}
