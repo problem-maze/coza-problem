@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visible Eye — Presence Prototype 04</title>
+<style>
+  /* ══════════════════════════════════════════════════════════════
+     ISOLATED INTEGRATED PROTOTYPE 04 — fourth pass, same locked lid/
+     pupil/lunar-white shell and same overall complexity level as
+     Prototype 03. Four targeted fixes, not a rebuild:
+
+     1) CORE — replaced the four-arc-plus-four-bridge assembly with
+        ONE continuous organic "chamber wall": a single partial
+        boundary whose radius follows a wobble function (a dominant-
+        side tightening plus a small irregular harmonic, not a
+        perfect ellipse), open across one real gap on the quiet side.
+        A fainter echo pass gives it wall thickness. A strut spans
+        the two lips of the opening, in gentle tension. A few ticks
+        are attached directly to wall vertices. This reads as one
+        object, not assembled parts.
+     2) RED — is now a literal recolored segment of that same wall
+        curve (computed with the identical wobble formula, just a
+        different angular window), plus one small tick that touches
+        it. Nowhere else. It is glued to the wall's own shape, not a
+        separate ring drawn near it.
+     3) WHOLE-EYE CHARACTER — the two dominant mid-field boundaries
+        now share the core's wobble-wall language and the same
+        CENTER bias, so the nesting reads as one organism at
+        increasing scale rather than independently placed rings.
+     4) MOTION — the wall, the red segment, and the opening strut all
+        interpolate their 'd' geometry across three keyframes on the
+        same timing, so red always stays glued to the wall as both
+        genuinely reconfigure (not a scale/opacity trick). The pupil
+        drifts independently (refocus), and one mid-field boundary
+        gets its own small independent 'd' shift (a relationship
+        change one layer out).
+     ══════════════════════════════════════════════════════════════ */
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{
+    background:#FAFBFD; color:#24272E;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:48px 24px;
+  }
+  .stage{
+    width:840px; max-width:100%; background:#FFFFFF;
+    border:1px solid #E4E7EC; border-radius:20px; padding:28px 22px;
+  }
+  .stage svg{ display:block; width:100%; height:auto; }
+  svg{
+    --lunar:#FAFBFD; --ink:#24272E; --red-base:#B75C58;
+    --red-72: color-mix(in srgb, var(--red-base) 72%, var(--lunar) 28%);
+  }
+  .eye-lid{ fill:none; stroke:var(--ink); stroke-width:2.2; stroke-linecap:round; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <svg viewBox="-320 -140 640 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="lensProto4" clipPathUnits="userSpaceOnUse">
+          <path d="M -290 0 Q 0 -70 290 0 Q 0 240 -290 0 Z"/>
+        </clipPath>
+        <filter id="softAtmo4" x="-150%" y="-150%" width="400%" height="400%">
+          <feGaussianBlur stdDeviation="24"/>
+        </filter>
+        <filter id="softAtmoLow4" x="-150%" y="-150%" width="400%" height="400%">
+          <feGaussianBlur stdDeviation="20"/>
+        </filter>
+        <filter id="softAtmoTight4" x="-200%" y="-200%" width="500%" height="500%">
+          <feGaussianBlur stdDeviation="9"/>
+        </filter>
+        <filter id="edgeSoft4" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="0.16"/>
+        </filter>
+        <radialGradient id="atmoGraphite4" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#24272E" stop-opacity="0.08"/>
+          <stop offset="100%" stop-color="#24272E" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="atmoGraphiteLow4" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#24272E" stop-opacity="0.05"/>
+          <stop offset="100%" stop-color="#24272E" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="atmoRed4" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#B75C58" stop-opacity="0.16"/>
+          <stop offset="100%" stop-color="#B75C58" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <path class="eye-lid" d="M -290 0 Q 0 -70, 290 0"/>
+      <path class="eye-lid" d="M -290 0 Q 0 240, 290 0"/>
+
+      <g clip-path="url(#lensProto4)">
+        <ellipse cx="18" cy="-9" rx="96" ry="66" fill="url(#atmoGraphite4)" filter="url(#softAtmo4)"/>
+        <ellipse cx="-8" cy="55" rx="74" ry="48" fill="url(#atmoGraphiteLow4)" filter="url(#softAtmoLow4)"/>
+        <ellipse cx="12" cy="-4" rx="34" ry="26" fill="url(#atmoRed4)" filter="url(#softAtmoTight4)"/>
+
+        <g filter="url(#edgeSoft4)">
+          <g id="peripheralField">
+            <path d="M -130.38,-49.14 L -114.77,-55.55 L -97.38,-61.09 L -78.48,-65.68 L -58.36,-69.26 L -37.33,-71.76 L -15.73,-73.14 L 6.12,-73.40 L 27.88,-72.51 L 49.20,-70.49 L 69.76,-67.39 L 89.23,-63.23 L 107.32,-58.10 L 123.75,-52.06 L 138.25,-45.21" fill="none" stroke="var(--ink)" stroke-opacity="0.130" stroke-width="0.64" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 171.61,-38.20 L 182.64,-27.83 L 190.11,-16.92 L 193.89,-5.68 L 193.89,5.68 L 190.11,16.92 L 182.64,27.83 L 171.61,38.20 L 157.24,47.82 L 139.81,56.52 L 119.66,64.11 L 97.18,70.46 L 72.81,75.44 L 47.02,78.94 L 20.32,80.91" fill="none" stroke="var(--ink)" stroke-opacity="0.100" stroke-width="0.58" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -31.96,75.87 L -55.85,73.41 L -78.75,69.63 L -100.24,64.61 L -119.93,58.44 L -137.48,51.22 L -152.58,43.08 L -164.94,34.17 L -174.36,24.66 L -180.66,14.70 L -183.73,4.48 L -183.51,-5.82 L -180.02,-16.02" fill="none" stroke="var(--ink)" stroke-opacity="0.100" stroke-width="0.58" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -4.45,-68.47 L 12.23,-63.04" fill="none" stroke="var(--ink)" stroke-opacity="0.160" stroke-width="0.58" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 14.21,-76.80 L 31.56,-74.67" fill="none" stroke="var(--ink)" stroke-opacity="0.159" stroke-width="0.58" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -23.22,-77.11 L -6.50,-71.99" fill="none" stroke="var(--ink)" stroke-opacity="0.159" stroke-width="0.58" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -44.22,-67.04 L -27.41,-63.16" fill="none" stroke="var(--ink)" stroke-opacity="0.157" stroke-width="0.57" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 36.95,-64.65 L 53.25,-70.26" fill="none" stroke="var(--ink)" stroke-opacity="0.157" stroke-width="0.57" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 51.79,-80.37 L 68.65,-78.30" fill="none" stroke="var(--ink)" stroke-opacity="0.154" stroke-width="0.57" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -67.33,-69.38 L -50.73,-72.31" fill="none" stroke="var(--ink)" stroke-opacity="0.153" stroke-width="0.56" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 68.02,-66.65 L 84.46,-64.05" fill="none" stroke="var(--ink)" stroke-opacity="0.151" stroke-width="0.56" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -88.67,-57.76 L -72.59,-60.60" fill="none" stroke="var(--ink)" stroke-opacity="0.147" stroke-width="0.55" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+
+          <g id="midField">
+            <path d="M -93.49,4.11 L -93.85,-0.17 L -92.74,-4.42 L -90.13,-8.54 L -86.04,-12.40 L -80.61,-15.91 L -74.05,-19.00 L -66.63,-21.60 L -58.64,-23.70 L -50.36,-25.35 L -42.03,-26.58 L -33.82,-27.49 L -25.81,-28.14 L -18.00,-28.62 L -10.34,-28.97 L -2.74,-29.20 L 4.90,-29.32 L 12.64,-29.26 L 20.50,-28.97 L 28.43,-28.38 L 36.30,-27.41 L 43.93,-26.02 L 51.12,-24.19 L 57.67,-21.93 L 63.38,-19.28 L 68.15,-16.31 L 71.93,-13.09 L 74.72,-9.71 L 76.62,-6.23 L 77.74,-2.70 L 78.19,0.86 L 78.09,4.45 L 77.47,8.09 L 76.31,11.79 L 74.55,15.56 L 72.03,19.40 L 68.60,23.25 L 64.09,27.06 L 58.38,30.72 L 51.41,34.10 L 43.20,37.08" fill="none" stroke="var(--ink)" stroke-opacity="0.300" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round" id="midB1"/>
+        <path d="M -106.38,34.79 L -112.63,28.95 L -117.14,22.97 L -120.13,16.97 L -121.77,11.02 L -122.25,5.15 L -121.65,-0.62 L -119.98,-6.30 L -117.18,-11.87 L -113.12,-17.28 L -107.70,-22.48 L -100.81,-27.35 L -92.45,-31.79 L -82.70,-35.66 L -71.74,-38.86 L -59.87,-41.30 L -47.41,-42.95 L -34.74,-43.84 L -22.17,-44.04 L -9.95,-43.64 L 1.78,-42.78 L 12.99,-41.58 L 23.73,-40.14 L 34.13,-38.52 L 44.35,-36.75 L 54.48,-34.78 L 64.57,-32.56 L 74.56,-29.98 L 84.26,-26.97 L 93.40,-23.44 L 101.64,-19.39 L 108.62,-14.82 L 114.02,-9.80 L 117.59,-4.44 L 119.20,1.13 L 118.83,6.77 L 116.59,12.35 L 112.65,17.77 L 107.24,22.97 L 100.59,27.92 L 92.86,32.62" fill="none" stroke="var(--ink)" stroke-opacity="0.220" stroke-width="0.90" stroke-linecap="round" stroke-linejoin="round" id="midB3"/>
+        <path d="M 99.70,1.46 L 98.44,6.77 L 95.57,11.98 L 91.14,16.99 L 85.21,21.72 L 77.89,26.09 L 69.30,30.04 L 59.57,33.50 L 48.87,36.41 L 37.37,38.72 L 25.26,40.40 L 12.73,41.42 L 0.00,41.76" fill="none" stroke="var(--ink)" stroke-opacity="0.240" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round" id="midB2"/>
+        <path d="M -67.83,-53.40 L -50.83,-56.61 L -32.99,-58.88 L -14.60,-60.17 L 4.03,-60.46 L 22.60,-59.74 L 40.79,-58.02 L 58.30,-55.34 L 74.84,-51.73 L 90.14,-47.27 L 103.93,-42.01" fill="none" stroke="var(--ink)" stroke-opacity="0.150" stroke-width="0.70" stroke-linecap="round" stroke-linejoin="round" id="midB4"/>
+        <path d="M 101.66,54.47 L 82.14,59.96 L 60.96,64.24 L 38.55,67.21 L 15.35,68.82 L -8.16,69.04 L -31.51,67.85 L -54.21,65.29 L -75.82,61.40 L -95.89,56.27 L -114.01,50.00 L -129.82,42.71 L -143.00,34.56" fill="none" stroke="var(--ink)" stroke-opacity="0.120" stroke-width="0.62" stroke-linecap="round" stroke-linejoin="round" id="midB5"/>
+        <path d="M 29.88,-38.68 L 52.52,-39.87" fill="none" stroke="var(--ink)" stroke-opacity="0.572" stroke-width="1.17" stroke-linecap="round" stroke-linejoin="round" id="midEmphA"/>
+        <path d="M 20.72,-29.05 L 39.72,-40.46" fill="none" stroke="var(--ink)" stroke-opacity="0.558" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" id="midEmphB"/>
+        <path d="M 26.07,-48.86 L 46.53,-57.13" fill="none" stroke="var(--ink)" stroke-opacity="0.556" stroke-width="1.14" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 16.75,-44.26 L 37.59,-42.07" fill="none" stroke="var(--ink)" stroke-opacity="0.426" stroke-width="0.88" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 36.15,-28.13 L 56.89,-25.95" fill="none" stroke="var(--ink)" stroke-opacity="0.424" stroke-width="0.87" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 43.24,-42.11 L 63.98,-41.75" fill="none" stroke="var(--ink)" stroke-opacity="0.422" stroke-width="0.87" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 7.62,-35.70 L 27.36,-33.62" fill="none" stroke="var(--ink)" stroke-opacity="0.403" stroke-width="0.84" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 51.04,-32.70 L 70.44,-29.63" fill="none" stroke="var(--ink)" stroke-opacity="0.399" stroke-width="0.83" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 6.52,-52.68 L 25.60,-50.67" fill="none" stroke="var(--ink)" stroke-opacity="0.389" stroke-width="0.81" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 48.85,-21.56 L 67.47,-17.61" fill="none" stroke="var(--ink)" stroke-opacity="0.386" stroke-width="0.80" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 56.23,-44.80 L 74.60,-49.38" fill="none" stroke="var(--ink)" stroke-opacity="0.383" stroke-width="0.80" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -1.33,-43.75 L 16.97,-41.83" fill="none" stroke="var(--ink)" stroke-opacity="0.372" stroke-width="0.78" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -43.88,47.50 L -64.93,44.54" fill="none" stroke="var(--ink)" stroke-opacity="0.468" stroke-width="1.07" stroke-linecap="round" stroke-linejoin="round" id="midEmphC"/>
+        <path d="M -52.64,37.52 L -73.60,37.52" fill="none" stroke="var(--ink)" stroke-opacity="0.460" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -57.22,52.07 L -74.80,42.72" fill="none" stroke="var(--ink)" stroke-opacity="0.353" stroke-width="0.81" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -38.89,58.82 L -58.45,56.07" fill="none" stroke="var(--ink)" stroke-opacity="0.350" stroke-width="0.80" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -40.04,34.97 L -56.56,24.24" fill="none" stroke="var(--ink)" stroke-opacity="0.349" stroke-width="0.80" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -52.51,63.74 L -69.78,54.56" fill="none" stroke="var(--ink)" stroke-opacity="0.346" stroke-width="0.79" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -29.39,39.58 L -48.90,39.58" fill="none" stroke="var(--ink)" stroke-opacity="0.345" stroke-width="0.79" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -27.72,54.02 L -44.78,44.95" fill="none" stroke="var(--ink)" stroke-opacity="0.342" stroke-width="0.79" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -66.47,42.53 L -82.61,32.05" fill="none" stroke="var(--ink)" stroke-opacity="0.340" stroke-width="0.78" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -57.87,25.73 L -74.94,17.77" fill="none" stroke="var(--ink)" stroke-opacity="0.332" stroke-width="0.77" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 10.73,-21.13 L 11.42,-22.57 L 11.92,-24.02 L 12.24,-25.47 L 12.37,-26.93 L 12.31,-28.39 L 12.07,-29.85 L 11.63,-31.32 L 11.01,-32.80" fill="none" stroke="var(--ink)" stroke-opacity="0.320" stroke-width="0.72" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 44.69,-10.80 L 48.20,-10.48 L 51.69,-10.35 L 55.17,-10.40 L 58.63,-10.64 L 62.07,-11.07 L 65.49,-11.68 L 68.89,-12.48 L 72.28,-13.47" fill="none" stroke="var(--ink)" stroke-opacity="0.260" stroke-width="0.68" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -46.77,9.13 L -50.19,9.71 L -53.51,10.51 L -56.73,11.54 L -59.85,12.80 L -62.87,14.29 L -65.78,16.01 L -68.59,17.96 L -71.30,20.13" fill="none" stroke="var(--ink)" stroke-opacity="0.240" stroke-width="0.68" stroke-linecap="round" stroke-linejoin="round" id="midEmphD"/>
+        <path d="M 8.40,50.28 L 2.08,48.03 L -4.29,46.03 L -10.71,44.27 L -17.19,42.76 L -23.72,41.49 L -30.30,40.47 L -36.93,39.69 L -43.61,39.15" fill="none" stroke="var(--ink)" stroke-opacity="0.200" stroke-width="0.60" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M -81.79,-11.12 L -96.80,-10.10" fill="none" stroke="var(--ink)" stroke-opacity="0.180" stroke-width="0.58" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 85.95,1.26 L 99.21,4.37" fill="none" stroke="var(--ink)" stroke-opacity="0.180" stroke-width="0.58" stroke-linecap="round" stroke-linejoin="round" />
+            <path id="midB1anim" d="M -93.49,4.11 L -93.85,-0.17 L -92.74,-4.42 L -90.13,-8.54 L -86.04,-12.40 L -80.61,-15.91 L -74.05,-19.00 L -66.63,-21.60 L -58.64,-23.70 L -50.36,-25.35 L -42.03,-26.58 L -33.82,-27.49 L -25.81,-28.14 L -18.00,-28.62 L -10.34,-28.97 L -2.74,-29.20 L 4.90,-29.32 L 12.64,-29.26 L 20.50,-28.97 L 28.43,-28.38 L 36.30,-27.41 L 43.93,-26.02 L 51.12,-24.19 L 57.67,-21.93 L 63.38,-19.28 L 68.15,-16.31 L 71.93,-13.09 L 74.72,-9.71 L 76.62,-6.23 L 77.74,-2.70 L 78.19,0.86 L 78.09,4.45 L 77.47,8.09 L 76.31,11.79 L 74.55,15.56 L 72.03,19.40 L 68.60,23.25 L 64.09,27.06 L 58.38,30.72 L 51.41,34.10 L 43.20,37.08" fill="none" stroke="var(--ink)" stroke-opacity="0.30" stroke-width="1.05">
+              <animate attributeName="d" values="M -93.49,4.11 L -93.85,-0.17 L -92.74,-4.42 L -90.13,-8.54 L -86.04,-12.40 L -80.61,-15.91 L -74.05,-19.00 L -66.63,-21.60 L -58.64,-23.70 L -50.36,-25.35 L -42.03,-26.58 L -33.82,-27.49 L -25.81,-28.14 L -18.00,-28.62 L -10.34,-28.97 L -2.74,-29.20 L 4.90,-29.32 L 12.64,-29.26 L 20.50,-28.97 L 28.43,-28.38 L 36.30,-27.41 L 43.93,-26.02 L 51.12,-24.19 L 57.67,-21.93 L 63.38,-19.28 L 68.15,-16.31 L 71.93,-13.09 L 74.72,-9.71 L 76.62,-6.23 L 77.74,-2.70 L 78.19,0.86 L 78.09,4.45 L 77.47,8.09 L 76.31,11.79 L 74.55,15.56 L 72.03,19.40 L 68.60,23.25 L 64.09,27.06 L 58.38,30.72 L 51.41,34.10 L 43.20,37.08;M -90.06,3.96 L -90.44,-0.17 L -89.87,-4.29 L -88.19,-8.35 L -85.27,-12.29 L -81.03,-16.00 L -75.48,-19.36 L -68.72,-22.27 L -60.98,-24.65 L -52.53,-26.44 L -43.70,-27.64 L -34.80,-28.29 L -26.10,-28.46 L -17.79,-28.29 L -9.95,-27.88 L -2.57,-27.34 L 4.47,-26.78 L 11.33,-26.22 L 18.17,-25.67 L 25.14,-25.10 L 32.31,-24.40 L 39.68,-23.50 L 47.11,-22.29 L 54.40,-20.68 L 61.29,-18.64 L 67.49,-16.15 L 72.74,-13.24 L 76.84,-9.99 L 79.66,-6.48 L 81.20,-2.82 L 81.54,0.89 L 80.80,4.60 L 79.18,8.26 L 76.84,11.87 L 73.91,15.42 L 70.44,18.97 L 66.42,22.52 L 61.75,26.08 L 56.28,29.62 L 49.86,33.08 L 42.36,36.36;M -93.49,4.11 L -93.85,-0.17 L -92.74,-4.42 L -90.13,-8.54 L -86.04,-12.40 L -80.61,-15.91 L -74.05,-19.00 L -66.63,-21.60 L -58.64,-23.70 L -50.36,-25.35 L -42.03,-26.58 L -33.82,-27.49 L -25.81,-28.14 L -18.00,-28.62 L -10.34,-28.97 L -2.74,-29.20 L 4.90,-29.32 L 12.64,-29.26 L 20.50,-28.97 L 28.43,-28.38 L 36.30,-27.41 L 43.93,-26.02 L 51.12,-24.19 L 57.67,-21.93 L 63.38,-19.28 L 68.15,-16.31 L 71.93,-13.09 L 74.72,-9.71 L 76.62,-6.23 L 77.74,-2.70 L 78.19,0.86 L 78.09,4.45 L 77.47,8.09 L 76.31,11.79 L 74.55,15.56 L 72.03,19.40 L 68.60,23.25 L 64.09,27.06 L 58.38,30.72 L 51.41,34.10 L 43.20,37.08" keyTimes="0;0.5;1" dur="7.5s"
+                calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" repeatCount="indefinite"/>
+            </path>
+          </g>
+
+          <g id="gazeCore">
+            <path d="M -46.59,7.88 L -47.90,5.72 L -48.78,3.53 L -49.22,1.34 L -49.16,-0.85 L -48.58,-3.02 L -47.42,-5.15 L -45.64,-7.20 L -43.25,-9.12 L -40.26,-10.87 L -36.74,-12.41 L -32.77,-13.72 L -28.47,-14.76 L -23.95,-15.55 L -19.34,-16.08 L -14.74,-16.39 L -10.23,-16.51 L -5.85,-16.48 L -1.61,-16.35 L 2.51,-16.13 L 6.55,-15.84 L 10.55,-15.49 L 14.53,-15.06 L 18.53,-14.53 L 22.51,-13.88 L 26.44,-13.06 L 30.23,-12.07 L 33.79,-10.87 L 37.02,-9.48 L 39.81,-7.90 L 42.07,-6.16 L 43.76,-4.29 L 44.84,-2.33 L 45.33,-0.33 L 45.26,1.69 L 44.67,3.70 L 43.64,5.68 L 42.20,7.63 L 40.39,9.55 L 38.23,11.43 L 35.69,13.28 L 32.76,15.08 L 29.39,16.82 L 25.54,18.45 L 21.20,19.93" fill="none" stroke="var(--ink)" stroke-opacity="0.220" stroke-width="0.90" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M -14.58,-13.71 L -7.36,-9.48" fill="none" stroke="var(--ink)" stroke-opacity="0.340" stroke-width="0.80" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M 39.37,0.58 L 27.08,1.59" fill="none" stroke="var(--ink)" stroke-opacity="0.340" stroke-width="0.80" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M 24.35,17.65 L 14.91,14.02" fill="none" stroke="var(--ink)" stroke-opacity="0.340" stroke-width="0.80" stroke-linecap="round" stroke-linejoin="round" />
+            <path id="coreWall" d="M -43.40,7.34 L -44.88,5.36 L -45.95,3.33 L -46.54,1.27 L -46.57,-0.80 L -45.97,-2.86 L -44.69,-4.85 L -42.71,-6.73 L -40.08,-8.45 L -36.85,-9.95 L -33.14,-11.20 L -29.10,-12.18 L -24.87,-12.90 L -20.61,-13.38 L -16.41,-13.64 L -12.38,-13.76 L -8.53,-13.76 L -4.87,-13.71 L -1.34,-13.63 L 2.11,-13.54 L 5.55,-13.44 L 9.05,-13.30 L 12.64,-13.09 L 16.29,-12.78 L 19.97,-12.31 L 23.59,-11.65 L 27.04,-10.79 L 30.20,-9.72 L 32.98,-8.45 L 35.29,-7.00 L 37.07,-5.43 L 38.32,-3.76 L 39.07,-2.03 L 39.36,-0.29 L 39.28,1.46 L 38.89,3.22 L 38.23,4.98 L 37.34,6.75 L 36.19,8.55 L 34.73,10.39 L 32.91,12.25 L 30.63,14.10 L 27.81,15.92 L 24.40,17.63 L 20.40,19.18" fill="none" stroke="var(--ink)" stroke-opacity="0.66" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <animate attributeName="d" values="M -43.40,7.34 L -44.88,5.36 L -45.95,3.33 L -46.54,1.27 L -46.57,-0.80 L -45.97,-2.86 L -44.69,-4.85 L -42.71,-6.73 L -40.08,-8.45 L -36.85,-9.95 L -33.14,-11.20 L -29.10,-12.18 L -24.87,-12.90 L -20.61,-13.38 L -16.41,-13.64 L -12.38,-13.76 L -8.53,-13.76 L -4.87,-13.71 L -1.34,-13.63 L 2.11,-13.54 L 5.55,-13.44 L 9.05,-13.30 L 12.64,-13.09 L 16.29,-12.78 L 19.97,-12.31 L 23.59,-11.65 L 27.04,-10.79 L 30.20,-9.72 L 32.98,-8.45 L 35.29,-7.00 L 37.07,-5.43 L 38.32,-3.76 L 39.07,-2.03 L 39.36,-0.29 L 39.28,1.46 L 38.89,3.22 L 38.23,4.98 L 37.34,6.75 L 36.19,8.55 L 34.73,10.39 L 32.91,12.25 L 30.63,14.10 L 27.81,15.92 L 24.40,17.63 L 20.40,19.18;M -44.19,7.47 L -44.61,5.32 L -44.74,3.24 L -44.62,1.22 L -44.26,-0.76 L -43.61,-2.71 L -42.60,-4.63 L -41.14,-6.49 L -39.16,-8.25 L -36.60,-9.88 L -33.47,-11.31 L -29.83,-12.49 L -25.77,-13.37 L -21.45,-13.92 L -17.04,-14.17 L -12.70,-14.12 L -8.57,-13.83 L -4.75,-13.38 L -1.27,-12.84 L 1.91,-12.27 L 4.85,-11.74 L 7.68,-11.28 L 10.52,-10.90 L 13.47,-10.57 L 16.62,-10.25 L 19.99,-9.87 L 23.52,-9.39 L 27.12,-8.73 L 30.64,-7.85 L 33.91,-6.73 L 36.76,-5.38 L 39.03,-3.83 L 40.63,-2.12 L 41.50,-0.30 L 41.66,1.55 L 41.16,3.41 L 40.11,5.22 L 38.63,6.98 L 36.80,8.70 L 34.70,10.38 L 32.37,12.05 L 29.79,13.72 L 26.91,15.40 L 23.64,17.08 L 19.90,18.71;M -44.23,7.48 L -45.98,5.49 L -47.13,3.41 L -47.60,1.30 L -47.32,-0.82 L -46.30,-2.88 L -44.54,-4.84 L -42.11,-6.64 L -39.11,-8.24 L -35.68,-9.63 L -31.95,-10.80 L -28.05,-11.74 L -24.10,-12.50 L -20.18,-13.10 L -16.33,-13.57 L -12.56,-13.96 L -8.85,-14.28 L -5.16,-14.54 L -1.45,-14.74 L 2.31,-14.86 L 6.15,-14.87 L 10.03,-14.73 L 13.92,-14.43 L 17.75,-13.92 L 21.41,-13.20 L 24.83,-12.27 L 27.91,-11.14 L 30.60,-9.84 L 32.85,-8.41 L 34.68,-6.88 L 36.10,-5.28 L 37.16,-3.64 L 37.91,-1.97 L 38.42,-0.28 L 38.70,1.44 L 38.77,3.21 L 38.60,5.02 L 38.12,6.89 L 37.26,8.81 L 35.93,10.75 L 34.06,12.67 L 31.57,14.54 L 28.43,16.27 L 24.68,17.83 L 20.35,19.13;M -43.40,7.34 L -44.88,5.36 L -45.95,3.33 L -46.54,1.27 L -46.57,-0.80 L -45.97,-2.86 L -44.69,-4.85 L -42.71,-6.73 L -40.08,-8.45 L -36.85,-9.95 L -33.14,-11.20 L -29.10,-12.18 L -24.87,-12.90 L -20.61,-13.38 L -16.41,-13.64 L -12.38,-13.76 L -8.53,-13.76 L -4.87,-13.71 L -1.34,-13.63 L 2.11,-13.54 L 5.55,-13.44 L 9.05,-13.30 L 12.64,-13.09 L 16.29,-12.78 L 19.97,-12.31 L 23.59,-11.65 L 27.04,-10.79 L 30.20,-9.72 L 32.98,-8.45 L 35.29,-7.00 L 37.07,-5.43 L 38.32,-3.76 L 39.07,-2.03 L 39.36,-0.29 L 39.28,1.46 L 38.89,3.22 L 38.23,4.98 L 37.34,6.75 L 36.19,8.55 L 34.73,10.39 L 32.91,12.25 L 30.63,14.10 L 27.81,15.92 L 24.40,17.63 L 20.40,19.18" keyTimes="0;0.4;0.75;1" dur="6.5s"
+                calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" repeatCount="indefinite"/>
+            </path>
+            <path id="coreStrut" d="M -44.42,6.04 L -37.86,8.32 L -31.25,10.36 L -24.61,12.16 L -17.92,13.73 L -11.19,15.06 L -4.42,16.16 L 2.40,17.02 L 9.25,17.64 L 16.15,18.03 L 23.10,18.18" fill="none" stroke="var(--ink)" stroke-opacity="0.30" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round">
+              <animate attributeName="d" values="M -44.42,6.04 L -37.86,8.32 L -31.25,10.36 L -24.61,12.16 L -17.92,13.73 L -11.19,15.06 L -4.42,16.16 L 2.40,17.02 L 9.25,17.64 L 16.15,18.03 L 23.10,18.18;M -44.50,6.05 L -38.00,8.28 L -31.45,10.26 L -24.86,12.01 L -18.23,13.53 L -11.56,14.81 L -4.85,15.85 L 1.91,16.65 L 8.70,17.22 L 15.54,17.55 L 22.41,17.65;M -45.45,6.18 L -38.76,8.46 L -32.04,10.50 L -25.28,12.30 L -18.47,13.87 L -11.62,15.20 L -4.73,16.29 L 2.20,17.15 L 9.18,17.77 L 16.19,18.16 L 23.25,18.30;M -44.42,6.04 L -37.86,8.32 L -31.25,10.36 L -24.61,12.16 L -17.92,13.73 L -11.19,15.06 L -4.42,16.16 L 2.40,17.02 L 9.25,17.64 L 16.15,18.03 L 23.10,18.18" keyTimes="0;0.4;0.75;1" dur="6.5s"
+                calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" repeatCount="indefinite"/>
+            </path>
+            <path id="redSignal" d="M -2.86,-13.67 L -1.30,-13.63 L 0.24,-13.59 L 1.78,-13.55 L 3.31,-13.51 L 4.85,-13.46 L 6.39,-13.41 L 7.95,-13.35 L 9.52,-13.28 L 11.11,-13.19 L 12.72,-13.09 L 14.34,-12.96 L 15.98,-12.81 L 17.62,-12.63 L 19.26,-12.41" fill="none" stroke="var(--red-base)" stroke-opacity="0.85" stroke-width="2.35" stroke-linecap="round" stroke-linejoin="round">
+              <animate attributeName="d" values="M -2.86,-13.67 L -1.30,-13.63 L 0.24,-13.59 L 1.78,-13.55 L 3.31,-13.51 L 4.85,-13.46 L 6.39,-13.41 L 7.95,-13.35 L 9.52,-13.28 L 11.11,-13.19 L 12.72,-13.09 L 14.34,-12.96 L 15.98,-12.81 L 17.62,-12.63 L 19.26,-12.41;M 10.05,-10.95 L 11.33,-10.80 L 12.65,-10.65 L 14.00,-10.51 L 15.40,-10.37 L 16.83,-10.22 L 18.31,-10.07 L 19.83,-9.89 L 21.39,-9.70 L 22.97,-9.47 L 24.57,-9.21 L 26.18,-8.92 L 27.78,-8.58 L 29.36,-8.20 L 30.90,-7.77;M 3.74,-14.88 L 5.45,-14.88 L 7.17,-14.85 L 8.90,-14.79 L 10.64,-14.70 L 12.38,-14.57 L 14.11,-14.41 L 15.82,-14.20 L 17.51,-13.96 L 19.18,-13.67 L 20.80,-13.34 L 22.38,-12.96 L 23.91,-12.55 L 25.37,-12.09 L 26.76,-11.60;M -2.86,-13.67 L -1.30,-13.63 L 0.24,-13.59 L 1.78,-13.55 L 3.31,-13.51 L 4.85,-13.46 L 6.39,-13.41 L 7.95,-13.35 L 9.52,-13.28 L 11.11,-13.19 L 12.72,-13.09 L 14.34,-12.96 L 15.98,-12.81 L 17.62,-12.63 L 19.26,-12.41" keyTimes="0;0.4;0.75;1" dur="6.5s"
+                calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1" repeatCount="indefinite"/>
+            </path>
+            <path d="M 12.64,-13.09 L 6.64,-9.09" fill="none" stroke="var(--red-72)" stroke-opacity="0.550" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+        </g>
+      </g>
+
+      <g id="pupilDrift">
+        <animateTransform attributeName="transform" type="translate"
+          values="0,0; 2.6,-1.7; -1.4,2.0; 0.8,1.0; 0,0" keyTimes="0;0.3;0.6;0.85;1"
+          dur="7s" calcMode="spline"
+          keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"
+          repeatCount="indefinite"/>
+        <circle cx="0" cy="0" r="13" fill="var(--ink)"/>
+      </g>
+    </svg>
+  </div>
+
+  <script>
+    const cycles = [
+      ["midEmphA", 3.5, -0.4], ["midEmphB", 5, -1.2], ["midEmphC", 6.5, -2.5], ["midEmphD", 8, -3.5],
+    ];
+    cycles.forEach(([id, dur, beginOff]) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const base = parseFloat(el.getAttribute('stroke-opacity'));
+      const anim = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+      anim.setAttribute('attributeName', 'stroke-opacity');
+      const lo = Math.max(0.07, base*0.5).toFixed(3);
+      const hi = Math.min(0.9, base*1.45).toFixed(3);
+      anim.setAttribute('values', `${base};${hi};${lo};${base}`);
+      anim.setAttribute('keyTimes', '0;0.35;0.7;1');
+      anim.setAttribute('dur', dur + 's');
+      anim.setAttribute('begin', beginOff + 's');
+      anim.setAttribute('calcMode', 'spline');
+      anim.setAttribute('keySplines', '0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1');
+      anim.setAttribute('repeatCount', 'indefinite');
+      el.appendChild(anim);
+    });
+  </script>
+</body>
+</html>

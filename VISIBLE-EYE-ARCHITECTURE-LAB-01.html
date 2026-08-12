@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visible Eye — Architecture Lab 01</title>
+<style>
+  /* ══════════════════════════════════════════════════════════════
+     ISOLATED VISUAL-DESIGN STUDY — ARCHITECTURE LAB 01.
+     Not connected to production. Geometry only — no color, no glow,
+     no motion, no UI, no labels inside the eye.
+
+     A deliberate reset from every prior lab in this series. Those
+     built internal geometry as an encoded system (route logic,
+     relationship logic, resolution gradients) and then asked whether
+     the result looked good. This lab reverses the order: three
+     internal architectures composed purely as visual design —
+     judged on hierarchy, rhythm, balance, complexity, depth and
+     continuity — with no semantic layer attached to any mark.
+     Nothing here stands for reasoning, understanding, or a route.
+
+     A — LAYERED PRECISION: six faceted rings (regular polygons, not
+     circles), each rotated against the last and left open at one
+     edge, facet count and ink both increasing toward the center.
+     Three straight witness lines pass through every layer at fixed
+     angles — the device that reads the nested rings as one composed
+     instrument rather than six separate shapes.
+
+     B — ASYMMETRIC CONSTRUCT: one dense cluster of overlapping
+     angular facets, upper-left, with one facet weighted boldest to
+     anchor it. Its visual mass is balanced — not mirrored — by a
+     lighter, wider field of fine measured strokes lower-right. A
+     single connecting stroke ties the cluster toward the pupil's
+     neighbourhood without centering on it.
+
+     C — INTEGRATED COMPLEX FIELD: three genuinely different scales
+     in one composition — two bold, asymmetric macro sweeps; one
+     faceted medium ring with two of its own edges emphasized; small
+     graduation clusters only where macro and medium actually sit
+     close together. Two witness lines tie the scales into a single
+     object the same way they do in A.
+
+     LOCKED across all three: outer lid silhouette, pupil anchor and
+     size, overall proportions, calm negative space, monochrome
+     graphite, the lens clipPath that keeps every mark inside the
+     eye's actual opening.
+     ══════════════════════════════════════════════════════════════ */
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{
+    background:#f4f5f7; color:#1e2430;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    min-height:100vh;
+  }
+  .lab-head{ padding:40px 24px 8px; text-align:center; }
+  .lab-title{ font-size:13px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; color:#6b7280; }
+  .lab-sub{ margin-top:6px; font-size:12px; color:#9aa1ac; letter-spacing:0.3px; }
+  .lab-row{ display:flex; flex-wrap:wrap; justify-content:center; align-items:flex-start; gap:28px; padding:32px 24px 60px; }
+  .lab-card{ width:400px; max-width:90vw; background:#ffffff; border:1px solid #e4e6ea; border-radius:18px; padding:18px 14px 22px; }
+  .lab-card svg{ display:block; width:100%; height:auto; }
+  .lab-card-label{ margin-top:14px; text-align:center; }
+  .lab-card-id{ font-size:12px; font-weight:700; letter-spacing:2px; color:#2a303c; }
+  .lab-card-name{ margin-top:3px; font-size:11px; letter-spacing:1.2px; text-transform:uppercase; color:#9aa1ac; }
+  .eye-lid{ fill:none; stroke:#232936; stroke-width:2.2; stroke-linecap:round; }
+  .eye-pupil{ fill:#232936; }
+</style>
+</head>
+<body>
+  <div class="lab-head">
+    <div class="lab-title">Visible Eye — Architecture Lab 01</div>
+    <div class="lab-sub">Three internal architectures &middot; monochrome graphite &middot; static</div>
+  </div>
+  <div class="lab-row">
+    <div class="lab-card">
+      <svg viewBox="-320 -140 640 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="lensA" clipPathUnits="userSpaceOnUse">
+            <path d="M -290 0 Q 0 -70 290 0 Q 0 240 -290 0 Z"/>
+          </clipPath>
+        </defs>
+        <path class="eye-lid" d="M -290 0 Q 0 -70, 290 0"/>
+        <path class="eye-lid" d="M -290 0 Q 0 240, 290 0"/>
+        <g clip-path="url(#lensA)">
+        <path d="M 177.90,7.83 L 144.72,44.01 L 72.76,68.41 L -18.70,74.47 L -105.14,60.58 L -163.42,30.46 L -177.90,-7.83 L -144.72,-44.01 L -72.76,-68.41 L 18.70,-74.47 L 105.14,-60.58 L 163.42,-30.46" fill="none" stroke="rgba(30,36,48,0.2)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -143.93,21.82 L -149.27,-14.22 L -107.21,-45.74 L -31.11,-62.74 L 54.86,-59.82 L 123.41,-37.91 L 152.79,-3.96 L 133.65,31.24 L 72.08,56.53 L -12.37,63.87 L -92.90,50.93" fill="none" stroke="rgba(30,36,48,0.26)" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 119.60,18.22 L 71.17,44.17 L -4.44,53.25 L -78.36,41.99 L -122.35,14.69 L -119.60,-18.22 L -71.17,-44.17 L 4.44,-53.25 L 78.36,-41.99 L 122.35,-14.69" fill="none" stroke="rgba(30,36,48,0.33)" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -97.20,9.39 L -88.89,-18.96 L -38.98,-38.44 L 29.17,-39.94 L 83.67,-22.74 L 99.02,5.09 L 68.04,30.54 L 5.22,41.70 L -60.04,33.35" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 72.60,-5.91 L 61.32,17.31 L 14.11,30.39 L -41.36,25.67 L -72.60,5.91 L -61.32,-17.31 L -14.11,-30.39 L 41.36,-25.67" fill="none" stroke="rgba(30,36,48,0.52)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -47.16,4.09 L -37.05,-12.88 L 0.96,-20.16 L 38.24,-12.25 L 46.73,4.88 L 20.03,18.33 L -21.76,17.99" fill="none" stroke="rgba(30,36,48,0.63)" stroke-width="1.26" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 57.40,-73.95 L 12.76,-16.43" fill="none" stroke="rgba(30,36,48,0.16)" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 87.21,68.66 L 19.38,15.26" fill="none" stroke="rgba(30,36,48,0.16)" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -183.95,10.82 L -40.88,2.40" fill="none" stroke="rgba(30,36,48,0.16)" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 168.09,-25.61 L 147.48,-22.47" fill="none" stroke="rgba(30,36,48,0.24)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -49.84,60.59 L -42.70,51.91" fill="none" stroke="rgba(30,36,48,0.24)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -85.17,-39.59 L -69.51,-32.32" fill="none" stroke="rgba(30,36,48,0.24)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 99.02,5.09 L 77.25,3.97" fill="none" stroke="rgba(30,36,48,0.24)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -53.20,21.51 L -37.43,15.13" fill="none" stroke="rgba(30,36,48,0.24)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <circle class="eye-pupil" cx="0" cy="0" r="13"/>
+      </svg>
+      <div class="lab-card-label">
+        <div class="lab-card-id">A</div>
+        <div class="lab-card-name">Layered Precision</div>
+      </div>
+    </div>
+    <div class="lab-card">
+      <svg viewBox="-320 -140 640 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="lensB" clipPathUnits="userSpaceOnUse">
+            <path d="M -290 0 Q 0 -70 290 0 Q 0 240 -290 0 Z"/>
+          </clipPath>
+        </defs>
+        <path class="eye-lid" d="M -290 0 Q 0 -70, 290 0"/>
+        <path class="eye-lid" d="M -290 0 Q 0 240, 290 0"/>
+        <g clip-path="url(#lensB)">
+        <path d="M -42.06,33.53 L -115.36,52.77 L -141.80,15.81 L -78.73,-2.10 Z" fill="none" stroke="rgba(30,36,48,0.32)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -31.57,2.23 L -73.25,21.57 L -139.12,7.76 L -94.43,-12.54 Z" fill="none" stroke="rgba(30,36,48,0.38)" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -33.20,62.88 L -104.79,64.48 L -95.83,32.72 L -28.02,28.08 Z" fill="none" stroke="rgba(30,36,48,0.27)" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -14.10,20.36 L -50.36,31.10 L -82.35,17.36 L -51.79,7.19 Z" fill="none" stroke="rgba(30,36,48,0.58)" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -93.35,24.42 L -81.76,4.81" fill="none" stroke="rgba(30,36,48,0.24)" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -65.36,47.39 L -49.85,18.79" fill="none" stroke="rgba(30,36,48,0.22)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -93.35,24.42 L -65.36,47.39" fill="none" stroke="rgba(30,36,48,0.2)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -49.85,18.79 L -31.97,2.84" fill="none" stroke="rgba(30,36,48,0.4)" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 82.01,18.25 L 95.43,24.38" fill="none" stroke="rgba(30,36,48,0.3)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 76.59,27.87 L 86.02,35.26" fill="none" stroke="rgba(30,36,48,0.312)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 64.70,37.28 L 69.50,45.49" fill="none" stroke="rgba(30,36,48,0.324)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 46.37,45.73 L 46.16,54.26" fill="none" stroke="rgba(30,36,48,0.336)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 95.81,28.08 L 106.49,35.33" fill="none" stroke="rgba(30,36,48,0.348)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 84.02,39.06 L 90.14,47.27" fill="none" stroke="rgba(30,36,48,0.36)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 65.04,49.12 L 66.14,57.79" fill="none" stroke="rgba(30,36,48,0.372)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 39.35,57.44 L 35.27,66.05" fill="none" stroke="rgba(30,36,48,0.384)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 104.81,39.51 L 112.32,47.68" fill="none" stroke="rgba(30,36,48,0.396)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 85.83,51.31 L 88.32,60.10" fill="none" stroke="rgba(30,36,48,0.408)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 59.28,61.42 L 56.51,70.29" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 26.10,68.98 L 18.13,77.39" fill="none" stroke="rgba(30,36,48,0.432)" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 59.28,61.42 L 52.80,72.30" fill="none" stroke="rgba(30,36,48,0.5)" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <circle class="eye-pupil" cx="0" cy="0" r="13"/>
+      </svg>
+      <div class="lab-card-label">
+        <div class="lab-card-id">B</div>
+        <div class="lab-card-name">Asymmetric Construct</div>
+      </div>
+    </div>
+    <div class="lab-card">
+      <svg viewBox="-320 -140 640 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="lensC" clipPathUnits="userSpaceOnUse">
+            <path d="M -290 0 Q 0 -70 290 0 Q 0 240 -290 0 Z"/>
+          </clipPath>
+        </defs>
+        <path class="eye-lid" d="M -290 0 Q 0 -70, 290 0"/>
+        <path class="eye-lid" d="M -290 0 Q 0 240, 290 0"/>
+        <g clip-path="url(#lensC)">
+        <path d="M -151.50,-30.93 L -144.92,-36.04 L -137.35,-40.90 L -128.85,-45.49 L -119.49,-49.77 L -109.31,-53.71 L -98.40,-57.29 L -86.81,-60.48 L -74.65,-63.26 L -61.97,-65.62 L -48.88,-67.53 L -35.46,-68.98 L -21.79,-69.97 L -7.98,-70.48 L 5.88,-70.52 L 19.71,-70.08 L 33.40,-69.16 L 46.87,-67.78 L 60.01,-65.94 L 72.76,-63.65 L 85.01,-60.93 L 96.68,-57.80 L 107.70,-54.28 L 118.00,-50.39 L 127.49,-46.16 L 136.12,-41.62 L 143.83,-36.79 L 150.57,-31.72 L 156.29,-26.43" fill="none" stroke="rgba(30,36,48,0.4)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 130.61,29.07 L 126.22,32.29 L 121.38,35.39 L 116.11,38.36 L 110.42,41.20 L 104.33,43.89 L 97.88,46.43 L 91.07,48.79 L 83.93,50.99 L 76.50,53.00 L 68.79,54.82 L 60.84,56.44 L 52.67,57.86 L 44.30,59.08 L 35.79,60.08 L 27.14,60.87 L 18.39,61.44 L 9.58,61.79 L 0.74,61.92 L -8.11,61.83 L -16.93,61.51 L -25.69,60.98 L -34.35,60.23 L -42.89,59.26 L -51.28,58.08 L -59.49,56.69 L -67.48,55.10 L -75.23,53.31 L -82.72,51.33" fill="none" stroke="rgba(30,36,48,0.34)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 10.43,41.53 L -55.79,34.62 L -95.90,11.51 L -91.14,-16.99 L -43.73,-37.53 L 24.13,-40.52 L 80.71,-24.55 L 99.52,2.91 L 71.76,29.01" fill="none" stroke="rgba(30,36,48,0.36)" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 80.71,-24.55 L 99.52,2.91" fill="none" stroke="rgba(30,36,48,0.52)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -55.79,34.62 L -95.90,11.51" fill="none" stroke="rgba(30,36,48,0.52)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 32.44,-15.86 L 49.85,0.73 L 29.72,16.77 L -12.79,20.18 L -45.67,8.40 L -44.16,-9.71 L -9.40,-20.51" fill="none" stroke="rgba(30,36,48,0.52)" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -86.00,-62.35 L -26.66,-19.33" fill="none" stroke="rgba(30,36,48,0.18)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 98.66,58.98 L 30.58,18.28" fill="none" stroke="rgba(30,36,48,0.18)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -111.89,-46.84 L -90.76,-54.26" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -106.54,-44.60 L -86.42,-51.67" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M -101.19,-42.36 L -82.08,-49.07" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 73.00,43.64 L 53.79,48.29" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 68.66,41.05 L 50.59,45.42" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 64.32,38.45 L 47.39,42.55" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 45.07,-40.46 L 61.17,-36.57" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 41.87,-37.59 L 56.83,-33.97" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 38.67,-34.72 L 52.48,-31.38" fill="none" stroke="rgba(30,36,48,0.42)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <circle class="eye-pupil" cx="0" cy="0" r="13"/>
+      </svg>
+      <div class="lab-card-label">
+        <div class="lab-card-id">C</div>
+        <div class="lab-card-name">Integrated Complex Field</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
