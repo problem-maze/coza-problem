@@ -1,0 +1,180 @@
+{
+  "milestone": "L0-R2",
+  "name": "CINEMATIC LIVING PHOTOGRAPH RECOVERY",
+  "status": "READY_FOR_PHONE_REVIEW",
+  "visual_phone_pass_claimed": false,
+  "stop_condition": "STOP_AFTER_L0-R2",
+  "source": {
+    "path": "ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp",
+    "dimensions": "960x640",
+    "format": "WEBP",
+    "sha256": "a993834ccddaf3d21b847584273b31ec07e8a37df8496570623e4c762c4c66ab",
+    "generated_or_replaced": false,
+    "reference_only_assets_used_as_source": false
+  },
+  "diagnosis": [
+    {
+      "subsystem": "water",
+      "classes": [
+        "ineffective_pixel_transformation",
+        "insufficient_visible_motion",
+        "excessive_frame_cost"
+      ],
+      "root_cause": "Small Canvas2D tile displacement disappeared at phone scale and consumed many CPU draws."
+    },
+    {
+      "subsystem": "reflection",
+      "classes": [
+        "unsuitable_rendering_technique",
+        "insufficient_physical_coupling"
+      ],
+      "root_cause": "Separate visual strokes had an independent rhythm rather than deriving from the water pixels."
+    },
+    {
+      "subsystem": "waterfall",
+      "classes": [
+        "unsuitable_rendering_technique"
+      ],
+      "root_cause": "Wrapped source strips and regular strokes exposed procedural repetition."
+    },
+    {
+      "subsystem": "foliage",
+      "classes": [
+        "ineffective_pixel_transformation",
+        "compositing_visibility_issue"
+      ],
+      "root_cause": "Whole clipped source bounds were translated or rotated like cardboard regions."
+    },
+    {
+      "subsystem": "atmosphere",
+      "classes": [
+        "insufficient_visible_motion",
+        "compositing_visibility_issue"
+      ],
+      "root_cause": "Thin veils were too weak at phone scale and read as overlays."
+    },
+    {
+      "subsystem": "review_surface",
+      "classes": [
+        "viewport_scaling_issue",
+        "excessive_frame_cost"
+      ],
+      "root_cause": "The prior debug dashboard made the scene too small and added synchronous pixel sampling."
+    }
+  ],
+  "architecture": {
+    "runtime_owner": "NaturalEyeRuntime",
+    "scene_clock": "one monotonic pause-aware SceneClock",
+    "top_level_raf_call_sites": 1,
+    "layer_owned_raf_loops": 0,
+    "recurring_timers": 0,
+    "logical_layers": [
+      "water",
+      "waterfall",
+      "atmosphere",
+      "foliage",
+      "spray"
+    ],
+    "render_layer": "material-compositor",
+    "shared_environment_state": true,
+    "failure_isolation": true,
+    "parallax": "disabled for realism",
+    "stale_old_renderer_paths_removed": true
+  },
+  "renderer": {
+    "primary": "WebGL fragment material compositor",
+    "fallback": "Canvas2D compatibility compositor when WebGL cannot initialize",
+    "primary_reason": "One capped GPU pass makes source pixels move continuously without CPU tile loops or a full-scene warp.",
+    "masks": [
+      "water hard/influence plus waterfall channels",
+      "foliage attachment/depth plus farAir",
+      "localized waterfallSpray"
+    ],
+    "source_texture": "approved image only"
+  },
+  "motion_contract": {
+    "water": "domain-warped multi-scale displacement with stable mask attenuation",
+    "reflection": "same waterFlow field, same time, same stable light direction",
+    "waterfall": "continuous downward flow with varied local velocity and breakup",
+    "spray": "localized noise moisture driven by waterfall energy",
+    "atmosphere": "farAir-only, slow depth-aware drift",
+    "foliage": "anchored per-pixel field with near > mid response",
+    "static": "island, trunks, rocks, and large wood remain in the base",
+    "parallax": "disabled"
+  },
+  "proof_mode": {
+    "default_mode": "natural",
+    "focuses": [
+      "water",
+      "waterfall",
+      "atmosphere",
+      "foliage",
+      "all"
+    ],
+    "natural_values_separate": true,
+    "proof_values_silently_promoted": false
+  },
+  "phone_review": {
+    "required": true,
+    "duration_seconds": "10-20",
+    "target_viewports": [
+      "384x731",
+      "390x844",
+      "360x800"
+    ],
+    "visual_authority": "real phone video",
+    "acceptance_claim": "REVIEW_ONLY"
+  },
+  "validation": {
+    "node_check_touched_javascript": "PASS",
+    "html_contract": "PASS",
+    "geometry_exact_paths": "PASS_22_OF_22",
+    "required_region_groups": "PASS_9_OF_9",
+    "one_raf_call_site": "PASS",
+    "one_scene_clock": "PASS",
+    "no_recurring_timer_tokens": "PASS",
+    "no_video": "PASS",
+    "no_generated_image_files": "PASS_BY_WORKTREE_REVIEW",
+    "authoritative_asset_hash": "PASS",
+    "default_mode_natural": "PASS",
+    "diagnostics_collapsed_by_default": "PASS",
+    "proof_isolation_controls": "PASS",
+    "stale_old_l0_path_scan": "PASS",
+    "image_audit": "ENVIRONMENT_LIMITED_MISSING_PIL",
+    "package_preflight": "ENVIRONMENT_LIMITED_MISSING_PIL",
+    "browser_runtime_smoke": "NOT_AVAILABLE_IN_CONTAINER",
+    "phone_visual_review": "REQUIRED",
+    "staged_git_diff_check": "PASS"
+  },
+  "performance_smoke_test": {
+    "numerical_browser_measurement": false,
+    "reason": "No Chromium, Playwright, Puppeteer, or alternate local browser runtime is installed.",
+    "static_observations": {
+      "compositor_draws_per_top_level_frame": 1,
+      "logical_update_rates_hz": {
+        "water": 30,
+        "waterfall": 24,
+        "foliage": 18,
+        "spray": 12,
+        "atmosphere": 8
+      },
+      "standard_phone_render_scale": "1.7x CSS width capped at 960px",
+      "low_tier_render_scale": "1.45x CSS width capped at 960px",
+      "diagnostics_dom_update_interval_ms": 700,
+      "diagnostic_pixel_probe_interval_ms": 1400,
+      "diagnostic_pixel_probe_requires_manual_expand": true
+    },
+    "z10_status": "NOT_STARTED"
+  },
+  "changed_files": [
+    "Problem-NATURAL-EYE-L0-R2-CINEMATIC-LIVING-RECOVERY-v1.html",
+    "L0-R2-REPORT.md",
+    "L0-R2-report.json"
+  ],
+  "later_milestones": {
+    "L1": "NOT_STARTED",
+    "Z10": "NOT_STARTED",
+    "home_integration": "NOT_STARTED"
+  },
+  "tooling_note": "The managed apply_patch helper could not access its synthetic workspace mount; the exact requested HTML/report paths were written through a narrowly scoped fallback and then validated."
+}

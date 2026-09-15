@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Natural Eye — L0-R2 Cinematic Living Photograph Recovery</title>
+<style>
+*{box-sizing:border-box}
+:root{color-scheme:dark;--ink:#eef3ed;--muted:#b5c4b9;--panel:rgba(17,28,23,.86);--line:rgba(235,244,235,.18);--accent:#d9e8cc}
+html,body{margin:0;min-height:100%;background:#101914;color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{min-height:100dvh}
+.shell{width:min(1160px,100%);min-height:100dvh;margin:0 auto;display:flex;flex-direction:column;justify-content:center;padding:18px}
+.scene-frame{position:relative;width:100%;aspect-ratio:3/2;overflow:hidden;background:#26392f;box-shadow:0 18px 46px rgba(0,0,0,.35)}
+.scene-frame img,.scene-frame canvas{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;display:block}
+.scene-frame img{object-fit:fill}
+.scene-frame canvas{pointer-events:none;opacity:0;transition:opacity .2s ease}
+.scene-status{position:absolute;top:12px;left:12px;padding:6px 8px;border:1px solid rgba(241,248,238,.16);border-radius:8px;background:rgba(11,20,16,.64);color:#f3f7ef;font:700 10px/1.1 system-ui,-apple-system,sans-serif;letter-spacing:.04em;pointer-events:none}
+.review-dock{margin:12px auto 0;width:min(760px,100%);padding:11px 12px;border:1px solid var(--line);border-radius:16px;background:var(--panel);box-shadow:0 12px 32px rgba(0,0,0,.18)}
+.dock-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{font-size:14px;font-weight:800;letter-spacing:-.02em}
+.build{display:block;margin-top:2px;color:var(--muted);font-size:10px;line-height:1.3}
+.controls,.proof-row{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.controls{margin-top:10px}
+.proof-row{margin-top:8px}
+.proof-label{color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+button{appearance:none;border:1px solid var(--line);border-radius:999px;background:rgba(245,250,243,.08);color:var(--ink);padding:8px 10px;font:700 10px/1 system-ui,-apple-system,sans-serif;cursor:pointer;white-space:nowrap}
+button:hover{background:rgba(245,250,243,.16)}
+button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:#17231b}
+button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hint,.authority{margin:8px 0 0;color:var(--muted);font-size:10px;line-height:1.45}
+.authority{opacity:.82}
+details{margin-top:9px;border-top:1px solid rgba(235,244,235,.1);padding-top:8px}
+summary{cursor:pointer;color:var(--ink);font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+pre{margin:8px 0 0;max-height:240px;overflow:auto;padding:10px;border-radius:10px;background:#09110d;color:#d6e5d6;font:10px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap}
+@media (max-width:700px){
+  .shell{width:100%;min-height:100dvh;padding:0;justify-content:flex-start}
+  .scene-frame{width:100%;border-radius:0;box-shadow:none}
+  .scene-status{top:9px;left:9px}
+  .review-dock{position:fixed;right:8px;bottom:max(8px,env(safe-area-inset-bottom));left:8px;width:auto;margin:0;padding:9px 10px;border-radius:14px;background:rgba(11,19,15,.9);box-shadow:0 10px 28px rgba(0,0,0,.32);backdrop-filter:blur(12px)}
+  .build,.hint,.authority{display:none}
+  .dock-head{min-height:20px}
+  .brand{font-size:12px}
+  .controls{margin-top:7px}
+  .proof-row{margin-top:6px;gap:4px}
+  button{padding:7px 8px;font-size:9px}
+  details{margin-top:7px;padding-top:7px}
+  pre{max-height:190px;font-size:9px}
+}
+@media (prefers-reduced-motion:reduce){.scene-frame canvas{transition:none}}
+</style>
+</head>
+<body>
+<main class="shell" data-build="L0-R2-CINEMATIC-LIVING-RECOVERY-v1">
+  <figure class="scene-frame" id="sceneFrame" aria-label="Natural Eye cinematic living photograph">
+    <img id="baseImage" src="ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp" alt="Natural Eye landscape with a turquoise lake, island, waterfall, forest, wood and rocks">
+    <canvas id="motionCanvas" aria-label="Procedural natural motion layer"></canvas>
+    <div class="scene-status" id="sceneStatus" aria-live="polite">Loading approved source…</div>
+  </figure>
+  <section class="review-dock" aria-label="L0-R2 phone review controls">
+    <div class="dock-head">
+      <div><div class="brand">Natural Eye</div><span class="build">L0-R2 · Cinematic Living Photograph Recovery</span></div>
+      <button id="modeButton" type="button" aria-pressed="false">Mode: NATURAL</button>
+    </div>
+    <div class="controls">
+      <button id="pauseButton" type="button" aria-pressed="false">Pause scene</button>
+      <button id="retryButton" type="button">Retry isolated layers</button>
+    </div>
+    <div class="proof-row" role="group" aria-label="Proof subsystem focus">
+      <span class="proof-label">Proof focus</span>
+      <button type="button" data-proof-focus="water" aria-pressed="false">WATER ONLY</button>
+      <button type="button" data-proof-focus="waterfall" aria-pressed="false">WATERFALL ONLY</button>
+      <button type="button" data-proof-focus="atmosphere" aria-pressed="false">ATMOSPHERE ONLY</button>
+      <button type="button" data-proof-focus="foliage" aria-pressed="false">FOLIAGE ONLY</button>
+      <button type="button" data-proof-focus="all" aria-pressed="true">ALL</button>
+    </div>
+    <p class="hint">NATURAL is the default review target. Selecting a proof focus enters PROOF and exaggerates only that family. The real phone video remains the visual authority.</p>
+    <details id="diagnosticDetails">
+      <summary>Runtime diagnostics</summary>
+      <pre id="diagnostics">Waiting for the approved source…</pre>
+      <p class="authority">Counters describe ownership and health only. They do not prove visible natural motion.</p>
+    </details>
+  </section>
+</main>
+<script>
+'use strict';
+const DESIGN={width:960,height:640};
+const SOURCE_SHA256='a993834ccddaf3d21b847584273b31ec07e8a37df8496570623e4c762c4c66ab';
+const baseImage=document.getElementById('baseImage');
+const sceneFrame=document.getElementById('sceneFrame');
+const motionCanvas=document.getElementById('motionCanvas');
+const sceneStatus=document.getElementById('sceneStatus');
+const diagnosticsNode=document.getElementById('diagnostics');
+const diagnosticDetails=document.getElementById('diagnosticDetails');
+const modeButton=document.getElementById('modeButton');
+const pauseButton=document.getElementById('pauseButton');
+const retryButton=document.getElementById('retryButton');
+const proofButtons=Array.from(document.querySelectorAll('[data-proof-focus]'));
+
+const REGION_MAP={
+  region_order:['farAir','midForest','nearFoliage','lake','waterfallStream','waterfallSpray','islandStatic','staticWood','staticRocks'],
+  regions:{
+    lake:{
+      id:'lake',material:'water-surface',motion_eligible:true,feather_px:8,attenuation:'shoreline-island-wood-rock-boundaries',
+      path:'M 100 322 C 112 288 142 259 184 238 C 233 213 292 198 352 193 C 423 188 491 193 556 203 C 624 213 694 231 748 254 C 798 275 838 305 865 337 C 883 359 889 380 884 399 C 875 423 848 443 815 461 C 773 483 722 499 671 514 C 611 532 552 544 501 548 C 437 552 377 542 325 527 C 270 513 225 494 185 473 C 147 452 119 430 103 404 C 91 382 91 349 100 322 Z',
+      excludes:['islandStatic','rock-shore-right','waterfallSpray','midForest','near-foliage-left-shore','near-foliage-right-shore','wood-upper-arch','wood-lower-left-log','wood-lower-right-log']
+    },
+    islandStatic:{
+      id:'islandStatic',material:'static-island',motion_eligible:false,feather_px:0,attenuation:'hard-static-exclusion',
+      path:'M 411 357 C 417 335 430 313 443 290 C 452 271 464 252 477 241 C 488 228 501 237 511 251 C 517 230 528 215 539 229 C 548 211 561 223 564 245 C 575 224 588 238 586 261 C 603 247 616 262 607 283 C 622 280 627 298 616 311 C 628 323 618 341 605 348 C 613 365 598 381 580 383 C 563 402 536 412 510 413 C 483 414 458 401 441 389 C 425 385 412 375 411 357 Z',
+      excludes:[]
+    },
+    waterfallStream:{
+      id:'waterfallStream',material:'waterfall-stream',motion_eligible:true,feather_px:3,attenuation:'continuous-downward-flow',
+      path:'M 839 187 C 855 192 864 205 862 224 C 860 242 855 258 862 274 C 868 289 884 302 890 319 C 898 342 893 365 880 388 L 852 380 C 861 355 858 338 850 321 C 840 303 828 288 828 271 C 828 249 839 233 832 215 C 827 201 827 192 839 187 Z',
+      excludes:['midForest','farAir','waterfallSpray','near-foliage-right-shore','wood-upper-arch','rock-shore-right']
+    },
+    waterfallSpray:{
+      id:'waterfallSpray',material:'waterfall-impact-spray',motion_eligible:true,feather_px:10,attenuation:'impact-local-only',
+      path:'M 797 352 C 818 337 842 339 860 353 C 878 333 903 338 919 355 C 934 347 954 355 960 374 L 960 432 C 939 429 921 416 900 418 C 879 420 866 440 845 440 C 823 440 811 424 795 410 C 780 396 782 370 797 352 Z',
+      excludes:['lake','midForest','waterfallStream','near-foliage-right-shore','rock-shore-right','wood-upper-arch']
+    },
+    farAir:{
+      id:'farAir',material:'far-air-mountains',motion_eligible:true,feather_px:24,attenuation:'distant-low-amplitude',
+      path:'M 314 0 L 960 0 L 960 185 C 920 175 884 159 845 153 C 799 146 760 136 718 140 C 675 145 638 136 598 123 C 556 109 522 108 483 119 C 439 133 403 126 371 109 C 348 97 330 85 314 79 Z',
+      excludes:['midForest','near-foliage-canopy-left','near-foliage-canopy-upper','wood-left-trunk','wood-upper-arch']
+    },
+    midForest:{
+      id:'midForest',material:'mid-forest',motion_eligible:true,feather_px:12,attenuation:'depth-limited-forest-response',
+      path:'M 214 116 C 259 106 307 95 349 103 C 396 112 431 136 468 151 C 509 166 550 151 593 153 C 642 156 684 169 724 184 C 768 200 808 221 843 251 L 827 294 C 790 273 754 257 715 246 C 674 234 632 222 590 215 C 538 207 495 205 452 203 C 403 201 360 199 318 206 C 277 213 242 229 209 251 L 187 226 C 196 190 205 150 214 116 Z M 0 216 C 39 204 80 207 117 221 C 151 234 174 254 192 283 L 174 348 C 150 330 124 313 103 292 C 75 267 40 254 0 252 Z M 756 184 C 804 199 850 223 889 257 C 920 284 944 312 960 334 L 960 405 C 935 385 909 363 885 340 C 860 315 837 293 816 276 C 791 255 764 241 737 230 Z',
+      excludes:['farAir','lake','near-foliage-canopy-left','near-foliage-canopy-upper','near-foliage-left-shore','near-foliage-right-shore','wood-left-trunk','wood-upper-arch','waterfallStream','waterfallSpray','islandStatic']
+    },
+    nearFoliage:[
+      {id:'near-foliage-canopy-left',material:'near-foliage',motion_eligible:true,feather_px:6,attenuation:'anchored-near-cluster',path:'M 0 0 H 188 C 166 31 146 60 125 90 C 101 126 75 155 42 176 C 26 186 12 194 0 198 Z',excludes:['lake','midForest','farAir','islandStatic','waterfallStream','waterfallSpray','wood-left-trunk','wood-upper-arch','wood-lower-left-log','wood-lower-right-log','rock-shore-right','rock-foreground-left','rock-foreground-center','rock-foreground-right','rock-lower-right-edge']},
+      {id:'near-foliage-canopy-upper',material:'near-foliage',motion_eligible:true,feather_px:6,attenuation:'anchored-near-cluster',path:'M 210 0 H 450 C 430 20 408 38 385 55 C 360 74 337 92 317 107 C 302 118 286 122 272 115 C 268 95 275 72 287 50 C 299 29 312 13 325 0 Z',excludes:['lake','midForest','farAir','islandStatic','waterfallStream','waterfallSpray','wood-left-trunk','wood-upper-arch','wood-lower-left-log','wood-lower-right-log','rock-shore-right','rock-foreground-left','rock-foreground-center','rock-foreground-right','rock-lower-right-edge']},
+      {id:'near-foliage-left-shore',material:'near-foliage',motion_eligible:true,feather_px:6,attenuation:'anchored-near-cluster',path:'M 0 232 C 36 224 70 235 96 254 C 119 272 133 294 139 315 L 106 326 C 91 307 73 291 49 279 C 30 270 14 267 0 268 Z',excludes:['lake','midForest','farAir','islandStatic','waterfallStream','waterfallSpray','wood-left-trunk','wood-upper-arch','wood-lower-left-log','wood-lower-right-log','rock-shore-right','rock-foreground-left','rock-foreground-center','rock-foreground-right','rock-lower-right-edge']},
+      {id:'near-foliage-foreground-left',material:'near-foliage',motion_eligible:true,feather_px:8,attenuation:'anchored-near-cluster',path:'M 0 404 C 37 396 72 401 98 417 C 120 431 130 449 139 468 C 112 485 92 511 76 543 C 62 572 52 607 46 640 H 0 Z',excludes:['lake','midForest','farAir','islandStatic','waterfallStream','waterfallSpray','wood-left-trunk','wood-upper-arch','wood-lower-left-log','wood-lower-right-log','rock-shore-right','rock-foreground-left','rock-foreground-center','rock-foreground-right','rock-lower-right-edge']},
+      {id:'near-foliage-foreground-middle',material:'near-foliage',motion_eligible:true,feather_px:8,attenuation:'anchored-near-cluster',path:'M 431 610 C 445 598 455 596 465 602 C 474 609 478 625 481 640 H 420 Z',excludes:['lake','midForest','farAir','islandStatic','waterfallStream','waterfallSpray','wood-left-trunk','wood-upper-arch','wood-lower-left-log','wood-lower-right-log','rock-shore-right','rock-foreground-left','rock-foreground-center','rock-foreground-right','rock-lower-right-edge']},
+      {id:'near-foliage-right-shore',material:'near-foliage',motion_eligible:true,feather_px:6,attenuation:'anchored-near-cluster',path:'M 921 317 C 939 321 951 333 960 344 L 960 505 H 932 C 938 470 928 432 922 398 C 916 365 916 338 921 317 Z',excludes:['lake','midForest','farAir','islandStatic','waterfallStream','waterfallSpray','wood-left-trunk','wood-upper-arch','wood-lower-left-log','wood-lower-right-log','rock-shore-right','rock-foreground-left','rock-foreground-center','rock-foreground-right','rock-lower-right-edge']},
+      {id:'near-foliage-lower-right-edge',material:'near-foliage',motion_eligible:true,feather_px:6,attenuation:'anchored-near-cluster',path:'M 948 482 C 955 479 959 482 960 488 L 960 640 H 928 C 934 591 939 536 948 482 Z',excludes:['lake','midForest','farAir','islandStatic','waterfallStream','waterfallSpray','wood-left-trunk','wood-upper-arch','wood-lower-left-log','wood-lower-right-log','rock-shore-right','rock-foreground-left','rock-foreground-center','rock-foreground-right','rock-lower-right-edge']}
+    ],
+    staticWood:[
+      {id:'wood-left-trunk',material:'static-wood',motion_eligible:false,feather_px:0,attenuation:'hard-static-anchor',path:'M 0 0 C 39 4 72 28 91 65 C 108 99 108 138 101 177 C 94 222 100 264 118 308 C 132 344 151 383 154 414 C 157 438 147 456 133 469 L 77 451 C 83 421 71 390 56 358 C 33 311 11 278 0 246 Z',excludes:[]},
+      {id:'wood-upper-arch',material:'static-wood',motion_eligible:false,feather_px:0,attenuation:'hard-static-anchor',path:'M 0 245 C 54 214 91 181 145 158 C 211 131 284 116 360 119 C 437 121 516 131 589 150 C 671 170 749 201 816 237 C 876 269 925 299 960 316 L 960 365 C 920 355 875 335 826 308 C 756 270 685 242 608 218 C 531 194 452 183 376 182 C 302 181 235 192 178 211 C 111 233 70 273 0 303 Z',excludes:[]},
+      {id:'wood-lower-left-log',material:'static-wood',motion_eligible:false,feather_px:0,attenuation:'hard-static-anchor',path:'M 107 496 C 158 477 207 476 258 491 C 304 505 350 527 401 527 C 442 527 477 514 514 498 L 544 534 C 493 559 455 585 407 596 C 351 607 311 581 263 560 C 213 537 170 536 121 550 Z',excludes:[]},
+      {id:'wood-lower-right-log',material:'static-wood',motion_eligible:false,feather_px:0,attenuation:'hard-static-anchor',path:'M 493 533 C 552 512 600 486 650 472 C 704 457 747 466 792 492 C 837 517 870 553 916 577 L 879 621 C 829 593 782 568 733 550 C 685 531 643 529 591 544 C 550 556 518 576 478 592 Z',excludes:[]}
+    ],
+    staticRocks:[
+      {id:'rock-shore-right',material:'static-rocks',motion_eligible:false,feather_px:0,attenuation:'hard-static-anchor',path:'M 704 405 C 726 387 752 378 778 381 C 803 384 822 399 823 418 C 825 438 806 455 784 463 C 757 472 731 462 713 448 C 697 436 690 417 704 405 Z',excludes:[]},
+      {id:'rock-foreground-left',material:'static-rocks',motion_eligible:false,feather_px:0,attenuation:'hard-static-anchor',path:'M 77 559 C 89 526 117 499 149 494 C 181 489 205 510 224 540 C 241 567 254 602 268 640 L 53 640 C 57 615 65 584 77 559 Z',excludes:[]},
+      {id:'rock-foreground-center',material:'static-rocks',motion_eligible:false,feather_px:0,attenuation:'hard-static-anchor',path:'M 272 567 C 289 538 318 519 349 522 C 382 526 402 553 421 583 C 438 609 448 628 452 640 L 241 640 C 246 611 255 584 272 567 Z',excludes:[]},
+      {id:'rock-foreground-right',material:'static-rocks',motion_eligible:false,feather_px:0,attenuation:'hard-static-anchor',path:'M 613 570 C 634 535 667 515 702 522 C 739 530 765 563 790 592 C 806 610 820 628 828 640 L 581 640 C 584 612 594 588 613 570 Z',excludes:[]},
+      {id:'rock-lower-right-edge',material:'static-rocks',motion_eligible:false,feather_px:0,attenuation:'hard-static-anchor',path:'M 832 527 C 858 503 890 493 918 502 C 943 510 958 536 960 555 L 960 640 H 813 C 816 599 818 557 832 527 Z',excludes:[]}
+    ]
+  }
+};
+const REGION_LOOKUP=new Map();
+Object.entries(REGION_MAP.regions).forEach(([key,value])=>{if(Array.isArray(value))value.forEach(region=>REGION_LOOKUP.set(region.id,region));else REGION_LOOKUP.set(key,value);});
+const GEOMETRY=new Map();
+REGION_LOOKUP.forEach((region,id)=>GEOMETRY.set(id,new Path2D(region.path)));
+const REGION_BOUNDS={
+  farAir:{x:308,y:0,w:652,h:190},midForest:{x:0,y:92,w:960,h:320},lake:{x:86,y:184,w:820,h:372},
+  waterfallStream:{x:824,y:180,w:74,h:212},waterfallSpray:{x:778,y:330,w:182,h:116},
+  'near-foliage-canopy-left':{x:0,y:0,w:192,h:205},'near-foliage-canopy-upper':{x:205,y:0,w:250,h:130},
+  'near-foliage-left-shore':{x:0,y:220,w:146,h:112},'near-foliage-foreground-left':{x:0,y:392,w:148,h:248},
+  'near-foliage-foreground-middle':{x:417,y:591,w:70,h:49},'near-foliage-right-shore':{x:912,y:310,w:48,h:202},
+  'near-foliage-lower-right-edge':{x:923,y:475,w:37,h:165}
+};
+const REGION_ANCHORS={
+  midForest:{x:620,y:210},'near-foliage-canopy-left':{x:78,y:98},'near-foliage-canopy-upper':{x:330,y:58},
+  'near-foliage-left-shore':{x:70,y:278},'near-foliage-foreground-left':{x:69,y:515},
+  'near-foliage-foreground-middle':{x:452,y:620},'near-foliage-right-shore':{x:944,y:394},
+  'near-foliage-lower-right-edge':{x:949,y:564}
+};
+function clamp(value,min,max){return Math.max(min,Math.min(max,value));}
+function fract(value){return value-Math.floor(value);}
+function smooth(value){return value*value*(3-2*value);}
+function hash2(x,y,seed){return fract(Math.sin(x*127.1+y*311.7+seed*74.7)*43758.5453123);}
+function valueNoise(x,y,seed){
+  const x0=Math.floor(x),y0=Math.floor(y),tx=smooth(x-x0),ty=smooth(y-y0);
+  const a=hash2(x0,y0,seed),b=hash2(x0+1,y0,seed),c=hash2(x0,y0+1,seed),d=hash2(x0+1,y0+1,seed);
+  const ab=a+(b-a)*tx,cd=c+(d-c)*tx;
+  return ab+(cd-ab)*ty;
+}
+function fbm(x,y,seed){
+  let amplitude=.5,sum=0,weight=0;
+  for(let octave=0;octave<4;octave+=1){sum+=valueNoise(x,y,seed+octave*17)*amplitude;weight+=amplitude;x=x*2.03+11.7;y=y*1.97-7.3;amplitude*=.5;}
+  return sum/weight;
+}
+function signedFbm(x,y,seed){return fbm(x,y,seed)*2-1;}
+function makeNativeCanvas(){const canvas=document.createElement('canvas');canvas.width=DESIGN.width;canvas.height=DESIGN.height;return canvas;}
+function clear2d(ctx){
+  ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.filter='none';ctx.clearRect(0,0,DESIGN.width,DESIGN.height);
+}
+function paintRegionMask(ctx,region){
+  ctx.save();ctx.globalCompositeOperation='source-over';ctx.fillStyle='#fff';ctx.fill(GEOMETRY.get(region.id));
+  (region.excludes||[]).forEach(id=>{const path=GEOMETRY.get(id);if(!path)return;ctx.globalCompositeOperation='destination-out';ctx.fill(path);ctx.globalCompositeOperation='source-over';});
+  ctx.restore();
+}
+function readAlpha(canvas){return canvas.getContext('2d',{willReadFrequently:true}).getImageData(0,0,DESIGN.width,DESIGN.height).data;}
+function waterAttenuation(x,y){
+  const shoreline=Math.min(clamp((x-118)/72,0,1),clamp((868-x)/72,0,1),clamp((y-204)/42,0,1),clamp((552-y)/44,0,1));
+  const islandDistance=((x-512)/132)**2+((y-330)/104)**2;
+  const islandEdge=1-.82*Math.exp(-islandDistance*1.45);
+  const rockDistance=((x-758)/90)**2+((y-420)/66)**2;
+  const rockEdge=1-.78*Math.exp(-rockDistance*1.4);
+  return clamp(Math.min(shoreline,islandEdge,rockEdge),0,1);
+}
+function buildMaskBundle(){
+  const waterHardCanvas=makeNativeCanvas(),waterHardCtx=waterHardCanvas.getContext('2d');
+  paintRegionMask(waterHardCtx,REGION_LOOKUP.get('lake'));
+  const waterSoftCanvas=makeNativeCanvas(),waterSoftCtx=waterSoftCanvas.getContext('2d');
+  waterSoftCtx.filter='blur(12px)';waterSoftCtx.drawImage(waterHardCanvas,0,0);
+  const waterHard=readAlpha(waterHardCanvas),waterSoft=readAlpha(waterSoftCanvas);
+  const streamCanvas=makeNativeCanvas();paintRegionMask(streamCanvas.getContext('2d'),REGION_LOOKUP.get('waterfallStream'));
+  const streamAlpha=readAlpha(streamCanvas);
+  const sprayCanvas=makeNativeCanvas();paintRegionMask(sprayCanvas.getContext('2d'),REGION_LOOKUP.get('waterfallSpray'));
+  const sprayAlpha=readAlpha(sprayCanvas);
+  const waterData=new Uint8Array(DESIGN.width*DESIGN.height*4),sprayData=new Uint8Array(DESIGN.width*DESIGN.height*4);
+  for(let index=0,pixel=0;index<waterData.length;index+=4,pixel+=4){
+    const hard=waterHard[pixel+3]/255,soft=waterSoft[pixel+3]/255;
+    waterData[index]=Math.round(hard*255);waterData[index+1]=Math.round(hard*soft*255);waterData[index+2]=streamAlpha[pixel+3];
+    waterData[index+3]=Math.round((streamAlpha[pixel+3]/255)*(streamAlpha[pixel+3]/255)*255);
+    sprayData[index]=sprayAlpha[pixel+3];sprayData[index+1]=sprayAlpha[pixel+3];sprayData[index+2]=sprayAlpha[pixel+3];sprayData[index+3]=sprayAlpha[pixel+3];
+  }
+  const detailData=new Uint8Array(DESIGN.width*DESIGN.height*4);
+  const addFoliageRegion=(region,depth)=>{
+    const canvas=makeNativeCanvas();paintRegionMask(canvas.getContext('2d'),region);const alpha=readAlpha(canvas);
+    const bounds=REGION_BOUNDS[region.id]||REGION_BOUNDS.midForest,anchor=REGION_ANCHORS[region.id]||REGION_ANCHORS.midForest;
+    const radius=Math.max(24,Math.max(bounds.w,bounds.h)*.72);
+    for(let index=0,pixel=0;index<detailData.length;index+=4,pixel+=4){
+      const coverage=alpha[pixel+3]/255;if(coverage<=0)continue;
+      const position=Math.floor(pixel/4),dx=(position%DESIGN.width-anchor.x)/radius,dy=(Math.floor(position/DESIGN.width)-anchor.y)/radius;
+      const attachment=clamp(Math.sqrt(dx*dx+dy*dy),0,1);
+      detailData[index]=Math.max(detailData[index],Math.round(coverage*255));
+      detailData[index+1]=Math.max(detailData[index+1],Math.round(coverage*attachment*255));
+      detailData[index+2]=Math.max(detailData[index+2],Math.round(coverage*depth*255));
+    }
+  };
+  addFoliageRegion(REGION_LOOKUP.get('midForest'),.34);REGION_MAP.regions.nearFoliage.forEach(region=>addFoliageRegion(region,1));
+  const airCanvas=makeNativeCanvas();paintRegionMask(airCanvas.getContext('2d'),REGION_LOOKUP.get('farAir'));const airAlpha=readAlpha(airCanvas);
+  for(let index=0,pixel=0;index<detailData.length;index+=4,pixel+=4)detailData[index+3]=airAlpha[pixel+3];
+  return {waterData,detailData,sprayData};
+}
+
+const VERTEX_SHADER_SOURCE=[
+  'attribute vec2 aPosition;','attribute vec2 aUv;','varying vec2 vUv;','void main(){','  vUv=aUv;','  gl_Position=vec4(aPosition,0.0,1.0);','}'
+].join('\n');
+const FRAGMENT_SHADER_SOURCE=[
+  'precision mediump float;','varying vec2 vUv;','uniform sampler2D uBase;','uniform sampler2D uWaterMask;','uniform sampler2D uDetailMask;','uniform sampler2D uSprayMask;',
+  'uniform float uTime;','uniform float uSeed;','uniform float uWaterGain;','uniform float uFallGain;','uniform float uAirGain;','uniform float uFoliageGain;','uniform float uSprayGain;','uniform float uFallEnergy;',
+  'uniform vec2 uWind;','uniform vec2 uAirDrift;','uniform vec2 uLightDirection;',
+  'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123);}',
+  'float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);float a=hash(i),b=hash(i+vec2(1.0,0.0)),c=hash(i+vec2(0.0,1.0)),d=hash(i+vec2(1.0,1.0));return mix(mix(a,b,f.x),mix(c,d,f.x),f.y);}',
+  'float fbm(vec2 p){float value=0.0,amplitude=.5;for(int octave=0;octave<3;octave++){value+=noise(p)*amplitude;p=p*2.03+vec2(11.7,-7.3);amplitude*=.5;}return value/.875;}',
+  'vec2 waterFlow(vec2 uv,float time,float seed){vec2 p=uv*vec2(7.0,4.5)+vec2(seed*.17,seed*.11);float warpX=fbm(p*.55+vec2(time*.009,-time*.006));float warpY=fbm(p*.68+vec2(-time*.007,time*.005)+7.0);vec2 q=p+vec2(warpX-.5,warpY-.5)*1.8;float broad=fbm(q*.8+vec2(time*.012,-time*.008));float cross=fbm(q*1.9+vec2(-time*.024,time*.017)+13.0);float small=fbm(q*5.0+vec2(time*.061,-time*.045)+29.0);float lateral=(broad-.5)*.65+(cross-.5)*.27+(small-.5)*.08;float vertical=(cross-.5)*.45+(broad-.5)*.22+(small-.5)*.13;return vec2(lateral*.0080+(warpX-.5)*.0015,vertical*.0032+(warpY-.5)*.0010);}',
+  'vec4 sampleWater(vec2 uv,float time,float seed,float influence,float gain){vec2 displacement=waterFlow(uv,time,seed)*gain*influence;vec2 safeUv=clamp(uv+displacement,vec2(.002),vec2(.998));vec4 source=texture2D(uBase,safeUv);vec3 normal=normalize(vec3(-displacement.x*70.0,-displacement.y*70.0,1.0));vec3 light=normalize(vec3(uLightDirection,.72));float response=max(dot(normal,light),0.0);float broken=smoothstep(.63,.90,fbm(uv*vec2(16.0,7.0)+vec2(time*.023,-time*.018)+41.0));float reflection=pow(response,18.0)*broken*influence;vec3 color=source.rgb;color*=1.0+(fbm(uv*vec2(8.0,3.5)+vec2(-time*.011,time*.008)+57.0)-.5)*.045*influence;color+=vec3(.032,.026,.014)*reflection;return vec4(clamp(color,0.0,1.0),1.0);}',
+  'vec4 sampleFall(vec2 uv,float time,float seed,float gain,float energy){float top=.28125,span=.33125,localY=clamp((uv.y-top)/span,0.0,1.0);float broad=fbm(vec2(uv.x*5.5,localY*2.4)+vec2(-time*.011,-time*.047)+seed);float channel=fbm(vec2(uv.x*23.0,localY*3.2)+vec2(time*.018,-time*.083)+seed+8.0);float travel=time*(.034+.017*broad)+channel*.13;float sourceLocal=mod(localY-travel+.06*broad,.94);float sourceLocalB=mod(localY-travel*.73+channel*.09+.31,.94);float xWarp=(fbm(vec2(uv.x*19.0,localY*4.1)+vec2(time*.021,-time*.032)+seed+15.0)-.5)*.0060*gain;vec2 sourceUv=vec2(clamp(uv.x+xWarp,.002,.998),top+sourceLocal*span);vec2 sourceUvB=vec2(clamp(uv.x-xWarp*.5,.002,.998),top+sourceLocalB*span);vec4 first=texture2D(uBase,sourceUv),second=texture2D(uBase,sourceUvB);float breakup=smoothstep(.25,.78,fbm(vec2(uv.x*39.0,localY*5.0)+vec2(-time*.014,-time*.12)+seed+22.0));vec3 color=mix(first.rgb,second.rgb,.18+.10*breakup);color*=.985+.045*energy+.035*breakup;color+=vec3(.015,.028,.026)*breakup*.55;return vec4(clamp(color,0.0,1.0),1.0);}',
+  'vec4 sampleFoliage(vec2 uv,float time,float seed,float attachment,float depth,float gain,vec2 wind){vec2 p=uv*vec2(9.0,6.0)+vec2(seed*.3,seed*.17);float broad=fbm(p*.55+vec2(time*.013,-time*.009)+3.0);float cross=fbm(p*1.55+vec2(-time*.027,time*.019)+17.0);float fine=fbm(p*4.3+vec2(time*.063,-time*.051)+31.0);vec2 shift=vec2((broad-.5)*.0040+(cross-.5)*.0012,(cross-.5)*.0017+(fine-.5)*.0007);shift*=attachment*depth*gain;shift+=wind*vec2(.0012,.00035)*attachment*depth*gain;vec2 sampleUv=clamp(uv+shift,vec2(.002),vec2(.998));vec4 source=texture2D(uBase,sampleUv);float shade=(broad-.5)*.035*depth;return vec4(clamp(source.rgb*(1.0+shade)+vec3(.004,.009,.002)*fine*depth,0.0,1.0),1.0);}',
+  'void main(){vec2 uv=clamp(vUv,vec2(.0),vec2(1.0));vec4 source=texture2D(uBase,uv),result=source,waterMask=texture2D(uWaterMask,uv),detailMask=texture2D(uDetailMask,uv),sprayMask=texture2D(uSprayMask,uv);float coverage=0.0;',
+  'if(waterMask.r>.01&&uWaterGain>.001){result=sampleWater(uv,uTime,uSeed,waterMask.g,uWaterGain);coverage=waterMask.r;}',
+  'if(waterMask.b>.01&&uFallGain>.001){result=sampleFall(uv,uTime,uSeed+19.0,uFallGain,uFallEnergy);coverage=waterMask.b;}',
+  'if(detailMask.r>.01&&uFoliageGain>.001){float foliageCoverage=detailMask.r*uFoliageGain;result=sampleFoliage(uv,uTime,uSeed+43.0,detailMask.g,detailMask.b,uFoliageGain,uWind);coverage=max(coverage,foliageCoverage);}',
+  'if(detailMask.a>.01&&uAirGain>.001){float airNoise=fbm(uv*vec2(3.2,7.0)+uAirDrift+71.0);float veil=detailMask.a*uAirGain*(.022+.040*airNoise);vec3 haze=vec3(.74,.81,.77);result=vec4(mix(result.rgb,haze,clamp(veil,0.0,.20)),1.0);coverage=max(coverage,detailMask.a*uAirGain);}',
+  'if(sprayMask.r>.01&&uSprayGain>.001){vec2 sprayUv=uv*vec2(29.0,18.0)+vec2(uTime*.031,-uTime*.061)+83.0;float droplets=fbm(sprayUv);float plume=fbm(uv*vec2(5.0,4.0)+vec2(-uTime*.012,-uTime*.028)+97.0);float localized=smoothstep(.72,.91,droplets)*(.35+.65*plume);float moisture=sprayMask.r*uSprayGain*uFallEnergy*(.018+.075*localized);result=vec4(mix(result.rgb,vec3(.77,.87,.84),clamp(moisture,0.0,.13)),1.0);coverage=max(coverage,sprayMask.r*uSprayGain);}',
+  'gl_FragColor=vec4(result.rgb,clamp(coverage,0.0,1.0));}'
+].join('\n');
+
+function compileShader(gl,type,source){
+  const shader=gl.createShader(type);gl.shaderSource(shader,source);gl.compileShader(shader);
+  if(!gl.getShaderParameter(shader,gl.COMPILE_STATUS)){const message=gl.getShaderInfoLog(shader)||'shader compile failed';gl.deleteShader(shader);throw new Error(message);}
+  return shader;
+}
+function makeProgram(gl,vertexSource,fragmentSource){
+  const program=gl.createProgram();gl.attachShader(program,compileShader(gl,gl.VERTEX_SHADER,vertexSource));gl.attachShader(program,compileShader(gl,gl.FRAGMENT_SHADER,fragmentSource));gl.linkProgram(program);
+  if(!gl.getProgramParameter(program,gl.LINK_STATUS)){const message=gl.getProgramInfoLog(program)||'program link failed';gl.deleteProgram(program);throw new Error(message);}
+  return program;
+}
+function configureTexture(gl,texture){
+  gl.bindTexture(gl.TEXTURE_2D,texture);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+}
+function uploadDataTexture(gl,data){
+  const texture=gl.createTexture();configureTexture(gl,texture);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,DESIGN.width,DESIGN.height,0,gl.RGBA,gl.UNSIGNED_BYTE,data);return texture;
+}
+function uploadImageTexture(gl,image){
+  const texture=gl.createTexture();configureTexture(gl,texture);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,image);return texture;
+}
+class MaterialCompositor{
+  constructor(canvas,image){this.canvas=canvas;this.image=image;this.gl=null;this.ctx=null;this.backend='uninitialized';this.backendError='';this.program=null;this.locations=null;this.positionBuffer=null;this.uvBuffer=null;this.textures=null;this.width=1;this.height=1;}
+  init(){
+    let gl=null;
+    try{gl=this.canvas.getContext('webgl',{alpha:true,antialias:false,premultipliedAlpha:false,preserveDrawingBuffer:false});}catch(error){this.backendError=String(error&&error.message||error);}
+    if(gl){try{this.initWebgl(gl);this.backend='webgl';return;}catch(error){this.backendError=String(error&&error.message||error);const replacement=document.createElement('canvas');replacement.id=this.canvas.id;replacement.setAttribute('aria-label','Procedural natural motion layer');this.canvas.parentNode.replaceChild(replacement,this.canvas);this.canvas=replacement;}}
+    this.ctx=this.canvas.getContext('2d',{alpha:true});
+    if(!this.ctx)throw new Error(this.backendError||'no WebGL or Canvas2D compositor available');
+    this.backend='canvas2d-fallback';
+  }
+  initWebgl(gl){
+    const masks=buildMaskBundle();this.gl=gl;this.program=makeProgram(gl,VERTEX_SHADER_SOURCE,FRAGMENT_SHADER_SOURCE);
+    this.positionBuffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,this.positionBuffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+    this.uvBuffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,this.uvBuffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([0,0,2,0,0,2]),gl.STATIC_DRAW);
+    this.textures={base:null,water:uploadDataTexture(gl,masks.waterData),detail:uploadDataTexture(gl,masks.detailData),spray:uploadDataTexture(gl,masks.sprayData)};
+    this.locations={
+      position:gl.getAttribLocation(this.program,'aPosition'),uv:gl.getAttribLocation(this.program,'aUv'),base:gl.getUniformLocation(this.program,'uBase'),water:gl.getUniformLocation(this.program,'uWaterMask'),detail:gl.getUniformLocation(this.program,'uDetailMask'),spray:gl.getUniformLocation(this.program,'uSprayMask'),time:gl.getUniformLocation(this.program,'uTime'),seed:gl.getUniformLocation(this.program,'uSeed'),waterGain:gl.getUniformLocation(this.program,'uWaterGain'),fallGain:gl.getUniformLocation(this.program,'uFallGain'),airGain:gl.getUniformLocation(this.program,'uAirGain'),foliageGain:gl.getUniformLocation(this.program,'uFoliageGain'),sprayGain:gl.getUniformLocation(this.program,'uSprayGain'),fallEnergy:gl.getUniformLocation(this.program,'uFallEnergy'),wind:gl.getUniformLocation(this.program,'uWind'),airDrift:gl.getUniformLocation(this.program,'uAirDrift'),lightDirection:gl.getUniformLocation(this.program,'uLightDirection')
+    };
+    gl.useProgram(this.program);gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.clearColor(0,0,0,0);
+  }
+  resize(width,height){this.width=width;this.height=height;this.canvas.width=width;this.canvas.height=height;if(this.gl)this.gl.viewport(0,0,width,height);}
+  render(state,gains){if(this.backend==='webgl')this.renderWebgl(state,gains);else this.renderFallback(state,gains);}
+  renderWebgl(state,gains){
+    if(!this.textures.base){
+      if(this.image.complete&&this.image.naturalWidth)this.textures.base=uploadImageTexture(this.gl,this.image);
+      else return;
+    }
+    const gl=this.gl,loc=this.locations,environment=state.environment,water=environment.water,fall=environment.fall,air=environment.air,foliage=environment.foliage;
+    gl.viewport(0,0,this.width,this.height);gl.clear(gl.COLOR_BUFFER_BIT);gl.useProgram(this.program);
+    gl.bindBuffer(gl.ARRAY_BUFFER,this.positionBuffer);gl.enableVertexAttribArray(loc.position);gl.vertexAttribPointer(loc.position,2,gl.FLOAT,false,0,0);
+    gl.bindBuffer(gl.ARRAY_BUFFER,this.uvBuffer);gl.enableVertexAttribArray(loc.uv);gl.vertexAttribPointer(loc.uv,2,gl.FLOAT,false,0,0);
+    gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,this.textures.base);gl.uniform1i(loc.base,0);
+    gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,this.textures.water);gl.uniform1i(loc.water,1);
+    gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,this.textures.detail);gl.uniform1i(loc.detail,2);
+    gl.activeTexture(gl.TEXTURE3);gl.bindTexture(gl.TEXTURE_2D,this.textures.spray);gl.uniform1i(loc.spray,3);
+    gl.uniform1f(loc.time,state.time);gl.uniform1f(loc.seed,water.seed);gl.uniform1f(loc.waterGain,gains.water);gl.uniform1f(loc.fallGain,gains.waterfall);gl.uniform1f(loc.airGain,gains.atmosphere);gl.uniform1f(loc.foliageGain,gains.foliage);gl.uniform1f(loc.sprayGain,gains.spray);gl.uniform1f(loc.fallEnergy,fall.energy);
+    gl.uniform2f(loc.wind,foliage.x,foliage.y);gl.uniform2f(loc.airDrift,air.x,air.y);gl.uniform2f(loc.lightDirection,water.lightDirection.x,water.lightDirection.y);gl.drawArrays(gl.TRIANGLES,0,3);
+  }
+  renderFallback(state,gains){
+    const ctx=this.ctx;clear2d(ctx);
+    if(gains.water>.001){
+      ctx.save();ctx.clip(GEOMETRY.get('lake'));
+      for(let y=190;y<556;y+=9){const centerX=110+(y-190)*1.9,influence=waterAttenuation(centerX,y),shift=signedFbm(y*.031+state.time*.043,y*.009-state.time*.021,31)*3.8*gains.water*influence,sourceY=clamp(y+shift,184,545);ctx.globalAlpha=.58+.24*influence;ctx.drawImage(this.image,88,sourceY,820,9,88,y,820,9);}
+      ctx.restore();
+    }
+    if(gains.waterfall>.001){
+      ctx.save();ctx.clip(GEOMETRY.get('waterfallStream'));
+      for(let y=181;y<393;y+=7){const local=signedFbm(y*.041-state.time*.057,y*.013+state.time*.017,61),sourceY=clamp(y+local*8-state.time*5.2,176,388);ctx.globalAlpha=.68+.12*state.environment.fall.energy;ctx.drawImage(this.image,822,sourceY,78,7,822,y,78,7);}
+      ctx.restore();
+    }
+    if(gains.atmosphere>.001){
+      ctx.save();ctx.clip(GEOMETRY.get('farAir'));const gradient=ctx.createLinearGradient(360,40,940,180);gradient.addColorStop(0,'rgba(220,232,220,0)');gradient.addColorStop(.55,'rgba(220,232,220,'+(.025*gains.atmosphere)+')');gradient.addColorStop(1,'rgba(220,232,220,0)');ctx.fillStyle=gradient;ctx.fillRect(300,0,660,200);ctx.restore();
+    }
+    if(gains.foliage>.001){
+      const drawBands=region=>{
+        const bounds=REGION_BOUNDS[region.id]||REGION_BOUNDS.midForest,anchor=REGION_ANCHORS[region.id]||REGION_ANCHORS.midForest;
+        ctx.save();ctx.clip(GEOMETRY.get(region.id));
+        for(let y=bounds.y;y<bounds.y+bounds.h;y+=10){const attachment=clamp(Math.abs(y-anchor.y)/Math.max(30,bounds.h),0,1),dx=signedFbm(y*.018+state.time*.027,region.id.length*.11,91+region.id.length)*2.4*attachment*gains.foliage,height=Math.min(11,bounds.y+bounds.h-y);ctx.globalAlpha=.38;ctx.drawImage(this.image,bounds.x,y,bounds.w,height,bounds.x+dx,y,bounds.w,height);}
+        ctx.restore();
+      };
+      drawBands(REGION_LOOKUP.get('midForest'));REGION_MAP.regions.nearFoliage.forEach(drawBands);
+    }
+    if(gains.spray>.001){ctx.save();ctx.clip(GEOMETRY.get('waterfallSpray'));ctx.fillStyle='rgba(219,235,228,'+(.025*gains.spray)+')';ctx.fillRect(790,344,170,94);ctx.restore();}
+  }
+  probe(points){
+    const values=[];
+    if(this.backend==='webgl'){
+      const pixel=new Uint8Array(4);
+      points.forEach(point=>{const x=clamp(Math.round(point[0]*(this.width-1)),0,this.width-1),y=clamp(Math.round(point[1]*(this.height-1)),0,this.height-1);this.gl.readPixels(x,y,1,1,this.gl.RGBA,this.gl.UNSIGNED_BYTE,pixel);values.push(pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]);});
+    }else{
+      const data=this.ctx.getImageData(0,0,this.width,this.height).data;
+      points.forEach(point=>{const x=clamp(Math.round(point[0]*(this.width-1)),0,this.width-1),y=clamp(Math.round(point[1]*(this.height-1)),0,this.height-1),index=(y*this.width+x)*4;values.push(data[index]+','+data[index+1]+','+data[index+2]+','+data[index+3]);});
+    }
+    return values.join('|');
+  }
+  dispose(){if(!this.gl)return;Object.values(this.textures||{}).forEach(texture=>this.gl.deleteTexture(texture));if(this.program)this.gl.deleteProgram(this.program);this.gl=null;}
+}
+class SceneClock{
+  constructor(){this.elapsedMs=0;this.lastNow=null;this.paused=true;this.resetCount=0;this.resumeCount=0;}
+  resume(now){if(!this.paused)return;this.paused=false;this.lastNow=now;this.resumeCount+=1;}
+  pause(now){if(this.paused)return;this.paused=true;this.lastNow=now;}
+  tick(now){if(this.lastNow===null){this.lastNow=now;return {elapsedMs:this.elapsedMs,dtMs:0};}if(this.paused){this.lastNow=now;return {elapsedMs:this.elapsedMs,dtMs:0};}const rawDelta=Math.max(0,now-this.lastNow);this.lastNow=now;const dtMs=Math.min(rawDelta,80);this.elapsedMs+=dtMs;return {elapsedMs:this.elapsedMs,dtMs:dtMs};}
+}
+function makeStateLayer(name,targetHz,update){return {name:name,enabled:true,targetHz:targetHz,lastUpdate:-Infinity,lastRender:-Infinity,updateCount:0,renderCount:0,errorCount:0,lastError:'',lastCostMs:0,init(){},update:update,render(){},dispose(){}};}
+class NaturalEyeController{
+  constructor(){
+    this.clock=new SceneClock();this.rafId=null;this.boundFrame=now=>this.frame(now);this.running=false;this.active=false;this.visible=!document.hidden;this.requestedActive=true;this.imageReady=false;this.mode='natural';this.proofFocus='all';this.layers=[];this.layerByName=new Map();
+    this.environment={water:{seed:17.0,lightDirection:{x:-.24,y:.97}},fall:{energy:.82},air:{x:0,y:0},foliage:{x:0,y:0},spray:{energy:.82}};
+    const memory=Number(navigator.deviceMemory||0),hardware=Number(navigator.hardwareConcurrency||0);
+    this.quality={tier:memory&&memory<=3||hardware&&hardware<=4?'low':'standard',reducedMotion:Boolean(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches),memory:memory,hardware:hardware};
+    this.diagnostics={alive:false,active:false,visible:this.visible,frameCount:0,updateCount:0,renderCount:0,lastError:'',resumeCount:0,clockResetCount:0,rafOwnerCount:0,fps:0,lastFrameCostMs:0,maxFrameGapMs:0,longFrameCount:0,slowFrameCount:0,viewport:'',dpr:1,mode:this.mode,proofFocus:this.proofFocus,tier:this.quality.tier,reducedMotion:this.quality.reducedMotion,backend:'pending',lastDiagnosticsAt:0,lastProbeAt:0,lastProbeSignature:'',probeChanges:0,frameTimes:[],lastFrameNow:undefined};
+  }
+  registerLayer(name,layer){
+    layer.name=name;
+    try{layer.init({runtime:this,image:baseImage,geometry:GEOMETRY});this.layers.push(layer);this.layerByName.set(name,layer);}
+    catch(error){layer.errorCount=1;layer.lastError=String(error&&error.message||error);this.diagnostics.lastError=name+': '+layer.lastError;}
+  }
+  resize(){
+    const rect=sceneFrame.getBoundingClientRect(),dpr=Math.min(Number(window.devicePixelRatio||1),1.7),scale=this.quality.tier==='low'?1.45:1.7;
+    const width=Math.max(1,Math.min(DESIGN.width,Math.round(rect.width*scale))),height=Math.max(1,Math.round(width*DESIGN.height/DESIGN.width));
+    this.diagnostics.viewport=Math.round(rect.width)+'x'+Math.round(rect.height)+' CSS / '+width+'x'+height+' compositor px';this.diagnostics.dpr=dpr;
+    const compositor=this.layerByName.get('material-compositor');if(compositor&&compositor.renderer)compositor.renderer.resize(width,height);
+  }
+  schedule(){if(!this.active||!this.visible||this.rafId!==null)return;this.rafId=requestAnimationFrame(this.boundFrame);this.diagnostics.rafOwnerCount=1;}
+  cancelScheduledFrame(){if(this.rafId!==null)cancelAnimationFrame(this.rafId);this.rafId=null;this.diagnostics.rafOwnerCount=0;}
+  setActive(active,reason){
+    const next=Boolean(active)&&this.visible&&this.running&&this.imageReady;
+    if(next===this.active){if(next)this.schedule();return;}
+    this.active=next;this.diagnostics.active=next;
+    if(next){this.clock.resume(performance.now());this.diagnostics.resumeCount=this.clock.resumeCount;this.schedule();}else{this.clock.pause(performance.now());this.cancelScheduledFrame();}
+    syncUi();if(this.imageReady)sceneStatus.textContent=next?'NATURAL ENVIRONMENT · '+this.mode.toUpperCase():'SCENE PAUSED · '+(reason||'manual');
+  }
+  start(){if(this.running)return;this.running=true;this.diagnostics.alive=true;this.resize();if(this.imageReady)this.setActive(this.requestedActive,'start');}
+  pauseFromUser(){this.requestedActive=false;this.setActive(false,'user');}
+  resumeFromUser(){this.requestedActive=true;if(this.visible)this.setActive(true,'user');}
+  lifecycleHidden(reason){this.visible=false;this.diagnostics.visible=false;this.setActive(false,reason);}
+  lifecycleVisible(reason){this.visible=!document.hidden;this.diagnostics.visible=this.visible;if(this.visible&&this.requestedActive&&this.imageReady)this.setActive(true,reason);}
+  setMode(mode){this.mode=mode==='proof'?'proof':'natural';this.diagnostics.mode=this.mode;syncUi();sceneStatus.textContent=this.active?'NATURAL ENVIRONMENT · '+this.mode.toUpperCase():'SCENE PAUSED · '+this.mode.toUpperCase();}
+  setProofFocus(focus){const allowed=['water','waterfall','atmosphere','foliage','all'];this.proofFocus=allowed.includes(focus)?focus:'all';this.diagnostics.proofFocus=this.proofFocus;this.setMode('proof');syncUi();}
+  gainFor(channel){
+    const layer=this.layerByName.get(channel);if(!layer||!layer.enabled)return 0;
+    if(this.mode==='natural')return this.quality.reducedMotion?(channel==='water'?.72:.58):1;
+    const proofGain={water:1.85,waterfall:1.7,atmosphere:2.25,foliage:2.0,spray:1.85};
+    if(this.proofFocus==='all')return proofGain[channel]||1;
+    if(this.proofFocus==='water')return channel==='water'?proofGain.water:0;
+    if(this.proofFocus==='waterfall')return channel==='waterfall'||channel==='spray'?proofGain[channel]:0;
+    if(this.proofFocus==='atmosphere')return channel==='atmosphere'?proofGain.atmosphere:0;
+    if(this.proofFocus==='foliage')return channel==='foliage'?proofGain.foliage:0;
+    return 0;
+  }
+  gains(){return {water:this.gainFor('water'),waterfall:this.gainFor('waterfall'),spray:this.gainFor('spray'),atmosphere:this.gainFor('atmosphere'),foliage:this.gainFor('foliage')};}
+  retryFailedLayers(){this.layers.forEach(layer=>{if(!layer.errorCount)return;layer.enabled=true;layer.lastError='';layer.lastUpdate=-Infinity;layer.lastRender=-Infinity;});this.diagnostics.lastError='';syncUi();}
+  updateLayer(layer,state,now){
+    if(!layer.enabled)return;const interval=1000/Math.max(1,layer.targetHz||1);if(now-layer.lastUpdate<interval)return;const start=performance.now();
+    try{layer.update(state);layer.lastUpdate=now;layer.updateCount+=1;this.diagnostics.updateCount+=1;layer.lastCostMs=performance.now()-start;}
+    catch(error){layer.errorCount+=1;layer.enabled=false;layer.lastError=String(error&&error.message||error);this.diagnostics.lastError=layer.name+': '+layer.lastError;}
+  }
+  renderLayer(layer,state){
+    if(!layer.enabled)return;const start=performance.now();
+    try{layer.render(state);layer.renderCount+=1;this.diagnostics.renderCount+=1;layer.lastRender=state.now;layer.lastCostMs=Math.max(layer.lastCostMs,performance.now()-start);}
+    catch(error){layer.errorCount+=1;layer.enabled=false;layer.lastError=String(error&&error.message||error);this.diagnostics.lastError=layer.name+': '+layer.lastError;}
+  }
+  probePixels(now){
+    if(!diagnosticDetails.open||now-this.diagnostics.lastProbeAt<1400)return;
+    const compositor=this.layerByName.get('material-compositor');if(!compositor||!compositor.renderer||compositor.renderer.backend==='uninitialized')return;
+    this.diagnostics.lastProbeAt=now;const signature=compositor.renderer.probe([[.5,.56],[.87,.42],[.07,.12],[.74,.12]]);
+    if(this.diagnostics.lastProbeSignature&&signature!==this.diagnostics.lastProbeSignature)this.diagnostics.probeChanges+=1;this.diagnostics.lastProbeSignature=signature;
+  }
+  updateDiagnostics(now,frameStart){
+    const d=this.diagnostics;d.lastFrameCostMs=performance.now()-frameStart;
+    if(d.lastFrameNow!==undefined){const gap=now-d.lastFrameNow;d.maxFrameGapMs=Math.max(d.maxFrameGapMs,gap);if(gap>33.3)d.longFrameCount+=1;if(d.lastFrameCostMs>33.3)d.slowFrameCount+=1;}
+    d.lastFrameNow=now;d.frameTimes.push(now);while(d.frameTimes.length&&now-d.frameTimes[0]>2000)d.frameTimes.shift();
+    d.fps=d.frameTimes.length>1?(d.frameTimes.length-1)/((d.frameTimes[d.frameTimes.length-1]-d.frameTimes[0])/1000):0;d.clockResetCount=this.clock.resetCount;d.resumeCount=this.clock.resumeCount;this.probePixels(now);
+    if(now-d.lastDiagnosticsAt<700)return;d.lastDiagnosticsAt=now;
+    const layerLines=this.layers.map(layer=>layer.name+': '+(layer.enabled?'on':'isolated')+' u'+layer.updateCount+' r'+layer.renderCount+' '+layer.lastCostMs.toFixed(2)+'ms'+(layer.lastError?' ERROR='+layer.lastError:''));
+    diagnosticsNode.textContent=['runtime='+(d.alive?'alive':'stopped')+' active='+this.active+' visible='+this.visible+' rafOwners='+d.rafOwnerCount,'clock='+(this.clock.elapsedMs/1000).toFixed(2)+'s paused='+this.clock.paused+' resumes='+d.resumeCount+' resets='+d.clockResetCount,'frames='+d.frameCount+' fps='+d.fps.toFixed(1)+' frameCost='+d.lastFrameCostMs.toFixed(2)+'ms maxGap='+d.maxFrameGapMs.toFixed(1)+'ms >33ms='+d.longFrameCount,'updates='+d.updateCount+' renders='+d.renderCount+' visualProbeChanges='+d.probeChanges+' probe=manual-phone-authority','mode='+d.mode+' proofFocus='+d.proofFocus+' tier='+d.tier+' reducedMotion='+d.reducedMotion+' backend='+d.backend,'viewport='+d.viewport+' dpr='+d.dpr+' source=960x640 '+SOURCE_SHA256.slice(0,12)+'…','lastError='+(d.lastError||'none'),...layerLines].join('\n');
+  }
+  frame(now){
+    this.rafId=null;if(!this.active||!this.visible)return;const frameStart=performance.now();
+    try{
+      const clockState=this.clock.tick(now),state={now:now,time:clockState.elapsedMs/1000,dt:clockState.dtMs/1000,mode:this.mode,tier:this.quality.tier,reducedMotion:this.quality.reducedMotion,environment:this.environment,runtime:this};
+      this.layers.forEach(layer=>this.updateLayer(layer,state,now));this.layers.forEach(layer=>this.renderLayer(layer,state));this.diagnostics.frameCount+=1;this.updateDiagnostics(now,frameStart);
+    }catch(error){this.diagnostics.lastError='runtime: '+String(error&&error.message||error);}finally{this.schedule();}
+  }
+  stop(){this.requestedActive=false;this.active=false;this.running=false;this.clock.pause(performance.now());this.cancelScheduledFrame();this.layers.forEach(layer=>{try{layer.dispose();}catch(error){this.diagnostics.lastError=layer.name+': '+String(error&&error.message||error);}});}
+}
+const NaturalEyeRuntime=new NaturalEyeController();
+const waterLayer=makeStateLayer('water',30,state=>{state.environment.water={seed:17.0,lightDirection:{x:-.24,y:.97},lowFrequency:fbm(state.time*.010,.37,501),localEnergy:fbm(state.time*.027,.61,509)};});
+const waterfallLayer=makeStateLayer('waterfall',24,state=>{state.environment.fall={energy:.72+.25*fbm(state.time*.052,.41,601),localDrift:signedFbm(state.time*.019,.77,613)};});
+const atmosphereLayer=makeStateLayer('atmosphere',8,state=>{state.environment.air={x:signedFbm(state.time*.006,.42,811)*.18+signedFbm(state.time*.013,.31,817)*.06,y:signedFbm(state.time*.004,.72,823)*.08};});
+const foliageLayer=makeStateLayer('foliage',18,state=>{state.environment.foliage={x:signedFbm(state.time*.017,.27,901)*.58+signedFbm(state.time*.041,.53,907)*.17,y:signedFbm(state.time*.012,.64,919)*.24};});
+const sprayLayer=makeStateLayer('spray',12,state=>{state.environment.spray={energy:state.environment.fall.energy};});
+const compositorLayer={
+  name:'material-compositor',enabled:true,targetHz:60,lastUpdate:-Infinity,lastRender:-Infinity,updateCount:0,renderCount:0,errorCount:0,lastError:'',lastCostMs:0,renderer:null,
+  init(){this.renderer=new MaterialCompositor(motionCanvas,baseImage);this.renderer.init();NaturalEyeRuntime.diagnostics.backend=this.renderer.backend;},
+  update(){},render(state){this.renderer.render(state,NaturalEyeRuntime.gains());},dispose(){if(this.renderer)this.renderer.dispose();}
+};
+NaturalEyeRuntime.registerLayer('water',waterLayer);NaturalEyeRuntime.registerLayer('waterfall',waterfallLayer);NaturalEyeRuntime.registerLayer('atmosphere',atmosphereLayer);NaturalEyeRuntime.registerLayer('foliage',foliageLayer);NaturalEyeRuntime.registerLayer('spray',sprayLayer);NaturalEyeRuntime.registerLayer('material-compositor',compositorLayer);
+function syncUi(){
+  modeButton.textContent='Mode: '+NaturalEyeRuntime.mode.toUpperCase();modeButton.setAttribute('aria-pressed',String(NaturalEyeRuntime.mode==='proof'));pauseButton.textContent=NaturalEyeRuntime.active?'Pause scene':'Resume scene';pauseButton.setAttribute('aria-pressed',String(!NaturalEyeRuntime.active));proofButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.getAttribute('data-proof-focus')===NaturalEyeRuntime.proofFocus)));
+}
+modeButton.addEventListener('click',()=>NaturalEyeRuntime.setMode(NaturalEyeRuntime.mode==='natural'?'proof':'natural'));
+pauseButton.addEventListener('click',()=>{if(NaturalEyeRuntime.active)NaturalEyeRuntime.pauseFromUser();else NaturalEyeRuntime.resumeFromUser();});
+retryButton.addEventListener('click',()=>NaturalEyeRuntime.retryFailedLayers());
+proofButtons.forEach(button=>button.addEventListener('click',()=>NaturalEyeRuntime.setProofFocus(button.getAttribute('data-proof-focus'))));
+window.addEventListener('resize',()=>NaturalEyeRuntime.resize(),{passive:true});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)NaturalEyeRuntime.lifecycleHidden('document-hidden');else NaturalEyeRuntime.lifecycleVisible('document-visible');});
+window.addEventListener('pagehide',()=>NaturalEyeRuntime.lifecycleHidden('pagehide'),{passive:true});
+window.addEventListener('pageshow',()=>NaturalEyeRuntime.lifecycleVisible('pageshow'),{passive:true});
+window.addEventListener('focus',()=>NaturalEyeRuntime.lifecycleVisible('focus'),{passive:true});
+function imageReady(){
+  if(NaturalEyeRuntime.imageReady)return;
+  NaturalEyeRuntime.imageReady=true;sceneStatus.textContent='APPROVED SOURCE READY · NATURAL';NaturalEyeRuntime.start();sceneFrame.classList.add('ready');syncUi();
+}
+baseImage.addEventListener('load',imageReady,{once:true});
+baseImage.addEventListener('error',()=>{sceneStatus.textContent='APPROVED SOURCE FAILED TO LOAD';NaturalEyeRuntime.diagnostics.lastError='authoritative image load failed';});
+if(baseImage.complete&&baseImage.naturalWidth)imageReady();
+syncUi();
+window.NaturalEyeRuntime=NaturalEyeRuntime;
+</script>
+</body>
+</html>
