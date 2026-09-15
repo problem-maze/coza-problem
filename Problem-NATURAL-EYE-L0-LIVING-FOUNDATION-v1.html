@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Problem Natural Eye — L0 Living Foundation v1</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#f4f1e9}
+body{min-height:100dvh;padding:12px;color:#1c2923;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.shell{width:min(1100px,100%);margin:0 auto}
+.intro{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin:0 0 12px}
+.intro h1{margin:0;font-size:clamp(19px,3vw,28px);line-height:1.04;letter-spacing:-.03em}
+.intro p{margin:7px 0 0;color:#52645a;font-size:12px;line-height:1.45;max-width:720px}
+.build{display:inline-flex;align-items:center;margin-top:9px;padding:6px 9px;border:1px solid rgba(28,41,35,.16);border-radius:999px;background:rgba(255,255,255,.68);font:700 10px/1.1 system-ui,-apple-system,sans-serif;letter-spacing:.04em;color:#1c2923}
+.scene-frame{position:relative;width:100%;aspect-ratio:3/2;overflow:hidden;border-radius:22px;background:#d8ddd2;box-shadow:0 12px 32px rgba(28,41,35,.14)}
+.scene-frame img,.scene-frame canvas{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;display:block}
+.scene-frame img{object-fit:contain}
+.scene-frame canvas{opacity:0;transition:opacity .2s ease;pointer-events:none}
+.scene-frame.ready canvas{opacity:1}
+.scene-status{position:absolute;top:10px;left:10px;padding:6px 8px;border-radius:8px;background:rgba(15,29,24,.72);color:#f8f6ef;font:700 10px/1.15 system-ui,-apple-system,sans-serif;letter-spacing:.03em;pointer-events:none}
+.panel{margin-top:12px;padding:11px 12px;border:1px solid rgba(28,41,35,.14);border-radius:16px;background:rgba(255,255,255,.72)}
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:7px}
+button{appearance:none;border:1px solid rgba(28,41,35,.2);border-radius:999px;background:#fff;color:#1c2923;padding:8px 11px;font:700 11px/1 system-ui,-apple-system,sans-serif;cursor:pointer}
+button:hover{background:#f0eee7}
+button[aria-pressed="true"]{background:#1c2923;color:#f6f4ef;border-color:#1c2923}
+.hint{margin:9px 0 0;color:#52645a;font-size:11px;line-height:1.4}
+details{margin-top:10px}
+summary{cursor:pointer;color:#1c2923;font-size:11px;font-weight:700}
+pre{margin:8px 0 0;overflow:auto;padding:10px;border-radius:10px;background:#17251f;color:#d8e4d9;font:10px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap}
+.review-note{margin:10px 0 0;color:#52645a;font-size:11px;line-height:1.45}
+@media (max-width:700px){
+  body{padding:10px}
+  .intro{display:block}
+  .build{margin-top:8px}
+  .scene-frame{border-radius:16px}
+  .panel{padding:10px}
+}
+@media (prefers-reduced-motion:reduce){
+  .scene-frame canvas{transition:none}
+}
+</style>
+</head>
+<body>
+<main class="shell" data-build="L0-LIVING-FOUNDATION-v1">
+  <header class="intro">
+    <div>
+      <h1>Natural Eye — L0 Living Foundation</h1>
+      <p>One living scene built from the approved 960×640 source and the authoritative Z1 geometry. Natural mode is the review target; proof mode is an explicit early-stage visibility aid.</p>
+      <div class="build" aria-label="Build marker">L0 LIVING FOUNDATION v1 — SOURCE + Z1 GEOMETRY LOCK</div>
+    </div>
+  </header>
+
+  <figure class="scene-frame" id="sceneFrame" aria-label="Natural Eye living landscape">
+    <img id="baseImage" src="ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp" alt="Natural Eye landscape: turquoise lake, island, waterfall, forest, foreground wood and rocks">
+    <canvas id="sceneCanvas" aria-label="Animated Natural Eye scene"></canvas>
+    <div class="scene-status" id="sceneStatus">Loading approved source…</div>
+  </figure>
+
+  <section class="panel" aria-label="L0 runtime controls and diagnostics">
+    <div class="controls">
+      <button id="modeButton" type="button" aria-pressed="false">Mode: NATURAL</button>
+      <button id="pauseButton" type="button" aria-pressed="false">Pause scene</button>
+      <button id="retryButton" type="button">Retry failed layers</button>
+    </div>
+    <p class="hint">For phone review, use Natural first. Proof increases bounded motion amplitudes without changing the source or geometry. Touch or pointer movement provides a very small depth cue.</p>
+    <details open>
+      <summary>Runtime diagnostics</summary>
+      <pre id="diagnostics">Waiting for the approved source…</pre>
+    </details>
+    <p class="review-note">This artifact is intentionally standalone. Phone-visible behavior is the acceptance authority; the diagnostics are evidence about ownership and state, not a visual pass claim.</p>
+  </section>
+</main>
+
+<script>
+'use strict';
+
+const DESIGN = { width: 960, height: 640 };
+const SOURCE_SHA256 = 'a993834ccddaf3d21b847584273b31ec07e8a37df8496570623e4c762c4c66ab';
+const baseImage = document.getElementById('baseImage');
+const sceneFrame = document.getElementById('sceneFrame');
+const sceneCanvas = document.getElementById('sceneCanvas');
+const sceneStatus = document.getElementById('sceneStatus');
+const diagnosticsNode = document.getElementById('diagnostics');
+const modeButton = document.getElementById('modeButton');
+const pauseButton = document.getElementById('pauseButton');
+const retryButton = document.getElementById('retryButton');
+
+/* This is the authoritative Z1 map copied in native 960×640 coordinates. */
+const REGION_MAP = {
+  region_order: ['farAir','midForest','nearFoliage','lake','waterfallStream','waterfallSpray','islandStatic','staticWood','staticRocks'],
+  regions: {
+    lake: {
+      id:'lake', material:'water-surface',
+      path:'M 100 322 C 112 288 142 259 184 238 C 233 213 292 198 352 193 C 423 188 491 193 556 203 C 624 213 694 231 748 254 C 798 275 838 305 865 337 C 883 359 889 380 884 399 C 875 423 848 443 815 461 C 773 483 722 499 671 514 C 611 532 552 544 501 548 C 437 552 377 542 325 527 C 270 513 225 494 185 473 C 147 452 119 430 103 404 C 91 382 91 349 100 322 Z',
+      excludes:['islandStatic','rock-shore-right','waterfallSpray','midForest','near-foliage-left-shore','near-foliage-right-shore','wood-upper-arch','wood-lower-left-log','wood-lower-right-log']
+    },
+    islandStatic: {
+      id:'islandStatic', material:'static-island',
+      path:'M 411 357 C 417 335 430 313 443 290 C 452 271 464 252 477 241 C 488 228 501 237 511 251 C 517 230 528 215 539 229 C 548 211 561 223 564 245 C 575 224 588 238 586 261 C 603 247 616 262 607 283 C 622 280 627 298 616 311 C 628 323 618 341 605 348 C 613 365 598 381 580 383 C 563 402 536 412 510 413 C 483 414 458 401 441 389 C 425 385 412 375 411 357 Z',
+      excludes:[]
+    },
+    waterfallStream: {
+      id:'waterfallStream', material:'waterfall-stream',
+      path:'M 839 187 C 855 192 864 205 862 224 C 860 242 855 258 862 274 C 868 289 884 302 890 319 C 898 342 893 365 880 388 L 852 380 C 861 355 858 338 850 321 C 840 303 828 288 828 271 C 828 249 839 233 832 215 C 827 201 827 192 839 187 Z',
+      excludes:['midForest','farAir','waterfallSpray','near-foliage-right-shore','wood-upper-arch','rock-shore-right']
+    },
+    waterfallSpray: {
+      id:'waterfallSpray', material:'waterfall-impact-spray',
+      path:'M 797 352 C 818 337 842 339 860 353 C 878 333 903 338 919 355 C 934 347 954 355 960 374 L 960 432 C 939 429 921 416 900 418 C 879 420 866 440 845 440 C 823 440 811 424 795 410 C 780 396 782 370 797 352 Z',
+      excludes:['lake','midForest','waterfallStream','near-foliage-right-shore','rock-shore-right','wood-upper-arch']
+    },
+    farAir: {
+      id:'farAir', material:'far-air-mountains',
+      path:'M 314 0 L 960 0 L 960 185 C 920 175 884 159 845 153 C 799 146 760 136 718 140 C 675 145 638 136 598 123 C 556 109 522 108 483 119 C 439 133 403 126 371 109 C 348 97 330 85 314 79 Z',
+      excludes:['midForest','near-foliage-canopy-left','near-foliage-canopy-upper','wood-left-trunk','wood-upper-arch']
+    },
+    midForest: {
+      id:'midForest', material:'mid-forest',
+      path:'M 214 116 C 259 106 307 95 349 103 C 396 112 431 136 468 151 C 509 166 550 151 593 153 C 642 156 684 169 724 184 C 768 200 808 221 843 251 L 827 294 C 790 273 754 257 715 246 C 674 234 632 222 590 215 C 538 207 495 205 452 203 C 403 201 360 199 318 206 C 277 213 242 229 209 251 L 187 226 C 196 190 205 150 214 116 Z M 0 216 C 39 204 80 207 117 221 C 151 234 174 254 192 283 L 174 348 C 150 330 124 313 103 292 C 75 267 40 254 0 252 Z M 756 184 C 804 199 850 223 889 257 C 920 284 944 312 960 334 L 960 405 C 935 385 909 363 885 340 C 860 315 837 293 816 276 C 791 255 764 241 737 230 Z',
+      excludes:['farAir','lake','near-foliage-canopy-left','near-foliage-canopy-upper','near-foliage-left-shore','near-foliage-right-shore','wood-left-trunk','wood-upper-arch','waterfallStream','waterfallSpray','islandStatic']
+    },
+    nearFoliage: [
+      {id:'near-foliage-canopy-left',material:'near-foliage',path:'M 0 0 H 188 C 166 31 146 60 125 90 C 101 126 75 155 42 176 C 26 186 12 194 0 198 Z',excludes:['lake','midForest','farAir','islandStatic','waterfallStream','waterfallSpray','wood-left-trunk','wood-upper-arch','wood-lower-left-log','wood-lower-right-log','rock-shore-right','rock-foreground-left','rock-foreground-center','rock-foreground-right','rock-lower-right-edge']},
+      {id:'near-foliage-canopy-upper',material:'near-foliage',path:'M 210 0 H 450 C 430 20 408 38 385 55 C 360 74 337 92 317 107 C 302 118 286 122 272 115 C 268 95 275 72 287 50 C 299 29 312 13 325 0 Z',excludes:['lake','midForest','farAir','islandStatic','waterfallStream','waterfallSpray','wood-left-trunk','wood-upper-arch','wood-lower-left-log','wood-lower-right-log','rock-shore-right','rock-foreground-left','rock-foreground-center','rock-foreground-right','rock-lower-right-edge']},
+      {id:'near-foliage-left-shore',material:'near-foliage',path:'M 0 232 C 36 224 70 235 96 254 C 119 272 133 294 139 315 L 106 326 C 91 307 73 291 49 279 C 30 270 14 267 0 268 Z',excludes:['lake','midForest','farAir','islandStatic','waterfallStream','waterfallSpray','wood-left-trunk','wood-upper-arch','wood-lower-left-log','wood-lower-right-log','rock-shore-right','rock-foreground-left','rock-foreground-center','rock-foreground-right','rock-lower-right-edge']},
+      {id:'near-foliage-foreground-left',material:'near-foliage',path:'M 0 404 C 37 396 72 401 98 417 C 120 431 130 449 139 468 C 112 485 92 511 76 543 C 62 572 52 607 46 640 H 0 Z',excludes:['lake','midForest','farAir','islandStatic','waterfallStream','waterfallSpray','wood-left-trunk','wood-upper-arch','wood-lower-left-log','wood-lower-right-log','rock-shore-right','rock-foreground-left','rock-foreground-center','rock-foreground-right','rock-lower-right-edge']},
+      {id:'near-foliage-foreground-middle',material:'near-foliage',path:'M 431 610 C 445 598 455 596 465 602 C 474 609 478 625 481 640 H 420 Z',excludes:['lake','midForest','farAir','islandStatic','waterfallStream','waterfallSpray','wood-left-trunk','wood-upper-arch','wood-lower-left-log','wood-lower-right-log','rock-shore-right','rock-foreground-left','rock-foreground-center','rock-foreground-right','rock-lower-right-edge']},
+      {id:'near-foliage-right-shore',material:'near-foliage',path:'M 921 317 C 939 321 951 333 960 344 L 960 505 H 932 C 938 470 928 432 922 398 C 916 365 916 338 921 317 Z',excludes:['lake','midForest','farAir','islandStatic','waterfallStream','waterfallSpray','wood-left-trunk','wood-upper-arch','wood-lower-left-log','wood-lower-right-log','rock-shore-right','rock-foreground-left','rock-foreground-center','rock-foreground-right','rock-lower-right-edge']},
+      {id:'near-foliage-lower-right-edge',material:'near-foliage',path:'M 948 482 C 955 479 959 482 960 488 L 960 640 H 928 C 934 591 939 536 948 482 Z',excludes:['lake','midForest','farAir','islandStatic','waterfallStream','waterfallSpray','wood-left-trunk','wood-upper-arch','wood-lower-left-log','wood-lower-right-log','rock-shore-right','rock-foreground-left','rock-foreground-center','rock-foreground-right','rock-lower-right-edge']}
+    ],
+    staticWood: [
+      {id:'wood-left-trunk',material:'static-wood',path:'M 0 0 C 39 4 72 28 91 65 C 108 99 108 138 101 177 C 94 222 100 264 118 308 C 132 344 151 383 154 414 C 157 438 147 456 133 469 L 77 451 C 83 421 71 390 56 358 C 33 311 11 278 0 246 Z',excludes:[]},
+      {id:'wood-upper-arch',material:'static-wood',path:'M 0 245 C 54 214 91 181 145 158 C 211 131 284 116 360 119 C 437 121 516 131 589 150 C 671 170 749 201 816 237 C 876 269 925 299 960 316 L 960 365 C 920 355 875 335 826 308 C 756 270 685 242 608 218 C 531 194 452 183 376 182 C 302 181 235 192 178 211 C 111 233 70 273 0 303 Z',excludes:[]},
+      {id:'wood-lower-left-log',material:'static-wood',path:'M 107 496 C 158 477 207 476 258 491 C 304 505 350 527 401 527 C 442 527 477 514 514 498 L 544 534 C 493 559 455 585 407 596 C 351 607 311 581 263 560 C 213 537 170 536 121 550 Z',excludes:[]},
+      {id:'wood-lower-right-log',material:'static-wood',path:'M 493 533 C 552 512 600 486 650 472 C 704 457 747 466 792 492 C 837 517 870 553 916 577 L 879 621 C 829 593 782 568 733 550 C 685 531 643 529 591 544 C 550 556 518 576 478 592 Z',excludes:[]}
+    ],
+    staticRocks: [
+      {id:'rock-shore-right',material:'static-rocks',path:'M 704 405 C 726 387 752 378 778 381 C 803 384 822 399 823 418 C 825 438 806 455 784 463 C 757 472 731 462 713 448 C 697 436 690 417 704 405 Z',excludes:[]},
+      {id:'rock-foreground-left',material:'static-rocks',path:'M 77 559 C 89 526 117 499 149 494 C 181 489 205 510 224 540 C 241 567 254 602 268 640 L 53 640 C 57 615 65 584 77 559 Z',excludes:[]},
+      {id:'rock-foreground-center',material:'static-rocks',path:'M 272 567 C 289 538 318 519 349 522 C 382 526 402 553 421 583 C 438 609 448 628 452 640 L 241 640 C 246 611 255 584 272 567 Z',excludes:[]},
+      {id:'rock-foreground-right',material:'static-rocks',path:'M 613 570 C 634 535 667 515 702 522 C 739 530 765 563 790 592 C 806 610 820 628 828 640 L 581 640 C 584 612 594 588 613 570 Z',excludes:[]},
+      {id:'rock-lower-right-edge',material:'static-rocks',path:'M 832 527 C 858 503 890 493 918 502 C 943 510 958 536 960 555 L 960 640 H 813 C 816 599 818 557 832 527 Z',excludes:[]}
+    ]
+  }
+};
+
+const REGION_LOOKUP = new Map();
+Object.entries(REGION_MAP.regions).forEach(([key, value]) => {
+  if (Array.isArray(value)) value.forEach(region => REGION_LOOKUP.set(region.id, region));
+  else REGION_LOOKUP.set(key, value);
+});
+const GEOMETRY = new Map();
+REGION_LOOKUP.forEach((region, id) => GEOMETRY.set(id, new Path2D(region.path)));
+
+const REGION_BOUNDS = {
+  farAir:{x:308,y:0,w:652,h:190}, midForest:{x:0,y:92,w:960,h:320},
+  lake:{x:86,y:184,w:820,h:372}, waterfallStream:{x:824,y:180,w:74,h:212}, waterfallSpray:{x:778,y:330,w:182,h:116},
+  'near-foliage-canopy-left':{x:0,y:0,w:192,h:205}, 'near-foliage-canopy-upper':{x:205,y:0,w:250,h:130},
+  'near-foliage-left-shore':{x:0,y:220,w:146,h:112}, 'near-foliage-foreground-left':{x:0,y:392,w:148,h:248},
+  'near-foliage-foreground-middle':{x:417,y:591,w:70,h:49}, 'near-foliage-right-shore':{x:912,y:310,w:48,h:202},
+  'near-foliage-lower-right-edge':{x:923,y:475,w:37,h:165}
+};
+const REGION_ANCHORS = {
+  midForest:{x:620,y:210}, 'near-foliage-canopy-left':{x:78,y:98}, 'near-foliage-canopy-upper':{x:330,y:58},
+  'near-foliage-left-shore':{x:70,y:278}, 'near-foliage-foreground-left':{x:69,y:515},
+  'near-foliage-foreground-middle':{x:452,y:620}, 'near-foliage-right-shore':{x:944,y:394}, 'near-foliage-lower-right-edge':{x:949,y:564}
+};
+
+function clamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
+function fract(value) { return value - Math.floor(value); }
+function mod(value, length) { return ((value % length) + length) % length; }
+function smooth(value) { return value * value * (3 - 2 * value); }
+function hash2(x, y, seed) {
+  return fract(Math.sin(x * 127.1 + y * 311.7 + seed * 74.7) * 43758.5453123);
+}
+function valueNoise(x, y, seed) {
+  const x0 = Math.floor(x), y0 = Math.floor(y);
+  const tx = smooth(x - x0), ty = smooth(y - y0);
+  const a = hash2(x0, y0, seed), b = hash2(x0 + 1, y0, seed);
+  const c = hash2(x0, y0 + 1, seed), d = hash2(x0 + 1, y0 + 1, seed);
+  return (a + (b - a) * tx) + ((c + (d - c) * tx) - (a + (b - a) * tx)) * ty;
+}
+function fbm(x, y, seed) {
+  let amplitude = .5, sum = 0, weight = 0;
+  for (let octave = 0; octave < 4; octave += 1) {
+    sum += valueNoise(x, y, seed + octave * 17) * amplitude;
+    weight += amplitude;
+    x = x * 2.03 + 11.7;
+    y = y * 1.97 - 7.3;
+    amplitude *= .5;
+  }
+  return sum / weight;
+}
+function signedFbm(x, y, seed) { return fbm(x, y, seed) * 2 - 1; }
+function rgba(r, g, b, alpha) { return `rgba(${r},${g},${b},${clamp(alpha, 0, 1).toFixed(3)})`; }
+
+const scratchCanvas = document.createElement('canvas');
+scratchCanvas.width = DESIGN.width;
+scratchCanvas.height = DESIGN.height;
+const scratchCtx = scratchCanvas.getContext('2d', {alpha:true});
+
+function resetSurface(ctx) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.imageSmoothingEnabled = true;
+  ctx.clearRect(0, 0, DESIGN.width, DESIGN.height);
+}
+
+function renderRegion(targetCtx, region, painter) {
+  const regionPath = GEOMETRY.get(region.id);
+  resetSurface(scratchCtx);
+  scratchCtx.save();
+  scratchCtx.clip(regionPath);
+  painter(scratchCtx);
+  scratchCtx.restore();
+  if (region.excludes && region.excludes.length) {
+    scratchCtx.save();
+    scratchCtx.globalCompositeOperation = 'destination-out';
+    region.excludes.forEach(id => {
+      const excludedPath = GEOMETRY.get(id);
+      if (excludedPath) scratchCtx.fill(excludedPath);
+    });
+    scratchCtx.restore();
+  }
+  targetCtx.drawImage(scratchCanvas, 0, 0);
+}
+
+function drawSourceBounds(ctx, bounds, dx, dy, angle, anchor, alpha) {
+  ctx.save();
+  ctx.globalAlpha = alpha === undefined ? 1 : alpha;
+  if (angle || dx || dy) {
+    ctx.translate(anchor.x + dx, anchor.y + dy);
+    if (angle) ctx.rotate(angle);
+    ctx.translate(-anchor.x, -anchor.y);
+  }
+  ctx.drawImage(baseImage, bounds.x, bounds.y, bounds.w, bounds.h, bounds.x, bounds.y, bounds.w, bounds.h);
+  ctx.restore();
+}
+
+function waterAttenuation(x, y) {
+  const shoreline = Math.min(
+    clamp((x - 118) / 72, 0, 1), clamp((868 - x) / 72, 0, 1),
+    clamp((y - 204) / 42, 0, 1), clamp((552 - y) / 44, 0, 1)
+  );
+  const islandDistance = ((x - 512) / 132) ** 2 + ((y - 330) / 104) ** 2;
+  const islandEdge = 1 - .82 * Math.exp(-islandDistance * 1.45);
+  const rockDistance = ((x - 758) / 90) ** 2 + ((y - 420) / 66) ** 2;
+  const rockEdge = 1 - .78 * Math.exp(-rockDistance * 1.4);
+  return clamp(Math.min(shoreline, islandEdge, rockEdge), 0, 1);
+}
+
+function waterCell(water, x, y) {
+  const col = clamp(Math.round((x - 112) / 748 * (water.cols - 1)), 0, water.cols - 1);
+  const row = clamp(Math.round((y - 202) / 338 * (water.rows - 1)), 0, water.rows - 1);
+  return water.cells[row * water.cols + col];
+}
+
+class SceneClock {
+  constructor() {
+    this.elapsedMs = 0;
+    this.lastNow = null;
+    this.paused = true;
+    this.resetCount = 0;
+    this.resumeCount = 0;
+  }
+  resume(now) {
+    if (!this.paused) return;
+    this.paused = false;
+    this.lastNow = now;
+    this.resumeCount += 1;
+  }
+  pause(now) {
+    if (this.paused) return;
+    this.paused = true;
+    this.lastNow = now;
+  }
+  tick(now) {
+    if (this.lastNow === null) {
+      this.lastNow = now;
+      return {elapsedMs:this.elapsedMs, dtMs:0};
+    }
+    if (this.paused) {
+      this.lastNow = now;
+      return {elapsedMs:this.elapsedMs, dtMs:0};
+    }
+    const rawDelta = Math.max(0, now - this.lastNow);
+    this.lastNow = now;
+    const dtMs = Math.min(rawDelta, 80);
+    this.elapsedMs += dtMs;
+    return {elapsedMs:this.elapsedMs, dtMs};
+  }
+}
+
+function makeVisualLayer(name, targetHz, update, draw) {
+  return {
+    name,
+    enabled:true,
+    targetHz,
+    lastRender:-Infinity,
+    updateCount:0,
+    renderCount:0,
+    errorCount:0,
+    lastError:'',
+    lastCostMs:0,
+    surface:null,
+    ctx:null,
+    init(context) {
+      this.surface = context.createSurface();
+      this.ctx = this.surface.ctx;
+    },
+    update,
+    render(sceneState) {
+      resetSurface(this.ctx);
+      draw(this.ctx, sceneState, this);
+    },
+    dispose() {
+      this.surface = null;
+      this.ctx = null;
+    }
+  };
+}
+
+class NaturalEyeController {
+  constructor() {
+    this.clock = new SceneClock();
+    this.rafId = null;
+    this.boundFrame = now => this.frame(now);
+    this.running = false;
+    this.active = false;
+    this.visible = !document.hidden;
+    this.mode = 'natural';
+    this.requestedActive = true;
+    this.layers = [];
+    this.layerByName = new Map();
+    this.imageReady = false;
+    this.dpr = 1;
+    this.sceneScale = 1;
+    this.inputTarget = {x:0,y:0};
+    this.input = {x:0,y:0};
+    this.diagnostics = {
+      alive:false, frameCount:0, updateCount:0, renderCount:0, lastError:'',
+      pixelSampleCount:0, pixelChangedSamples:0, pixelChanged:false, lastPixelSignature:'',
+      resumeCount:0, clockResetCount:0, rafOwnerCount:0, lastFrameCostMs:0, maxFrameGapMs:0,
+      longFrameCount:0, fps:0, viewport:'', dpr:1, mode:'natural', tier:'standard', reducedMotion:false,
+      lastDiagnosticsAt:0, lastPixelSampleAt:0
+    };
+    const deviceMemory = Number(navigator.deviceMemory || 0);
+    const hardware = Number(navigator.hardwareConcurrency || 0);
+    this.quality = {
+      tier: deviceMemory && deviceMemory <= 3 || hardware && hardware <= 4 ? 'low' : 'standard',
+      reducedMotion: Boolean(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches),
+      deviceMemory, hardware
+    };
+    this.diagnostics.tier = this.quality.tier;
+    this.diagnostics.reducedMotion = this.quality.reducedMotion;
+  }
+  createSurface() {
+    const surface = document.createElement('canvas');
+    surface.width = DESIGN.width;
+    surface.height = DESIGN.height;
+    const ctx = surface.getContext('2d', {alpha:true});
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    return {canvas:surface, ctx};
+  }
+  registerLayer(name, layer) {
+    layer.name = name;
+    try {
+      layer.init({runtime:this, image:baseImage, geometry:GEOMETRY, createSurface:() => this.createSurface()});
+      this.layers.push(layer);
+      this.layerByName.set(name, layer);
+    } catch (error) {
+      layer.errorCount = 1;
+      layer.lastError = String(error && error.message || error);
+      this.diagnostics.lastError = `${name}: ${layer.lastError}`;
+    }
+  }
+  setMode(mode) {
+    this.mode = mode === 'proof' ? 'proof' : 'natural';
+    this.diagnostics.mode = this.mode;
+    modeButton.textContent = `Mode: ${this.mode.toUpperCase()}`;
+    modeButton.setAttribute('aria-pressed', String(this.mode === 'proof'));
+    this.layers.forEach(layer => { layer.lastRender = -Infinity; });
+  }
+  resize() {
+    const rect = sceneFrame.getBoundingClientRect();
+    const dpr = Math.min(Number(window.devicePixelRatio || 1), 2);
+    this.dpr = dpr;
+    this.sceneScale = rect.width / DESIGN.width;
+    sceneCanvas.width = Math.max(1, Math.round(rect.width * dpr));
+    sceneCanvas.height = Math.max(1, Math.round(rect.height * dpr));
+    sceneCanvas.style.width = `${rect.width}px`;
+    sceneCanvas.style.height = `${rect.height}px`;
+    this.diagnostics.viewport = `${Math.round(rect.width)}x${Math.round(rect.height)} CSS / ${sceneCanvas.width}x${sceneCanvas.height} px`;
+    this.diagnostics.dpr = dpr;
+    this.layers.forEach(layer => { layer.lastRender = -Infinity; });
+  }
+  schedule() {
+    if (!this.active || !this.visible || this.rafId !== null) return;
+    this.rafId = requestAnimationFrame(this.boundFrame);
+    this.diagnostics.rafOwnerCount = 1;
+  }
+  cancelScheduledFrame() {
+    if (this.rafId !== null) cancelAnimationFrame(this.rafId);
+    this.rafId = null;
+    this.diagnostics.rafOwnerCount = 0;
+  }
+  setActive(active, reason) {
+    const next = Boolean(active) && this.visible;
+    if (next === this.active) {
+      if (next) this.schedule();
+      return;
+    }
+    this.active = next;
+    if (next) {
+      this.clock.resume(performance.now());
+      this.diagnostics.resumeCount = this.clock.resumeCount;
+      this.schedule();
+    } else {
+      this.clock.pause(performance.now());
+      this.cancelScheduledFrame();
+    }
+    sceneStatus.textContent = next ? `Runtime active · ${this.mode.toUpperCase()} mode` : `Runtime paused · ${reason || 'manual'}`;
+  }
+  start() {
+    if (this.running) return;
+    this.running = true;
+    this.diagnostics.alive = true;
+    this.resize();
+    if (this.imageReady) this.setActive(true, 'start');
+  }
+  pauseFromUser() {
+    this.requestedActive = false;
+    this.setActive(false, 'user');
+    pauseButton.textContent = 'Resume scene';
+    pauseButton.setAttribute('aria-pressed', 'true');
+  }
+  resumeFromUser() {
+    this.requestedActive = true;
+    if (this.visible) this.setActive(true, 'user');
+    pauseButton.textContent = 'Pause scene';
+    pauseButton.setAttribute('aria-pressed', 'false');
+  }
+  lifecycleHidden(reason) {
+    this.visible = false;
+    this.setActive(false, reason);
+  }
+  lifecycleVisible(reason) {
+    this.visible = !document.hidden;
+    if (this.visible && this.requestedActive && this.imageReady) this.setActive(true, reason);
+  }
+  retryFailedLayers() {
+    this.layers.forEach(layer => {
+      if (layer.errorCount) {
+        layer.enabled = true;
+        layer.lastError = '';
+        layer.lastRender = -Infinity;
+      }
+    });
+  }
+  updateLayer(layer, state, now) {
+    if (!layer.enabled) return;
+    const interval = 1000 / Math.max(1, layer.targetHz);
+    if (now - layer.lastRender < interval) return;
+    const start = performance.now();
+    try {
+      layer.update(state);
+      layer.updateCount += 1;
+      this.diagnostics.updateCount += 1;
+      layer.render(state);
+      layer.renderCount += 1;
+      this.diagnostics.renderCount += 1;
+      layer.lastRender = now;
+      layer.lastCostMs = performance.now() - start;
+    } catch (error) {
+      layer.errorCount += 1;
+      layer.enabled = false;
+      layer.lastError = String(error && error.message || error);
+      this.diagnostics.lastError = `${layer.name}: ${layer.lastError}`;
+    }
+  }
+  compose() {
+    const context = sceneCanvas.getContext('2d');
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, sceneCanvas.width, sceneCanvas.height);
+    context.setTransform(this.sceneScale * this.dpr, 0, 0, this.sceneScale * this.dpr, 0, 0);
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = 'high';
+    context.drawImage(baseImage, 0, 0, DESIGN.width, DESIGN.height);
+    this.layers.forEach(layer => {
+      if (layer.enabled && layer.surface) context.drawImage(layer.surface.canvas, 0, 0, DESIGN.width, DESIGN.height);
+    });
+    sceneFrame.classList.add('ready');
+  }
+  probePixels(now) {
+    if (now - this.diagnostics.lastPixelSampleAt < 650 || !sceneCanvas.width) return;
+    this.diagnostics.lastPixelSampleAt = now;
+    const context = sceneCanvas.getContext('2d');
+    const points = [[.22,.36],[.46,.52],[.67,.46],[.82,.37],[.18,.78],[.91,.72]];
+    const values = points.map(([x,y]) => {
+      const px = clamp(Math.round(x * (sceneCanvas.width - 1)), 0, sceneCanvas.width - 1);
+      const py = clamp(Math.round(y * (sceneCanvas.height - 1)), 0, sceneCanvas.height - 1);
+      const sample = context.getImageData(px, py, 1, 1).data;
+      return `${sample[0]},${sample[1]},${sample[2]}`;
+    }).join('|');
+    this.diagnostics.pixelSampleCount += 1;
+    if (this.diagnostics.lastPixelSignature && this.diagnostics.lastPixelSignature !== values) {
+      this.diagnostics.pixelChangedSamples += 1;
+      this.diagnostics.pixelChanged = true;
+    }
+    this.diagnostics.lastPixelSignature = values;
+  }
+  updateDiagnostics(now, frameStart) {
+    const d = this.diagnostics;
+    d.lastFrameCostMs = performance.now() - frameStart;
+    if (this.lastFrameNow !== undefined) {
+      const gap = now - this.lastFrameNow;
+      d.maxFrameGapMs = Math.max(d.maxFrameGapMs, gap);
+      if (gap > 33.3) d.longFrameCount += 1;
+    }
+    this.lastFrameNow = now;
+    this.frameTimes = this.frameTimes || [];
+    this.frameTimes.push(now);
+    while (this.frameTimes.length && now - this.frameTimes[0] > 2000) this.frameTimes.shift();
+    d.fps = this.frameTimes.length > 1 ? (this.frameTimes.length - 1) / ((this.frameTimes[this.frameTimes.length - 1] - this.frameTimes[0]) / 1000) : 0;
+    d.clockResetCount = this.clock.resetCount;
+    d.resumeCount = this.clock.resumeCount;
+    if (now - d.lastDiagnosticsAt > 280) {
+      d.lastDiagnosticsAt = now;
+      const layerLines = this.layers.map(layer => `${layer.name}: ${layer.enabled ? 'on' : 'isolated'} u${layer.updateCount} r${layer.renderCount} ${layer.lastCostMs.toFixed(2)}ms${layer.lastError ? ` ERROR=${layer.lastError}` : ''}`);
+      diagnosticsNode.textContent = [
+        `runtime=${d.alive ? 'alive' : 'stopped'} active=${this.active} visible=${this.visible} rafOwners=${d.rafOwnerCount}`,
+        `clock=${(this.clock.elapsedMs / 1000).toFixed(2)}s paused=${this.clock.paused} resumes=${d.resumeCount} resets=${d.clockResetCount}`,
+        `frames=${d.frameCount} fps=${d.fps.toFixed(1)} frameCost=${d.lastFrameCostMs.toFixed(2)}ms maxGap=${d.maxFrameGapMs.toFixed(1)}ms >33ms=${d.longFrameCount}`,
+        `updates=${d.updateCount} renders=${d.renderCount} pixels=${d.pixelChanged ? 'changed' : 'awaiting'} samples=${d.pixelSampleCount} changedSamples=${d.pixelChangedSamples}`,
+        `mode=${d.mode} tier=${d.tier} reducedMotion=${d.reducedMotion} viewport=${d.viewport} dpr=${d.dpr} source=960x640 ${SOURCE_SHA256.slice(0,12)}…`,
+        `lastError=${d.lastError || 'none'}`,
+        ...layerLines
+      ].join('\n');
+    }
+  }
+  frame(now) {
+    this.rafId = null;
+    if (!this.active || !this.visible) return;
+    const frameStart = performance.now();
+    try {
+      const clockState = this.clock.tick(now);
+      this.input.x += (this.inputTarget.x - this.input.x) * .08;
+      this.input.y += (this.inputTarget.y - this.input.y) * .08;
+      const state = {
+        now, time:clockState.elapsedMs / 1000, dt:clockState.dtMs / 1000,
+        mode:this.mode, reducedMotion:this.quality.reducedMotion, tier:this.quality.tier,
+        image:baseImage, input:this.input, lightDirection:{x:-.24,y:.97}, runtime:this,
+        water:null, parallax:{x:0,y:0}
+      };
+      const parallaxDrift = signedFbm(state.time * .012, .37, 701) * .18;
+      state.parallax.x = clamp(state.input.x * .7 + parallaxDrift, -.9, .9);
+      state.parallax.y = clamp(state.input.y * .45 + signedFbm(state.time * .009, .61, 709) * .12, -.7, .7);
+      this.layers.forEach(layer => this.updateLayer(layer, state, now));
+      this.compose();
+      this.diagnostics.frameCount += 1;
+      this.probePixels(now);
+      this.updateDiagnostics(now, frameStart);
+    } catch (error) {
+      this.diagnostics.lastError = `runtime: ${String(error && error.message || error)}`;
+    } finally {
+      this.schedule();
+    }
+  }
+  stop() {
+    this.requestedActive = false;
+    this.active = false;
+    this.running = false;
+    this.clock.pause(performance.now());
+    this.cancelScheduledFrame();
+    this.layers.forEach(layer => { try { layer.dispose(); } catch (error) { this.diagnostics.lastError = `${layer.name}: ${String(error && error.message || error)}`; } });
+  }
+}
+
+const NaturalEyeRuntime = new NaturalEyeController();
+
+const waterHz = NaturalEyeRuntime.quality.tier === 'low' ? 18 : 24;
+const waterfallHz = NaturalEyeRuntime.quality.tier === 'low' ? 19 : 25;
+const foliageHz = NaturalEyeRuntime.quality.tier === 'low' ? 10 : 14;
+
+NaturalEyeRuntime.registerLayer('depth-parallax', makeVisualLayer('depth-parallax', 10, state => {
+  state.parallax = state.parallax || {x:0,y:0};
+}, (ctx, state) => {
+  const far = REGION_LOOKUP.get('farAir');
+  renderRegion(ctx, far, drawCtx => {
+    drawSourceBounds(drawCtx, REGION_BOUNDS.farAir, state.parallax.x * .2, state.parallax.y * .16, 0, {x:620,y:82}, .9);
+  });
+  const mid = REGION_LOOKUP.get('midForest');
+  renderRegion(ctx, mid, drawCtx => {
+    drawSourceBounds(drawCtx, REGION_BOUNDS.midForest, state.parallax.x * .46, state.parallax.y * .34, 0, REGION_ANCHORS.midForest, .92);
+  });
+}));
+
+NaturalEyeRuntime.registerLayer('atmosphere', makeVisualLayer('atmosphere', NaturalEyeRuntime.quality.tier === 'low' ? 6 : 8, state => {
+  state.airDrift = signedFbm(state.time * .017, .42, 811);
+}, (ctx, state) => {
+  const region = REGION_LOOKUP.get('farAir');
+  renderRegion(ctx, region, drawCtx => {
+    const proof = state.mode === 'proof' ? 1.7 : 1;
+    const drift = state.airDrift * 9 * proof;
+    drawCtx.lineJoin = 'round';
+    for (let layer = 0; layer < 4; layer += 1) {
+      const baseY = 32 + layer * 34 + signedFbm(state.time * .013 + layer, .8, 820 + layer) * 7;
+      const alpha = (.035 + layer * .009) * proof;
+      drawCtx.beginPath();
+      drawCtx.moveTo(310, baseY);
+      for (let step = 0; step <= 8; step += 1) {
+        const x = 310 + step * 82 + drift;
+        const y = baseY + signedFbm(x * .012, state.time * .021 + layer, 830 + layer) * 8;
+        drawCtx.lineTo(x, y);
+      }
+      for (let step = 8; step >= 0; step -= 1) {
+        const x = 310 + step * 82 + drift;
+        const y = baseY + 17 + signedFbm(x * .013, state.time * .019 + layer + 4, 840 + layer) * 7;
+        drawCtx.lineTo(x, y);
+      }
+      drawCtx.closePath();
+      drawCtx.fillStyle = rgba(224, 232, 222, alpha);
+      drawCtx.fill();
+    }
+  });
+}));
+
+NaturalEyeRuntime.registerLayer('water', makeVisualLayer('water', waterHz, state => {
+  const cols = 24, rows = 16, cells = [];
+  const amplitude = (state.mode === 'proof' ? 3.5 : 2.25) * (state.reducedMotion ? .35 : 1);
+  for (let row = 0; row < rows; row += 1) {
+    for (let col = 0; col < cols; col += 1) {
+      const x = 112 + col / (cols - 1) * 748;
+      const y = 202 + row / (rows - 1) * 338;
+      const edge = waterAttenuation(x, y);
+      const broad = signedFbm(x * .019 + state.time * .014, y * .022 - state.time * .010, 21);
+      const cross = signedFbm(x * .036 - state.time * .021, y * .017 + state.time * .016, 43);
+      const micro = signedFbm(x * .098 + state.time * .067, y * .083 - state.time * .051, 77);
+      const gust = .62 + .38 * fbm(state.time * .052 + col * .021, row * .017, 91);
+      const local = (.35 + .65 * edge) * gust;
+      cells.push({
+        dx: amplitude * (.62 * broad + .24 * cross + .14 * micro + .22) * local,
+        dy: amplitude * (.21 * broad + .55 * cross + .24 * micro) * local,
+        slope: .5 * broad + .35 * cross + .15 * micro,
+        energy: clamp(.45 + .38 * broad + .22 * micro, 0, 1),
+        x, y
+      });
+    }
+  }
+  state.water = {cols, rows, cells, time:state.time, lightDirection:state.lightDirection};
+}, (ctx, state) => {
+  const region = REGION_LOOKUP.get('lake');
+  renderRegion(ctx, region, drawCtx => {
+    const tileW = 40, tileH = 22;
+    const proof = state.mode === 'proof' ? 1.25 : 1;
+    for (let y = 188; y < 556; y += tileH) {
+      for (let x = 86; x < 906; x += tileW) {
+        const w = Math.min(tileW + 1, DESIGN.width - x);
+        const h = Math.min(tileH + 1, DESIGN.height - y);
+        const cell = waterCell(state.water, x + w * .5, y + h * .5);
+        const safe = waterAttenuation(x + w * .5, y + h * .5);
+        const detail = signedFbm(x * .032 + state.time * .032, y * .041 - state.time * .024, 121);
+        const sx = clamp(x + cell.dx * proof + detail * .55 * safe, 0, DESIGN.width - w);
+        const sy = clamp(y + cell.dy * proof + detail * .35 * safe, 188, 540);
+        drawCtx.globalAlpha = .97;
+        drawCtx.drawImage(baseImage, sx, sy, w, h, x, y, w, h);
+      }
+    }
+  });
+}));
+
+NaturalEyeRuntime.registerLayer('reflection', makeVisualLayer('reflection', waterHz, state => {
+  state.reflectionWater = state.water;
+}, (ctx, state) => {
+  const region = REGION_LOOKUP.get('lake');
+  renderRegion(ctx, region, drawCtx => {
+    if (!state.reflectionWater) return;
+    const water = state.reflectionWater;
+    const proof = state.mode === 'proof' ? 1.45 : 1;
+    drawCtx.lineCap = 'round';
+    drawCtx.lineJoin = 'round';
+    for (let index = 0; index < 18; index += 1) {
+      const y = 289 + index * 12.5 + signedFbm(state.time * .031 + index, .24, 501 + index) * 5;
+      const x = 613 + signedFbm(index * .13, state.time * .027, 521 + index) * 26;
+      const length = 20 + fbm(index * .19, state.time * .021, 541 + index) * 28;
+      const cell = waterCell(water, x, y);
+      const alpha = (.10 + .12 * cell.energy) * proof;
+      drawCtx.beginPath();
+      for (let step = 0; step < 5; step += 1) {
+        const pointX = x + step * length / 4;
+        const pointY = y + cell.dy * .45 + signedFbm(pointX * .034 + state.time * .028, index, 561 + index) * 3.2;
+        if (step === 0) drawCtx.moveTo(pointX, pointY);
+        else drawCtx.lineTo(pointX, pointY);
+      }
+      drawCtx.strokeStyle = rgba(255, 228, 164, alpha);
+      drawCtx.lineWidth = 1.1 + cell.energy * .8;
+      drawCtx.stroke();
+    }
+  });
+}));
+
+NaturalEyeRuntime.registerLayer('waterfall', makeVisualLayer('waterfall', waterfallHz, state => {
+  state.fallEnergy = .7 + .3 * fbm(state.time * .08, .41, 601);
+}, (ctx, state) => {
+  const region = REGION_LOOKUP.get('waterfallStream');
+  renderRegion(ctx, region, drawCtx => {
+    const proof = state.mode === 'proof' ? 1.25 : 1;
+    const top = 180, span = 212;
+    drawCtx.globalAlpha = .84;
+    for (let index = 0; index < 10; index += 1) {
+      const x = 826 + index * 7;
+      const width = 7 + (index % 3);
+      const period = 27 + index * 2.7;
+      const shift = mod(state.time * (10 + index * .8) * proof + index * 5.7, period);
+      const sourceX = clamp(x - 2, 0, DESIGN.width - width);
+      const firstHeight = span - shift;
+      if (firstHeight > 1) drawCtx.drawImage(baseImage, sourceX, top + shift, width, firstHeight, x - 2, top, width, firstHeight);
+      if (shift > 1) drawCtx.drawImage(baseImage, sourceX, top, width, shift, x - 2, top + firstHeight, width, shift);
+    }
+    drawCtx.globalAlpha = 1;
+    drawCtx.lineCap = 'round';
+    for (let index = 0; index < 7; index += 1) {
+      const x = 833 + index * 8 + signedFbm(state.time * .035 + index, .31, 621 + index) * 2.5;
+      drawCtx.beginPath();
+      drawCtx.moveTo(x, 190);
+      for (let step = 1; step <= 7; step += 1) {
+        const y = 190 + step * 27;
+        drawCtx.lineTo(x + signedFbm(x * .025, y * .018 + state.time * .055, 641 + index) * 2.2, y);
+      }
+      drawCtx.strokeStyle = rgba(226, 242, 238, (.12 + .035 * (index % 3)) * proof);
+      drawCtx.lineWidth = 1.1 + (index % 3) * .45;
+      drawCtx.stroke();
+    }
+  });
+}));
+
+NaturalEyeRuntime.registerLayer('spray', makeVisualLayer(NaturalEyeRuntime.quality.tier === 'low' ? 'spray' : 'spray', NaturalEyeRuntime.quality.tier === 'low' ? 12 : 16, state => {
+  state.sprayBreath = .7 + .3 * fbm(state.time * .062, .7, 671);
+}, (ctx, state) => {
+  const region = REGION_LOOKUP.get('waterfallSpray');
+  renderRegion(ctx, region, drawCtx => {
+    const proof = state.mode === 'proof' ? 1.55 : 1;
+    const count = state.mode === 'proof' ? 32 : 22;
+    for (let index = 0; index < count; index += 1) {
+      const speed = .085 + hash2(index, 4, 681) * .09;
+      const age = fract(state.time * speed + hash2(index, 6, 689));
+      const rise = Math.sin(age * Math.PI) * (4 + hash2(index, 8, 697) * 11);
+      const x = 817 + hash2(index, 10, 703) * 116 + age * (6 + hash2(index, 12, 709) * 18);
+      const y = 378 + hash2(index, 14, 719) * 38 - rise + age * 20;
+      const radius = .7 + hash2(index, 16, 727) * 2.2;
+      const alpha = (.10 + .19 * Math.sin(age * Math.PI)) * proof;
+      drawCtx.beginPath();
+      drawCtx.ellipse(x, y, radius * 1.5, radius, .2, 0, Math.PI * 2);
+      drawCtx.fillStyle = rgba(213, 233, 228, alpha);
+      drawCtx.fill();
+    }
+    for (let index = 0; index < 7; index += 1) {
+      const x = 822 + index * 17 + signedFbm(state.time * .022 + index, .5, 741 + index) * 12;
+      const y = 384 + signedFbm(state.time * .019 + index, .8, 751 + index) * 12;
+      drawCtx.beginPath();
+      drawCtx.ellipse(x, y, 13 + index * 1.8, 3.5 + index * .6, signedFbm(index, state.time * .017, 761) * .25, 0, Math.PI * 2);
+      drawCtx.fillStyle = rgba(203, 227, 221, (.035 + index * .006) * proof * state.sprayBreath);
+      drawCtx.fill();
+    }
+  });
+}));
+
+NaturalEyeRuntime.registerLayer('foliage', makeVisualLayer('foliage', foliageHz, state => {
+  state.wind = .6 + .4 * fbm(state.time * .058, .27, 901);
+}, (ctx, state) => {
+  const proof = state.mode === 'proof' ? 1.75 : 1;
+  const motionScale = state.reducedMotion ? .3 : 1;
+  const mid = REGION_LOOKUP.get('midForest');
+  const midNoiseX = signedFbm(state.time * .041, .18, 911);
+  const midNoiseY = signedFbm(state.time * .037, .34, 919);
+  renderRegion(ctx, mid, drawCtx => {
+    drawSourceBounds(drawCtx, REGION_BOUNDS.midForest, midNoiseX * .52 * proof * motionScale + NaturalEyeRuntime.input.x * .06, midNoiseY * .32 * proof * motionScale, midNoiseX * .0007, REGION_ANCHORS.midForest, .98);
+  });
+  REGION_MAP.regions.nearFoliage.forEach((region, index) => {
+    const seed = 941 + index * 23;
+    const dx = (signedFbm(state.time * (.047 + index * .003) + index, .21, seed) * .82 + signedFbm(state.time * .083 + index, .44, seed + 3) * .18) * 1.8 * proof * motionScale;
+    const dy = signedFbm(state.time * (.039 + index * .002), .52 + index * .11, seed + 7) * .95 * proof * motionScale;
+    const angle = signedFbm(state.time * .031 + index, .77, seed + 11) * .009 * proof * motionScale;
+    const anchor = REGION_ANCHORS[region.id];
+    renderRegion(ctx, region, drawCtx => {
+      drawSourceBounds(drawCtx, REGION_BOUNDS[region.id], dx, dy, angle, anchor, .99);
+    });
+  });
+}));
+
+function updateStatus() {
+  if (!NaturalEyeRuntime.imageReady) return;
+  if (NaturalEyeRuntime.active) sceneStatus.textContent = `Runtime active · ${NaturalEyeRuntime.mode.toUpperCase()} mode`;
+}
+
+modeButton.addEventListener('click', () => {
+  NaturalEyeRuntime.setMode(NaturalEyeRuntime.mode === 'natural' ? 'proof' : 'natural');
+  updateStatus();
+});
+pauseButton.addEventListener('click', () => {
+  if (NaturalEyeRuntime.active) NaturalEyeRuntime.pauseFromUser();
+  else NaturalEyeRuntime.resumeFromUser();
+});
+retryButton.addEventListener('click', () => NaturalEyeRuntime.retryFailedLayers());
+
+function setInputFromPointer(clientX, clientY) {
+  const rect = sceneFrame.getBoundingClientRect();
+  NaturalEyeRuntime.inputTarget.x = clamp((clientX - rect.left) / rect.width * 2 - 1, -1, 1);
+  NaturalEyeRuntime.inputTarget.y = clamp((clientY - rect.top) / rect.height * 2 - 1, -1, 1);
+}
+sceneFrame.addEventListener('pointermove', event => setInputFromPointer(event.clientX, event.clientY), {passive:true});
+sceneFrame.addEventListener('pointerleave', () => { NaturalEyeRuntime.inputTarget.x = 0; NaturalEyeRuntime.inputTarget.y = 0; }, {passive:true});
+window.addEventListener('resize', () => NaturalEyeRuntime.resize(), {passive:true});
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) NaturalEyeRuntime.lifecycleHidden('document-hidden');
+  else NaturalEyeRuntime.lifecycleVisible('document-visible');
+});
+window.addEventListener('pagehide', () => NaturalEyeRuntime.lifecycleHidden('pagehide'), {passive:true});
+window.addEventListener('pageshow', () => NaturalEyeRuntime.lifecycleVisible('pageshow'), {passive:true});
+window.addEventListener('focus', () => NaturalEyeRuntime.lifecycleVisible('focus'), {passive:true});
+
+function imageReady() {
+  NaturalEyeRuntime.imageReady = true;
+  sceneStatus.textContent = 'Approved source ready · starting runtime';
+  NaturalEyeRuntime.start();
+}
+baseImage.addEventListener('load', imageReady, {once:true});
+baseImage.addEventListener('error', () => {
+  sceneStatus.textContent = 'Approved source failed to load';
+  NaturalEyeRuntime.diagnostics.lastError = 'authoritative image load failed';
+});
+if (baseImage.complete && baseImage.naturalWidth) imageReady();
+
+window.NaturalEyeRuntime = NaturalEyeRuntime;
+</script>
+</body>
+</html>

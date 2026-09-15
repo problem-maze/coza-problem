@@ -1,0 +1,98 @@
+{
+  "milestone": "L0",
+  "name": "LIVING FOUNDATION",
+  "artifact": "Problem-NATURAL-EYE-L0-LIVING-FOUNDATION-v1.html",
+  "decision": "READY_FOR_PHONE_REVIEW",
+  "visual_pass_claimed": false,
+  "source": {
+    "path": "ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp",
+    "dimensions": "960x640",
+    "format": "WEBP",
+    "sha256": "a993834ccddaf3d21b847584273b31ec07e8a37df8496570623e4c762c4c66ab",
+    "generated_or_replaced": false
+  },
+  "geometry": {
+    "source": "GEOMETRY/REGION-SCHEMA.json",
+    "coordinate_space": "native_960x640",
+    "required_region_groups": [
+      "lake",
+      "islandStatic",
+      "waterfallStream",
+      "waterfallSpray",
+      "farAir",
+      "midForest",
+      "nearFoliage",
+      "staticWood",
+      "staticRocks"
+    ],
+    "flattened_path_count": 22,
+    "exact_path_consistency": "PASS"
+  },
+  "runtime": {
+    "owner": "NaturalEyeRuntime",
+    "scene_clock": "pause-aware monotonic SceneClock",
+    "top_level_raf_owner_count": 1,
+    "layer_owned_raf_loops": 0,
+    "private_timers": 0,
+    "lifecycle_events": [
+      "visibilitychange",
+      "pagehide",
+      "pageshow",
+      "focus"
+    ],
+    "clock_reset_behavior": "no reset path; hidden/background pauses clock",
+    "failure_isolation": true,
+    "diagnostics": [
+      "runtime state",
+      "update count",
+      "render count",
+      "pixel-change sampling",
+      "last error",
+      "resume count",
+      "clock reset count",
+      "per-layer cadence and cost"
+    ]
+  },
+  "motion_families": {
+    "water": "seeded multi-scale native-image displacement with shoreline/island attenuation",
+    "reflection": "same-frame water-state coupling with fixed light direction",
+    "waterfall": "localized continuous downward source-texture flow",
+    "spray": "localized seeded low-density impact moisture",
+    "atmosphere": "slow far-air-only irregular drift",
+    "foliage": "anchored region-specific response with near > mid > far amplitude",
+    "depth_parallax": "subtle far/mid local shift with bounded pointer input"
+  },
+  "checks": {
+    "node_check_touched_javascript": "PASS",
+    "html_contract": "PASS",
+    "z1_region_ids": "PASS",
+    "z1_exact_paths": "PASS",
+    "one_raf_call_site": "PASS",
+    "no_private_interval_or_timeout": "PASS",
+    "no_video": "PASS",
+    "no_css_has": "PASS",
+    "no_inset_zero": "PASS",
+    "git_diff_check": "PASS",
+    "asset_file_and_dimensions": "PASS_960x640_WEBP",
+    "asset_sha256": "PASS",
+    "image_audit": "ENVIRONMENT_LIMITED_MISSING_PIL",
+    "package_preflight": "ENVIRONMENT_LIMITED_MISSING_PIL",
+    "browser_visual_review": "PENDING_REAL_PHONE",
+    "phone_visual_pass": null
+  },
+  "phone_review": {
+    "status": "REQUIRED",
+    "target_css_viewports": [
+      "384x731",
+      "390x844",
+      "360x800"
+    ],
+    "real_phone_authority": true,
+    "notes": "Review Natural mode with a 10-20 second screen recording, diagnostics, pause/resume, and background/foreground recovery. Do not treat counters as visual proof."
+  },
+  "later_milestones": {
+    "L1": "NOT_STARTED",
+    "home_integration": "NOT_STARTED",
+    "z10_benchmark": "NOT_STARTED"
+  }
+}
