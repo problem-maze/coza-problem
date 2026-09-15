@@ -1,0 +1,1 @@
+Z0/Z1 have passed. Implement Z2 only. Build one NaturalEyeRuntime, one SceneClock, one top-level RAF owner, explicit lifecycle, layer registration, failure isolation, and diagnostics. Add no realistic motion yet beyond a minimal deterministic heartbeat/proof primitive if needed to verify the scheduler. Run lifecycle and syntax tests. Stop before water.

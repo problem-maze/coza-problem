@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "design_space": {
+    "width": 960,
+    "height": 640,
+    "coordinate_mode": "native-or-normalized"
+  },
+  "status": "TO_BE_AUTHORED_IN_Z1",
+  "regions": {
+    "lake": null,
+    "islandStatic": null,
+    "waterfallStream": null,
+    "waterfallSpray": null,
+    "farAir": null,
+    "midForest": null,
+    "nearFoliage": [],
+    "staticWood": [],
+    "staticRocks": []
+  }
+}

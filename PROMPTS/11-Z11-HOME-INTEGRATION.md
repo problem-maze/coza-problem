@@ -1,0 +1,1 @@
+Z10 has passed. Integrate the standalone accepted scene into Problem Home. Before editing, search all app hooks listed in APP-HOOKS-CHECKLIST.md. Use PageLife, existing theme state, I18N, Home layout, CTA, Bottom Nav, tier system, and reduced motion. Do not create duplicate routers/state systems. Verify Natural/Moon persistence and navigation to Solve.

@@ -1,0 +1,1 @@
+Z5 has passed. Add waterfall stream, impact, and spray as separate localized systems sharing the SceneClock. Avoid marching dash patterns and visible short loops. Do not add global atmosphere yet. Stop for phone video approval.

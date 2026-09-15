@@ -1,0 +1,1 @@
+Z7 has passed. Add anchored foliage movement with depth-dependent amplitude. Static trunks, rocks, and island mass must not move. Near/mid/far clusters must not synchronize. Stop for phone video approval.

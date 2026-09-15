@@ -1,0 +1,1 @@
+Z8 has passed. Unify time, wind, depth, and light so all accepted subsystems read as one environment. Do not add new decorative effects. The goal is coherence, not more motion. Produce a scene-unification report and phone test.

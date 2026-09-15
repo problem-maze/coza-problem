@@ -1,0 +1,52 @@
+{
+  "english_only_text": true,
+  "arabic_text_files": [],
+  "issues": [],
+  "assets": [
+    {
+      "path": "ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp",
+      "size": [
+        960,
+        640
+      ],
+      "format": "WEBP",
+      "sha256": "a993834ccddaf3d21b847584273b31ec07e8a37df8496570623e4c762c4c66ab"
+    },
+    {
+      "path": "ASSETS/REFERENCE/natural-eye-existing-desktop-1536x1024.jpg",
+      "size": [
+        1536,
+        1024
+      ],
+      "format": "JPEG",
+      "sha256": "66dc75ef095b15efca34b40588b3a1233dff96c0dea0761101cac09bd3185274"
+    },
+    {
+      "path": "ASSETS/REFERENCE/natural-eye-existing-mobile-1152x1536.jpg",
+      "size": [
+        1152,
+        1536
+      ],
+      "format": "JPEG",
+      "sha256": "d4cf5ba763912281bfb0bb4dcf94c985d775581e54068870790a7e14675b9013"
+    },
+    {
+      "path": "EVIDENCE/phone-region-map-debug-691x1536.jpg",
+      "size": [
+        691,
+        1536
+      ],
+      "format": "JPEG",
+      "sha256": "76c0ff9145059c2182c2b475c66df4482704c962ad78fd3abea3e2ec124fd787"
+    },
+    {
+      "path": "EVIDENCE/phone-static-golden-691x1536.jpg",
+      "size": [
+        691,
+        1536
+      ],
+      "format": "JPEG",
+      "sha256": "af4c1c94b61d8189753df94fe9be09c15e4385b0ade476365db07650866bfe32"
+    }
+  ]
+}

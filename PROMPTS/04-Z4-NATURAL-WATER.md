@@ -1,0 +1,1 @@
+Z3 proof water is visibly confirmed. Convert the water to NATURAL mode using irregular multi-scale motion, boundary attenuation, deterministic seed, and no short obvious loop. Preserve a developer PROOF toggle. Do not add reflection, waterfall, atmosphere, or foliage yet. Stop for phone visual approval.

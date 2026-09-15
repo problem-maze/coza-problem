@@ -1,0 +1,1 @@
+Z11 integration has passed. Add no new features. Run final regression, lifecycle, performance, mobile-layout, theme-persistence, and syntax checks. Produce the final golden artifact, benchmark report, evidence index, and explicit unresolved-risk list. Lock the build only if no critical gate remains open.

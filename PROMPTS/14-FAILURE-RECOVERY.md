@@ -1,0 +1,1 @@
+The current gate did not visibly work. Do not increase opacity/amplitude blindly. First classify the failure as geometry, rendering-path visibility, lifecycle/runtime, or perceptual realism. Search for conflicting CSS/state. Create one diagnostic proof that isolates the suspected layer. Use the result to choose the next architecture. Do not stack another broad patch.

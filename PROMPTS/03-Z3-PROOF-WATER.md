@@ -1,0 +1,1 @@
+Z2 has passed. Implement Z3 water only in PROOF mode. Movement must be visually undeniable on the target phone while preserving island/shore stability. Do not tune for realism yet. Produce a short phone test protocol and stop for video evidence.

@@ -1,0 +1,1 @@
+Z4 natural water has passed. Implement reflection only. It must derive from the same water state and stable sun direction. Avoid independent sparkle clocks and uniform glitter. Stop for phone visual approval.

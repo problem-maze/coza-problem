@@ -1,0 +1,64 @@
+{
+  "assets": [
+    {
+      "role": "authoritative-base",
+      "authority": "AUTHORITATIVE",
+      "path": "ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp",
+      "width": 960,
+      "height": 640,
+      "format": "WEBP",
+      "mode": "RGB",
+      "aspect": 1.5,
+      "bytes": 221008,
+      "sha256": "a993834ccddaf3d21b847584273b31ec07e8a37df8496570623e4c762c4c66ab"
+    },
+    {
+      "role": "existing-desktop-composition-reference",
+      "authority": "REFERENCE-ONLY",
+      "path": "ASSETS/REFERENCE/natural-eye-existing-desktop-1536x1024.jpg",
+      "width": 1536,
+      "height": 1024,
+      "format": "JPEG",
+      "mode": "RGB",
+      "aspect": 1.5,
+      "bytes": 586306,
+      "sha256": "66dc75ef095b15efca34b40588b3a1233dff96c0dea0761101cac09bd3185274"
+    },
+    {
+      "role": "existing-mobile-composition-reference",
+      "authority": "REFERENCE-ONLY",
+      "path": "ASSETS/REFERENCE/natural-eye-existing-mobile-1152x1536.jpg",
+      "width": 1152,
+      "height": 1536,
+      "format": "JPEG",
+      "mode": "RGB",
+      "aspect": 0.75,
+      "bytes": 456595,
+      "sha256": "d4cf5ba763912281bfb0bb4dcf94c985d775581e54068870790a7e14675b9013"
+    },
+    {
+      "role": "phone-static-evidence",
+      "authority": "EVIDENCE",
+      "path": "EVIDENCE/phone-static-golden-691x1536.jpg",
+      "width": 691,
+      "height": 1536,
+      "format": "JPEG",
+      "mode": "RGB",
+      "aspect": 0.44987,
+      "bytes": 203996,
+      "sha256": "af4c1c94b61d8189753df94fe9be09c15e4385b0ade476365db07650866bfe32"
+    },
+    {
+      "role": "phone-region-map-evidence",
+      "authority": "EVIDENCE",
+      "path": "EVIDENCE/phone-region-map-debug-691x1536.jpg",
+      "width": 691,
+      "height": 1536,
+      "format": "JPEG",
+      "mode": "RGB",
+      "aspect": 0.44987,
+      "bytes": 205100,
+      "sha256": "76c0ff9145059c2182c2b475c66df4482704c962ad78fd3abea3e2ec124fd787"
+    }
+  ]
+}

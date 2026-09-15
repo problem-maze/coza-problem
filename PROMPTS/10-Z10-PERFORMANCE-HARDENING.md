@@ -1,0 +1,1 @@
+Z9 visual scene is accepted. Perform Z10 performance hardening on the target 4GB phone class. Preserve visible life while reducing cost. Implement tier behavior and reduced motion. Run the full 60-second benchmark fields required by the package. Report verified improvements, regressions, worst layer, and remaining risks.

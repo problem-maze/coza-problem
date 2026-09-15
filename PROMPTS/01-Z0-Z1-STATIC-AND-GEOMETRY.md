@@ -1,0 +1,1 @@
+Implement Z0 and Z1 only. Use the exact authoritative base. Keep native 3:2 composition. Author geometry in 960×640 or normalized coordinates. Provide toggleable debug regions and labels. Fix the old mask problems documented in GEOMETRY-CONTRACT.md. Do not add animation. Validate and stop for phone screenshots.

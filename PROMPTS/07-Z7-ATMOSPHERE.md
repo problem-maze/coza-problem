@@ -1,0 +1,1 @@
+Z6 has passed. Add slow depth-limited atmosphere: far valley air and localized waterfall moisture. Do not wash the whole image with a moving fog layer. Keep motion slower than water. Stop for phone visual approval.

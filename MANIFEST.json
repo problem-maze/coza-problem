@@ -1,0 +1,311 @@
+{
+  "package": "CODEX-LUNA-MAX-NATURAL-EYE-ZERO-REBUILD-PACK-v2-EN",
+  "file_count_before_manifest": 61,
+  "files": [
+    {
+      "path": "00-START-HERE.md",
+      "bytes": 1691,
+      "sha256": "8bad35c45cd0c76b350590f9c45b230a0d289f7401abd45bf29dea4fd537f478"
+    },
+    {
+      "path": "01-SOURCE-OF-TRUTH.md",
+      "bytes": 1316,
+      "sha256": "51aeb06c7ef294fcc027ec3dafb5edec546cc2ce4ce781c710819f591db4b9aa"
+    },
+    {
+      "path": "02-ASSET-AND-DIMENSION-CONTRACT.md",
+      "bytes": 2675,
+      "sha256": "7d5e7663c3e270dd1a468ca118886c78bf1b6c765ca06abe463a5a3af4f35154"
+    },
+    {
+      "path": "03-ZERO-REBUILD-ROADMAP.md",
+      "bytes": 2123,
+      "sha256": "4a27c8805ea2be68baee67a31e6750aa3de44ef8c4ae57cf05d9190d9a12aa16"
+    },
+    {
+      "path": "04-HARD-CONSTRAINTS.md",
+      "bytes": 1208,
+      "sha256": "ca72051ed6ff7800df79edbd9fd0100e5f98f9bf4a1ca228991226419b586502"
+    },
+    {
+      "path": "05-NATURAL-MOTION-PHYSICS.md",
+      "bytes": 1882,
+      "sha256": "a8938ec49509988d6bf8557ccffed9849de0b9794b8e74e61a994abe59854bfa"
+    },
+    {
+      "path": "06-RUNTIME-KERNEL-CONTRACT.md",
+      "bytes": 1261,
+      "sha256": "c9b7abc97d45cd49a136dc2798147af0ca2f08ab46323a740b93d18f0db153d3"
+    },
+    {
+      "path": "07-MOBILE-PERFORMANCE-BUDGET.md",
+      "bytes": 1307,
+      "sha256": "125b43d80248b63454786dc9c577dbd40b6c415c069aecd0d8c25fecf7583020"
+    },
+    {
+      "path": "08-ACCEPTANCE-GATES.md",
+      "bytes": 1406,
+      "sha256": "07e52eca69f3f1273edccf0a656659728e949f2a98f863e5ce142ef8fbfec7b2"
+    },
+    {
+      "path": "09-KNOWN-FAILURES.md",
+      "bytes": 1149,
+      "sha256": "f662eec92854bddade5f3ac8a8d3c737736051ce2c888295f765568dcafe63c1"
+    },
+    {
+      "path": "10-DELIVERABLE-CONTRACT.md",
+      "bytes": 859,
+      "sha256": "0ac20b0438d85a53a571dd8c407329f7f2ea83c29c2fdaac4c55c0c93ea75498"
+    },
+    {
+      "path": "11-ENGLISH-ONLY-AND-COMMUNICATION-CONTRACT.md",
+      "bytes": 720,
+      "sha256": "a1c7f684ea50adde256c076cf75ce502b764bb1f27dd2a6d67ec35e1cdf76459"
+    },
+    {
+      "path": "ASSETS/ASSET-INVENTORY.json",
+      "bytes": 1918,
+      "sha256": "fa12460e7b6b114b55b92f0b337affc1c5623265d30a8988ba4f5c6fab4f9ac4"
+    },
+    {
+      "path": "ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp",
+      "bytes": 221008,
+      "sha256": "a993834ccddaf3d21b847584273b31ec07e8a37df8496570623e4c762c4c66ab"
+    },
+    {
+      "path": "ASSETS/README.md",
+      "bytes": 551,
+      "sha256": "0002037ef66c5fe85f8173634c31d0f889bafe171b251ec7de424ecba3ab50a2"
+    },
+    {
+      "path": "ASSETS/REFERENCE/natural-eye-existing-desktop-1536x1024.jpg",
+      "bytes": 586306,
+      "sha256": "66dc75ef095b15efca34b40588b3a1233dff96c0dea0761101cac09bd3185274"
+    },
+    {
+      "path": "ASSETS/REFERENCE/natural-eye-existing-mobile-1152x1536.jpg",
+      "bytes": 456595,
+      "sha256": "d4cf5ba763912281bfb0bb4dcf94c985d775581e54068870790a7e14675b9013"
+    },
+    {
+      "path": "EVIDENCE/README.md",
+      "bytes": 356,
+      "sha256": "71fb277c029c22ad8de0d2994783caeb0b05096e0e01a70eba77c5068619211d"
+    },
+    {
+      "path": "EVIDENCE/phone-region-map-debug-691x1536.jpg",
+      "bytes": 205100,
+      "sha256": "76c0ff9145059c2182c2b475c66df4482704c962ad78fd3abea3e2ec124fd787"
+    },
+    {
+      "path": "EVIDENCE/phone-static-golden-691x1536.jpg",
+      "bytes": 203996,
+      "sha256": "af4c1c94b61d8189753df94fe9be09c15e4385b0ade476365db07650866bfe32"
+    },
+    {
+      "path": "GEOMETRY/GEOMETRY-CONTRACT.md",
+      "bytes": 1264,
+      "sha256": "f56043ccbe9f85c673cd224431d15fe4174acc50c8c99f9e9e83cf28b6c9dcf2"
+    },
+    {
+      "path": "GEOMETRY/REGION-SCHEMA.json",
+      "bytes": 401,
+      "sha256": "253babf809978079f8325be49b67eedb8bcc6e8cd4ebbdfe79b8f38663061c2b"
+    },
+    {
+      "path": "INTEGRATION/APP-HOOKS-CHECKLIST.md",
+      "bytes": 473,
+      "sha256": "86057261ac4cd8684e3fa03bfa58be043379e5e9b14538d6e3943c165cc2f39a"
+    },
+    {
+      "path": "INTEGRATION/HOME-INTEGRATION-MAP-EN.md",
+      "bytes": 2370,
+      "sha256": "bb9694deffe9d750db248539a81e5a5c347ed869bee02e4b774259a4657063b1"
+    },
+    {
+      "path": "INTEGRATION/LIVING-NATURAL-EYE-REORDER-EN.md",
+      "bytes": 1838,
+      "sha256": "d82c7f5bc2ab901ca577c01c47edd12cbbae3719410949ec427d4d9aaba3ffe9"
+    },
+    {
+      "path": "PREFLIGHT-REPORT.json",
+      "bytes": 1300,
+      "sha256": "830114468dd96f23a091febbcfe0e730768b858053a6c4e466e61e3cc9097259"
+    },
+    {
+      "path": "PROMPTS/00-MASTER-CODEX-LUNA-MAX-PROMPT.md",
+      "bytes": 1248,
+      "sha256": "b25743000b1df5fd7574fff582d757dfa21f92ea79aabd7eec2895ace43bcc5a"
+    },
+    {
+      "path": "PROMPTS/01-Z0-Z1-STATIC-AND-GEOMETRY.md",
+      "bytes": 314,
+      "sha256": "67f543326a73d75f70a8f2f66ca27540a46519fd9329455604353513f00d853f"
+    },
+    {
+      "path": "PROMPTS/02-Z2-RUNTIME-KERNEL.md",
+      "bytes": 355,
+      "sha256": "5fddcf3dbc5fb5f37b75be5b42260d915e8edcf004d9d18bc9cf23c46fb9c156"
+    },
+    {
+      "path": "PROMPTS/03-Z3-PROOF-WATER.md",
+      "bytes": 246,
+      "sha256": "5bddb77fdc726cd6ba576a593b16c1123ec4c55a0c5cb4ded36e33f5703ff84f"
+    },
+    {
+      "path": "PROMPTS/04-Z4-NATURAL-WATER.md",
+      "bytes": 305,
+      "sha256": "def4d2a5c26e514edaf8e9bb77e044b7dbfdb8f29417b87ad4501895c58acb97"
+    },
+    {
+      "path": "PROMPTS/05-Z5-REFLECTION.md",
+      "bytes": 209,
+      "sha256": "c9a2af1a026e7b8f658b5b9a6fff305d4ac82767384a2c58325b30206288d425"
+    },
+    {
+      "path": "PROMPTS/06-Z6-WATERFALL-SPRAY.md",
+      "bytes": 228,
+      "sha256": "3608757198bb56ba3febf47eb760ec31dae4e6462c949cf4359b302bcb9e91f1"
+    },
+    {
+      "path": "PROMPTS/07-Z7-ATMOSPHERE.md",
+      "bytes": 215,
+      "sha256": "ceeaab357fdaa8fea7b02a98227d364e06d7f39c951cbfb1dc685adbbed6d526"
+    },
+    {
+      "path": "PROMPTS/08-Z8-FOLIAGE-DEPTH.md",
+      "bytes": 205,
+      "sha256": "9aa8b190a8e5d731ad778938b8f43eb0840b12775989b24468785909156faafc"
+    },
+    {
+      "path": "PROMPTS/09-Z9-SCENE-UNIFICATION.md",
+      "bytes": 228,
+      "sha256": "d69c6ff93bcae122b7dfcb3982e93aa1be03a392d4d3b9bb108925d46d22de9b"
+    },
+    {
+      "path": "PROMPTS/10-Z10-PERFORMANCE-HARDENING.md",
+      "bytes": 323,
+      "sha256": "52cf3231d8d3c1070aeb53ff255386f129c9f643af91be931a623d964338b094"
+    },
+    {
+      "path": "PROMPTS/11-Z11-HOME-INTEGRATION.md",
+      "bytes": 355,
+      "sha256": "ecda048f59f704a78cec5e3c8f94f10890cd056f64320a7b98c8431842a2df17"
+    },
+    {
+      "path": "PROMPTS/12-Z12-FINAL-GOLDEN-LOCK.md",
+      "bytes": 306,
+      "sha256": "d0338a89e2746a0fb3b7ef07b20feea1a75a6b2fa15669835156d33d1444922e"
+    },
+    {
+      "path": "PROMPTS/13-PHONE-VISUAL-REVIEW.md",
+      "bytes": 298,
+      "sha256": "c6eb7b1b6d9cc26e388948c5ea1e7d1542ba2beb03dae0bcf147b8428fcd20ef"
+    },
+    {
+      "path": "PROMPTS/14-FAILURE-RECOVERY.md",
+      "bytes": 370,
+      "sha256": "ca416f94f4dfcf12d58c3cc664ecc7fe7409b792719b4d8f1485f99212e781a8"
+    },
+    {
+      "path": "PROMPTS/15-CODE-REVIEW-PROMPT.md",
+      "bytes": 374,
+      "sha256": "c39a81fade96a4cd11c93787b9c50e5ec9c7ba436792d361230ec061e62242ed"
+    },
+    {
+      "path": "QUALITY/NATURAL-REALISM-CHECKLIST.md",
+      "bytes": 789,
+      "sha256": "65518084cfa9aba17202ae4ae959612e9bc2a666f78e35be8c57bcabc1c0b68c"
+    },
+    {
+      "path": "QUALITY/PERFORMANCE-AND-LIFECYCLE-CHECKLIST.md",
+      "bytes": 506,
+      "sha256": "ec01681856064f27fa3b186297b2f371d85af218a955ca1f782ac919158bedae"
+    },
+    {
+      "path": "REFERENCE/OLD-REPORTS/A1-DOM-SVG-REALITY-PIPELINE-v1-REPORT.md",
+      "bytes": 813,
+      "sha256": "658cab1517f94dc4496b53572e485287308b569c8a9850a065196c4f18be480a"
+    },
+    {
+      "path": "REFERENCE/OLD-REPORTS/NATURAL-EYE-A1-REALITY-ENGINE-v1-REPORT.md",
+      "bytes": 2033,
+      "sha256": "71383e9ff4eb0ffe708b5fb9be102704bf3dd8fd2467e67b5e08f00226e0e656"
+    },
+    {
+      "path": "REFERENCE/OLD-REPORTS/P08-RUNTIME-CLOSURE-R7-REPORT.md",
+      "bytes": 2922,
+      "sha256": "93cd49ace1214f8620a2197f72f02ffd1c5f861be99320b3938e7f3c36affd07"
+    },
+    {
+      "path": "REFERENCE/PACKAGE-REVIEW-v1-TO-v2.md",
+      "bytes": 1093,
+      "sha256": "c69f03e5184224df3845fd92fe575455a0f90fa51cad741082f5f9e2ddbbea7e"
+    },
+    {
+      "path": "REFERENCE/PROJECT/CODEBASE-ATLAS.md",
+      "bytes": 10690,
+      "sha256": "a2c44fa7a51b823665be02cd5ec3874037c2644eda49260d673033e8f4be0b7e"
+    },
+    {
+      "path": "REFERENCE/PROJECT/COMMUNICATION-MODE-ENGLISH-SANITIZED.md",
+      "bytes": 4900,
+      "sha256": "e3444759dd918da9059313a67476f4e5d11e53efa88d7e227d5d3c4fda8b6a1b"
+    },
+    {
+      "path": "REFERENCE/PROJECT/HANDOFF-BRIEF.md",
+      "bytes": 5363,
+      "sha256": "c2f057f977a5c602ee7a73f117a54ee15e6b6e21066ee4a900d4cb93099deb2d"
+    },
+    {
+      "path": "REFERENCE/PROJECT/THINKING-TRANSFER.md",
+      "bytes": 17374,
+      "sha256": "8888807a7d1ff786b90b5f0ce7069a388776b433ac29217edd808d1803962d29"
+    },
+    {
+      "path": "SOURCE-OF-TRUTH.json",
+      "bytes": 1082,
+      "sha256": "8d1a8b17b6e1175a36459209dd037a7e582876e2da8725cb945546c3dafcf243"
+    },
+    {
+      "path": "STARTER/Problem-NATURAL-EYE-Z0-CLEAN-STATIC-STARTER.html",
+      "bytes": 983,
+      "sha256": "3b5a0859e4667cc611e78609d5213a686108418caa55c39ec4f3997f425a1bcc"
+    },
+    {
+      "path": "TOOLS/acceptance-template.json",
+      "bytes": 770,
+      "sha256": "7562feabd6d9780f5748d8b31333cbf928b003a8c214614a84bdd59de8d54619"
+    },
+    {
+      "path": "TOOLS/check_js.sh",
+      "bytes": 497,
+      "sha256": "f74a5e261a815619a39de3bfe4b7b8ccf25ac11f1314c4555ba9941fb9fd1b6d"
+    },
+    {
+      "path": "TOOLS/image_audit.py",
+      "bytes": 601,
+      "sha256": "affb4bc62cdd35ec1aaaca951d5e9558afa197760eea2ca04b90dff393fc66bd"
+    },
+    {
+      "path": "TOOLS/package_preflight.py",
+      "bytes": 1340,
+      "sha256": "6848a9e252f3e1a72ca98693b4e353b163ce892786637c3f379099326309ce45"
+    },
+    {
+      "path": "TOOLS/validate_html.py",
+      "bytes": 550,
+      "sha256": "c3a47713f4bd89ebb102516b8ec612b67df2c2316dc3ee937f5d393e0d73f91c"
+    },
+    {
+      "path": "WORKFLOW/CODEX-OPERATING-CONTRACT.md",
+      "bytes": 649,
+      "sha256": "70ed2153f2bda8ecbe1311f4aded7ee9d7cc8c661dd275837fc72517d4882ad2"
+    },
+    {
+      "path": "WORKFLOW/GITHUB-WORKFLOW.md",
+      "bytes": 1079,
+      "sha256": "d478dcffe7c0e749dead712e3738f14d9ab04a6c7f84a28ed415a47503a6c490"
+    }
+  ]
+}

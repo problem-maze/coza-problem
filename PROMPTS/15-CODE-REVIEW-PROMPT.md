@@ -1,0 +1,1 @@
+Review the current Natural Eye gate implementation as a senior frontend/runtime engineer. Check ownership, lifecycle, hidden work, geometry coupling, static boundaries, periodicity, phone-scale readability, tier behavior, reduced motion, forbidden CSS, and syntax validation. Return blockers first, then regressions, then improvements. Do not rewrite code unless requested.

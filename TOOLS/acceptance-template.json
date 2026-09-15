@@ -1,0 +1,39 @@
+{
+  "gate": "Z?",
+  "artifact": "",
+  "build_marker": "",
+  "decision": "PASS|FAIL|REVIEW",
+  "static_checks": {
+    "node_check": null,
+    "no_has": null,
+    "no_inset_zero": null,
+    "english_only_docs": null
+  },
+  "phone_evidence": {
+    "device": "",
+    "viewport_css": "",
+    "dpr": null,
+    "visual_pass": null,
+    "notes": ""
+  },
+  "runtime": {
+    "raf_owners": null,
+    "scene_clock_resets": null,
+    "resume_count": null,
+    "permanent_freeze": null,
+    "last_error": ""
+  },
+  "performance": {
+    "duration_s": null,
+    "avg_fps": null,
+    "avg_ft_ms": null,
+    "p95_ms": null,
+    "p99_ms": null,
+    "over_33ms": null,
+    "over_50ms": null,
+    "jank_pct": null,
+    "long_tasks": null,
+    "max_gap_ms": null,
+    "worst_layer": ""
+  }
+}

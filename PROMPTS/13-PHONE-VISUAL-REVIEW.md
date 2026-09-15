@@ -1,0 +1,1 @@
+Review the supplied phone screenshot/video for the current gate. Judge visible pixels, not counters. Separate: what is definitely visible, what is ambiguous, what is wrong, and the single next engineering change. Do not advance the gate if the user says the motion still looks static or synthetic.
