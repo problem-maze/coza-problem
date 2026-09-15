@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Problem Natural Eye — Z1 Geometry Lock v1</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#f6f4ef}
+body{min-height:100dvh;padding:16px;color:#1c2923;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.workspace{width:min(1100px,100%);margin:0 auto}
+.intro{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin:0 0 12px}
+.intro h1{margin:0;font-size:clamp(18px,3vw,26px);line-height:1.05;letter-spacing:-.02em}
+.intro p{margin:5px 0 0;color:#52645a;font-size:12px;line-height:1.4}
+.controls{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:7px}
+button{appearance:none;border:1px solid rgba(28,41,35,.2);border-radius:999px;background:#fff;color:#1c2923;padding:8px 11px;font:700 11px/1 system-ui,-apple-system,sans-serif;cursor:pointer}
+button[aria-pressed="true"]{background:#1c2923;color:#f6f4ef;border-color:#1c2923}
+.scene{position:relative;width:100%;aspect-ratio:3/2;overflow:hidden;border-radius:24px;background:#d9ddd2;box-shadow:0 12px 34px rgba(28,41,35,.15)}
+.scene img{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;object-fit:contain;display:block}
+.debug-layer{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;pointer-events:none}
+.region{fill:var(--region-color);fill-opacity:.18;stroke:var(--region-color);stroke-opacity:.95;stroke-width:3;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.region-fill{stroke:none}
+.region-outline{fill:none}
+.region[data-static="true"]{fill-opacity:.12;stroke-dasharray:9 5}
+.region-label rect{fill:rgba(15,29,24,.82);stroke:rgba(246,244,239,.82);stroke-width:1;vector-effect:non-scaling-stroke}
+.region-label text{fill:#fff;font:700 17px/1 system-ui,-apple-system,sans-serif;letter-spacing:.02em;paint-order:stroke;stroke:rgba(15,29,24,.45);stroke-width:2px;stroke-linejoin:round}
+.region-label circle{fill:#fff;stroke:rgba(15,29,24,.9);stroke-width:2;vector-effect:non-scaling-stroke}
+.debug-layer.regions-off .region{display:none}
+.debug-layer.labels-off .region-label{display:none}
+.legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:12px 0 0}
+.legend-item{display:flex;align-items:center;gap:7px;min-width:0;padding:7px 9px;border:1px solid rgba(28,41,35,.12);border-radius:10px;background:rgba(255,255,255,.64);font-size:11px;line-height:1.2}
+.swatch{flex:0 0 10px;width:10px;height:10px;border-radius:50%;background:var(--swatch);box-shadow:0 0 0 1px rgba(28,41,35,.14)}
+.legend-item span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.note{margin:10px 0 0;color:#52645a;font-size:11px;line-height:1.4}
+.build{position:fixed;right:10px;bottom:10px;z-index:5;font:700 10px/1.15 system-ui,-apple-system,sans-serif;letter-spacing:.04em;color:#1c2923;background:rgba(246,244,239,.94);padding:8px 10px;border:1px solid rgba(28,41,35,.18);border-radius:999px;box-shadow:0 4px 14px rgba(28,41,35,.12)}
+@media (max-width:700px){
+  body{padding:12px}
+  .intro{display:block}
+  .controls{justify-content:flex-start;margin-top:10px}
+  .legend{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .region-label text{font-size:20px}
+}
+</style>
+</head>
+<body>
+<main class="workspace" data-build="Z1-GEOMETRY-v1">
+  <header class="intro">
+    <div>
+      <h1>Natural Eye — Z1 Geometry Lock</h1>
+      <p>Exact 960×640 source with an authoritative static region map. Debug only; no runtime or animation.</p>
+    </div>
+    <div class="controls" aria-label="Geometry debug controls">
+      <button id="toggleRegions" type="button" aria-pressed="true">Regions on</button>
+      <button id="toggleLabels" type="button" aria-pressed="true">Labels on</button>
+    </div>
+  </header>
+  <figure class="scene" id="scene" aria-label="Natural Eye Z1 geometry map">
+    <img src="ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp" alt="Natural Eye landscape: a turquoise lake, island, waterfall, forest and foreground wood and rocks">
+    <svg class="debug-layer" id="debugLayer" viewBox="0 0 960 640" preserveAspectRatio="none" role="img" aria-label="Static outlines for lake, island, waterfall, air, forest, foliage, wood and rocks">
+      <defs id="regionMasks"></defs>
+      <g id="regionPaths"></g>
+      <g id="regionLabels"></g>
+    </svg>
+  </figure>
+  <section class="legend" aria-label="Geometry legend">
+    <div class="legend-item" style="--swatch:#2b8fa1"><i class="swatch"></i><span>Lake — moving surface</span></div>
+    <div class="legend-item" style="--swatch:#d5a33b"><i class="swatch"></i><span>Island — static exclusion</span></div>
+    <div class="legend-item" style="--swatch:#527fb0"><i class="swatch"></i><span>Waterfall — stream</span></div>
+    <div class="legend-item" style="--swatch:#ae91c9"><i class="swatch"></i><span>Waterfall — impact / spray</span></div>
+    <div class="legend-item" style="--swatch:#98acb3"><i class="swatch"></i><span>Far air / mountains</span></div>
+    <div class="legend-item" style="--swatch:#5f927a"><i class="swatch"></i><span>Mid forest</span></div>
+    <div class="legend-item" style="--swatch:#6b9f64"><i class="swatch"></i><span>Near foliage clusters</span></div>
+    <div class="legend-item" style="--swatch:#986548"><i class="swatch"></i><span>Static wood / trunks</span></div>
+    <div class="legend-item" style="--swatch:#727b76"><i class="swatch"></i><span>Static rocks / shore</span></div>
+  </section>
+  <p class="note">Phone gate: keep this page at the target CSS viewport, capture the static map with Regions on and Labels on, and inspect the lake, island, waterfall split, far air, mid forest, near foliage, wood and rock boundaries.</p>
+</main>
+<div class="build" aria-label="Build marker">Z1 GEOMETRY LOCK v1 — NATIVE 960×640 — DEBUG ON</div>
+<script>
+const REGION_MAP = {
+  "regions": {
+    "lake": {
+      "id": "lake",
+      "material": "water-surface",
+      "path": "M 100 322 C 112 288 142 259 184 238 C 233 213 292 198 352 193 C 423 188 491 193 556 203 C 624 213 694 231 748 254 C 798 275 838 305 865 337 C 883 359 889 380 884 399 C 875 423 848 443 815 461 C 773 483 722 499 671 514 C 611 532 552 544 501 548 C 437 552 377 542 325 527 C 270 513 225 494 185 473 C 147 452 119 430 103 404 C 91 382 91 349 100 322 Z",
+      "excludes": ["islandStatic", "rock-shore-right", "waterfallSpray", "midForest", "near-foliage-left-shore", "near-foliage-right-shore", "wood-upper-arch", "wood-lower-left-log", "wood-lower-right-log"],
+      "motion_eligible": true,
+      "feather_px": 8,
+      "attenuation": "shoreline-island-wood-rock-boundaries",
+      "debug_color": "#2b8fa1"
+    },
+    "islandStatic": {
+      "id": "islandStatic",
+      "material": "static-island",
+      "path": "M 411 357 C 417 335 430 313 443 290 C 452 271 464 252 477 241 C 488 228 501 237 511 251 C 517 230 528 215 539 229 C 548 211 561 223 564 245 C 575 224 588 238 586 261 C 603 247 616 262 607 283 C 622 280 627 298 616 311 C 628 323 618 341 605 348 C 613 365 598 381 580 383 C 563 402 536 412 510 413 C 483 414 458 401 441 389 C 425 385 412 375 411 357 Z",
+      "motion_eligible": false,
+      "feather_px": 0,
+      "attenuation": "hard-static-exclusion",
+      "debug_color": "#d5a33b"
+    },
+    "waterfallStream": {
+      "id": "waterfallStream",
+      "material": "waterfall-stream",
+      "path": "M 839 187 C 855 192 864 205 862 224 C 860 242 855 258 862 274 C 868 289 884 302 890 319 C 898 342 893 365 880 388 L 852 380 C 861 355 858 338 850 321 C 840 303 828 288 828 271 C 828 249 839 233 832 215 C 827 201 827 192 839 187 Z",
+      "excludes": ["midForest", "farAir", "waterfallSpray", "near-foliage-right-shore", "wood-upper-arch", "rock-shore-right"],
+      "motion_eligible": true,
+      "feather_px": 3,
+      "attenuation": "continuous-downward-flow",
+      "debug_color": "#527fb0"
+    },
+    "waterfallSpray": {
+      "id": "waterfallSpray",
+      "material": "waterfall-impact-spray",
+      "path": "M 797 352 C 818 337 842 339 860 353 C 878 333 903 338 919 355 C 934 347 954 355 960 374 L 960 432 C 939 429 921 416 900 418 C 879 420 866 440 845 440 C 823 440 811 424 795 410 C 780 396 782 370 797 352 Z",
+      "excludes": ["lake", "midForest", "waterfallStream", "near-foliage-right-shore", "rock-shore-right", "wood-upper-arch"],
+      "motion_eligible": true,
+      "feather_px": 10,
+      "attenuation": "impact-local-only",
+      "debug_color": "#ae91c9"
+    },
+    "farAir": {
+      "id": "farAir",
+      "material": "far-air-mountains",
+      "path": "M 314 0 L 960 0 L 960 185 C 920 175 884 159 845 153 C 799 146 760 136 718 140 C 675 145 638 136 598 123 C 556 109 522 108 483 119 C 439 133 403 126 371 109 C 348 97 330 85 314 79 Z",
+      "excludes": ["midForest", "near-foliage-canopy-left", "near-foliage-canopy-upper", "wood-left-trunk", "wood-upper-arch"],
+      "motion_eligible": true,
+      "feather_px": 24,
+      "attenuation": "distant-low-amplitude",
+      "debug_color": "#98acb3"
+    },
+    "midForest": {
+      "id": "midForest",
+      "material": "mid-forest",
+      "path": "M 214 116 C 259 106 307 95 349 103 C 396 112 431 136 468 151 C 509 166 550 151 593 153 C 642 156 684 169 724 184 C 768 200 808 221 843 251 L 827 294 C 790 273 754 257 715 246 C 674 234 632 222 590 215 C 538 207 495 205 452 203 C 403 201 360 199 318 206 C 277 213 242 229 209 251 L 187 226 C 196 190 205 150 214 116 Z M 0 216 C 39 204 80 207 117 221 C 151 234 174 254 192 283 L 174 348 C 150 330 124 313 103 292 C 75 267 40 254 0 252 Z M 756 184 C 804 199 850 223 889 257 C 920 284 944 312 960 334 L 960 405 C 935 385 909 363 885 340 C 860 315 837 293 816 276 C 791 255 764 241 737 230 Z",
+      "excludes": ["farAir", "lake", "near-foliage-canopy-left", "near-foliage-canopy-upper", "near-foliage-left-shore", "near-foliage-right-shore", "wood-left-trunk", "wood-upper-arch", "waterfallStream", "waterfallSpray", "islandStatic"],
+      "motion_eligible": true,
+      "feather_px": 12,
+      "attenuation": "depth-limited-forest-response",
+      "debug_color": "#5f927a"
+    },
+    "nearFoliage": [
+      {"id":"near-foliage-canopy-left","material":"near-foliage","path":"M 0 0 H 188 C 166 31 146 60 125 90 C 101 126 75 155 42 176 C 26 186 12 194 0 198 Z","excludes":["lake","midForest","farAir","islandStatic","waterfallStream","waterfallSpray","wood-left-trunk","wood-upper-arch","wood-lower-left-log","wood-lower-right-log","rock-shore-right","rock-foreground-left","rock-foreground-center","rock-foreground-right","rock-lower-right-edge"],"motion_eligible":true,"feather_px":6,"attenuation":"anchored-near-cluster","debug_color":"#6b9f64"},
+      {"id":"near-foliage-canopy-upper","material":"near-foliage","path":"M 210 0 H 450 C 430 20 408 38 385 55 C 360 74 337 92 317 107 C 302 118 286 122 272 115 C 268 95 275 72 287 50 C 299 29 312 13 325 0 Z","excludes":["lake","midForest","farAir","islandStatic","waterfallStream","waterfallSpray","wood-left-trunk","wood-upper-arch","wood-lower-left-log","wood-lower-right-log","rock-shore-right","rock-foreground-left","rock-foreground-center","rock-foreground-right","rock-lower-right-edge"],"motion_eligible":true,"feather_px":6,"attenuation":"anchored-near-cluster","debug_color":"#72a769"},
+      {"id":"near-foliage-left-shore","material":"near-foliage","path":"M 0 232 C 36 224 70 235 96 254 C 119 272 133 294 139 315 L 106 326 C 91 307 73 291 49 279 C 30 270 14 267 0 268 Z","excludes":["lake","midForest","farAir","islandStatic","waterfallStream","waterfallSpray","wood-left-trunk","wood-upper-arch","wood-lower-left-log","wood-lower-right-log","rock-shore-right","rock-foreground-left","rock-foreground-center","rock-foreground-right","rock-lower-right-edge"],"motion_eligible":true,"feather_px":6,"attenuation":"anchored-near-cluster","debug_color":"#77aa6d"},
+      {"id":"near-foliage-foreground-left","material":"near-foliage","path":"M 0 404 C 37 396 72 401 98 417 C 120 431 130 449 139 468 C 112 485 92 511 76 543 C 62 572 52 607 46 640 H 0 Z","excludes":["lake","midForest","farAir","islandStatic","waterfallStream","waterfallSpray","wood-left-trunk","wood-upper-arch","wood-lower-left-log","wood-lower-right-log","rock-shore-right","rock-foreground-left","rock-foreground-center","rock-foreground-right","rock-lower-right-edge"],"motion_eligible":true,"feather_px":8,"attenuation":"anchored-near-cluster","debug_color":"#65985d"},
+      {"id":"near-foliage-foreground-middle","material":"near-foliage","path":"M 431 610 C 445 598 455 596 465 602 C 474 609 478 625 481 640 H 420 Z","excludes":["lake","midForest","farAir","islandStatic","waterfallStream","waterfallSpray","wood-left-trunk","wood-upper-arch","wood-lower-left-log","wood-lower-right-log","rock-shore-right","rock-foreground-left","rock-foreground-center","rock-foreground-right","rock-lower-right-edge"],"motion_eligible":true,"feather_px":8,"attenuation":"anchored-near-cluster","debug_color":"#6fa266"},
+      {"id":"near-foliage-right-shore","material":"near-foliage","path":"M 921 317 C 939 321 951 333 960 344 L 960 505 H 932 C 938 470 928 432 922 398 C 916 365 916 338 921 317 Z","excludes":["lake","midForest","farAir","islandStatic","waterfallStream","waterfallSpray","wood-left-trunk","wood-upper-arch","wood-lower-left-log","wood-lower-right-log","rock-shore-right","rock-foreground-left","rock-foreground-center","rock-foreground-right","rock-lower-right-edge"],"motion_eligible":true,"feather_px":7,"attenuation":"anchored-near-cluster","debug_color":"#75a967"},
+      {"id":"near-foliage-lower-right-edge","material":"near-foliage","path":"M 948 482 C 955 479 959 482 960 488 L 960 640 H 928 C 934 591 939 536 948 482 Z","excludes":["lake","midForest","farAir","islandStatic","waterfallStream","waterfallSpray","wood-left-trunk","wood-upper-arch","wood-lower-left-log","wood-lower-right-log","rock-shore-right","rock-foreground-left","rock-foreground-center","rock-foreground-right","rock-lower-right-edge"],"motion_eligible":true,"feather_px":8,"attenuation":"anchored-near-cluster","debug_color":"#68995e"}
+    ],
+    "staticWood": [
+      {"id":"wood-left-trunk","material":"static-wood","path":"M 0 0 C 39 4 72 28 91 65 C 108 99 108 138 101 177 C 94 222 100 264 118 308 C 132 344 151 383 154 414 C 157 438 147 456 133 469 L 77 451 C 83 421 71 390 56 358 C 33 311 11 278 0 246 Z","motion_eligible":false,"feather_px":0,"attenuation":"hard-static-exclusion","debug_color":"#986548"},
+      {"id":"wood-upper-arch","material":"static-wood","path":"M 0 245 C 54 214 91 181 145 158 C 211 131 284 116 360 119 C 437 121 516 131 589 150 C 671 170 749 201 816 237 C 876 269 925 299 960 316 L 960 365 C 920 355 875 335 826 308 C 756 270 685 242 608 218 C 531 194 452 183 376 182 C 302 181 235 192 178 211 C 111 233 70 273 0 303 Z","motion_eligible":false,"feather_px":0,"attenuation":"hard-static-exclusion","debug_color":"#a06a4b"},
+      {"id":"wood-lower-left-log","material":"static-wood","path":"M 107 496 C 158 477 207 476 258 491 C 304 505 350 527 401 527 C 442 527 477 514 514 498 L 544 534 C 493 559 455 585 407 596 C 351 607 311 581 263 560 C 213 537 170 536 121 550 Z","motion_eligible":false,"feather_px":0,"attenuation":"hard-static-exclusion","debug_color":"#956149"},
+      {"id":"wood-lower-right-log","material":"static-wood","path":"M 493 533 C 552 512 600 486 650 472 C 704 457 747 466 792 492 C 837 517 870 553 916 577 L 879 621 C 829 593 782 568 733 550 C 685 531 643 529 591 544 C 550 556 518 576 478 592 Z","motion_eligible":false,"feather_px":0,"attenuation":"hard-static-exclusion","debug_color":"#8f5f46"}
+    ],
+    "staticRocks": [
+      {"id":"rock-shore-right","material":"static-rocks","path":"M 704 405 C 726 387 752 378 778 381 C 803 384 822 399 823 418 C 825 438 806 455 784 463 C 757 472 731 462 713 448 C 697 436 690 417 704 405 Z","motion_eligible":false,"feather_px":0,"attenuation":"hard-static-exclusion","debug_color":"#727b76"},
+      {"id":"rock-foreground-left","material":"static-rocks","path":"M 77 559 C 89 526 117 499 149 494 C 181 489 205 510 224 540 C 241 567 254 602 268 640 L 53 640 C 57 615 65 584 77 559 Z","motion_eligible":false,"feather_px":0,"attenuation":"hard-static-exclusion","debug_color":"#707975"},
+      {"id":"rock-foreground-center","material":"static-rocks","path":"M 272 567 C 289 538 318 519 349 522 C 382 526 402 553 421 583 C 438 609 448 628 452 640 L 241 640 C 246 611 255 584 272 567 Z","motion_eligible":false,"feather_px":0,"attenuation":"hard-static-exclusion","debug_color":"#77807a"},
+      {"id":"rock-foreground-right","material":"static-rocks","path":"M 613 570 C 634 535 667 515 702 522 C 739 530 765 563 790 592 C 806 610 820 628 828 640 L 581 640 C 584 612 594 588 613 570 Z","motion_eligible":false,"feather_px":0,"attenuation":"hard-static-exclusion","debug_color":"#707a75"},
+      {"id":"rock-lower-right-edge","material":"static-rocks","path":"M 832 527 C 858 503 890 493 918 502 C 943 510 958 536 960 555 L 960 640 H 813 C 816 599 818 557 832 527 Z","motion_eligible":false,"feather_px":0,"attenuation":"hard-static-exclusion","debug_color":"#68726d"}
+    ]
+  },
+  "debug_labels": [
+    {"region":"farAir","text":"FAR AIR / MOUNTAINS","x":520,"y":61},
+    {"region":"midForest","text":"MID FOREST","x":615,"y":179},
+    {"region":"nearFoliage","text":"NEAR FOLIAGE","x":32,"y":77},
+    {"region":"lake","text":"LAKE - MOVING SURFACE","x":238,"y":350},
+    {"region":"islandStatic","text":"ISLAND - STATIC","x":466,"y":331},
+    {"region":"waterfallStream","text":"WATERFALL STREAM","x":730,"y":246},
+    {"region":"waterfallSpray","text":"IMPACT / SPRAY","x":765,"y":412},
+    {"region":"staticWood","text":"STATIC WOOD","x":328,"y":168},
+    {"region":"staticRocks","text":"STATIC ROCKS","x":295,"y":609}
+  ]
+};
+
+const SVG_NS = "http://www.w3.org/2000/svg";
+const debugLayer = document.getElementById("debugLayer");
+const regionPaths = document.getElementById("regionPaths");
+const regionLabels = document.getElementById("regionLabels");
+const lookup = new Map();
+
+Object.entries(REGION_MAP.regions).forEach(([key, value]) => {
+  if (Array.isArray(value)) {
+    value.forEach(region => lookup.set(region.id, region));
+    lookup.set(key, value[0]);
+  } else {
+    lookup.set(key, value);
+    lookup.set(value.id, value);
+  }
+});
+
+function regionAttributes(node, region) {
+  node.dataset.regionId = region.id;
+  node.dataset.material = region.material;
+  node.dataset.static = String(!region.motion_eligible);
+  node.style.setProperty("--region-color", region.debug_color);
+}
+
+function addRegion(region) {
+  const safeId = region.id.replace(/[^a-zA-Z0-9_-]/g, "-");
+  const maskId = `mask-${safeId}`;
+  const mask = document.createElementNS(SVG_NS, "mask");
+  mask.setAttribute("id", maskId);
+  mask.setAttribute("maskUnits", "userSpaceOnUse");
+  mask.setAttribute("mask-type", "luminance");
+
+  const background = document.createElementNS(SVG_NS, "rect");
+  background.setAttribute("x", "0");
+  background.setAttribute("y", "0");
+  background.setAttribute("width", "960");
+  background.setAttribute("height", "640");
+  background.setAttribute("fill", "black");
+  mask.appendChild(background);
+
+  const base = document.createElementNS(SVG_NS, "path");
+  base.setAttribute("d", region.path);
+  base.setAttribute("fill", "white");
+  mask.appendChild(base);
+
+  (region.excludes || []).map(id => lookup.get(id)).filter(Boolean).forEach(excluded => {
+    const exclusion = document.createElementNS(SVG_NS, "path");
+    exclusion.setAttribute("d", excluded.path);
+    exclusion.setAttribute("fill", "black");
+    mask.appendChild(exclusion);
+  });
+  regionMasks.appendChild(mask);
+
+  const fillPath = document.createElementNS(SVG_NS, "path");
+  fillPath.setAttribute("class", "region region-fill");
+  fillPath.setAttribute("d", region.path);
+  fillPath.setAttribute("mask", `url(#${maskId})`);
+  regionAttributes(fillPath, region);
+  regionPaths.appendChild(fillPath);
+
+  const outline = document.createElementNS(SVG_NS, "path");
+  outline.setAttribute("class", "region region-outline");
+  outline.setAttribute("d", region.path);
+  outline.setAttribute("mask", `url(#${maskId})`);
+  regionAttributes(outline, region);
+  regionPaths.appendChild(outline);
+}
+
+const renderPlan = [
+  REGION_MAP.regions.farAir,
+  REGION_MAP.regions.midForest,
+  ...REGION_MAP.regions.nearFoliage,
+  REGION_MAP.regions.lake,
+  REGION_MAP.regions.waterfallStream,
+  REGION_MAP.regions.waterfallSpray,
+  REGION_MAP.regions.islandStatic,
+  ...REGION_MAP.regions.staticWood,
+  ...REGION_MAP.regions.staticRocks
+];
+renderPlan.forEach(addRegion);
+
+REGION_MAP.debug_labels.forEach(label => {
+  const group = document.createElementNS(SVG_NS, "g");
+  group.setAttribute("class", "region-label");
+  group.dataset.regionId = label.region;
+  group.setAttribute("transform", `translate(${label.x} ${label.y})`);
+
+  const marker = document.createElementNS(SVG_NS, "circle");
+  marker.setAttribute("cx", "0");
+  marker.setAttribute("cy", "0");
+  marker.setAttribute("r", "4");
+  group.appendChild(marker);
+
+  const box = document.createElementNS(SVG_NS, "rect");
+  const boxWidth = label.text.length * 8.4 + 18;
+  box.setAttribute("x", "7");
+  box.setAttribute("y", "-23");
+  box.setAttribute("width", String(boxWidth));
+  box.setAttribute("height", "27");
+  box.setAttribute("rx", "6");
+  group.appendChild(box);
+
+  const text = document.createElementNS(SVG_NS, "text");
+  text.setAttribute("x", "15");
+  text.setAttribute("y", "-5");
+  text.textContent = label.text;
+  group.appendChild(text);
+  regionLabels.appendChild(group);
+});
+
+function bindToggle(buttonId, className, onText, offText) {
+  const button = document.getElementById(buttonId);
+  button.addEventListener("click", () => {
+    const next = button.getAttribute("aria-pressed") !== "true";
+    button.setAttribute("aria-pressed", String(next));
+    button.textContent = next ? onText : offText;
+    debugLayer.classList.toggle(className, !next);
+  });
+}
+
+bindToggle("toggleRegions", "regions-off", "Regions on", "Regions off");
+bindToggle("toggleLabels", "labels-off", "Labels on", "Labels off");
+</script>
+</body>
+</html>

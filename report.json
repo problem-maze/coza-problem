@@ -1,0 +1,58 @@
+{
+  "gate": "Z0+Z1",
+  "artifacts": [
+    "Problem-NATURAL-EYE-Z0-STATIC-v1.html",
+    "Problem-NATURAL-EYE-Z1-GEOMETRY-v1.html"
+  ],
+  "geometry_schema": "GEOMETRY/REGION-SCHEMA.json",
+  "build_marker": {
+    "z0": "Z0 STATIC GOLDEN v1 \u2014 960x640 SOURCE LOCK",
+    "z1": "Z1 GEOMETRY LOCK v1 \u2014 NATIVE 960x640 \u2014 DEBUG ON"
+  },
+  "decision": "REVIEW",
+  "static_checks": {
+    "node_check": "PASS",
+    "no_has": "PASS",
+    "no_inset_zero": "PASS",
+    "no_video": "PASS",
+    "no_canvas": "PASS",
+    "no_raf_or_interval": "PASS",
+    "geometry_contract": "PASS",
+    "svg_mask_preview": "PASS_LOCAL_STATIC_PREVIEW",
+    "git_diff_check": "PASS",
+    "authoritative_asset_sha256": "PASS",
+    "authoritative_asset_dimensions": "PASS_960x640_WEBP",
+    "image_audit": "ENVIRONMENT_LIMITED_MISSING_PIL",
+    "package_preflight": "ENVIRONMENT_LIMITED_MISSING_PIL",
+    "embedded_map_schema_equality": "PASS"
+  },
+  "phone_evidence": {
+    "device": "",
+    "viewport_css": "",
+    "dpr": null,
+    "visual_pass": null,
+    "notes": "Awaiting real-phone Z0 and Z1 screenshots; supplied screenshots were historical forensic evidence."
+  },
+  "runtime": {
+    "raf_owners": 0,
+    "scene_clock_resets": 0,
+    "resume_count": 0,
+    "permanent_freeze": null,
+    "last_error": "",
+    "scope_note": "Z2 runtime intentionally not started."
+  },
+  "performance": {
+    "duration_s": null,
+    "avg_fps": null,
+    "avg_ft_ms": null,
+    "p95_ms": null,
+    "p99_ms": null,
+    "over_33ms": null,
+    "over_50ms": null,
+    "jank_pct": null,
+    "long_tasks": null,
+    "max_gap_ms": null,
+    "worst_layer": "",
+    "scope_note": "No runtime benchmark at Z0/Z1."
+  }
+}
