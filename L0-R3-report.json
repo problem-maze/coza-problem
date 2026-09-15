@@ -1,0 +1,92 @@
+{
+  "milestone": "L0-R3",
+  "name": "RENDERER TRUTH TEST",
+  "status": "READY_FOR_PHONE_TRUTH_TEST",
+  "final_status": {
+    "L0-R3": "READY FOR PHONE TRUTH TEST",
+    "L1": "NOT STARTED"
+  },
+  "visual_phone_pass_claimed": false,
+  "phone_visual_result": "UNJUDGED",
+  "stop_condition": "STOP_AFTER_L0-R3",
+  "artifact": "Problem-NATURAL-EYE-L0-R3-RENDERER-TRUTH-TEST-v1.html",
+  "source": {
+    "path": "ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp",
+    "dimensions": "960x640",
+    "format": "WEBP",
+    "sha256": "a993834ccddaf3d21b847584273b31ec07e8a37df8496570623e4c762c4c66ab",
+    "generated_or_replaced": false,
+    "reference_only_assets_used_as_source": false
+  },
+  "viewport_contract": {
+    "scene_aspect_ratio": "3:2",
+    "target_phone_viewports_css": [
+      "384x731",
+      "390x844",
+      "360x800"
+    ],
+    "same_viewport_contract_as_prior_review": true
+  },
+  "proof_stages": {
+    "A": {
+      "name": "DOM/CSS proof",
+      "renderer": "plain DOM/CSS",
+      "output": "large yellow DOM marker with CSS keyframe transform",
+      "automatic_claim": false,
+      "manual_initial_state": "UNJUDGED"
+    },
+    "B": {
+      "name": "Canvas2D proof",
+      "renderer": "Canvas2D",
+      "output": "solid red-and-white moving shape",
+      "deforms_approved_image": false,
+      "automatic_claim": false,
+      "manual_initial_state": "UNJUDGED"
+    },
+    "C": {
+      "name": "WebGL proof",
+      "renderer": "WebGL",
+      "output": "solid magenta moving circle with white cross",
+      "uses_image_texture": false,
+      "automatic_claim": false,
+      "manual_initial_state": "UNJUDGED"
+    },
+    "D": {
+      "name": "Real image pixel motion",
+      "renderer": "Canvas2D image-pixel compositor",
+      "output": "strong displacement of approved image pixels inside one lake sub-region",
+      "shoreline_and_island_motion": "excluded_by_region_selection",
+      "decorative_line_substitute": false,
+      "manual_gate": "A, B, and C must be manually marked PASS",
+      "automatic_claim": false,
+      "manual_initial_state": "UNJUDGED"
+    }
+  },
+  "decision_logic": {
+    "A_FAIL": "browser/layout/animation presentation is broken",
+    "A_PASS_B_FAIL": "Canvas2D path is broken",
+    "A_PASS_B_PASS_C_FAIL": "WebGL presentation path is broken; stop using WebGL for recovery",
+    "A_PASS_B_PASS_C_PASS_D_FAIL": "image-texture, mask, or deformation path is broken",
+    "all_stages_pass": "choose the simpler visible image-motion path with acceptable phone performance"
+  },
+  "architecture": {
+    "underlying_prior_renderer": "not loaded",
+    "stale_L0_or_L0_R2_runtime": "not loaded",
+    "hidden_duplicate_raf": false,
+    "shared_canvas_loop_owners": 1,
+    "stage_A_raf_owner": 0,
+    "recurring_timers": 0,
+    "external_scripts": 0
+  },
+  "validation": {
+    "node_check": "PASS",
+    "one_authoritative_asset_only": "PASS",
+    "generated_images": "NONE_ADDED",
+    "video": "NONE",
+    "hidden_duplicate_raf": "PASS",
+    "stale_renderer_underneath": "PASS",
+    "asset_hash_unchanged": "PASS",
+    "git_diff_check": "PASS",
+    "phone_visual_pass": "NOT_CLAIMED"
+  }
+}
