@@ -1,0 +1,206 @@
+{
+  "milestone": "R4B",
+  "name": "NATURAL WATER LOCK",
+  "status": "READY_FOR_PHONE_REVIEW",
+  "final_status": {
+    "R4B": "READY FOR PHONE REVIEW",
+    "R5": "NOT STARTED"
+  },
+  "phone_visual_pass_claimed": false,
+  "phone_visual_result": "UNJUDGED",
+  "stop_condition": "STOP_AFTER_R4B",
+  "artifact": "Problem-NATURAL-EYE-R4B-NATURAL-WATER-LOCK-v1.html",
+  "r4_phone_review_input": {
+    "technical_pixel_motion": "PASS_SUPPLIED_BY_USER",
+    "visual_realism": "FAIL_SUPPLIED_BY_USER",
+    "interpretation": "Real pixel motion and anchor stability are proven; only the visible water-motion model is replaced in R4B."
+  },
+  "source": {
+    "path": "ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp",
+    "dimensions": "960x640",
+    "format": "WEBP",
+    "sha256": "a993834ccddaf3d21b847584273b31ec07e8a37df8496570623e4c762c4c66ab",
+    "generated_or_replaced": false,
+    "modified": false
+  },
+  "r4_visual_fail_diagnosis": {
+    "primary_cause": "Shared global sine/cosine phase equations and amplified Proof Water displacement produced coherent, readable rhythmic deformation.",
+    "not_root_cause": [
+      "source visibility",
+      "real pixel sampling",
+      "boundary anchoring",
+      "Canvas2D presentation"
+    ],
+    "removed_from_live_pixel_loop": [
+      "per-pixel global wave equations",
+      "radial/ring origin",
+      "single-direction wave train",
+      "Proof Water amplitude model"
+    ]
+  },
+  "renderer": {
+    "selected": "Canvas2D ImageData resampling",
+    "retained_from_R4": true,
+    "webgl_used": false,
+    "visible_canvases": 1,
+    "offscreen_buffers": 2
+  },
+  "natural_flow_model": {
+    "type": "fixed-seed, asynchronously evolving multi-scale vector field",
+    "per_pixel_trigonometry": false,
+    "per_frame_allocations_for_flow": false,
+    "seeded_node_parameters": [
+      "heading",
+      "gain",
+      "phaseA",
+      "phaseB",
+      "phaseC",
+      "phaseEnergy",
+      "rateA",
+      "rateB",
+      "rateC",
+      "rateEnergy"
+    ],
+    "layers": [
+      {
+        "id": "macro",
+        "grid": "13x10",
+        "rotation_radians": -0.13,
+        "amplitude_design_pixels": {
+          "x": 3.6,
+          "y": 1.8
+        },
+        "rate_band_radians_per_second": "0.017-0.149",
+        "role": "slow broad drift"
+      },
+      {
+        "id": "meso",
+        "grid": "23x17",
+        "rotation_radians": 0.21,
+        "amplitude_design_pixels": {
+          "x": 2.65,
+          "y": 1.45
+        },
+        "rate_band_radians_per_second": "0.11-0.61",
+        "role": "local interference and independent flow regions"
+      },
+      {
+        "id": "micro",
+        "grid": "43x31",
+        "rotation_radians": -0.31,
+        "amplitude_design_pixels": {
+          "x": 1.35,
+          "y": 0.8
+        },
+        "rate_band_radians_per_second": "0.37-1.47",
+        "role": "small irregular surface activity"
+      }
+    ],
+    "sampling": "Smoothstep bilinear interpolation over three differently rotated grids.",
+    "temporal_behavior": "Each node evolves with independently seeded non-commensurate rates and a separate gradual energy envelope; layer-global energy is limited to a small modulation.",
+    "default_energy_scale": 0.86,
+    "elevated_energy_scale": 1.18,
+    "radial_or_ring_wave": false,
+    "dominant_single_direction": false,
+    "synchronized_whole_lake_motion": false
+  },
+  "boundary_behavior": {
+    "base_geometry": "Z1 lake path",
+    "attenuation": "Raster 8-neighbor distance field smoothstepped to zero at water boundaries.",
+    "excluded_static_regions": [
+      "island",
+      "waterfallStream",
+      "waterfallSpray",
+      "midForest",
+      "nearFoliageLeftShore",
+      "nearFoliageRightShore",
+      "woodUpperArch",
+      "woodLowerLeft",
+      "woodLowerRight",
+      "rockShore"
+    ],
+    "outside_mask": "Untouched source pixels are copied through.",
+    "sample_guard": "Displacement falls back from 100% to 52%, then 20%, then original source if the bilinear footprint leaves the water mask."
+  },
+  "runtime": {
+    "scene_clock_count": 1,
+    "raf_owner_count": 1,
+    "request_animation_frame_call_count": 1,
+    "recurring_timers": 0,
+    "background_foreground_recovery": "Retains elapsed time and re-anchors delta time after foregrounding.",
+    "animated_layers": [
+      "masked photographic lake surface only"
+    ],
+    "disabled_layers": [
+      "reflection",
+      "waterfall",
+      "spray",
+      "atmosphere",
+      "foliage",
+      "parallax"
+    ]
+  },
+  "ui": {
+    "default_view": "STATIC_REFERENCE_PAUSED",
+    "realism_review_control": "START / RESUME with WATER ENERGY off",
+    "secondary_control": "WATER ENERGY increases irregular field strength without reintroducing a periodic model",
+    "controls": [
+      "START / RESUME",
+      "PAUSE",
+      "WATER ENERGY",
+      "STATIC REFERENCE",
+      "DEBUG GEOMETRY",
+      "DIAGNOSTICS"
+    ]
+  },
+  "performance": {
+    "internal_resolution_policy": {
+      "density": "1.25x CSS width",
+      "minimum_width": 360,
+      "maximum_width": 600,
+      "aspect_ratio": "3:2"
+    },
+    "diagnostics": [
+      "approximate FPS",
+      "average frame cost",
+      "maximum observed frame cost",
+      "CSS viewport",
+      "DPR",
+      "internal render resolution",
+      "water mask pixels",
+      "flow model"
+    ],
+    "target_phone_runtime": "NOT_RUN_IN_THIS_ENVIRONMENT",
+    "phone_visual_pass_claimed": false
+  },
+  "validation": {
+    "node_check": "PASS",
+    "html_static_constraints": "PASS",
+    "seeded_multiscale_flow": "PASS",
+    "old_periodic_live_field_removed": "PASS",
+    "authoritative_asset_only": "PASS",
+    "asset_sha256": "PASS",
+    "duplicate_raf_scan": "PASS",
+    "recurring_timer_scan": "PASS",
+    "stale_renderer_scan": "PASS",
+    "generated_images": "NONE_ADDED",
+    "video": "NONE",
+    "external_scripts": "NONE",
+    "git_diff_check": "PASS",
+    "phone_realism_pass": "NOT_CLAIMED"
+  },
+  "remaining_risks": [
+    "Naturalness must be judged on the real phone over 10-20 seconds.",
+    "A reviewer may still identify a local grid, temporal beat, or dominant direction.",
+    "Canvas2D ImageData timing and output sharpness vary by device.",
+    "WATER ENERGY is a diagnostic strength setting, not the realism acceptance setting."
+  ],
+  "phone_test_procedure": [
+    "Open the R4B artifact on the target phone from a served repository root.",
+    "Start from Static Reference, then use START / RESUME with WATER ENERGY off.",
+    "Observe open water, island-adjacent water, and shoreline-adjacent water continuously for 10-20 seconds.",
+    "Record visual FAIL if any readable wave center, rings, repeated beat, synchronized motion, grid, dominant travel direction, shoreline tear, or sliding-photo effect remains.",
+    "Use PAUSE, STATIC REFERENCE, and DEBUG GEOMETRY for inspection.",
+    "Do not begin R5 from this checkpoint."
+  ]
+}
