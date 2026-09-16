@@ -1,0 +1,153 @@
+{
+  "milestone": "R4",
+  "name": "REAL IMAGE WATER MOTION",
+  "status": "READY_FOR_PHONE_REVIEW",
+  "final_status": {
+    "R4": "READY FOR PHONE REVIEW",
+    "R4B": "NOT STARTED"
+  },
+  "phone_visual_pass_claimed": false,
+  "phone_visual_result": "UNJUDGED",
+  "stop_condition": "STOP_AFTER_R4",
+  "artifact": "Problem-NATURAL-EYE-R4-REAL-IMAGE-WATER-MOTION-v1.html",
+  "source": {
+    "path": "ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp",
+    "dimensions": "960x640",
+    "format": "WEBP",
+    "sha256": "a993834ccddaf3d21b847584273b31ec07e8a37df8496570623e4c762c4c66ab",
+    "generated_or_replaced": false,
+    "modified": false,
+    "reference_only_assets_used_as_source": false
+  },
+  "r3_stage_d_root_cause": {
+    "summary": "Stage D was a hard-coded nine-band Canvas2D overlay, not a continuous bounded deformation of the Z1 lake surface. It had no authoritative lake mask or static-anchor exclusions and its source sampling was sparse one-dimensional strip replacement.",
+    "verified_by": [
+      "R3 phone result: A/B/C visible, D failed to prove real-image motion",
+      "R3 Stage D code: fixed 230x135 clip, nine horizontal drawImage bands, no Z1 geometry or boundary field"
+    ],
+    "classification": {
+      "texture_upload_source": "not_root_cause",
+      "mask_geometry": "primary_root_cause",
+      "sampling": "primary_root_cause",
+      "uv_transformation": "primary_root_cause",
+      "compositor_visibility": "not_root_cause",
+      "viewport_dpr_scaling": "not_root_cause",
+      "draw_ordering": "not_root_cause",
+      "alpha_compositing": "not_root_cause",
+      "renderer_architecture": "primary_root_cause"
+    }
+  },
+  "renderer": {
+    "selected": "Canvas2D ImageData resampling",
+    "why_selected": "R3 proved Canvas2D presentation on the target phone. It is the simplest available path that can directly resample the approved photographic pixels while keeping non-water pixels fixed.",
+    "webgl_used": false,
+    "visible_canvases": 1,
+    "offscreen_buffers": 2,
+    "offscreen_buffer_justification": "One source pixel buffer and one rasterized geometry-mask buffer are required for bounded image resampling."
+  },
+  "pixel_deformation": {
+    "method": "Full source ImageData copy followed by localized water-only bilinear resampling",
+    "field": "Independent dx/dy multi-scale field with four spatial components, nested phase variation, spatial phase variation, and temporal rates 0.31, 0.57, 0.93, and 1.37 radians/second",
+    "proof_amplitude_design_pixels": {
+      "x": 26,
+      "y": 14
+    },
+    "normal_amplitude_design_pixels": {
+      "x": 6,
+      "y": 3.2
+    },
+    "sample_guard": "When a displaced bilinear footprint leaves the water mask, displacement is reduced to 52%, then 20%, then falls back to the original pixel.",
+    "decorative_wave_overlay": false,
+    "whole_image_translation": false
+  },
+  "boundary_attenuation": {
+    "base_geometry": "Z1 lake path",
+    "static_exclusions": [
+      "island",
+      "waterfallStream",
+      "waterfallSpray",
+      "midForest",
+      "nearFoliageLeftShore",
+      "nearFoliageRightShore",
+      "woodUpperArch",
+      "woodLowerLeft",
+      "woodLowerRight",
+      "rockShore"
+    ],
+    "distance_field": "Bounded 8-neighbor raster distance field built once per internal-resolution change",
+    "falloff": "Smoothstep over approximately 15 design pixels; displacement reaches zero at the water-mask boundary",
+    "outside_mask_behavior": "Output pixels are copied from the untouched source buffer"
+  },
+  "runtime": {
+    "scene_clock": "one SceneClock with retained monotonic elapsed time",
+    "raf_owner_count": 1,
+    "raf_call_count": 1,
+    "recurring_timers": 0,
+    "independent_animation_loops": 0,
+    "background_recovery": "Pending RAF is cancelled while hidden; foreground resumes from retained elapsed time with a new delta anchor and no silent elapsed reset.",
+    "animated_layers": [
+      "masked photographic lake surface only"
+    ],
+    "disabled_layers": [
+      "reflection",
+      "waterfall",
+      "spray",
+      "atmosphere",
+      "foliage",
+      "parallax"
+    ]
+  },
+  "phone_performance_smoke_test": {
+    "workspace_static_smoke": "PASS",
+    "target_phone_runtime": "NOT_RUN_IN_THIS_ENVIRONMENT",
+    "phone_visual_pass_claimed": false,
+    "metrics_exposed_in_page": [
+      "approximate FPS",
+      "average frame cost",
+      "maximum observed frame cost",
+      "CSS viewport",
+      "device pixel ratio",
+      "internal render resolution",
+      "renderer",
+      "water-mask pixel count"
+    ],
+    "internal_resolution_policy": {
+      "density": "1.25x CSS width",
+      "minimum_width": 360,
+      "maximum_width": 600,
+      "aspect_ratio": "3:2"
+    }
+  },
+  "validation": {
+    "node_check": "PASS",
+    "html_static_constraints": "PASS",
+    "required_controls": "PASS",
+    "authoritative_asset_only": "PASS",
+    "asset_sha256": "PASS",
+    "duplicate_raf_scan": "PASS",
+    "recurring_timer_scan": "PASS",
+    "stale_renderer_scan": "PASS",
+    "generated_images": "NONE_ADDED",
+    "video": "NONE",
+    "external_scripts": "NONE",
+    "git_diff_check": "PASS",
+    "phone_visual_pass": "NOT_CLAIMED"
+  },
+  "remaining_risks": [
+    "Z1 authored boundaries still require real-phone visual inspection.",
+    "Canvas2D ImageData cost may vary by Android browser and thermal state.",
+    "Bounded internal resolution may be softer than the untouched static reference.",
+    "Proof amplitude is intentionally exaggerated and is not a final naturalism claim.",
+    "No code counter or context result is treated as a phone visual PASS."
+  ],
+  "phone_test_procedure": [
+    "Serve the repository root so the relative authoritative image path resolves.",
+    "Open the R4 HTML artifact at the established target phone viewport.",
+    "Inspect the default untouched Static Reference.",
+    "Tap PROOF WATER to enable strong motion and start/resume the SceneClock.",
+    "Judge actual photographic lake texture deformation in the open-water center.",
+    "Check that shoreline, island, waterfall edge, wood, and rocks remain anchored.",
+    "Use PAUSE and STATIC REFERENCE for comparison; use DEBUG GEOMETRY only for mask inspection.",
+    "Record phone visual result and diagnostics; stop after R4."
+  ]
+}

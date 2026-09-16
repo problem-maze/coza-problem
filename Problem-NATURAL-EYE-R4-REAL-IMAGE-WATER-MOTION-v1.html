@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Natural Eye — R4 Real Image Water Motion</title>
+<style>
+*{box-sizing:border-box}
+:root{color-scheme:dark;--ink:#f3f7f1;--muted:#aebdb1;--panel:rgba(11,22,16,.94);--line:rgba(237,246,237,.2);--accent:#e7f0c9;--accent-ink:#18251b;--warning:#ffd58b}
+html,body{margin:0;min-width:100%;min-height:100%;background:#09110d;color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{min-height:100dvh;overflow:hidden}
+button,summary{font:inherit}
+button{appearance:none;border:1px solid var(--line);border-radius:999px;background:rgba(245,250,243,.08);color:var(--ink);padding:9px 11px;font-size:10px;font-weight:850;letter-spacing:.035em;line-height:1;cursor:pointer;white-space:nowrap}
+button:hover{background:rgba(245,250,243,.16)}
+button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+button:disabled{cursor:not-allowed;opacity:.45}
+.app{position:relative;display:flex;flex-direction:column;min-height:100dvh;background:radial-gradient(circle at 50% 0%,#1a3025 0%,#09110d 56%)}
+.scene-stage{position:relative;display:grid;place-items:start center;min-height:0;flex:1;padding:clamp(8px,2vw,18px);overflow:auto}
+.scene-frame{position:relative;width:min(100%,calc((100dvh - 128px) * 1.5));aspect-ratio:3 / 2;flex:0 0 auto;overflow:hidden;background:#24372b;border:1px solid rgba(255,255,255,.17);box-shadow:0 18px 46px rgba(0,0,0,.38)}
+.scene-frame img,.scene-frame canvas,.debug-overlay{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;display:block}
+.scene-reference{z-index:1;object-fit:fill}
+.scene-renderer{z-index:2;image-rendering:auto}
+.debug-overlay{z-index:4;pointer-events:none;display:none;overflow:visible}
+.debug-overlay.is-visible{display:block}
+.debug-path{fill:none;stroke-width:3;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-dasharray:8 5}
+.debug-path.is-water{stroke:#79d9e5;stroke-width:4;stroke-dasharray:none}
+.debug-path.is-static{stroke:#f0c66b}
+.debug-label rect{fill:rgba(5,14,9,.86);stroke:rgba(255,255,255,.72);stroke-width:1;vector-effect:non-scaling-stroke}
+.debug-label text{fill:#fff;font:850 15px/1 system-ui,-apple-system,sans-serif;letter-spacing:.035em;paint-order:stroke;stroke:rgba(5,14,9,.5);stroke-width:2px;stroke-linejoin:round}
+.scene-status{position:absolute;z-index:6;top:9px;left:9px;max-width:calc(100% - 18px);padding:7px 9px;border:1px solid rgba(241,248,238,.23);border-radius:8px;background:rgba(7,17,11,.8);color:#f5f8f1;font:850 10px/1.2 system-ui,-apple-system,sans-serif;letter-spacing:.025em;pointer-events:none}
+.build-tag{position:absolute;z-index:6;right:9px;bottom:9px;padding:6px 8px;border:1px solid rgba(241,248,238,.2);border-radius:999px;background:rgba(7,17,11,.74);color:#d7e4d8;font:800 9px/1 system-ui,-apple-system,sans-serif;letter-spacing:.045em;pointer-events:none}
+.control-dock{position:relative;z-index:8;width:100%;padding:10px max(10px,env(safe-area-inset-left)) max(10px,env(safe-area-inset-bottom));border-top:1px solid rgba(237,246,237,.16);background:var(--panel);box-shadow:0 -12px 32px rgba(0,0,0,.22);backdrop-filter:blur(12px)}
+.dock-inner{width:min(760px,100%);margin:0 auto}
+.dock-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.dock-title{margin:0;color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+.dock-state{margin:0;color:var(--muted);font-size:10px;line-height:1.2;text-align:right}
+.controls{display:flex;flex-wrap:wrap;gap:6px}
+.controls button{flex:1 1 auto;min-width:108px}
+.diagnostic-details{margin-top:9px;border-top:1px solid rgba(237,246,237,.12);padding-top:8px}
+.diagnostic-details summary{cursor:pointer;color:var(--muted);font-size:10px;font-weight:900;letter-spacing:.065em;text-transform:uppercase}
+.diagnostic-details pre{max-height:240px;margin:8px 0 0;overflow:auto;padding:9px;border-radius:9px;background:#07100b;color:#d7e6d8;font:10px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap}
+.notice{margin:7px 0 0;color:#87988b;font-size:9px;line-height:1.35}
+[hidden]{display:none!important}
+@media (orientation:landscape){.scene-stage{align-items:center}.scene-frame{width:min(100%,calc((100dvh - 104px) * 1.5))}}
+@media (max-width:520px){
+  .scene-stage{padding:8px}
+  .scene-frame{width:100%}
+  .dock-head{align-items:flex-start}
+  .dock-state{max-width:58%;font-size:9px}
+  .controls button{min-width:0;padding:9px 8px;font-size:9px}
+  .scene-status{font-size:9px}
+}
+</style>
+</head>
+<body>
+<main class="app" data-build="R4-REAL-IMAGE-WATER-MOTION-v1">
+  <section class="scene-stage" aria-label="Natural Eye water motion review scene">
+    <figure class="scene-frame" id="sceneFrame">
+      <img id="sceneReference" class="scene-reference" src="ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp" alt="Approved Natural Eye source image: a turquoise lake with a static island, waterfall, forest, wood and rocks" draggable="false">
+      <canvas id="sceneRenderer" class="scene-renderer" aria-label="Canvas2D real photographic lake pixel motion" hidden></canvas>
+      <svg id="debugOverlay" class="debug-overlay" viewBox="0 0 960 640" preserveAspectRatio="none" aria-label="Z1 static-anchor geometry debug overlay" hidden></svg>
+      <div id="sceneStatus" class="scene-status" aria-live="polite">STATIC REFERENCE · approved source loading…</div>
+      <div class="build-tag">R4 · REAL IMAGE WATER</div>
+    </figure>
+  </section>
+
+  <section class="control-dock" aria-label="R4 phone review controls">
+    <div class="dock-inner">
+      <div class="dock-head">
+        <p class="dock-title">R4 · Real image water motion</p>
+        <p id="dockState" class="dock-state">STATIC REFERENCE · paused</p>
+      </div>
+      <div class="controls">
+        <button id="resumeButton" type="button">START / RESUME</button>
+        <button id="pauseButton" type="button">PAUSE</button>
+        <button id="proofButton" type="button" aria-pressed="false">PROOF WATER</button>
+        <button id="referenceButton" type="button" aria-pressed="true">STATIC REFERENCE</button>
+        <button id="debugButton" type="button" aria-pressed="false">DEBUG GEOMETRY</button>
+        <button id="diagnosticsButton" type="button" aria-expanded="false" aria-controls="diagnosticsDetails">DIAGNOSTICS</button>
+      </div>
+      <details id="diagnosticsDetails" class="diagnostic-details">
+        <summary>Runtime diagnostics</summary>
+        <pre id="diagnostics">Diagnostics are health information only. Phone visual judgement remains manual.</pre>
+        <p class="notice">R4 intentionally stops at real-image water proof. No reflection, waterfall, spray, atmosphere, foliage, or parallax is active.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<script>
+'use strict';
+
+const DESIGN = Object.freeze({width:960,height:640});
+const SOURCE_PATH = 'ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp';
+const SOURCE_SHA256 = 'a993834ccddaf3d21b847584273b31ec07e8a37df8496570623e4c762c4c66ab';
+const MAX_INTERNAL_WIDTH = 600;
+const MIN_INTERNAL_WIDTH = 360;
+const INTERNAL_DENSITY = 1.25;
+
+const GEOMETRY = Object.freeze({
+  lake:'M 100 322 C 112 288 142 259 184 238 C 233 213 292 198 352 193 C 423 188 491 193 556 203 C 624 213 694 231 748 254 C 798 275 838 305 865 337 C 883 359 889 380 884 399 C 875 423 848 443 815 461 C 773 483 722 499 671 514 C 611 532 552 544 501 548 C 437 552 377 542 325 527 C 270 513 225 494 185 473 C 147 452 119 430 103 404 C 91 382 91 349 100 322 Z',
+  island:'M 411 357 C 417 335 430 313 443 290 C 452 271 464 252 477 241 C 488 228 501 237 511 251 C 517 230 528 215 539 229 C 548 211 561 223 564 245 C 575 224 588 238 586 261 C 603 247 616 262 607 283 C 622 280 627 298 616 311 C 628 323 618 341 605 348 C 613 365 598 381 580 383 C 563 402 536 412 510 413 C 483 414 458 401 441 389 C 425 385 412 375 411 357 Z',
+  waterfallStream:'M 839 187 C 855 192 864 205 862 224 C 860 242 855 258 862 274 C 868 289 884 302 890 319 C 898 342 893 365 880 388 L 852 380 C 861 355 858 338 850 321 C 840 303 828 288 828 271 C 828 249 839 233 832 215 C 827 201 827 192 839 187 Z',
+  waterfallSpray:'M 797 352 C 818 337 842 339 860 353 C 878 333 903 338 919 355 C 934 347 954 355 960 374 L 960 432 C 939 429 921 416 900 418 C 879 420 866 440 845 440 C 823 440 811 424 795 410 C 780 396 782 370 797 352 Z',
+  midForest:'M 214 116 C 259 106 307 95 349 103 C 396 112 431 136 468 151 C 509 166 550 151 593 153 C 642 156 684 169 724 184 C 768 200 808 221 843 251 L 827 294 C 790 273 754 257 715 246 C 674 234 632 222 590 215 C 538 207 495 205 452 203 C 403 201 360 199 318 206 C 277 213 242 229 209 251 L 187 226 C 196 190 205 150 214 116 Z M 0 216 C 39 204 80 207 117 221 C 151 234 174 254 192 283 L 174 348 C 150 330 124 313 103 292 C 75 267 40 254 0 252 Z M 756 184 C 804 199 850 223 889 257 C 920 284 944 312 960 334 L 960 405 C 935 385 909 363 885 340 C 860 315 837 293 816 276 C 791 255 764 241 737 230 Z',
+  nearFoliageLeftShore:'M 0 232 C 36 224 70 235 96 254 C 119 272 133 294 139 315 L 106 326 C 91 307 73 291 49 279 C 30 270 14 267 0 268 Z',
+  nearFoliageRightShore:'M 921 317 C 939 321 951 333 960 344 L 960 505 H 932 C 938 470 928 432 922 398 C 916 365 916 338 921 317 Z',
+  woodLeftTrunk:'M 0 0 C 39 4 72 28 91 65 C 108 99 108 138 101 177 C 94 222 100 264 118 308 C 132 344 151 383 154 414 C 157 438 147 456 133 469 L 77 451 C 83 421 71 390 56 358 C 33 311 11 278 0 246 Z',
+  woodUpperArch:'M 0 245 C 54 214 91 181 145 158 C 211 131 284 116 360 119 C 437 121 516 131 589 150 C 671 170 749 201 816 237 C 876 269 925 299 960 316 L 960 365 C 920 355 875 335 826 308 C 756 270 685 242 608 218 C 531 194 452 183 376 182 C 302 181 235 192 178 211 C 111 233 70 273 0 303 Z',
+  woodLowerLeft:'M 107 496 C 158 477 207 476 258 491 C 304 505 350 527 401 527 C 442 527 477 514 514 498 L 544 534 C 493 559 455 585 407 596 C 351 607 311 581 263 560 C 213 537 170 536 121 550 Z',
+  woodLowerRight:'M 493 533 C 552 512 600 486 650 472 C 704 457 747 466 792 492 C 837 517 870 553 916 577 L 879 621 C 829 593 782 568 733 550 C 685 531 643 529 591 544 C 550 556 518 576 478 592 Z',
+  rockShore:'M 704 405 C 726 387 752 378 778 381 C 803 384 822 399 823 418 C 825 438 806 455 784 463 C 757 472 731 462 713 448 C 697 436 690 417 704 405 Z',
+  rockLeft:'M 77 559 C 89 526 117 499 149 494 C 181 489 205 510 224 540 C 241 567 254 602 268 640 L 53 640 C 57 615 65 584 77 559 Z',
+  rockCenter:'M 272 567 C 289 538 318 519 349 522 C 382 526 402 553 421 583 C 438 609 448 628 452 640 L 241 640 C 246 611 255 584 272 567 Z',
+  rockRight:'M 613 570 C 634 535 667 515 702 522 C 739 530 765 563 790 592 C 806 610 820 628 828 640 L 581 640 C 584 612 594 588 613 570 Z',
+  rockLowerRight:'M 832 527 C 858 503 890 493 918 502 C 943 510 958 536 960 555 L 960 640 H 813 C 816 599 818 557 832 527 Z'
+});
+
+const WATER_EXCLUSIONS = [
+  GEOMETRY.island,
+  GEOMETRY.waterfallStream,
+  GEOMETRY.waterfallSpray,
+  GEOMETRY.midForest,
+  GEOMETRY.nearFoliageLeftShore,
+  GEOMETRY.nearFoliageRightShore,
+  GEOMETRY.woodUpperArch,
+  GEOMETRY.woodLowerLeft,
+  GEOMETRY.woodLowerRight,
+  GEOMETRY.rockShore
+];
+
+const DEBUG_REGIONS = [
+  {id:'lake',label:'LAKE · MOTION',path:GEOMETRY.lake,x:235,y:352,color:'#79d9e5',water:true},
+  {id:'island',label:'ISLAND · STATIC',path:GEOMETRY.island,x:458,y:332,color:'#f0c66b',static:true},
+  {id:'stream',label:'WATERFALL · STATIC',path:GEOMETRY.waterfallStream,x:726,y:245,color:'#9ca9f4',static:true},
+  {id:'spray',label:'SPRAY · STATIC',path:GEOMETRY.waterfallSpray,x:768,y:420,color:'#c8a4df',static:true},
+  {id:'wood',label:'WOOD · STATIC',path:GEOMETRY.woodUpperArch,x:330,y:168,color:'#d39a68',static:true},
+  {id:'rock',label:'ROCK · STATIC',path:GEOMETRY.rockShore,x:710,y:403,color:'#b6c0b8',static:true}
+];
+
+const sceneFrameElement = document.getElementById('sceneFrame');
+const sceneReference = document.getElementById('sceneReference');
+const sceneRenderer = document.getElementById('sceneRenderer');
+const debugOverlay = document.getElementById('debugOverlay');
+const sceneStatus = document.getElementById('sceneStatus');
+const dockState = document.getElementById('dockState');
+const resumeButton = document.getElementById('resumeButton');
+const pauseButton = document.getElementById('pauseButton');
+const proofButton = document.getElementById('proofButton');
+const referenceButton = document.getElementById('referenceButton');
+const debugButton = document.getElementById('debugButton');
+const diagnosticsButton = document.getElementById('diagnosticsButton');
+const diagnosticsDetails = document.getElementById('diagnosticsDetails');
+const diagnosticsNode = document.getElementById('diagnostics');
+
+const state = {
+  sourceReady:false,
+  rendererReady:false,
+  rendererError:'',
+  proofWater:false,
+  staticReference:true,
+  debugGeometry:false
+};
+
+const renderer = {
+  canvasContext:null,
+  sourceCanvas:document.createElement('canvas'),
+  sourceContext:null,
+  maskCanvas:document.createElement('canvas'),
+  maskContext:null,
+  sourcePixels:null,
+  outputImage:null,
+  waterMask:null,
+  boundaryWeight:null,
+  width:0,
+  height:0,
+  scale:1,
+  waterPixelCount:0,
+  paths:null
+};
+
+const sceneClock = {
+  running:false,
+  elapsed:0,
+  lastNow:null,
+  rafId:0
+};
+
+const stats = {
+  frames:0,
+  fps:0,
+  fpsWindowStart:0,
+  fpsWindowFrames:0,
+  lastFrameCost:0,
+  averageFrameCost:0,
+  totalFrameCost:0,
+  maxFrameCost:0,
+  viewportWidth:0,
+  viewportHeight:0,
+  dpr:1,
+  lastDiagnosticsAt:0,
+  lastResizeAt:0
+};
+
+function clamp(value,min,max){return Math.max(min,Math.min(max,value));}
+function smoothstep(value){const t=clamp(value,0,1);return t*t*(3-2*t);}
+function setStatus(message){sceneStatus.textContent=message;}
+
+function initializeRendererContexts(){
+  try{
+    renderer.canvasContext=sceneRenderer.getContext('2d',{alpha:false,desynchronized:true});
+    renderer.sourceContext=renderer.sourceCanvas.getContext('2d',{alpha:false});
+    renderer.maskContext=renderer.maskCanvas.getContext('2d',{alpha:true});
+  }catch(error){
+    state.rendererError=String(error&&error.message||error);
+    return false;
+  }
+  if(!renderer.canvasContext||!renderer.sourceContext||!renderer.maskContext){
+    state.rendererError='Canvas2D context unavailable';
+    return false;
+  }
+  try{
+    renderer.paths={};
+    Object.keys(GEOMETRY).forEach((key)=>{renderer.paths[key]=new Path2D(GEOMETRY[key]);});
+  }catch(error){
+    state.rendererError='Path2D geometry unavailable: '+String(error&&error.message||error);
+    return false;
+  }
+  return true;
+}
+
+function buildBoundaryWeights(waterMask,width,height){
+  const pixelCount=width*height;
+  const distance=new Uint8Array(pixelCount);
+  distance.fill(255);
+  let waterPixelCount=0;
+  for(let index=0;index<pixelCount;index+=1){
+    if(!waterMask[index]) distance[index]=0;
+    else waterPixelCount+=1;
+  }
+  const maxDistance=Math.max(7,Math.round(18*renderer.scale));
+  for(let pass=1;pass<=maxDistance;pass+=1){
+    let changed=false;
+    for(let y=1;y<height-1;y+=1){
+      const row=y*width;
+      for(let x=1;x<width-1;x+=1){
+        const index=row+x;
+        if(!waterMask[index]||distance[index]!==255) continue;
+        if(distance[index-1]===pass-1||distance[index+1]===pass-1||distance[index-width]===pass-1||distance[index+width]===pass-1||distance[index-width-1]===pass-1||distance[index-width+1]===pass-1||distance[index+width-1]===pass-1||distance[index+width+1]===pass-1){
+          distance[index]=pass;
+          changed=true;
+        }
+      }
+    }
+    if(!changed) break;
+  }
+  const weight=new Float32Array(pixelCount);
+  const radius=Math.max(5,Math.round(15*renderer.scale));
+  for(let index=0;index<pixelCount;index+=1){
+    if(!waterMask[index]) continue;
+    const distanceValue=distance[index]===255?radius+1:distance[index];
+    weight[index]=smoothstep((distanceValue-1)/radius);
+  }
+  renderer.waterPixelCount=waterPixelCount;
+  return weight;
+}
+
+function rebuildMask(){
+  const width=renderer.width;
+  const height=renderer.height;
+  const maskContext=renderer.maskContext;
+  const scale=renderer.scale;
+  renderer.maskCanvas.width=width;
+  renderer.maskCanvas.height=height;
+  maskContext.setTransform(1,0,0,1,0,0);
+  maskContext.clearRect(0,0,width,height);
+  maskContext.setTransform(scale,0,0,scale,0,0);
+  maskContext.fillStyle='#fff';
+  maskContext.fill(renderer.paths.lake);
+  maskContext.fillStyle='#000';
+  WATER_EXCLUSIONS.forEach((path)=>maskContext.fill(new Path2D(path)));
+  maskContext.setTransform(1,0,0,1,0,0);
+  const maskPixels=maskContext.getImageData(0,0,width,height).data;
+  const waterMask=new Uint8Array(width*height);
+  for(let index=0,pixel=0;index<waterMask.length;index+=1,pixel+=4){
+    waterMask[index]=maskPixels[pixel]>127?1:0;
+  }
+  renderer.waterMask=waterMask;
+  renderer.boundaryWeight=buildBoundaryWeights(waterMask,width,height);
+}
+
+function configureRenderer(){
+  if(!state.sourceReady||!renderer.canvasContext) return;
+  const rect=sceneFrameElement.getBoundingClientRect();
+  if(!rect.width||!rect.height) return;
+  const targetWidth=clamp(Math.round(rect.width*INTERNAL_DENSITY),MIN_INTERNAL_WIDTH,MAX_INTERNAL_WIDTH);
+  const targetHeight=Math.max(1,Math.round(targetWidth*DESIGN.height/DESIGN.width));
+  const dpr=window.devicePixelRatio||1;
+  stats.viewportWidth=rect.width;
+  stats.viewportHeight=rect.height;
+  stats.dpr=dpr;
+  if(renderer.width===targetWidth&&renderer.height===targetHeight){
+    updateDiagnostics();
+    return;
+  }
+  renderer.width=targetWidth;
+  renderer.height=targetHeight;
+  renderer.scale=targetWidth/DESIGN.width;
+  sceneRenderer.width=targetWidth;
+  sceneRenderer.height=targetHeight;
+  renderer.sourceCanvas.width=targetWidth;
+  renderer.sourceCanvas.height=targetHeight;
+  renderer.maskCanvas.width=targetWidth;
+  renderer.maskCanvas.height=targetHeight;
+  renderer.sourceContext.setTransform(1,0,0,1,0,0);
+  renderer.sourceContext.imageSmoothingEnabled=true;
+  renderer.sourceContext.clearRect(0,0,targetWidth,targetHeight);
+  renderer.sourceContext.drawImage(sceneReference,0,0,targetWidth,targetHeight);
+  renderer.sourcePixels=renderer.sourceContext.getImageData(0,0,targetWidth,targetHeight).data;
+  renderer.outputImage=renderer.canvasContext.createImageData(targetWidth,targetHeight);
+  rebuildMask();
+  state.rendererReady=true;
+  stats.lastResizeAt=performance.now();
+  drawStaticFrame();
+  updateMediaVisibility();
+  updateDiagnostics();
+}
+
+function drawStaticFrame(){
+  if(!state.rendererReady||!renderer.outputImage||!renderer.sourcePixels) return;
+  renderer.outputImage.data.set(renderer.sourcePixels);
+  renderer.canvasContext.putImageData(renderer.outputImage,0,0);
+}
+
+function sourceSampleIsWater(sx,sy){
+  const width=renderer.width;
+  const height=renderer.height;
+  const x0=Math.floor(sx);
+  const y0=Math.floor(sy);
+  const x1=Math.min(width-1,x0+1);
+  const y1=Math.min(height-1,y0+1);
+  if(x0<0||y0<0||x0>=width||y0>=height) return false;
+  const mask=renderer.waterMask;
+  return Boolean(mask[y0*width+x0]&&mask[y0*width+x1]&&mask[y1*width+x0]&&mask[y1*width+x1]);
+}
+
+function renderWaterFrame(time){
+  if(!state.rendererReady||!renderer.outputImage||!renderer.sourcePixels) return;
+  const width=renderer.width;
+  const height=renderer.height;
+  const scale=renderer.scale;
+  const source=renderer.sourcePixels;
+  const output=renderer.outputImage.data;
+  const mask=renderer.waterMask;
+  const boundaryWeight=renderer.boundaryWeight;
+  const proof=state.proofWater;
+  const amplitudeX=(proof?26:6)*scale;
+  const amplitudeY=(proof?14:3.2)*scale;
+  output.set(source);
+  for(let y=1;y<height-1;y+=1){
+    const designY=y/scale;
+    const row=y*width;
+    const openWaterEnvelope=.72+.28*smoothstep((designY-250)/260);
+    for(let x=1;x<width-1;x+=1){
+      const index=row+x;
+      const edgeWeight=boundaryWeight[index];
+      if(!mask[index]||edgeWeight<=0) continue;
+      const designX=x/scale;
+      const phaseA=time*.93+designX*.041+designY*.017+Math.sin(designY*.022)*.72;
+      const phaseB=-time*.57+designX*.015-designY*.052+Math.sin(designX*.018)*.64;
+      const phaseC=time*1.37+designX*.073+designY*.029;
+      const phaseD=time*.31-designX*.031+designY*.061+Math.sin((designX+designY)*.011)*.8;
+      const dx=amplitudeX*edgeWeight*openWaterEnvelope*(Math.sin(phaseA)*.52+Math.sin(phaseB)*.29+Math.cos(phaseC)*.19);
+      const dy=amplitudeY*edgeWeight*openWaterEnvelope*(Math.cos(phaseB)*.46+Math.sin(phaseD)*.32+Math.cos(phaseA*.43+phaseC*.21)*.22);
+      let sx=x+dx;
+      let sy=y+dy;
+      if(!sourceSampleIsWater(sx,sy)){
+        sx=x+dx*.52;
+        sy=y+dy*.52;
+        if(!sourceSampleIsWater(sx,sy)){
+          sx=x+dx*.2;
+          sy=y+dy*.2;
+          if(!sourceSampleIsWater(sx,sy)){
+            sx=x;
+            sy=y;
+          }
+        }
+      }
+      const x0=Math.floor(sx);
+      const y0=Math.floor(sy);
+      const x1=Math.min(width-1,x0+1);
+      const y1=Math.min(height-1,y0+1);
+      const fx=sx-x0;
+      const fy=sy-y0;
+      const topLeft=(y0*width+x0)*4;
+      const topRight=(y0*width+x1)*4;
+      const bottomLeft=(y1*width+x0)*4;
+      const bottomRight=(y1*width+x1)*4;
+      const topWeight=1-fy;
+      const bottomWeight=fy;
+      const leftWeight=1-fx;
+      const rightWeight=fx;
+      const w00=topWeight*leftWeight;
+      const w10=topWeight*rightWeight;
+      const w01=bottomWeight*leftWeight;
+      const w11=bottomWeight*rightWeight;
+      const outputPixel=index*4;
+      output[outputPixel]=source[topLeft]*w00+source[topRight]*w10+source[bottomLeft]*w01+source[bottomRight]*w11;
+      output[outputPixel+1]=source[topLeft+1]*w00+source[topRight+1]*w10+source[bottomLeft+1]*w01+source[bottomRight+1]*w11;
+      output[outputPixel+2]=source[topLeft+2]*w00+source[topRight+2]*w10+source[bottomLeft+2]*w01+source[bottomRight+2]*w11;
+      output[outputPixel+3]=255;
+    }
+  }
+  renderer.canvasContext.putImageData(renderer.outputImage,0,0);
+}
+
+function updateMediaVisibility(){
+  sceneReference.hidden=!state.staticReference;
+  sceneRenderer.hidden=state.staticReference||!state.rendererReady;
+  debugOverlay.hidden=!state.debugGeometry;
+  debugOverlay.classList.toggle('is-visible',state.debugGeometry);
+  referenceButton.setAttribute('aria-pressed',String(state.staticReference));
+  debugButton.setAttribute('aria-pressed',String(state.debugGeometry));
+  proofButton.setAttribute('aria-pressed',String(state.proofWater));
+  const activity=sceneClock.running?'running':'paused';
+  const view=state.staticReference?'STATIC REFERENCE':'LIVE CANVAS';
+  const proof=state.proofWater?' · PROOF WATER':' · normal water';
+  dockState.textContent=view+' · '+activity+proof;
+}
+
+function updateDiagnostics(){
+  if(!diagnosticsDetails.open) return;
+  const rendererState=state.rendererReady?'ready':(state.rendererError||'waiting for source');
+  diagnosticsNode.textContent=[
+    'visualVerdict=manual phone review only',
+    'renderer=Canvas2D ImageData displacement',
+    'rendererState='+rendererState,
+    'rafOwner=SceneClock top-level loop · active='+(sceneClock.running?'1':'0'),
+    'frames='+stats.frames+' approxFps='+stats.fps.toFixed(1),
+    'averageFrameCostMs='+stats.averageFrameCost.toFixed(2),
+    'maxObservedFrameCostMs='+stats.maxFrameCost.toFixed(2),
+    'lastFrameCostMs='+stats.lastFrameCost.toFixed(2),
+    'viewport='+Math.round(stats.viewportWidth)+'x'+Math.round(stats.viewportHeight)+' CSS',
+    'dpr='+stats.dpr.toFixed(2),
+    'internalRender='+renderer.width+'x'+renderer.height,
+    'waterMaskPixels='+renderer.waterPixelCount,
+    'source='+SOURCE_PATH,
+    'sourceSha256='+SOURCE_SHA256,
+    'clockElapsedSeconds='+sceneClock.elapsed.toFixed(2),
+    'visibility='+((document.hidden)?'background':'foreground')
+  ].join('\n');
+}
+
+function recordFrameCost(cost,now){
+  stats.frames+=1;
+  stats.lastFrameCost=cost;
+  stats.totalFrameCost+=cost;
+  stats.averageFrameCost=stats.totalFrameCost/stats.frames;
+  stats.maxFrameCost=Math.max(stats.maxFrameCost,cost);
+  if(!stats.fpsWindowStart) stats.fpsWindowStart=now;
+  stats.fpsWindowFrames+=1;
+  if(now-stats.fpsWindowStart>=1000){
+    stats.fps=stats.fpsWindowFrames*1000/(now-stats.fpsWindowStart);
+    stats.fpsWindowFrames=0;
+    stats.fpsWindowStart=now;
+  }
+}
+
+function scheduleSceneFrame(){
+  if(sceneClock.rafId===0&&sceneClock.running&&!document.hidden) sceneClock.rafId=requestAnimationFrame(renderLoop);
+}
+
+function renderLoop(now){
+  sceneClock.rafId=0;
+  if(!sceneClock.running||document.hidden) return;
+  if(sceneClock.lastNow!==null){
+    sceneClock.elapsed+=Math.min(.1,Math.max(0,(now-sceneClock.lastNow)/1000));
+  }
+  sceneClock.lastNow=now;
+  const frameStarted=performance.now();
+  renderWaterFrame(sceneClock.elapsed);
+  recordFrameCost(performance.now()-frameStarted,now);
+  if(diagnosticsDetails.open&&now-stats.lastDiagnosticsAt>=500){
+    stats.lastDiagnosticsAt=now;
+    updateDiagnostics();
+  }
+  scheduleSceneFrame();
+}
+
+function resumeScene(){
+  if(!state.sourceReady||!state.rendererReady){
+    setStatus('WAITING · approved source has not finished loading.');
+    return;
+  }
+  if(state.staticReference){
+    state.staticReference=false;
+    updateMediaVisibility();
+  }
+  if(sceneClock.running) return;
+  sceneClock.running=true;
+  sceneClock.lastNow=performance.now();
+  setStatus(state.proofWater?'PROOF WATER · real lake pixels moving · anchors remain masked':'LIVE WATER · real lake pixels moving');
+  updateMediaVisibility();
+  scheduleSceneFrame();
+  updateDiagnostics();
+}
+
+function pauseScene(message){
+  sceneClock.running=false;
+  sceneClock.lastNow=null;
+  if(sceneClock.rafId!==0){
+    cancelAnimationFrame(sceneClock.rafId);
+    sceneClock.rafId=0;
+  }
+  if(message) setStatus(message);
+  updateMediaVisibility();
+  updateDiagnostics();
+}
+
+function toggleProofWater(){
+  state.proofWater=!state.proofWater;
+  if(state.staticReference){
+    state.staticReference=false;
+    updateMediaVisibility();
+  }
+  if(!sceneClock.running) resumeScene();
+  else setStatus(state.proofWater?'PROOF WATER · strong photographic pixel displacement':'NORMAL WATER · reduced photographic pixel displacement');
+  updateMediaVisibility();
+}
+
+function toggleStaticReference(){
+  state.staticReference=!state.staticReference;
+  if(state.staticReference){
+    pauseScene('STATIC REFERENCE · untouched approved image');
+  }else{
+    drawStaticFrame();
+    setStatus('LIVE CANVAS · tap START / RESUME to animate real lake pixels');
+    updateMediaVisibility();
+  }
+  updateDiagnostics();
+}
+
+function createDebugGeometry(){
+  const svgNamespace='http://www.w3.org/2000/svg';
+  DEBUG_REGIONS.forEach((region)=>{
+    const path=document.createElementNS(svgNamespace,'path');
+    path.setAttribute('class','debug-path'+(region.water?' is-water':'')+(region.static?' is-static':''));
+    path.setAttribute('d',region.path);
+    path.setAttribute('stroke',region.color);
+    path.dataset.region=region.id;
+    debugOverlay.appendChild(path);
+    const labelGroup=document.createElementNS(svgNamespace,'g');
+    labelGroup.setAttribute('class','debug-label');
+    const textWidth=Math.max(96,region.label.length*7.2);
+    const rect=document.createElementNS(svgNamespace,'rect');
+    rect.setAttribute('x',String(region.x-5));
+    rect.setAttribute('y',String(region.y-17));
+    rect.setAttribute('width',String(textWidth));
+    rect.setAttribute('height','23');
+    rect.setAttribute('rx','4');
+    const text=document.createElementNS(svgNamespace,'text');
+    text.setAttribute('x',String(region.x));
+    text.setAttribute('y',String(region.y));
+    text.textContent=region.label;
+    labelGroup.appendChild(rect);
+    labelGroup.appendChild(text);
+    debugOverlay.appendChild(labelGroup);
+  });
+}
+
+function toggleDebugGeometry(){
+  state.debugGeometry=!state.debugGeometry;
+  updateMediaVisibility();
+  setStatus(state.debugGeometry?'DEBUG GEOMETRY · cyan lake mask, amber static anchors':'DEBUG GEOMETRY OFF · review image pixels directly');
+}
+
+function handleVisibilityChange(){
+  if(document.hidden){
+    if(sceneClock.rafId!==0){
+      cancelAnimationFrame(sceneClock.rafId);
+      sceneClock.rafId=0;
+    }
+    sceneClock.lastNow=null;
+    updateDiagnostics();
+    return;
+  }
+  if(sceneClock.running){
+    sceneClock.lastNow=performance.now();
+    setStatus(state.proofWater?'FOREGROUND · PROOF WATER resumed':'FOREGROUND · live water resumed');
+    scheduleSceneFrame();
+  }
+  updateDiagnostics();
+}
+
+function handleResize(){
+  configureRenderer();
+  if(!state.staticReference&&!sceneClock.running) drawStaticFrame();
+}
+
+function handleSourceReady(){
+  state.sourceReady=true;
+  if(!initializeRendererContexts()){
+    setStatus('ERROR · Canvas2D renderer unavailable: '+state.rendererError);
+    updateDiagnostics();
+    return;
+  }
+  configureRenderer();
+  setStatus('STATIC REFERENCE · approved source ready · tap PROOF WATER');
+  updateMediaVisibility();
+  updateDiagnostics();
+}
+
+sceneReference.addEventListener('load',handleSourceReady,{once:true});
+sceneReference.addEventListener('error',()=>{
+  state.rendererError='approved source failed to load';
+  setStatus('ERROR · approved source failed to load');
+  updateDiagnostics();
+},{once:true});
+resumeButton.addEventListener('click',resumeScene);
+pauseButton.addEventListener('click',()=>pauseScene('PAUSED · frame held for anchor inspection'));
+proofButton.addEventListener('click',toggleProofWater);
+referenceButton.addEventListener('click',toggleStaticReference);
+debugButton.addEventListener('click',toggleDebugGeometry);
+diagnosticsButton.addEventListener('click',()=>{
+  diagnosticsDetails.open=!diagnosticsDetails.open;
+  diagnosticsButton.setAttribute('aria-expanded',String(diagnosticsDetails.open));
+  updateDiagnostics();
+});
+diagnosticsDetails.addEventListener('toggle',()=>{
+  diagnosticsButton.setAttribute('aria-expanded',String(diagnosticsDetails.open));
+  updateDiagnostics();
+});
+document.addEventListener('visibilitychange',handleVisibilityChange);
+window.addEventListener('resize',handleResize,{passive:true});
+
+createDebugGeometry();
+updateMediaVisibility();
+updateDiagnostics();
+if(sceneReference.complete&&sceneReference.naturalWidth) handleSourceReady();
+</script>
+</body>
+</html>
