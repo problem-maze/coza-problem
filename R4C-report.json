@@ -1,0 +1,91 @@
+{
+  "stage": "R4C",
+  "title": "Water Representation Lab",
+  "status": "READY FOR PHONE REVIEW",
+  "next_stage": "R5: NOT STARTED",
+  "visual_pass_claimed": false,
+  "scope": {
+    "baseline": "R4B Canvas2D implementation; R4B not modified.",
+    "allowed": "Water representation and restrained water flow only.",
+    "excluded": [
+      "reflection",
+      "waterfall animation",
+      "spray",
+      "atmosphere",
+      "foliage",
+      "parallax",
+      "generated images",
+      "video"
+    ]
+  },
+  "authoritative_source": {
+    "path": "ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp",
+    "sha256": "a993834ccddaf3d21b847584273b31ec07e8a37df8496570623e4c762c4c66ab",
+    "modified": false
+  },
+  "confirmed_r4b_root_cause": {
+    "diagnosis": "R4B sampled the original photograph at displaced coordinates, preserving its baked concentric/radial ripple geometry.",
+    "r4c_response": "D samples the reconstructed C buffer rather than the original source buffer."
+  },
+  "renderer": {
+    "selected": "Canvas2D ImageData",
+    "rationale": "The R3/R4 real-photo Canvas2D path is proven on phone and keeps the representation lab inspectable.",
+    "webgl": false,
+    "visible_canvas_count": 1
+  },
+  "views": {
+    "A": {
+      "output": "Untouched approved source image."
+    },
+    "B": {
+      "output": "Masked three-pass low-pass de-ringed base.",
+      "nominal_design_pixel_radii": [
+        11,
+        22,
+        36
+      ],
+      "open_water_blend": 0.94
+    },
+    "C": {
+      "output": "B plus seeded four-way blends of valid-water photographic residuals.",
+      "residual": "original source minus B",
+      "local_coordinate_scale": 0.48
+    },
+    "D": {
+      "output": "Restrained macro/meso/micro flow applied only to C.",
+      "animated_input": "renderer.reconstructedPixels",
+      "flow_scale": 0.42
+    }
+  },
+  "boundary_protection": {
+    "existing_mask_preserved": true,
+    "attenuation": "Smooth boundary field approaches zero at shoreline, island, rocks, wood, and other static exclusions.",
+    "bilinear_guard": "All four source-footprint pixels must be valid water."
+  },
+  "runtime": {
+    "raf_owners": 1,
+    "recurring_timers": 0,
+    "lifecycle": "No elapsed-time reset on pause/background; foreground refreshes timestamp.",
+    "per_frame_representation_rebuild": false,
+    "per_frame_allocations": false,
+    "internal_resolution": "3:2 Canvas2D, width clamped to 360–600 pixels"
+  },
+  "validation": {
+    "node_check": "passed",
+    "asset_sha256": "passed",
+    "static_architecture": "passed",
+    "phone_visual_review": "pending",
+    "phone_performance_smoke": "pending device measurement"
+  },
+  "remaining_risks": [
+    "B may be too smooth or retain broad ring evidence.",
+    "C may show residual mosaic or repeated texture.",
+    "D may still expose a recognizable pattern."
+  ],
+  "phone_test_procedure": [
+    "Compare A to B for radial-center suppression.",
+    "Hold C static for 10 seconds and inspect seams/anchors.",
+    "Only then run D for 10–20 seconds.",
+    "Read diagnostics separately from the visual verdict."
+  ]
+}
