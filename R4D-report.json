@@ -1,0 +1,106 @@
+{
+  "stage": "R4D",
+  "title": "Isolated WebGL Water Surface Proof",
+  "status": "READY FOR PHONE REVIEW",
+  "next_stage": "R5: NOT STARTED",
+  "visual_pass_claimed": false,
+  "phone_performance_pass_claimed": false,
+  "scope": {
+    "renderer": "WebGL 1",
+    "coverage": "isolated open-water ROI only",
+    "excluded": [
+      "full-lake animation",
+      "original-photo displacement",
+      "de-ring reconstruction",
+      "patch reconstruction",
+      "reflection system",
+      "waterfall animation",
+      "spray",
+      "atmosphere",
+      "foliage",
+      "parallax",
+      "R5 work"
+    ]
+  },
+  "authoritative_source": {
+    "path": "ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp",
+    "sha256": "a993834ccddaf3d21b847584273b31ec07e8a37df8496570623e4c762c4c66ab",
+    "modified": false
+  },
+  "frozen_r4c": {
+    "modified": false,
+    "checksums": {
+      "Problem-NATURAL-EYE-R4C-WATER-REPRESENTATION-LAB-v1.html": "71528c6fa6dc95e16a480a285700ac34ea00c3e7bc429aac81fa24c4d9040ce4",
+      "R4C-REPORT.md": "adf54fe1a3c4da838fa5607f2e8f617c23e6e3bf91291504ae1362272aafd93a",
+      "R4C-report.json": "a0f306599b617d21392ad1726d75beafd07a1871ed04063758eb246e678580b8"
+    }
+  },
+  "roi": {
+    "source_pixels": {
+      "x": 215,
+      "y": 275,
+      "width": 190,
+      "height": 130
+    },
+    "location": "open water left of island",
+    "contains_static_anchors": false
+  },
+  "pipeline": {
+    "source_scene": "static DOM photograph",
+    "photographic_base": "one-time two-pass nine-tap separable GPU blur",
+    "surface": "six-scale analytic non-aligned directional gradient",
+    "refraction_input": "gpu.baseTarget.texture only",
+    "refraction_limit_pixels": 1.25,
+    "lighting": "subtle upper-right diffuse and warm specular response"
+  },
+  "modes": {
+    "A": "untouched original water crop",
+    "B": "static low-frequency photographic base",
+    "C": "procedural surface frozen at time 37.25",
+    "D": "procedural surface animated; minimum review duration 20 seconds"
+  },
+  "runtime": {
+    "raf_owners": 1,
+    "recurring_timers": 0,
+    "per_frame_imagedata_loops": 0,
+    "per_frame_gpu_allocations": 0,
+    "internal_width_range_pixels": [
+      320,
+      480
+    ],
+    "maximum_internal_size_approx": "480x328",
+    "target_fps": 30,
+    "diagnostics": [
+      "approximate FPS",
+      "average frame cost",
+      "maximum frame cost",
+      "last frame cost",
+      "internal render size",
+      "viewport",
+      "DPR"
+    ]
+  },
+  "validation": {
+    "node_check": "passed",
+    "static_architecture": "passed",
+    "asset_sha256": "passed",
+    "r4c_frozen_checksums": "passed",
+    "webgl_phone_runtime": "pending",
+    "phone_visual_review": "pending"
+  },
+  "remaining_risks": [
+    "Target-phone WebGL compilation and FPS are not yet measured.",
+    "Low-frequency base softness requires phone judgement.",
+    "Directional interference or a readable rhythm may emerge over 20 seconds.",
+    "Lighting amplitude may require a later authorized calibration."
+  ],
+  "phone_test_procedure": [
+    "Inspect A as the untouched source crop.",
+    "Inspect B as a static low-frequency base.",
+    "Hold C and confirm the normal response is frozen.",
+    "Run D continuously for at least 20 seconds.",
+    "Reject radial, concentric, looping, boiling, sliding, or synchronized motion.",
+    "Record diagnostics and confirm at least 30 FPS.",
+    "Confirm the static scene outside the ROI never moves."
+  ]
+}
