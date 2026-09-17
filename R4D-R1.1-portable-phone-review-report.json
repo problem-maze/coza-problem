@@ -1,0 +1,66 @@
+{
+  "revision": "R4D-R1.1",
+  "label": "portable-phone-review-recovery",
+  "status": "READY FOR PHONE REVIEW",
+  "next_stage": "R5: NOT STARTED",
+  "branch": "rebuild/natural-eye-zero-v1",
+  "parent_checkpoint": "d3ddf62f0c01b952a5a40240e797ac028c4e5209",
+  "scope": "R4D portability and preflight recovery only",
+  "r4c_modified": false,
+  "source": {
+    "original_path": "ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp",
+    "sha256": "a993834ccddaf3d21b847584273b31ec07e8a37df8496570623e4c762c4c66ab",
+    "dimensions": {
+      "width": 960,
+      "height": 640
+    },
+    "delivery": "embedded original WebP data URI in a single HTML artifact",
+    "generated_media_added": false
+  },
+  "roi": {
+    "x": 215,
+    "y": 275,
+    "width": 190,
+    "height": 130
+  },
+  "runtime_preflight": {
+    "requires_embedded_source_decode": true,
+    "requires_webgl": true,
+    "requires_nonzero_layout": true,
+    "requires_low_frequency_base": true,
+    "blocks_b_c_d_before_ready": true,
+    "diagnostic_ready_signals": [
+      "preflight=ready",
+      "rendererState=ready",
+      "viewport>0x0",
+      "internalRender>0x0",
+      "frames>0 after D starts"
+    ]
+  },
+  "rendering": {
+    "fixed_blurred_base": true,
+    "spatial_field_controls": [
+      "local direction",
+      "local energy",
+      "local phase"
+    ],
+    "normals_only": true,
+    "refraction_cap_px": 1.25,
+    "original_pixel_motion": false,
+    "residual_patch_reconstruction": false,
+    "texture_scrolling": false,
+    "raf_call_sites": 1,
+    "recurring_timer_call_sites": 0
+  },
+  "static_validation": {
+    "embedded_webp_data_uri": "passed",
+    "external_approved_source_path_absent": "passed",
+    "explicit_gl_edges": "passed",
+    "inset_declarations": 0,
+    "script_syntax_compile": "passed",
+    "json_parse": "passed",
+    "phone_visual_review": "pending",
+    "phone_performance_review": "pending"
+  },
+  "phone_verdict": "manual review required"
+}
