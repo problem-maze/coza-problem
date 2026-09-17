@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Natural Eye — R4D-R1 Spatial Flow Field Proof</title>
+<style>
+*{box-sizing:border-box}
+:root{color-scheme:dark;--ink:#f2f6ee;--muted:#aebbad;--panel:rgba(10,19,14,.95);--line:rgba(239,247,235,.2);--accent:#dcebb8;--accent-ink:#172218}
+html,body{margin:0;min-width:100%;min-height:100%;background:#08100b;color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{min-height:100dvh;overflow:hidden}
+button,summary{font:inherit}
+button{appearance:none;border:1px solid var(--line);border-radius:999px;background:rgba(245,250,243,.08);color:var(--ink);padding:9px 10px;font-size:10px;font-weight:850;letter-spacing:.035em;line-height:1;cursor:pointer;white-space:nowrap}
+button:hover{background:rgba(245,250,243,.16)}
+button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+button:disabled{cursor:not-allowed;opacity:.45}
+.app{display:flex;flex-direction:column;min-height:100dvh;background:radial-gradient(circle at 50% 0%,#1d3125 0%,#08100b 58%)}
+.stage{display:flex;flex:1;min-height:0;flex-direction:column;align-items:center;gap:8px;padding:8px;overflow:auto}
+.context-row{display:flex;width:min(680px,100%);align-items:center;gap:10px}
+.context-frame{position:relative;width:clamp(128px,34vw,210px);aspect-ratio:3 / 2;flex:0 0 auto;overflow:hidden;border:1px solid rgba(255,255,255,.2);background:url("ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp") center/100% 100% no-repeat;box-shadow:0 10px 26px rgba(0,0,0,.3)}
+.roi-marker{position:absolute;left:22.396%;top:42.969%;width:19.792%;height:20.313%;border:2px solid #e9f7bd;box-shadow:0 0 0 1px rgba(0,0,0,.7),0 0 12px rgba(233,247,189,.35)}
+.roi-marker::after{content:"ROI";position:absolute;left:-2px;top:-17px;padding:2px 4px;background:#e9f7bd;color:#142017;font:900 8px/1 system-ui,sans-serif;letter-spacing:.08em}
+.context-copy{min-width:0}
+.context-title{margin:0 0 3px;color:var(--accent);font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.context-note{margin:0;color:var(--muted);font-size:9px;line-height:1.35}
+.proof-frame{position:relative;width:min(680px,100%);aspect-ratio:19 / 13;flex:0 0 auto;overflow:hidden;border:1px solid rgba(255,255,255,.2);background:#286f75;box-shadow:0 18px 44px rgba(0,0,0,.4)}
+.crop-source{position:absolute;z-index:1;left:-113.158%;top:-211.538%;width:505.263%;height:492.308%;max-width:none;display:block;user-select:none;pointer-events:none}
+.gl-surface{position:absolute;z-index:2;top:0;right:0;bottom:0;left:0;width:100%;height:100%;display:block}
+.mode-status{position:absolute;z-index:5;top:8px;left:8px;max-width:calc(100% - 16px);padding:7px 9px;border:1px solid rgba(244,249,239,.25);border-radius:8px;background:rgba(6,15,9,.8);font:850 10px/1.2 system-ui,sans-serif;letter-spacing:.025em;pointer-events:none}
+.build-tag{position:absolute;z-index:5;right:8px;bottom:8px;padding:6px 8px;border:1px solid rgba(244,249,239,.2);border-radius:999px;background:rgba(6,15,9,.76);color:#d8e4d6;font:800 9px/1 system-ui,sans-serif;letter-spacing:.045em;pointer-events:none}
+.control-dock{position:relative;z-index:8;width:100%;padding:9px max(10px,env(safe-area-inset-left)) max(9px,env(safe-area-inset-bottom));border-top:1px solid rgba(237,246,237,.15);background:var(--panel);box-shadow:0 -12px 30px rgba(0,0,0,.22);backdrop-filter:blur(12px)}
+.dock-inner{width:min(760px,100%);margin:0 auto}
+.dock-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px}
+.dock-title{margin:0;color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.09em;text-transform:uppercase}
+.dock-state{margin:0;color:var(--muted);font-size:9px;line-height:1.25;text-align:right}
+.controls{display:flex;flex-wrap:wrap;gap:6px}
+.controls button{flex:1 1 auto;min-width:92px}
+.diagnostic-details{margin-top:8px;border-top:1px solid rgba(237,246,237,.12);padding-top:7px}
+.diagnostic-details summary{cursor:pointer;color:var(--muted);font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+.diagnostic-details pre{max-height:210px;margin:7px 0 0;overflow:auto;padding:8px;border-radius:8px;background:#060e09;color:#d7e5d6;font:10px/1.42 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap}
+.notice{margin:6px 0 0;color:#879589;font-size:9px;line-height:1.35}
+[hidden]{display:none!important}
+@media (max-width:520px){
+  .context-row{gap:8px}
+  .context-note{font-size:8px}
+  .mode-status{font-size:9px}
+  .dock-head{align-items:flex-start}
+  .dock-state{max-width:58%}
+  .controls button{min-width:0;padding:9px 7px;font-size:9px}
+}
+</style>
+</head>
+<body>
+<main class="app" data-build="R4D-R1-SPATIAL-FLOW-FIELD-PROOF-v1">
+  <section class="stage" aria-label="R4D-R1 isolated WebGL spatial flow field proof">
+    <div class="context-row">
+      <div class="context-frame" role="img" aria-label="Static approved source scene with the isolated open-water ROI marked">
+        <div class="roi-marker" aria-hidden="true"></div>
+      </div>
+      <div class="context-copy">
+        <p class="context-title">Static source · isolated ROI</p>
+        <p class="context-note">Only the marked open-water crop enters WebGL. The original scene, island, shore, rocks, wood, trees, and waterfall remain static.</p>
+      </div>
+    </div>
+
+    <figure class="proof-frame" id="proofFrame">
+      <img id="sourceImage" class="crop-source" src="ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp" alt="Untouched approved open-water crop left of the island" draggable="false">
+      <canvas id="glSurface" class="gl-surface" aria-label="WebGL isolated spatial flow-field water proof" hidden></canvas>
+      <div id="modeStatus" class="mode-status" aria-live="polite">A · ORIGINAL WATER CROP · source loading…</div>
+      <div class="build-tag">R4D-R1 · SPATIAL ROI</div>
+    </figure>
+  </section>
+
+  <section class="control-dock" aria-label="R4D-R1 phone review controls">
+    <div class="dock-inner">
+      <div class="dock-head">
+        <p class="dock-title">R4D-R1 · Spatial surface proof</p>
+        <p id="dockState" class="dock-state">A · ORIGINAL · static</p>
+      </div>
+      <div class="controls">
+        <button data-mode="A" type="button" aria-pressed="true">A ORIGINAL</button>
+        <button data-mode="B" type="button" aria-pressed="false">B LOW-FREQ BASE</button>
+        <button data-mode="C" type="button" aria-pressed="false">C FROZEN SURFACE</button>
+        <button data-mode="D" type="button" aria-pressed="false">D ANIMATED</button>
+        <button id="resumeButton" type="button">START / RESUME</button>
+        <button id="pauseButton" type="button">PAUSE</button>
+        <button id="diagnosticsButton" type="button" aria-expanded="false" aria-controls="diagnosticsDetails">DIAGNOSTICS</button>
+      </div>
+      <details id="diagnosticsDetails" class="diagnostic-details">
+        <summary>Runtime diagnostics</summary>
+        <pre id="diagnostics">Diagnostics are device measurements only. Phone visual judgement remains manual.</pre>
+        <p class="notice">D should be judged for at least 20 seconds. R4D-R1 contains no full-lake animation, reflection system, waterfall, spray, atmosphere, foliage, or parallax.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<script>
+'use strict';
+
+const SOURCE_PATH='ASSETS/AUTHORITATIVE/natural-eye-approved-base-960x640.webp';
+const SOURCE_SHA256='a993834ccddaf3d21b847584273b31ec07e8a37df8496570623e4c762c4c66ab';
+const SOURCE_SIZE=Object.freeze({width:960,height:640});
+const ROI=Object.freeze({x:215,y:275,width:190,height:130});
+const MIN_INTERNAL_WIDTH=320;
+const MAX_INTERNAL_WIDTH=480;
+const INTERNAL_DENSITY=1.15;
+const FROZEN_SURFACE_TIME=37.25;
+
+const proofFrame=document.getElementById('proofFrame');
+const sourceImage=document.getElementById('sourceImage');
+const glSurface=document.getElementById('glSurface');
+const modeStatus=document.getElementById('modeStatus');
+const dockState=document.getElementById('dockState');
+const resumeButton=document.getElementById('resumeButton');
+const pauseButton=document.getElementById('pauseButton');
+const diagnosticsButton=document.getElementById('diagnosticsButton');
+const diagnosticsDetails=document.getElementById('diagnosticsDetails');
+const diagnosticsNode=document.getElementById('diagnostics');
+const modeButtons=Array.from(document.querySelectorAll('[data-mode]'));
+
+const MODE_LABELS=Object.freeze({
+  A:'A · ORIGINAL WATER CROP',
+  B:'B · LOW-FREQUENCY BASE',
+  C:'C · FROZEN PROCEDURAL SURFACE',
+  D:'D · ANIMATED PROCEDURAL SURFACE'
+});
+
+const state={
+  mode:'A',
+  sourceReady:false,
+  glReady:false,
+  baseReady:false,
+  rendererError:''
+};
+
+const sceneClock={
+  running:false,
+  elapsed:0,
+  lastNow:null,
+  rafId:0
+};
+
+const stats={
+  frames:0,
+  fps:0,
+  fpsWindowStart:0,
+  fpsWindowFrames:0,
+  lastFrameCost:0,
+  averageFrameCost:0,
+  totalFrameCost:0,
+  maxFrameCost:0,
+  viewportWidth:0,
+  viewportHeight:0,
+  dpr:1,
+  lastDiagnosticsAt:0
+};
+
+const gpu={
+  gl:null,
+  width:0,
+  height:0,
+  vertexBuffer:null,
+  sourceTexture:null,
+  blurTarget:null,
+  baseTarget:null,
+  blurProgram:null,
+  finalProgram:null,
+  blurLocations:null,
+  finalLocations:null
+};
+
+const VERTEX_SHADER_SOURCE=`
+attribute vec2 a_position;
+varying vec2 v_uv;
+void main(){
+  v_uv=a_position*.5+.5;
+  gl_Position=vec4(a_position,0.0,1.0);
+}`;
+
+const BLUR_FRAGMENT_SHADER_SOURCE=`
+precision mediump float;
+uniform sampler2D u_texture;
+uniform vec4 u_roi;
+uniform vec2 u_step;
+varying vec2 v_uv;
+void main(){
+  vec2 uv=mix(u_roi.xy,u_roi.zw,v_uv);
+  vec3 color=vec3(0.0);
+  color+=texture2D(u_texture,uv-4.0*u_step).rgb*.028;
+  color+=texture2D(u_texture,uv-3.0*u_step).rgb*.066;
+  color+=texture2D(u_texture,uv-2.0*u_step).rgb*.124;
+  color+=texture2D(u_texture,uv-u_step).rgb*.180;
+  color+=texture2D(u_texture,uv).rgb*.204;
+  color+=texture2D(u_texture,uv+u_step).rgb*.180;
+  color+=texture2D(u_texture,uv+2.0*u_step).rgb*.124;
+  color+=texture2D(u_texture,uv+3.0*u_step).rgb*.066;
+  color+=texture2D(u_texture,uv+4.0*u_step).rgb*.028;
+  gl_FragColor=vec4(color,1.0);
+}`;
+
+const FINAL_FRAGMENT_SHADER_SOURCE=`
+precision mediump float;
+uniform sampler2D u_base;
+uniform vec2 u_resolution;
+uniform float u_time;
+uniform float u_surface;
+varying vec2 v_uv;
+
+float hash12(vec2 p){
+  vec3 p3=fract(vec3(p.xyx)*.1031);
+  p3+=dot(p3,p3.yzx+33.33);
+  return fract((p3.x+p3.y)*p3.z);
+}
+
+float valueNoise(vec2 p){
+  vec2 cell=floor(p);
+  vec2 f=fract(p);
+  f=f*f*(3.0-2.0*f);
+  float a=hash12(cell);
+  float b=hash12(cell+vec2(1.0,0.0));
+  float c=hash12(cell+vec2(0.0,1.0));
+  float d=hash12(cell+vec2(1.0,1.0));
+  return mix(mix(a,b,f.x),mix(c,d,f.x),f.y);
+}
+
+vec2 localDirection(vec2 baseDirection,float turn){
+  vec2 perpendicular=vec2(-baseDirection.y,baseDirection.x);
+  return normalize(baseDirection+perpendicular*turn);
+}
+
+vec2 waveGradient(vec2 p,vec2 direction,float frequency,float amplitude,float phase){
+  return direction*(amplitude*frequency*cos(dot(p,direction)*frequency+phase));
+}
+
+vec2 surfaceGradient(vec2 uv,float time){
+  vec2 aspect=vec2(u_resolution.x/u_resolution.y,1.0);
+  vec2 p=(uv-.5)*aspect*6.2831853;
+
+  // Fixed continuous control fields: these never sample or translate the photograph.
+  // Time changes only local normal phase, energy, and heading; it is not texture scrolling.
+  float directionField=valueNoise(vec2(p.x*.43-p.y*.17,p.x*.11+p.y*.37)+vec2(3.7,1.9));
+  float energyField=valueNoise(vec2(p.x*.29+p.y*.31,-p.x*.24+p.y*.41)+vec2(-2.6,4.1));
+  float phaseField=valueNoise(vec2(p.x*.51+p.y*.13,p.x*.18-p.y*.46)+vec2(6.2,-3.4));
+
+  float localPhase=(phaseField-.5)*6.2831853;
+  float localRate=.052+.074*energyField;
+  float slowTurn=.075*sin(time*.017+localPhase);
+  float turn=(directionField-.5)*.68+slowTurn;
+  float macroEnergy=mix(.76,1.08,energyField);
+  float mesoEnergy=mix(.70,1.13,energyField);
+  float microEnergy=mix(.64,1.17,energyField);
+
+  float e1=(.86+.14*sin(time*.021+1.7+localPhase*.31))*macroEnergy;
+  float e2=(.83+.17*sin(time*.017+4.2-localPhase*.27))*macroEnergy;
+  float e3=(.88+.12*sin(time*.029+.4+localPhase*.51))*mesoEnergy;
+  float e4=(.80+.20*sin(time*.013+2.8-localPhase*.43))*mesoEnergy;
+  float e5=(.85+.15*sin(time*.023+5.1+localPhase*.69))*microEnergy;
+  float e6=(.82+.18*sin(time*.019+3.4-localPhase*.58))*microEnergy;
+
+  float p1=time*(.101+localRate*.24)+.19*sin(time*.031+.7+localPhase*.22)+localPhase*.74;
+  float p2=-time*(.074+localRate*.19)+.16*sin(time*.023+2.1-localPhase*.18)+localPhase*.56;
+  float p3=time*(.057+localRate*.16)+.14*sin(time*.037+4.8+localPhase*.35)+localPhase*.43;
+  float p4=-time*(.041+localRate*.13)+.11*sin(time*.017+1.2-localPhase*.29)+localPhase*.34;
+  float p5=time*(.031+localRate*.11)+.09*sin(time*.043+3.6+localPhase*.47)+localPhase*.25;
+  float p6=-time*(.022+localRate*.08)+.08*sin(time*.029+5.5-localPhase*.39)+localPhase*.18;
+
+  vec2 gradient=vec2(0.0);
+  gradient+=waveGradient(p,localDirection(vec2(.939693,.342020),turn*.72),1.05,.052*e1,p1);
+  gradient+=waveGradient(p,localDirection(vec2(-.573576,.819152),-turn*.56),1.61,.039*e2,p2+1.3);
+  gradient+=waveGradient(p,localDirection(vec2(.207912,.978148),turn*.44+slowTurn*.42),2.33,.028*e3,p3+2.7);
+  gradient+=waveGradient(p,localDirection(vec2(-.913545,.406737),-turn*.38+slowTurn*.31),3.47,.019*e4,p4+4.1);
+  gradient+=waveGradient(p,localDirection(vec2(.743145,-.669131),turn*.29-slowTurn*.25),5.21,.012*e5,p5+5.4);
+  gradient+=waveGradient(p,localDirection(vec2(-.309017,-.951057),-turn*.23-slowTurn*.18),7.73,.007*e6,p6+.5);
+  return gradient;
+}
+
+void main(){
+  vec2 gradient=surfaceGradient(v_uv,u_time)*u_surface;
+  vec3 normal=normalize(vec3(-gradient*1.4,1.0));
+  vec2 maxOffset=vec2(1.25)/u_resolution;
+  vec2 refraction=clamp(normal.xy*1.25/u_resolution,-maxOffset,maxOffset)*u_surface;
+  vec2 baseUv=clamp(v_uv+refraction,vec2(.003),vec2(.997));
+  vec3 color=texture2D(u_base,baseUv).rgb;
+  vec3 lightDirection=normalize(vec3(.72,.55,.64));
+  vec3 viewDirection=vec3(0.0,0.0,1.0);
+  vec3 halfDirection=normalize(lightDirection+viewDirection);
+  float diffuse=max(dot(normal,lightDirection),0.0);
+  float specular=pow(max(dot(normal,halfDirection),0.0),42.0);
+  float luminance=((diffuse-.64)*.045+specular*.032)*u_surface;
+  color*=1.0+luminance;
+  color+=vec3(1.0,.86,.63)*(specular*.016*u_surface);
+  gl_FragColor=vec4(color,1.0);
+}`;
+
+function clamp(value,min,max){return Math.max(min,Math.min(max,value));}
+function setStatus(message){modeStatus.textContent=message;}
+
+function compileShader(gl,type,source){
+  const shader=gl.createShader(type);
+  gl.shaderSource(shader,source);
+  gl.compileShader(shader);
+  if(!gl.getShaderParameter(shader,gl.COMPILE_STATUS)){
+    const log=gl.getShaderInfoLog(shader)||'unknown shader error';
+    gl.deleteShader(shader);
+    throw new Error(log);
+  }
+  return shader;
+}
+
+function createProgram(gl,vertexSource,fragmentSource){
+  const vertexShader=compileShader(gl,gl.VERTEX_SHADER,vertexSource);
+  const fragmentShader=compileShader(gl,gl.FRAGMENT_SHADER,fragmentSource);
+  const program=gl.createProgram();
+  gl.attachShader(program,vertexShader);
+  gl.attachShader(program,fragmentShader);
+  gl.linkProgram(program);
+  gl.deleteShader(vertexShader);
+  gl.deleteShader(fragmentShader);
+  if(!gl.getProgramParameter(program,gl.LINK_STATUS)){
+    const log=gl.getProgramInfoLog(program)||'unknown program link error';
+    gl.deleteProgram(program);
+    throw new Error(log);
+  }
+  return program;
+}
+
+function configureTexture(gl,texture){
+  gl.bindTexture(gl.TEXTURE_2D,texture);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+}
+
+function createRenderTarget(width,height){
+  const gl=gpu.gl;
+  const texture=gl.createTexture();
+  configureTexture(gl,texture);
+  gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,width,height,0,gl.RGBA,gl.UNSIGNED_BYTE,null);
+  const framebuffer=gl.createFramebuffer();
+  gl.bindFramebuffer(gl.FRAMEBUFFER,framebuffer);
+  gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,texture,0);
+  if(gl.checkFramebufferStatus(gl.FRAMEBUFFER)!==gl.FRAMEBUFFER_COMPLETE){
+    gl.deleteFramebuffer(framebuffer);
+    gl.deleteTexture(texture);
+    throw new Error('WebGL framebuffer incomplete');
+  }
+  gl.bindFramebuffer(gl.FRAMEBUFFER,null);
+  return {texture,framebuffer};
+}
+
+function destroyRenderTarget(target){
+  if(!target||!gpu.gl) return;
+  gpu.gl.deleteFramebuffer(target.framebuffer);
+  gpu.gl.deleteTexture(target.texture);
+}
+
+function bindQuad(program,positionLocation){
+  const gl=gpu.gl;
+  gl.useProgram(program);
+  gl.bindBuffer(gl.ARRAY_BUFFER,gpu.vertexBuffer);
+  gl.enableVertexAttribArray(positionLocation);
+  gl.vertexAttribPointer(positionLocation,2,gl.FLOAT,false,0,0);
+}
+
+function initializeWebGL(){
+  let gl=null;
+  try{
+    gl=glSurface.getContext('webgl',{alpha:false,antialias:false,depth:false,stencil:false,preserveDrawingBuffer:false,powerPreference:'low-power'});
+  }catch(error){
+    state.rendererError=String(error&&error.message||error);
+    return false;
+  }
+  if(!gl){
+    state.rendererError='WebGL context unavailable';
+    return false;
+  }
+  gpu.gl=gl;
+  try{
+    gpu.blurProgram=createProgram(gl,VERTEX_SHADER_SOURCE,BLUR_FRAGMENT_SHADER_SOURCE);
+    gpu.finalProgram=createProgram(gl,VERTEX_SHADER_SOURCE,FINAL_FRAGMENT_SHADER_SOURCE);
+    gpu.blurLocations={
+      position:gl.getAttribLocation(gpu.blurProgram,'a_position'),
+      texture:gl.getUniformLocation(gpu.blurProgram,'u_texture'),
+      roi:gl.getUniformLocation(gpu.blurProgram,'u_roi'),
+      step:gl.getUniformLocation(gpu.blurProgram,'u_step')
+    };
+    gpu.finalLocations={
+      position:gl.getAttribLocation(gpu.finalProgram,'a_position'),
+      base:gl.getUniformLocation(gpu.finalProgram,'u_base'),
+      resolution:gl.getUniformLocation(gpu.finalProgram,'u_resolution'),
+      time:gl.getUniformLocation(gpu.finalProgram,'u_time'),
+      surface:gl.getUniformLocation(gpu.finalProgram,'u_surface')
+    };
+    gpu.vertexBuffer=gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,gpu.vertexBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+    gpu.sourceTexture=gl.createTexture();
+    configureTexture(gl,gpu.sourceTexture);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,sourceImage);
+    gl.disable(gl.BLEND);
+    gl.disable(gl.DEPTH_TEST);
+  }catch(error){
+    state.rendererError=String(error&&error.message||error);
+    return false;
+  }
+  state.glReady=true;
+  return true;
+}
+
+function renderLowFrequencyBase(){
+  const gl=gpu.gl;
+  const blur=gpu.blurLocations;
+  bindQuad(gpu.blurProgram,blur.position);
+  gl.viewport(0,0,gpu.width,gpu.height);
+  gl.activeTexture(gl.TEXTURE0);
+  gl.uniform1i(blur.texture,0);
+
+  gl.bindFramebuffer(gl.FRAMEBUFFER,gpu.blurTarget.framebuffer);
+  gl.bindTexture(gl.TEXTURE_2D,gpu.sourceTexture);
+  gl.uniform4f(
+    blur.roi,
+    ROI.x/SOURCE_SIZE.width,
+    1-(ROI.y+ROI.height)/SOURCE_SIZE.height,
+    (ROI.x+ROI.width)/SOURCE_SIZE.width,
+    1-ROI.y/SOURCE_SIZE.height
+  );
+  gl.uniform2f(blur.step,4/SOURCE_SIZE.width,0);
+  gl.drawArrays(gl.TRIANGLES,0,6);
+
+  gl.bindFramebuffer(gl.FRAMEBUFFER,gpu.baseTarget.framebuffer);
+  gl.bindTexture(gl.TEXTURE_2D,gpu.blurTarget.texture);
+  gl.uniform4f(blur.roi,0,0,1,1);
+  gl.uniform2f(blur.step,0,4/ROI.height);
+  gl.drawArrays(gl.TRIANGLES,0,6);
+  gl.bindFramebuffer(gl.FRAMEBUFFER,null);
+  state.baseReady=true;
+}
+
+function configureRenderer(){
+  if(!state.sourceReady||!state.glReady) return;
+  const rect=proofFrame.getBoundingClientRect();
+  if(!rect.width||!rect.height) return;
+  const targetWidth=clamp(Math.round(rect.width*INTERNAL_DENSITY),MIN_INTERNAL_WIDTH,MAX_INTERNAL_WIDTH);
+  const targetHeight=Math.max(1,Math.round(targetWidth*ROI.height/ROI.width));
+  stats.viewportWidth=rect.width;
+  stats.viewportHeight=rect.height;
+  stats.dpr=window.devicePixelRatio||1;
+  if(gpu.width===targetWidth&&gpu.height===targetHeight){
+    drawCurrentMode();
+    updateDiagnostics();
+    return;
+  }
+  gpu.width=targetWidth;
+  gpu.height=targetHeight;
+  glSurface.width=targetWidth;
+  glSurface.height=targetHeight;
+  destroyRenderTarget(gpu.blurTarget);
+  destroyRenderTarget(gpu.baseTarget);
+  gpu.blurTarget=createRenderTarget(targetWidth,targetHeight);
+  gpu.baseTarget=createRenderTarget(targetWidth,targetHeight);
+  state.baseReady=false;
+  renderLowFrequencyBase();
+  drawCurrentMode();
+  updateDiagnostics();
+}
+
+function drawSurface(time,surfaceStrength){
+  if(!state.baseReady) return;
+  const gl=gpu.gl;
+  const locations=gpu.finalLocations;
+  gl.bindFramebuffer(gl.FRAMEBUFFER,null);
+  gl.viewport(0,0,gpu.width,gpu.height);
+  bindQuad(gpu.finalProgram,locations.position);
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D,gpu.baseTarget.texture);
+  gl.uniform1i(locations.base,0);
+  gl.uniform2f(locations.resolution,gpu.width,gpu.height);
+  gl.uniform1f(locations.time,time);
+  gl.uniform1f(locations.surface,surfaceStrength);
+  gl.drawArrays(gl.TRIANGLES,0,6);
+}
+
+function drawCurrentMode(){
+  if(!state.baseReady||state.mode==='A') return;
+  if(state.mode==='B') drawSurface(0,0);
+  else if(state.mode==='C') drawSurface(FROZEN_SURFACE_TIME,1);
+  else drawSurface(sceneClock.elapsed,1);
+}
+
+function updateVisibility(){
+  const webglVisible=state.mode!=='A'&&state.baseReady;
+  glSurface.hidden=!webglVisible;
+  modeButtons.forEach((button)=>button.setAttribute('aria-pressed',String(button.dataset.mode===state.mode)));
+  dockState.textContent=MODE_LABELS[state.mode]+' · '+(sceneClock.running?'running':'paused');
+}
+
+function updateDiagnostics(){
+  if(!diagnosticsDetails.open) return;
+  diagnosticsNode.textContent=
+    'visualVerdict=manual phone review only\n'+
+    'renderer=WebGL 1 · isolated ROI only\n'+
+    'mode='+MODE_LABELS[state.mode]+'\n'+
+    'roiCoordinates='+ROI.x+','+ROI.y+' '+ROI.width+'x'+ROI.height+' source px\n'+
+    'sourceScene=static original photograph\n'+
+    'photographicInput=one-time GPU low-frequency base\n'+
+    'surface=6 analytic scales modulated by continuous local direction, energy, and phase fields\n'+
+    'surfaceInput=procedural normals only · no source-image motion · no texture scrolling\n'+
+    'refractionLimitPx=1.25 against base texture only\n'+
+    'rafOwner=SceneClock top-level loop · active='+(sceneClock.running?'1':'0')+'\n'+
+    'frames='+stats.frames+' approxFps='+stats.fps.toFixed(1)+'\n'+
+    'averageFrameCostMs='+stats.averageFrameCost.toFixed(2)+'\n'+
+    'maxObservedFrameCostMs='+stats.maxFrameCost.toFixed(2)+'\n'+
+    'lastFrameCostMs='+stats.lastFrameCost.toFixed(2)+'\n'+
+    'viewport='+Math.round(stats.viewportWidth)+'x'+Math.round(stats.viewportHeight)+' CSS\n'+
+    'dpr='+stats.dpr.toFixed(2)+'\n'+
+    'internalRender='+gpu.width+'x'+gpu.height+'\n'+
+    'source='+SOURCE_PATH+'\n'+
+    'sourceSha256='+SOURCE_SHA256+'\n'+
+    'clockElapsedSeconds='+sceneClock.elapsed.toFixed(2)+'\n'+
+    'visibility='+(document.hidden?'background':'foreground')+'\n'+
+    'rendererState='+(state.glReady&&state.baseReady?'ready':(state.rendererError||'waiting'));
+}
+
+function recordFrame(cost,now){
+  stats.frames+=1;
+  stats.lastFrameCost=cost;
+  stats.totalFrameCost+=cost;
+  stats.averageFrameCost=stats.totalFrameCost/stats.frames;
+  stats.maxFrameCost=Math.max(stats.maxFrameCost,cost);
+  if(!stats.fpsWindowStart) stats.fpsWindowStart=now;
+  stats.fpsWindowFrames+=1;
+  if(now-stats.fpsWindowStart>=1000){
+    stats.fps=stats.fpsWindowFrames*1000/(now-stats.fpsWindowStart);
+    stats.fpsWindowFrames=0;
+    stats.fpsWindowStart=now;
+  }
+}
+
+function scheduleFrame(){
+  if(sceneClock.rafId===0&&sceneClock.running&&!document.hidden) sceneClock.rafId=requestAnimationFrame(renderLoop);
+}
+
+function renderLoop(now){
+  sceneClock.rafId=0;
+  if(!sceneClock.running||document.hidden||state.mode!=='D') return;
+  if(sceneClock.lastNow!==null) sceneClock.elapsed+=Math.min(.1,Math.max(0,(now-sceneClock.lastNow)/1000));
+  sceneClock.lastNow=now;
+  const frameStarted=performance.now();
+  drawSurface(sceneClock.elapsed,1);
+  recordFrame(performance.now()-frameStarted,now);
+  if(diagnosticsDetails.open&&now-stats.lastDiagnosticsAt>=1000){
+    stats.lastDiagnosticsAt=now;
+    updateDiagnostics();
+  }
+  scheduleFrame();
+}
+
+function pauseAnimation(message){
+  sceneClock.running=false;
+  sceneClock.lastNow=null;
+  if(sceneClock.rafId!==0){
+    cancelAnimationFrame(sceneClock.rafId);
+    sceneClock.rafId=0;
+  }
+  if(message) setStatus(message);
+  updateVisibility();
+  updateDiagnostics();
+}
+
+function resumeAnimation(){
+  if(!state.sourceReady||!state.glReady||!state.baseReady){
+    setStatus('WAITING · WebGL low-frequency base is not ready.');
+    return;
+  }
+  state.mode='D';
+  glSurface.hidden=false;
+  if(sceneClock.running){
+    updateVisibility();
+    return;
+  }
+  sceneClock.running=true;
+  sceneClock.lastNow=performance.now();
+  setStatus('D · ANIMATED SURFACE · judge continuously for at least 20 seconds');
+  updateVisibility();
+  scheduleFrame();
+  updateDiagnostics();
+}
+
+function selectMode(mode){
+  if(!Object.prototype.hasOwnProperty.call(MODE_LABELS,mode)) return;
+  if(mode==='D'){
+    resumeAnimation();
+    return;
+  }
+  pauseAnimation();
+  state.mode=mode;
+  drawCurrentMode();
+  if(mode==='A') setStatus('A · ORIGINAL WATER CROP · untouched static source');
+  else if(mode==='B') setStatus('B · LOW-FREQUENCY PHOTOGRAPHIC BASE · static');
+  else setStatus('C · PROCEDURAL NORMAL SURFACE · frozen at deterministic time');
+  updateVisibility();
+  updateDiagnostics();
+}
+
+function handleVisibilityChange(){
+  if(document.hidden){
+    if(sceneClock.rafId!==0){
+      cancelAnimationFrame(sceneClock.rafId);
+      sceneClock.rafId=0;
+    }
+    sceneClock.lastNow=null;
+    updateDiagnostics();
+    return;
+  }
+  if(sceneClock.running&&state.mode==='D'){
+    sceneClock.lastNow=performance.now();
+    setStatus('D · FOREGROUND RESUME · continue the 20-second review');
+    scheduleFrame();
+  }
+  updateDiagnostics();
+}
+
+function handleSourceReady(){
+  if(state.sourceReady) return;
+  state.sourceReady=true;
+  if(!initializeWebGL()){
+    setStatus('ERROR · '+state.rendererError+' · A remains available');
+    updateVisibility();
+    updateDiagnostics();
+    return;
+  }
+  configureRenderer();
+  setStatus('A · ORIGINAL WATER CROP · R4D-R1 WebGL proof ready');
+  updateVisibility();
+  updateDiagnostics();
+}
+
+sourceImage.addEventListener('load',handleSourceReady,{once:true});
+sourceImage.addEventListener('error',()=>{
+  state.rendererError='approved source failed to load';
+  setStatus('ERROR · approved source failed to load');
+  updateDiagnostics();
+},{once:true});
+modeButtons.forEach((button)=>button.addEventListener('click',()=>selectMode(button.dataset.mode)));
+resumeButton.addEventListener('click',resumeAnimation);
+pauseButton.addEventListener('click',()=>pauseAnimation('PAUSED · D frame held for surface inspection'));
+diagnosticsButton.addEventListener('click',()=>{
+  diagnosticsDetails.open=!diagnosticsDetails.open;
+  diagnosticsButton.setAttribute('aria-expanded',String(diagnosticsDetails.open));
+  updateDiagnostics();
+});
+diagnosticsDetails.addEventListener('toggle',()=>{
+  diagnosticsButton.setAttribute('aria-expanded',String(diagnosticsDetails.open));
+  updateDiagnostics();
+});
+document.addEventListener('visibilitychange',handleVisibilityChange);
+window.addEventListener('resize',configureRenderer,{passive:true});
+
+updateVisibility();
+updateDiagnostics();
+if(sourceImage.complete&&sourceImage.naturalWidth) handleSourceReady();
+</script>
+</body>
+</html>
+
